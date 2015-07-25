@@ -113,6 +113,7 @@ public class Usuario {
 	public void logout(){
 		if(this.estaLogado == true){
 			this.estaLogado = false;
+			//xao
 		}
 		
 	}
