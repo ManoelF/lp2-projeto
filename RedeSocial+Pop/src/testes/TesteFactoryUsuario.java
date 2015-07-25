@@ -1,18 +1,17 @@
 package testes;
 
-
 import logica.FactoryUsuario;
 import logica.Usuario;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import exceptions.StringException;
+import exceptions.*;
 
 public class TesteFactoryUsuario {
 
 	@Test
-	public void testeCriaUsuario() throws StringException {
+	public void testeCriaUsuario() throws CadastroException {
 		
 		FactoryUsuario factory = new FactoryUsuario();
 		

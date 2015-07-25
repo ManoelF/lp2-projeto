@@ -11,7 +11,7 @@ public class FactoryUsuario {
 	}
 	
 	public Usuario criaUsuario(String nome, String email, String senha, 
-			String nascimento, String telefone, String imagem) throws StringException {
+			String nascimento, String telefone, String imagem) throws CadastroException {
 			usuario = new Usuario(nome, email, senha, nascimento, telefone, imagem);
 			return usuario;
 	}

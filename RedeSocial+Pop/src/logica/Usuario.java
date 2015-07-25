@@ -17,24 +17,24 @@ public class Usuario {
 	private boolean estaLogado;
 	private List<Usuario> amigos;
 	
-	public Usuario(String nome, String email, String senha, String nascimento, String telefone, String imagem) throws StringException {
+	public Usuario(String nome, String email, String senha, String nascimento, String telefone, String imagem) throws CadastroException {
 		if (nome == null || nome.equals("")){
-			throw new StringException("Nome");
+			throw new CadastroException("Nome");
 		}
 		if (email == null || email.equals("")) {
-			throw new StringException("Email");
+			throw new CadastroException("Email");
 		}
 		if (senha == null || senha.equals("")) {
-			throw new StringException("Senha");
+			throw new CadastroException("Senha");
 		}
 		if (nascimento == null || nascimento.equals("")) {
-			throw new StringException("Nascimento");
+			throw new CadastroException("Nascimento");
 		}
 		if (telefone == null || telefone.equals("")) {
-			throw new StringException("Telefone");
+			throw new CadastroException("Telefone");
 		}
 		if (imagem == null) {
-			throw new StringException("Imagem");
+			throw new CadastroException("Imagem");
 		}
 		if (imagem.equals("")) {
 			this.imagem = "resources/avatarDefaul.jpg";
@@ -100,6 +100,10 @@ public class Usuario {
 		this.imagem = imagem;
 	}
 
+	public boolean getEstaLogado(){
+		return this.estaLogado;
+	}
+	
 	public String insereSenha(String senha) {
 		return senha;
 	}
@@ -109,13 +113,18 @@ public class Usuario {
 	}
 
 	public void login() {
-		this.estaLogado = true;
+		if (this.estaLogado == false) {
+			this.estaLogado = true;
+		} else {
+ 
+		}
 	}
 
 	public void logout() {
 		if (this.estaLogado == true) {
 			this.estaLogado = false;
-			// xao
+		} else {
+			//
 		}
 
 	}

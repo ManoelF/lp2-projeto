@@ -22,37 +22,37 @@ public class TesteUsuario {
 	public void testUsuarioException()  {
 		try {
 		joao = new Usuario("", "joao@email.com", "123", "10/10/90", "9999-8888", "imagem/joao.jpg");
-		} catch(StringException erro) {
+		} catch(CadastroException erro) {
 			Assert.assertEquals(erro.getMessage(),"Nome inserida/o nao eh valida/o");
 		}
 		
 		try {
 			joao = new Usuario("Joao", "", "123", "10/10/90", "9999-8888", "imagem/joao.jpg");
-		} catch(StringException erro) {
+		} catch(CadastroException erro) {
 			Assert.assertEquals(erro.getMessage(),"Email inserida/o nao eh valida/o");
 		}
 		
 		try {
 			joao = new Usuario("Joao", "joao@email.com", "", "10/10/90", "9999-8888", "imagem/joao.jpg");
-		} catch(StringException erro) {
+		} catch(CadastroException erro) {
 			Assert.assertEquals(erro.getMessage(),"Senha inserida/o nao eh valida/o");
 		}
 		
 		try {
 			joao = new Usuario("Joao", "joao@email.com", "123", "", "9999-8888", "imagem/joao.jpg");
-		} catch(StringException erro) {
+		} catch(CadastroException erro) {
 			Assert.assertEquals(erro.getMessage(),"Nascimento inserida/o nao eh valida/o");
 		}		
 		
 		try {
 			joao = new Usuario("joao", "joao@email.com", "123", "10/10/90", "", "imagem/joao.jpg");
-		} catch(StringException erro) {
+		} catch(CadastroException erro) {
 			Assert.assertEquals(erro.getMessage(),"Telefone inserida/o nao eh valida/o");
 		}		
 		
 		try {
 		joao = new Usuario("Joao", "joao@email.com", "123", "10/10/90", "9999-8888", null);
-		} catch(StringException erro) {
+		} catch(CadastroException erro) {
 			Assert.assertEquals(erro.getMessage(),"Imagem inserida/o nao eh valida/o");
 		}			
 	}
@@ -70,7 +70,7 @@ public class TesteUsuario {
 			Assert.assertEquals(maria.getTelefone(), "2111-1222");
 			Assert.assertEquals(maria.getImagem(), "resources/avatarDefaul.jpg");
 			
-		} catch(StringException erro) {
+		} catch(CadastroException erro) {
 			Assert.fail();
 		}
 		

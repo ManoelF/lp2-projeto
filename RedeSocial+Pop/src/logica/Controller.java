@@ -16,11 +16,44 @@ public class Controller {
 	}
 	
 	public void cadastraUsuario(String nome, String email, String senha, 
-			String nascimento, String telefone, String imagem) throws StringException  {
+			String nascimento, String telefone, String imagem) throws CadastroException {
 		Usuario novoUsuario;
 		
 		novoUsuario = fabricaUsuario.criaUsuario(nome, email, senha, nascimento, telefone, imagem);
 		usuariosCadastrados.add(novoUsuario);
 	}
+	
+	public void logarUsuario(Usuario usuario, String senhaInserida, String EmailInserido ) throws LogicaException {
 		
+		for (Usuario user : usuariosCadastrados) {
+			if (user.getEstaLogado() == true) {
+				throw new LoginException();
+			}
+		}	
+		
+		verificaEmail(usuario, EmailInserido);
+		verificaSenha(usuario, senhaInserida);	
+		usuario.login();
+	}
+
+	public void deslogarUsuario(Usuario usuario){
+		usuario.logout();
+	}
+	
+	public boolean verificaSenha(Usuario usuario, String senhaInserida) throws SenhaIncorretaException{
+		if (usuario.getSenha().equals(senhaInserida)){
+			return true;
+		} else {
+			throw new SenhaIncorretaException();
+		}
+	}
+	
+	public boolean verificaEmail(Usuario usuario, String EmailInserido) throws EmailIncorretoException{
+		if (usuario.getEmail().equals(EmailInserido)){
+			return true;
+		} else {
+			throw new EmailIncorretoException();
+		}
+	}
+	
 }
