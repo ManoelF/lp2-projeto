@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import exceptions.StringException;
+import exceptions.*;
 
 public class TesteUsuario {
 	Usuario joao;

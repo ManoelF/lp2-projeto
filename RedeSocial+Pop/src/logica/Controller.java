@@ -2,6 +2,7 @@ package logica;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import exceptions.*;
 
 public class Controller {
@@ -15,7 +16,7 @@ public class Controller {
 	}
 	
 	public void cadastraUsuario(String nome, String email, String senha, 
-			String nascimento, String telefone, String imagem) throws StringException {
+			String nascimento, String telefone, String imagem) throws StringException  {
 		Usuario novoUsuario;
 		
 		novoUsuario = fabricaUsuario.criaUsuario(nome, email, senha, nascimento, telefone, imagem);
