@@ -17,24 +17,24 @@ public class Usuario {
 	private boolean estaLogado;
 	private List<Usuario> amigos;
 	
-	public Usuario(String nome, String email, String senha, String nascimento, String telefone, String imagem) throws CadastroException {
+	public Usuario(String nome, String email, String senha, String nascimento, String telefone, String imagem) throws CadastroInvalidoException {
 		if (nome == null || nome.equals("")){
-			throw new CadastroException("Nome");
+			throw new CadastroInvalidoException("Nome");
 		}
 		if (email == null || email.equals("")) {
-			throw new CadastroException("Email");
+			throw new CadastroInvalidoException("Email");
 		}
 		if (senha == null || senha.equals("")) {
-			throw new CadastroException("Senha");
+			throw new CadastroInvalidoException("Senha");
 		}
 		if (nascimento == null || nascimento.equals("")) {
-			throw new CadastroException("Nascimento");
+			throw new CadastroInvalidoException("Nascimento");
 		}
 		if (telefone == null || telefone.equals("")) {
-			throw new CadastroException("Telefone");
+			throw new CadastroInvalidoException("Telefone");
 		}
 		if (imagem == null) {
-			throw new CadastroException("Imagem");
+			throw new CadastroInvalidoException("Imagem");
 		}
 		if (imagem.equals("")) {
 			this.imagem = "resources/avatarDefaul.jpg";
@@ -112,21 +112,20 @@ public class Usuario {
 		return email;
 	}
 
-	public void login() {
+	public void login() throws UsuarioLogadoException {
 		if (this.estaLogado == false) {
 			this.estaLogado = true;
 		} else {
- 
+			throw new UsuarioLogadoException();
 		}
 	}
 
-	public void logout() {
+	public void logout() throws UsuarioDeslogadoException {
 		if (this.estaLogado == true) {
 			this.estaLogado = false;
 		} else {
-			//
+			throw new UsuarioDeslogadoException();
 		}
-
 	}
 
 }

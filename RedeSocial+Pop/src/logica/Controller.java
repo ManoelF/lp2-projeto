@@ -23,7 +23,7 @@ public class Controller {
 		usuariosCadastrados.add(novoUsuario);
 	}
 	
-	public void logarUsuario(Usuario usuario, String senhaInserida, String EmailInserido ) throws LogicaException {
+	public void logarUsuario(Usuario usuario, String senhaInserida, String EmailInserido ) throws LoginException {
 		
 		for (Usuario user : usuariosCadastrados) {
 			if (user.getEstaLogado() == true) {
@@ -36,11 +36,11 @@ public class Controller {
 		usuario.login();
 	}
 
-	public void deslogarUsuario(Usuario usuario){
+	public void deslogarUsuario(Usuario usuario) throws LoginException {
 		usuario.logout();
 	}
 	
-	public boolean verificaSenha(Usuario usuario, String senhaInserida) throws SenhaIncorretaException{
+	public boolean verificaSenha(Usuario usuario, String senhaInserida) throws LoginException {
 		if (usuario.getSenha().equals(senhaInserida)){
 			return true;
 		} else {
@@ -48,7 +48,7 @@ public class Controller {
 		}
 	}
 	
-	public boolean verificaEmail(Usuario usuario, String EmailInserido) throws EmailIncorretoException{
+	public boolean verificaEmail(Usuario usuario, String EmailInserido) throws LoginException {
 		if (usuario.getEmail().equals(EmailInserido)){
 			return true;
 		} else {
