@@ -128,4 +128,67 @@ public class Usuario {
 		}
 	}
 
+	
+	//Caso de Uso3: Pesquisar e alterar informacoes do usuario
+	
+	public void alterarNome(String novoNome) throws LogicaException {
+		if (novoNome == null || novoNome.equals("")){
+			throw new LogicaException("Nome");
+		}
+		this.nome = novoNome;
+	}
+	
+	public void alterarEmail(String novoEmail) throws LogicaException {
+		if (novoEmail == null || novoEmail.equals("")) {
+			throw new LogicaException("Email");
+		}
+		this.email = novoEmail;
+	}
+	
+	public boolean alterarSenha(String senha, String novaSenha) throws LogicaException {
+		if (senha == null || senha.equals("")) {
+			throw new LogicaException("Senha");
+		}
+		
+		if (novaSenha == null || novaSenha.equals("")) {
+			throw new LogicaException("Senha");
+		}
+		
+		if (this.senha.equals(senha)) {
+			this.senha = novaSenha;
+			return true;
+		} else {
+			//Lancar exception
+			return false;
+		}
+	}
+	
+	
+	public void alterarNascimento(String novoNascimento) throws LogicaException {
+		if (novoNascimento == null || novoNascimento.equals("")) {
+			throw new LogicaException("Nascimento");
+		}
+		this.nascimento = novoNascimento;
+	}
+	
+	public void alterarTelefone(String novoTelefone) throws LogicaException {
+		if (novoTelefone == null || novoTelefone.equals("")) {
+			throw new LogicaException("Telefone");
+		}
+		this.telefone = novoTelefone;
+	}
+
+	public void alterarImagem(String novaImagem) throws LogicaException {
+		if (novaImagem == null) {
+			throw new LogicaException("Imagem");
+		}
+		if (novaImagem.equals("")) {
+			this.imagem = "resources/avatarDefaul.jpg";
+		} else {
+			this.imagem = novaImagem;
+		}
+	}
+	
+	
+	
 }
