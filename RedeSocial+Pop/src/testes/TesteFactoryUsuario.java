@@ -11,7 +11,7 @@ import exceptions.*;
 public class TesteFactoryUsuario {
 
 	@Test
-	public void testeCriaUsuario() throws CadastroException {
+	public void testeCriaUsuario() throws CadastroInvalidoException {
 		
 		FactoryUsuario factory = new FactoryUsuario();
 		

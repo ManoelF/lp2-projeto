@@ -1,9 +1,9 @@
 package exceptions;
 
-public class EmailIncorretoException extends LoginException {
+public class EmailIncorretoException extends DadoIncorretoException {
 
 	public EmailIncorretoException() {
-		super("Email inserido invalido.");
+		super("Email inserido incorreto.");
 	}
 	
 }

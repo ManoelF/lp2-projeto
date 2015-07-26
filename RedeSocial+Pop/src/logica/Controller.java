@@ -16,7 +16,7 @@ public class Controller {
 	}
 	
 	public void cadastraUsuario(String nome, String email, String senha, 
-			String nascimento, String telefone, String imagem) throws CadastroException {
+			String nascimento, String telefone, String imagem) throws CadastroInvalidoException {
 		Usuario novoUsuario;
 		
 		novoUsuario = fabricaUsuario.criaUsuario(nome, email, senha, nascimento, telefone, imagem);
