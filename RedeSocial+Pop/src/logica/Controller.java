@@ -48,11 +48,9 @@ public class Controller {
 		for (Usuario usuario : usuariosCadastrados) {
 			if (usuario.getEmail().equals(EmailInserido)) {
 				return usuario;
-			} else {
-				throw new EmailIncorretoException();
 			}
 		}
-		return null;
+		throw new EmailIncorretoException();
 	}
 	
 	public void deslogarUsuario(Usuario usuario) throws LoginException {
