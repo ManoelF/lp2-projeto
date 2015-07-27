@@ -24,8 +24,6 @@ public class TesteController {
 	@Test
 	public void test() throws LoginException {
 		
-		usuario.login();
-		Assert.assertEquals(true, usuario.getEstaLogado());
 		
 		fail("Not yet implemented");
 	}

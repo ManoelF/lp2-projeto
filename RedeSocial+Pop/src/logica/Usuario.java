@@ -14,7 +14,6 @@ public class Usuario {
 	private String senha;
 	private String imagem;
 	private int pop;
-	private boolean estaLogado;
 	private List<Usuario> amigos;
 	
 	public Usuario(String nome, String email, String senha, String nascimento, String telefone, String imagem) throws CadastroInvalidoException {
@@ -48,7 +47,6 @@ public class Usuario {
 		this.telefone = telefone;
 		this.senha = senha;
 		this.pop = 0;
-		this.estaLogado = false;
 		this.amigos = new ArrayList<>();
 	}
 
@@ -99,10 +97,6 @@ public class Usuario {
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
 	}
-
-	public boolean getEstaLogado(){
-		return this.estaLogado;
-	}
 	
 	public String insereSenha(String senha) {
 		return senha;
@@ -111,23 +105,6 @@ public class Usuario {
 	public String insereEmail(String email) {
 		return email;
 	}
-
-	public void login() throws UsuarioLogadoException {
-		if (this.estaLogado == false) {
-			this.estaLogado = true;
-		} else {
-			throw new UsuarioLogadoException();
-		}
-	}
-
-	public void logout() throws UsuarioDeslogadoException {
-		if (this.estaLogado == true) {
-			this.estaLogado = false;
-		} else {
-			throw new UsuarioDeslogadoException();
-		}
-	}
-
 	
 	//Caso de Uso3: Pesquisar e alterar informacoes do usuario
 	

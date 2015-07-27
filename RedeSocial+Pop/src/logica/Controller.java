@@ -9,10 +9,11 @@ public class Controller {
 
 	private FactoryUsuario fabricaUsuario;
 	private List<Usuario> usuariosCadastrados;
+	private Usuario usuarioLogado;
 	
 	public Controller() {
 		this.fabricaUsuario = new FactoryUsuario();
-		usuariosCadastrados = new ArrayList<Usuario>();
+		usuariosCadastrados = new ArrayList<Usuario>();		
 	}
 	
 	public void cadastraUsuario(String nome, String email, String senha, 
@@ -24,37 +25,38 @@ public class Controller {
 		usuariosCadastrados.add(novoUsuario);
 	}
 	
-	public void logarUsuario(Usuario usuario, String senhaInserida, String EmailInserido ) throws LoginException {
+	public void logarUsuario(String senhaInserida, String EmailInserido ) throws LoginException {
 		
-		for (Usuario user : usuariosCadastrados) {
-			if (user.getEstaLogado() == true) {
-				throw new LoginException(usuario);
+		Usuario usuarioLogando;
+		
+		if (usuarioLogado != null) {
+			//throw new LoginException(usuario);
+		} else { 
+			usuarioLogando = pesquisaUsuario(EmailInserido);
+			
+			if (usuarioLogando.getSenha().equals(senhaInserida)){
+				usuarioLogado = usuarioLogando;
+			} else {
+				throw new SenhaIncorretaException();
 			}
+			
 		}	
-		
-		verificaEmail(usuario, EmailInserido);
-		verificaSenha(usuario, senhaInserida);	
-		usuario.login();
-	}
-	
-	public boolean verificaSenha(Usuario usuario, String senhaInserida) throws LoginException {
-		if (usuario.getSenha().equals(senhaInserida)){
-			return true;
-		} else {
-			throw new SenhaIncorretaException();
-		}
-	}
-	
-	public boolean verificaEmail(Usuario usuario, String EmailInserido) throws LoginException {
-		if (usuario.getEmail().equals(EmailInserido)){
-			return true;
-		} else {
-			throw new EmailIncorretoException();
-		}
 	}
 
+	private Usuario pesquisaUsuario(String EmailInserido) throws EmailIncorretoException {
+		
+		for (Usuario usuario : usuariosCadastrados) {
+			if (usuario.getEmail().equals(EmailInserido)) {
+				return usuario;
+			} else {
+				throw new EmailIncorretoException();
+			}
+		}
+		return null;
+	}
+	
 	public void deslogarUsuario(Usuario usuario) throws LoginException {
-		usuario.logout();
+		this.usuarioLogado = null;
 	}
 	
 }
