@@ -1,13 +1,11 @@
 package testes;
 
-import static org.junit.Assert.*;
-import junit.framework.Assert;
 import logica.*;
+import exceptions.*;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import exceptions.*;
 
 public class TesteController {
 
@@ -17,15 +15,90 @@ public class TesteController {
 	@Before
 	public void setUp() throws EntradaException{
 		controller = new Controller();
-		usuario = new Usuario("Day", "day.trindade@email.com", "poxaquecoxa", "", "XXXXX-XXXX", "imagens/day_perfil");
 	}
 	
+	@Test
+	public void testCadastraUsuario() throws LoginException, EntradaException {
+		try {
+			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "XXXXX-XXXX", "imagens/day_perfil");
+			Assert.assertEquals("day.trindade@email.com", controller.getUsuariosCadastrados().get(0).getEmail());
+		} catch (CadastroInvalidoException erro) {
+			Assert.fail();
+		}
+	}
 	
 	@Test
-	public void test() throws LoginException {
+	public void testCadastraUsuarioException() throws LoginException, EntradaException {
+		try {
+			controller.cadastraUsuario("", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "XXXXX-XXXX", "imagens/day_perfil");
+		} catch (CadastroInvalidoException erro) {
+			Assert.assertEquals("Nome inserida/o nao eh valida/o", erro.getMessage());
+		}
+	}
+	
+	@Test
+	public void testLogin() throws LoginException, EntradaException {
+		try {
+			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "XXXXX-XXXX", "imagens/day_perfil");
+			controller.login("day.trindade@email.com","poxaquecoxa");
 		
+			Assert.assertEquals("Day", controller.getUsuarioLogado().getNome());
+		} catch (LogicaException erro) {
+			Assert.fail();
+		}
+	}
+	
+	@Test
+	public void testLoginException() throws LoginException, EntradaException {
 		
-		fail("Not yet implemented");
+		//testa o caso de realizar login quando um outro usuario ja esta logado
+		try { 
+			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "XXXXX-XXXX", "imagens/day_perfil");
+			controller.cadastraUsuario("Stive Andrs", "stive.anderson@email.com", "indiegente", "01/01/1990", "XXXXX-XXXX", "imagens/stive_perfil");
+			
+			controller.login("day.trindade@email.com","poxaquecoxa");
+			controller.login("stive.anderson@email.com", "indiegente");
+		} catch (LogicaException erro) {
+			Assert.assertEquals("Nao foi possivel realizar login. Um usuario ja esta logado: Day.", erro.getMessage());
+		}
+		
+		controller.logout();
+		
+		//testa email inserido incorreto
+		try {
+			controller.cadastraUsuario("Stive Andrs", "stive.anderson@email.com", "indiegente", "01/01/1990", "XXXXX-XXXX", "imagens/stive_perfil");
+			controller.login("stive.andrs@email.com", "indiegente");
+		} catch (LogicaException erro) {
+			Assert.assertEquals("Nao foi possivel realizar login. O usuario com email stive.andrs@email.com nao esta cadastrado.", erro.getMessage());
+		}
+		
+		//testa senha inserida incorreta
+		try {
+			controller.cadastraUsuario("Stive Andrs", "stive.anderson@email.com", "indiegente", "01/01/1990", "XXXXX-XXXX", "imagens/stive_perfil");
+			controller.login("stive.anderson@email.com", "indies");
+		} catch (LogicaException erro) {
+			Assert.assertEquals("Nao foi possivel realizar login. Senha Invalida.", erro.getMessage());
+		}		
+	}
+
+	public void testLogout() throws EntradaException {
+		try {
+			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "XXXXX-XXXX", "imagens/day_perfil");
+			controller.login("day.trindade@email.com","poxaquecoxa");
+			controller.logout();
+			
+			Assert.assertEquals(null, controller.getUsuarioLogado());
+		} catch (LoginException erro) {
+			Assert.fail();
+		}
+	}
+	
+	public void testLogoutException() throws EntradaException {
+		try {
+			controller.logout();
+		} catch (LoginException erro) {
+			Assert.assertEquals("Nao eh possivel realizar logout. Nenhum usuario esta logado no +pop.", erro.getMessage());
+		}
 	}
 
 }

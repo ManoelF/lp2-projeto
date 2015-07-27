@@ -138,8 +138,7 @@ public class Usuario {
 			//Lancar exception
 			return false;
 		}
-	}
-	
+	}	
 	
 	public void alterarNascimento(String novoNascimento) throws LogicaException {
 		if (novoNascimento == null || novoNascimento.equals("")) {
@@ -165,7 +164,5 @@ public class Usuario {
 			this.imagem = novaImagem;
 		}
 	}
-	
-	
 	
 }

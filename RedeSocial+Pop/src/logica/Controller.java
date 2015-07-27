@@ -25,7 +25,7 @@ public class Controller {
 		usuariosCadastrados.add(novoUsuario);
 	}
 	
-	public void login(String senhaInserida, String EmailInserido ) throws LoginException {
+	public void login(String EmailInserido, String senhaInserida) throws LoginException {
 		
 		Usuario usuarioLogando;
 		
@@ -53,11 +53,20 @@ public class Controller {
 	}
 	
 	public void logout() throws LoginException {
+
 		if (this.usuarioLogado == null) {
 			throw new UsuarioDeslogadoException();
 		} else {
 			this.usuarioLogado = null;
 		}
+	}
+
+	public List<Usuario> getUsuariosCadastrados(){
+		return this.usuariosCadastrados;	
+	}
+	
+	public Usuario getUsuarioLogado(){
+		return this.usuarioLogado;
 	}
 	
 }
