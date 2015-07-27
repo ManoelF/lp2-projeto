@@ -25,12 +25,12 @@ public class Controller {
 		usuariosCadastrados.add(novoUsuario);
 	}
 	
-	public void logarUsuario(String senhaInserida, String EmailInserido ) throws LoginException {
+	public void login(String senhaInserida, String EmailInserido ) throws LoginException {
 		
 		Usuario usuarioLogando;
 		
 		if (usuarioLogado != null) {
-			//throw new LoginException(usuario);
+			throw new UsuarioLogadoException(usuarioLogado.getNome());
 		} else { 
 			usuarioLogando = pesquisaUsuario(EmailInserido);
 			
@@ -38,8 +38,7 @@ public class Controller {
 				usuarioLogado = usuarioLogando;
 			} else {
 				throw new SenhaIncorretaException();
-			}
-			
+			}			
 		}	
 	}
 
@@ -50,11 +49,15 @@ public class Controller {
 				return usuario;
 			}
 		}
-		throw new EmailIncorretoException();
+		throw new EmailIncorretoException(EmailInserido);
 	}
 	
-	public void deslogarUsuario(Usuario usuario) throws LoginException {
-		this.usuarioLogado = null;
+	public void logout() throws LoginException {
+		if (this.usuarioLogado == null) {
+			throw new UsuarioDeslogadoException();
+		} else {
+			this.usuarioLogado = null;
+		}
 	}
 	
 }
