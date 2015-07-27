@@ -16,7 +16,8 @@ public class Controller {
 	}
 	
 	public void cadastraUsuario(String nome, String email, String senha, 
-			String nascimento, String telefone, String imagem) throws CadastroInvalidoException {
+								String nascimento, String telefone, String imagem) 
+								throws CadastroInvalidoException {
 		Usuario novoUsuario;
 		
 		novoUsuario = fabricaUsuario.criaUsuario(nome, email, senha, nascimento, telefone, imagem);
@@ -27,17 +28,13 @@ public class Controller {
 		
 		for (Usuario user : usuariosCadastrados) {
 			if (user.getEstaLogado() == true) {
-				throw new LoginException();
+				throw new LoginException(usuario);
 			}
 		}	
 		
 		verificaEmail(usuario, EmailInserido);
 		verificaSenha(usuario, senhaInserida);	
 		usuario.login();
-	}
-
-	public void deslogarUsuario(Usuario usuario) throws LoginException {
-		usuario.logout();
 	}
 	
 	public boolean verificaSenha(Usuario usuario, String senhaInserida) throws LoginException {
@@ -54,6 +51,10 @@ public class Controller {
 		} else {
 			throw new EmailIncorretoException();
 		}
+	}
+
+	public void deslogarUsuario(Usuario usuario) throws LoginException {
+		usuario.logout();
 	}
 	
 }

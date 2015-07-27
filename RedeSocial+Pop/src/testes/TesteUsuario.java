@@ -106,7 +106,6 @@ public class TesteUsuario {
 			System.out.println(erro.getMessage());
 		}
 		
-		
 	}
 	
 	
@@ -165,14 +164,6 @@ public class TesteUsuario {
 		
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 }

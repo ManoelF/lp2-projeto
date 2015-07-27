@@ -2,10 +2,8 @@ package testes;
 
 import logica.FactoryUsuario;
 import logica.Usuario;
-
 import org.junit.Assert;
 import org.junit.Test;
-
 import exceptions.*;
 
 public class TesteFactoryUsuario {
@@ -33,7 +31,4 @@ public class TesteFactoryUsuario {
 		
 	} // fecha o teste CriaUsuario
 
-	
-	
-	
 }
