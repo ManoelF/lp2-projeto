@@ -10,7 +10,7 @@ public class Controller {
 	private FactoryUsuario fabricaUsuario;
 	private List<Usuario> usuariosCadastrados;
 	private Usuario usuarioLogado;
-	
+
 	public Controller() {
 		this.fabricaUsuario = new FactoryUsuario();
 		usuariosCadastrados = new ArrayList<Usuario>();		
@@ -64,7 +64,7 @@ public class Controller {
 	public List<Usuario> getUsuariosCadastrados(){
 		return this.usuariosCadastrados;	
 	}
-	
+
 	public Usuario getUsuarioLogado(){
 		return this.usuarioLogado;
 	}
