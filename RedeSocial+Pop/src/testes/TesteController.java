@@ -100,5 +100,8 @@ public class TesteController {
 			Assert.assertEquals("Nao eh possivel realizar logout. Nenhum usuario esta logado no +pop.", erro.getMessage());
 		}
 	}
+	
+	
+	//TESTAR E-MAIL IGUAIS
 
 }

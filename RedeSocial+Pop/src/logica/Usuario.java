@@ -15,6 +15,7 @@ public class Usuario {
 	private String imagem;
 	private int pop;
 	private List<Usuario> amigos;
+	private List<String> solicitacaoAmizades;
 	
 	public Usuario(String nome, String email, String senha, String nascimento, String telefone, String imagem) throws CadastroInvalidoException {
 		if (nome == null || nome.equals("")){
@@ -48,6 +49,7 @@ public class Usuario {
 		this.senha = senha;
 		this.pop = 0;
 		this.amigos = new ArrayList<>();
+		this.solicitacaoAmizades = new ArrayList<>();
 	}
 
 	public String getNome() {
@@ -104,6 +106,18 @@ public class Usuario {
 
 	public String insereEmail(String email) {
 		return email;
+	}
+	
+	public List<Usuario> getAmigos() {
+		return amigos;
+	}
+
+	public void setAmigos(List<Usuario> amigos) {
+		this.amigos = amigos;
+	}
+
+	public List<String> getSolicitacaoAmizades(){
+		return this.solicitacaoAmizades;
 	}
 	
 	//Caso de Uso3: Pesquisar e alterar informacoes do usuario
@@ -165,4 +179,13 @@ public class Usuario {
 		}
 	}
 	
+	public void recebeSolicitacaoAmizade(String usuarioSolicitante) {
+		this.solicitacaoAmizades.add(usuarioSolicitante);
+	}
+		
+	public String respostaDeAmizade(String emailUsuarioSolicitante) {
+		this.solicitacaoAmizades.remove(emailUsuarioSolicitante);
+		return emailUsuarioSolicitante;
+	}
+		
 }

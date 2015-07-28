@@ -47,25 +47,23 @@ public class Post {
 		this.deslike = this.deslike + 1;
 	}
 
-	public void guardaHashtag() {
+	private void guardaHashtag() {
 		
 		String novaHashtag = "";
 		
 		for (int i = 0; i < (this.texto.length()); i++) {
-			char c = texto.charAt(i);
-			String charToString = Character.toString(c);
+			char c = texto.charAt(i); 
+			String charToString = Character.toString(c); 
 			
-			if (charToString.equals(" ") ) {
-				
-				if (!novaHashtag.equals("")) {
-					this.hashtags.add(novaHashtag);
-					novaHashtag = "";
+			if (charToString.equals(" ") ) {	// verifica se o item da iteracao eh uma string vazia
+				if (!novaHashtag.equals("")) {  // se a hashtag atual nao for vazia (evita add strings vazias na lista de hash)
+					this.hashtags.add(novaHashtag); // adiciona a hashtag na lista de hashtag 
+					novaHashtag = "";				// e prepara uma nova hashtag
 				}
-		 
-			} else if (charToString.equals("#") || novaHashtag.length() >= 1 ) {
-				novaHashtag = novaHashtag + charToString;
+			} else if (charToString.equals("#") || novaHashtag.length() >= 1 ) {  
+				novaHashtag = novaHashtag + charToString;  // concatena itens para formar uma hashtag 
 			}
-		}
+		} // encerra loop
 	}
 
 	public String getTexto() {

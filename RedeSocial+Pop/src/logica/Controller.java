@@ -68,5 +68,17 @@ public class Controller {
 	public Usuario getUsuarioLogado(){
 		return this.usuarioLogado;
 	}
+
+	public void usuarioEnviaAmizade(Usuario usuarioSolicitante, Usuario usuarioDestino) {
+		usuarioDestino.recebeSolicitacaoAmizade(usuarioSolicitante.getEmail());
+	}
 	
+	public void usuarioRecusaAmizade(Usuario usuarioRecusante) {
+		
+	}
+	
+	public void usuarioAceitaAmizade(Usuario usuarioAceito) {
+		
+	}
+		
 }
