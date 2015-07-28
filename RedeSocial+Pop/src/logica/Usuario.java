@@ -179,6 +179,7 @@ public class Usuario {
 		}
 	}
 	
+<<<<<<< HEAD
 	public void recebeSolicitacaoAmizade(String usuarioSolicitante) {
 		this.solicitacaoAmizades.add(usuarioSolicitante);
 	}
@@ -188,4 +189,30 @@ public class Usuario {
 		return emailUsuarioSolicitante;
 	}
 		
+=======
+	public void like(Post post) {
+		post.ganhaLike();
+	}
+	
+	public void deslike(Post post) {
+		post.ganhaDeslike();
+	}
+
+	/*
+	 * public void removeAmigo(Usuario amigo){
+	 * 
+	 * for(int i; i < amigos.size(); i++){
+	 * 	if((amigos.contains(amigo)){
+	 * 		amigos.remove(amigo)
+	 * 		}
+	 * 	}
+	 * TANTO FAZ
+	 * for(int i; i < amigos.size(); i++){
+	 * 		if(amigos.get(i).getEmail().equals(amigo.getEmail())){
+	 * 			amigos.remove(amigo);
+	 * 		}
+	 * }
+	 * 
+	 */
+>>>>>>> f2f9aebeface28be408828a6f3f9d13e192f886e
 }
