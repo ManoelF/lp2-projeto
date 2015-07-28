@@ -179,7 +179,6 @@ public class Usuario {
 		}
 	}
 	
-<<<<<<< HEAD
 	public void recebeSolicitacaoAmizade(String usuarioSolicitante) {
 		this.solicitacaoAmizades.add(usuarioSolicitante);
 	}
@@ -189,7 +188,6 @@ public class Usuario {
 		return emailUsuarioSolicitante;
 	}
 		
-=======
 	public void like(Post post) {
 		post.ganhaLike();
 	}
@@ -214,5 +212,4 @@ public class Usuario {
 	 * }
 	 * 
 	 */
->>>>>>> f2f9aebeface28be408828a6f3f9d13e192f886e
 }
