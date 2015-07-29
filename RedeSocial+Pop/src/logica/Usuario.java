@@ -19,6 +19,7 @@ public class Usuario {
 	private int pop;
 	private List<Usuario> amigos;
 	private List<String> solicitacaoAmizades;
+
 	
 	// Foi adicionado o throws ParseException, deve ser tratado
 	public Usuario(String nome, String email, String senha, String nascimento, String telefone, String imagem) throws CadastroInvalidoException, ParseException {
@@ -198,6 +199,6 @@ public class Usuario {
         Date data = dateFormatada.parse(dataRecebida); //Transforma a data recebida(STR) em tipo Date()
         String dataNascimento = dateFormatada.format(data); // Transforma em String novamente mas do fomato esperado dd/MM/yyyy
         this.nascimento = dataNascimento;;
-    }
-
+    }	
+	
 }
