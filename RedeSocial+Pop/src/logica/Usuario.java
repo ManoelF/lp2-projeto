@@ -1,5 +1,8 @@
 package logica;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -16,8 +19,10 @@ public class Usuario {
 	private int pop;
 	private List<Usuario> amigos;
 	private List<String> solicitacaoAmizades;
+
 	
-	public Usuario(String nome, String email, String senha, String nascimento, String telefone, String imagem) throws CadastroInvalidoException {
+	// Foi adicionado o throws ParseException, deve ser tratado
+	public Usuario(String nome, String email, String senha, String nascimento, String telefone, String imagem) throws CadastroInvalidoException, ParseException {
 		if (nome == null || nome.equals("")){
 			throw new CadastroInvalidoException("Nome");
 		}
@@ -41,10 +46,9 @@ public class Usuario {
 		} else {
 			this.imagem = imagem;
 		}
-		
+		recebeDataNascimento(nascimento);
 		this.nome = nome;
 		this.email = email;
-		this.nascimento = nascimento;
 		this.telefone = telefone;
 		this.senha = senha;
 		this.pop = 0;
@@ -154,11 +158,11 @@ public class Usuario {
 		}
 	}	
 	
-	public void alterarNascimento(String novoNascimento) throws LogicaException {
+	public void alterarNascimento(String novoNascimento) throws LogicaException, ParseException {
 		if (novoNascimento == null || novoNascimento.equals("")) {
-			throw new LogicaException("Nascimento");
+			throw new LogicaException("Data de nascimento invalida");
 		}
-		this.nascimento = novoNascimento;
+		recebeDataNascimento(novoNascimento);
 	}
 	
 	public void alterarTelefone(String novoTelefone) throws LogicaException {
@@ -212,4 +216,15 @@ public class Usuario {
 	 * }
 	 * 
 	 */
+
+	// Tratando a data de Nascimento
+	// Falta tratar essa excecao
+	public void recebeDataNascimento(String dataRecebida) throws ParseException  {
+        SimpleDateFormat dateFormatada = new SimpleDateFormat("dd/MM/yy"); //Defeine dataFormatada no formato esperado
+        Date data = dateFormatada.parse(dataRecebida); //Transforma a data recebida(STR) em tipo Date()
+        String dataNascimento = dateFormatada.format(data); // Transforma em String novamente mas do fomato esperado dd/MM/yyyy
+        this.nascimento = dataNascimento;;
+    }	
+	
+
 }

@@ -10,15 +10,14 @@ public class TesteFactoryUsuario {
 
 	@Test
 	public void testeCriaUsuario() throws CadastroInvalidoException {
+		try {
 		
-		FactoryUsuario factory = new FactoryUsuario();
+			FactoryUsuario factory = new FactoryUsuario();
+			Usuario usuario;
 		
-		Usuario usuario;
-		
-		usuario = factory.criaUsuario("kerilin", "kerilinchang@gmail.com", "teste123",
+			usuario = factory.criaUsuario("kerilin", "kerilinchang@gmail.com", "teste123",
 				"23031994", "91919191", "imagem/avatar");
 		
-		try {
 			Assert.assertEquals("kerilin", usuario.getNome());
 			Assert.assertEquals("kerilinchang@gmail.com", usuario.getEmail());
 			Assert.assertEquals("teste123", usuario.getSenha());

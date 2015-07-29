@@ -1,5 +1,7 @@
 package testes;
 
+import java.text.ParseException;
+
 import logica.*;
 import exceptions.*;
 
@@ -10,7 +12,6 @@ import org.junit.Test;
 public class TesteController {
 
 	private Controller controller;
-	private Usuario usuario;
 	
 	@Before
 	public void setUp() throws EntradaException{
@@ -24,6 +25,8 @@ public class TesteController {
 			Assert.assertEquals("day.trindade@email.com", controller.getUsuariosCadastrados().get(0).getEmail());
 		} catch (CadastroInvalidoException erro) {
 			Assert.fail();
+		} catch(ParseException erro) {
+			Assert.fail();
 		}
 	}
 	
@@ -33,6 +36,8 @@ public class TesteController {
 			controller.cadastraUsuario("", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "XXXXX-XXXX", "imagens/day_perfil");
 		} catch (CadastroInvalidoException erro) {
 			Assert.assertEquals("Nome inserida/o nao eh valida/o", erro.getMessage());
+		} catch(ParseException erro) {
+			Assert.fail();
 		}
 	}
 	
@@ -44,6 +49,8 @@ public class TesteController {
 		
 			Assert.assertEquals("Day", controller.getUsuarioLogado().getNome());
 		} catch (LogicaException erro) {
+			Assert.fail();
+		} catch(ParseException erro) {
 			Assert.fail();
 		}
 	}
@@ -60,6 +67,8 @@ public class TesteController {
 			controller.login("stive.anderson@email.com", "indiegente");
 		} catch (LogicaException erro) {
 			Assert.assertEquals("Nao foi possivel realizar login. Um usuario ja esta logado: Day.", erro.getMessage());
+		} catch(ParseException erro) {
+			Assert.fail();
 		}
 		
 		controller.logout();
@@ -70,6 +79,8 @@ public class TesteController {
 			controller.login("stive.andrs@email.com", "indiegente");
 		} catch (LogicaException erro) {
 			Assert.assertEquals("Nao foi possivel realizar login. O usuario com email stive.andrs@email.com nao esta cadastrado.", erro.getMessage());
+		} catch(ParseException erro) {
+			Assert.fail();
 		}
 		
 		//testa senha inserida incorreta
@@ -78,7 +89,9 @@ public class TesteController {
 			controller.login("stive.anderson@email.com", "indies");
 		} catch (LogicaException erro) {
 			Assert.assertEquals("Nao foi possivel realizar login. Senha Invalida.", erro.getMessage());
-		}		
+		} catch(ParseException erro) {
+			Assert.fail();
+		}
 	}
 
 	public void testLogout() throws EntradaException {
@@ -89,6 +102,8 @@ public class TesteController {
 			
 			Assert.assertEquals(null, controller.getUsuarioLogado());
 		} catch (LoginException erro) {
+			Assert.fail();
+		} catch(ParseException erro) {
 			Assert.fail();
 		}
 	}
