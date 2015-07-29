@@ -1,5 +1,6 @@
 package logica;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Controller {
 	
 	public void cadastraUsuario(String nome, String email, String senha, 
 								String nascimento, String telefone, String imagem) 
-								throws CadastroInvalidoException {
+								throws CadastroInvalidoException, ParseException {
 		Usuario novoUsuario;
 		
 		novoUsuario = fabricaUsuario.criaUsuario(nome, email, senha, nascimento, telefone, imagem);

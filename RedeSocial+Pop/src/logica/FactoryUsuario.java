@@ -1,5 +1,7 @@
 package logica;
 
+import java.text.ParseException;
+
 import exceptions.*;
 
 public class FactoryUsuario {
@@ -11,7 +13,7 @@ public class FactoryUsuario {
 	}
 	
 	public Usuario criaUsuario(String nome, String email, String senha, 
-			String nascimento, String telefone, String imagem) throws CadastroInvalidoException {
+			String nascimento, String telefone, String imagem) throws CadastroInvalidoException, ParseException {
 			usuario = new Usuario(nome, email, senha, nascimento, telefone, imagem);
 			return usuario;
 	}

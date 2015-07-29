@@ -1,12 +1,16 @@
 package logica;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 import exceptions.*;
 
 public class Post {
 
 	private String texto;
+	private String dataAtual;
 	private int like;
 	private int deslike;
 	private int popularidade;
@@ -15,6 +19,7 @@ public class Post {
 	// data e hora
 
 	public Post(String texto) throws PostException {
+		inicializaData();
 		this.popularidade = 0;
 		this.like = 0;
 		this.deslike = 0;
@@ -104,6 +109,18 @@ public class Post {
 
 	public void setHashtags(List<String> hashtags) {
 		this.hashtags = hashtags;
+	}
+	
+	// Pegando a data no momento do post
+	public void inicializaData() {
+		Date date = new Date();  // Pega a data no instante atual
+		SimpleDateFormat out = new SimpleDateFormat("dd/MM"); // Transforma no formato especificado no post dia/mes
+		SimpleDateFormat hora = new SimpleDateFormat("HH:mm"); // Transforma no formato especificado no post hora;minutos
+
+		String result = out.format(date);   // Converte para String
+		String novaHora = hora.format(date);// Converte para String
+
+		this.dataAtual = result + " " + novaHora; // Deixa no formato especificado no post "dia/mes hora:minutos"
 	}
 
 }

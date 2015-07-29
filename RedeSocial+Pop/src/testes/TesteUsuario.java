@@ -1,13 +1,12 @@
 package testes;
 
-import static org.junit.Assert.*;
-import logica.Usuario;
-
+import java.text.ParseException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import exceptions.*;
+import logica.Usuario;
 
 public class TesteUsuario {
 	Usuario joao;
@@ -21,7 +20,7 @@ public class TesteUsuario {
 	
 	
 	@Test
-	public void testUsuarioException()  {
+	public void testUsuarioException() throws ParseException  {
 		try {
 		joao = new Usuario("", "joao@email.com", "123", "10/10/90", "9999-8888", "imagem/joao.jpg");
 		} catch(CadastroInvalidoException erro) {
@@ -68,11 +67,13 @@ public class TesteUsuario {
 			Assert.assertEquals("Maria", maria.getNome());
 			Assert.assertEquals("maria@email.com", maria.getEmail());
 			Assert.assertEquals("321", maria.getSenha());
-			Assert.assertEquals("20/01/1995", maria.getNascimento());
+			Assert.assertEquals("20/01/95", maria.getNascimento());
 			Assert.assertEquals("2111-1222", maria.getTelefone());
 			Assert.assertEquals("resources/avatarDefaul.jpg", maria.getImagem());
 			
 		} catch(CadastroInvalidoException erro) {
+			Assert.fail();
+		} catch(ParseException erro) {
 			Assert.fail();
 		}
 		
@@ -100,10 +101,12 @@ public class TesteUsuario {
 			fred.alterarImagem("");
 			Assert.assertEquals("resources/avatarDefaul.jpg", fred.getImagem());
 			
-		}catch(CadastroInvalidoException erro) {
+		} catch(CadastroInvalidoException erro) {
 			System.out.println(erro.getMessage());
-		}catch(LogicaException erro) {
+		} catch(LogicaException erro) {
 			System.out.println(erro.getMessage());
+		} catch(ParseException erro) {
+			Assert.fail();
 		}
 		
 	}
@@ -115,10 +118,12 @@ public class TesteUsuario {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/00", "9113-4215", "resources/bruna.jpg");
 			bruna.alterarNome("");
 			
-		}catch(CadastroInvalidoException erro) {
+		} catch(CadastroInvalidoException erro) {
 			System.out.println(erro.getMessage());
-		}catch(LogicaException erro) {
+		} catch(LogicaException erro) {
 			Assert.assertEquals("Bruna", bruna.getNome());
+		} catch(ParseException erro) {
+			Assert.fail();
 		}
 		
 		
@@ -126,40 +131,48 @@ public class TesteUsuario {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/00", "9113-4215", "resources/bruna.jpg");
 			bruna.alterarEmail("");
 			
-		}catch(CadastroInvalidoException erro) {
+		} catch(CadastroInvalidoException erro) {
 			System.out.println(erro.getMessage());
-		}catch(LogicaException erro) {
+		} catch(LogicaException erro) {
 			Assert.assertEquals("bruna@email.com", bruna.getEmail());
+		} catch(ParseException erro) {
+			Assert.fail();
 		}
 		
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/00", "9113-4215", "resources/bruna.jpg");
 			bruna.alterarNascimento("");
 			
-		}catch(CadastroInvalidoException erro) {
-			System.out.println(erro.getMessage());
-		}catch(LogicaException erro) {
+		} catch(CadastroInvalidoException erro) {
+		 	System.out.println(erro.getMessage());
+		} catch(LogicaException erro) {
 			Assert.assertEquals("12/11/00", bruna.getNascimento());
+		} catch(ParseException erro) {
+			Assert.fail();
 		}
 		
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/00", "9113-4215", "resources/bruna.jpg");
 			bruna.alterarTelefone("");
 			
-		}catch(CadastroInvalidoException erro) {
+		} catch(CadastroInvalidoException erro) {
 			System.out.println(erro.getMessage());
-		}catch(LogicaException erro) {
+		} catch(LogicaException erro) {
 			Assert.assertEquals("9113-4215", bruna.getTelefone());
+		} catch(ParseException erro) {
+			Assert.fail();
 		}
 		
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/00", "9113-4215", "resources/bruna.jpg");
 			bruna.alterarImagem("");
 			
-		}catch(CadastroInvalidoException erro) {
+		} catch(CadastroInvalidoException erro) {
 			System.out.println(erro.getMessage());
-		}catch(LogicaException erro) {
+		} catch(LogicaException erro) {
 			Assert.assertEquals("resources/bruna.jpg", bruna.getImagem());
+		} catch(ParseException erro) {
+			Assert.fail();
 		}
 		
 		

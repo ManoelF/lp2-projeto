@@ -1,13 +1,9 @@
 package testes;
 
-import static org.junit.Assert.*;
-
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-import exceptions.PostException;
-import exceptions.PostTamException;
+import exceptions.*;
 import logica.*;
 
 public class TestePost {
