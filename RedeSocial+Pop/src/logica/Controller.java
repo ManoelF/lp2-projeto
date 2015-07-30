@@ -19,11 +19,15 @@ public class Controller {
 	
 	public void cadastraUsuario(String nome, String email, String senha, 
 								String nascimento, String telefone, String imagem) 
-								throws CadastroInvalidoException, ParseException {
+								throws EntradaException, ParseException, LogicaException {
 		Usuario novoUsuario;
-		
-		novoUsuario = fabricaUsuario.criaUsuario(nome, email, senha, nascimento, telefone, imagem);
-		usuariosCadastrados.add(novoUsuario);
+		boolean podeCadastrar = verificaEmailJaCadastrado(email);
+		if (podeCadastrar == true) {
+			novoUsuario = fabricaUsuario.criaUsuario(nome, email, senha, nascimento, telefone, imagem);
+			usuariosCadastrados.add(novoUsuario);
+		} else {
+			throw new EmailJaCadastradoException();
+		}
 	}
 	
 	public void login(String EmailInserido, String senhaInserida) throws LoginException {
@@ -80,6 +84,15 @@ public class Controller {
 	
 	public void usuarioAceitaAmizade(Usuario usuarioAceito) {
 		
+	}
+	
+	public boolean verificaEmailJaCadastrado(String email) {
+		for (Usuario usuario : usuariosCadastrados) {
+			if (usuario.getEmail().equals(email)) {
+			return false;
+			}
+		}
+		return true;
 	}
 		
 }
