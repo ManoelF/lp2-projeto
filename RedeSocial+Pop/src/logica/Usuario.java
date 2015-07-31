@@ -18,11 +18,12 @@ public class Usuario {
 	private String imagem;
 	private int pop;
 	private List<Usuario> amigos;
-	private List<String> solicitacaoAmizades;
+	private List<String> solicitacaoAmizade;
+	private List<String> notificacoes;
 
 	
 	// Foi adicionado o throws ParseException, deve ser tratado
-	public Usuario(String nome, String email, String senha, String nascimento, String telefone, String imagem) throws CadastroInvalidoException, ParseException {
+ 	public Usuario(String nome, String email, String senha, String nascimento, String telefone, String imagem) throws CadastroInvalidoException, ParseException {
 		if (nome == null || nome.equals("")){
 			throw new CadastroInvalidoException("Nome");
 		}
@@ -53,7 +54,8 @@ public class Usuario {
 		this.senha = senha;
 		this.pop = 0;
 		this.amigos = new ArrayList<>();
-		this.solicitacaoAmizades = new ArrayList<>();
+		this.solicitacaoAmizade = new ArrayList<>();
+		this.notificacoes = new ArrayList<>();
 	}
 
 	public String getNome() {
@@ -120,8 +122,12 @@ public class Usuario {
 		this.amigos = amigos;
 	}
 
-	public List<String> getSolicitacaoAmizades(){
-		return this.solicitacaoAmizades;
+	public List<String> getSolicitacaoAmizade(){
+		return this.solicitacaoAmizade;
+	}
+	
+	public List<String> getNotificoes() {
+		return this.notificacoes;
 	}
 	
 	//Caso de Uso3: Pesquisar e alterar informacoes do usuario
@@ -182,14 +188,16 @@ public class Usuario {
 			this.imagem = novaImagem;
 		}
 	}
-	
-	public void recebeSolicitacaoAmizade(String usuarioSolicitante) {
-		this.solicitacaoAmizades.add(usuarioSolicitante);
+			
+	public void rejeitaAmizade(String emailUserRecusado) {
+		this.solicitacaoAmizade.remove(emailUserRecusado);
+		//remover a notificacao
 	}
-		
-	public String respostaDeAmizade(String emailUsuarioSolicitante) {
-		this.solicitacaoAmizades.remove(emailUsuarioSolicitante);
-		return emailUsuarioSolicitante;
+	
+	public void aceitaAmizade(Usuario usuarioAceito) {
+		this.solicitacaoAmizade.remove(usuarioAceito.getEmail());
+		//remover a notificacao
+		this.amigos.add(usuarioAceito);
 	}
 		
 	public void like(Post post) {

@@ -123,7 +123,4 @@ public class TesteController {
 		}
 	}
 	
-	
-	//TESTAR E-MAIL IGUAIS
-
 }
