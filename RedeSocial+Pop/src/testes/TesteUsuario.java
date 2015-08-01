@@ -115,9 +115,9 @@ public class TesteUsuario {
 			Assert.assertEquals("resources/avatarDefaul.jpg", fred.getImagem());
 			
 		} catch(CadastroInvalidoException erro) {
-			System.out.println(erro.getMessage());
+			Assert.fail();
 		} catch(LogicaException erro) {
-			System.out.println(erro.getMessage());
+			Assert.fail();
 		} catch(ParseException erro) {
 			Assert.fail();
 		}
@@ -130,11 +130,12 @@ public class TesteUsuario {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/00",
 					"9113-4215", "resources/bruna.jpg");
 			bruna.alterarNome("");
+			Assert.assertEquals("Bruna", bruna.getNome());
 
 		} catch (CadastroInvalidoException erro) {
-			System.out.println(erro.getMessage());
-		} catch(LogicaException erro) {
-			Assert.assertEquals("Bruna", bruna.getNome());
+			Assert.fail();
+		} catch(AtualizaInformacaoExcpetion erro) {
+			Assert.assertEquals("A atualizacao do/a Nome nao eh valida", erro.getMessage());
 		} catch(ParseException erro) {
 			Assert.fail();
 		}
@@ -143,10 +144,12 @@ public class TesteUsuario {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/00",
 					"9113-4215", "resources/bruna.jpg");
 			bruna.alterarEmail("");
-		} catch(CadastroInvalidoException erro) {
-			System.out.println(erro.getMessage());
-		} catch(LogicaException erro) {
 			Assert.assertEquals("bruna@email.com", bruna.getEmail());
+
+		} catch(CadastroInvalidoException erro) {
+			Assert.fail();
+		} catch(LogicaException erro) {
+			Assert.assertEquals("A atualizacao do/a Email nao eh valida", erro.getMessage());
 		} catch(ParseException erro) {
 			Assert.fail();
 		}
@@ -155,10 +158,12 @@ public class TesteUsuario {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/00",
 					"9113-4215", "resources/bruna.jpg");
 			bruna.alterarNascimento("");		
-		} catch(CadastroInvalidoException erro) {
-		 	System.out.println(erro.getMessage());
-		} catch(LogicaException erro) {
 			Assert.assertEquals("12/11/00", bruna.getNascimento());
+
+		} catch(CadastroInvalidoException erro) {
+			Assert.fail();
+		} catch(LogicaException erro) {
+			Assert.assertEquals("A atualizacao do/a Data de nascimento nao eh valida", erro.getMessage());
 		} catch(ParseException erro) {
 			Assert.fail();
 		}
@@ -167,10 +172,12 @@ public class TesteUsuario {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/00",
 					"9113-4215", "resources/bruna.jpg");
 			bruna.alterarTelefone("");			
-		} catch(CadastroInvalidoException erro) {
-			System.out.println(erro.getMessage());
-		} catch(LogicaException erro) {
 			Assert.assertEquals("9113-4215", bruna.getTelefone());
+
+		} catch(CadastroInvalidoException erro) {
+			Assert.fail();
+		} catch(LogicaException erro) {
+			Assert.assertEquals("A atualizacao do/a Telefone nao eh valida", erro.getMessage());
 		} catch(ParseException erro) {
 			Assert.fail();
 		}
@@ -178,11 +185,13 @@ public class TesteUsuario {
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/00",
 					"9113-4215", "resources/bruna.jpg");
-			bruna.alterarImagem("");			
-		} catch(CadastroInvalidoException erro) {
-			System.out.println(erro.getMessage());
-		} catch(LogicaException erro) {
+			bruna.alterarImagem(null);			
 			Assert.assertEquals("resources/bruna.jpg", bruna.getImagem());
+
+		} catch(CadastroInvalidoException erro) {
+			Assert.fail();
+		} catch(LogicaException erro) {
+			Assert.assertEquals("A atualizacao do/a Imagem nao eh valida", erro.getMessage());
 		} catch(ParseException erro) {
 			Assert.fail();
 		}

@@ -126,27 +126,27 @@ public class Usuario {
 	
 	//Caso de Uso3: Pesquisar e alterar informacoes do usuario
 	
-	public void alterarNome(String novoNome) throws LogicaException {
+	public void alterarNome(String novoNome) throws AtualizaInformacaoExcpetion {
 		if (novoNome == null || novoNome.equals("")){
-			throw new LogicaException("Nome");
+			throw new AtualizaInformacaoExcpetion("Nome");
 		}
 		this.nome = novoNome;
 	}
 	
-	public void alterarEmail(String novoEmail) throws LogicaException {
+	public void alterarEmail(String novoEmail) throws AtualizaInformacaoExcpetion {
 		if (novoEmail == null || novoEmail.equals("")) {
-			throw new LogicaException("Email");
+			throw new AtualizaInformacaoExcpetion("Email");
 		}
 		this.email = novoEmail;
 	}
 	
-	public boolean alterarSenha(String senha, String novaSenha) throws LogicaException {
+	public boolean alterarSenha(String senha, String novaSenha) throws AtualizaInformacaoExcpetion {
 		if (senha == null || senha.equals("")) {
-			throw new LogicaException("Senha");
+			throw new AtualizaInformacaoExcpetion("Senha");
 		}
 		
 		if (novaSenha == null || novaSenha.equals("")) {
-			throw new LogicaException("Senha");
+			throw new AtualizaInformacaoExcpetion("Senha");
 		}
 		
 		if (this.senha.equals(senha)) {
@@ -158,23 +158,23 @@ public class Usuario {
 		}
 	}	
 	
-	public void alterarNascimento(String novoNascimento) throws LogicaException, ParseException {
+	public void alterarNascimento(String novoNascimento) throws AtualizaInformacaoExcpetion, ParseException {
 		if (novoNascimento == null || novoNascimento.equals("")) {
-			throw new LogicaException("Data de nascimento invalida");
+			throw new AtualizaInformacaoExcpetion("Data de nascimento");
 		}
 		recebeDataNascimento(novoNascimento);
 	}
 	
-	public void alterarTelefone(String novoTelefone) throws LogicaException {
+	public void alterarTelefone(String novoTelefone) throws AtualizaInformacaoExcpetion {
 		if (novoTelefone == null || novoTelefone.equals("")) {
-			throw new LogicaException("Telefone");
+			throw new AtualizaInformacaoExcpetion("Telefone");
 		}
 		this.telefone = novoTelefone;
 	}
 
-	public void alterarImagem(String novaImagem) throws LogicaException {
+	public void alterarImagem(String novaImagem) throws AtualizaInformacaoExcpetion {
 		if (novaImagem == null) {
-			throw new LogicaException("Imagem");
+			throw new AtualizaInformacaoExcpetion("Imagem");
 		}
 		if (novaImagem.equals("")) {
 			this.imagem = "resources/avatarDefaul.jpg";
