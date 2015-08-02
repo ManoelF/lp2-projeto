@@ -100,8 +100,8 @@ public class Post {
 	public void converteData(String novaData) throws ParseException {
 		
 		Date data = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(novaData);  // transforma o aquivo recebido para Date()
-		String dataBanco = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(data);  // deixa no formato esperado nos arq de teses
-		System.out.println(dataBanco + "\n");
+		this.dataAtual = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(data);  // deixa no formato esperado nos arq de teses
+		System.out.println(dataAtual+ "\n");
 	}
 	
 	// buscando arquivos de audio ou midia
@@ -133,7 +133,6 @@ public class Post {
 		if (tipoMidia.equals("")){	
 			this.arquivos.add(tipoMidia); 			// apos o fim do loo, pode ser que haja um aquivo formado
 		}											// e eh necessario adiciona-lo a lista de arquivos
-		System.out.println(this.arquivos);
 	}
 	
 	// buscando as hashtag do testo
@@ -171,7 +170,16 @@ public class Post {
 		if (!novaHash.equals("")){
 			this.hashtags.add(novaHash);
 		}
-		System.out.println(this.hashtags);
+	}
+	
+	public void curtir(int pontos) {
+		this.like += 1;
+		this.popularidade += pontos;
+	}
+	
+	public void descurtir(int pontos) {
+		this.deslike += 1;
+		this.popularidade -= pontos;
 	}
 
 }
