@@ -23,16 +23,15 @@ public class TesteUsuario {
 	@Test
 	public void testUsuarioException() throws ParseException  {
 		try {
-			joao = new Usuario("", "joao@email.com", "123", "10/10/90",
-					"imagem/joao.jpg");
-
+			joao = new Usuario("", "joao@email.com", "123", "10/10/1990",
+					 "imagem/joao.jpg");
 		} catch (CadastroInvalidoException erro) {
 			Assert.assertEquals("Nome inserida/o nao eh valida/o",
 					erro.getMessage());
 		}
 
 		try {
-			joao = new Usuario("Joao", "", "123", "10/10/90",
+			joao = new Usuario("Joao", "", "123", "10/10/1990",
 					"imagem/joao.jpg");
 		} catch (CadastroInvalidoException erro) {
 			Assert.assertEquals("Email inserida/o nao eh valida/o",
@@ -40,7 +39,7 @@ public class TesteUsuario {
 		}
 
 		try {
-			joao = new Usuario("Joao", "joao@email.com", "", "10/10/90",
+			joao = new Usuario("Joao", "joao@email.com", "", "10/10/1990",
 					 "imagem/joao.jpg");
 		} catch (CadastroInvalidoException erro) {
 			Assert.assertEquals("Senha inserida/o nao eh valida/o",
@@ -56,7 +55,7 @@ public class TesteUsuario {
 		}
 
 		try {
-			joao = new Usuario("Joao", "joao@email.com", "123", "10/10/90", null);
+			joao = new Usuario("Joao", "joao@email.com", "123", "10/10/1990", null);
 		} catch (CadastroInvalidoException erro) {
 			Assert.assertEquals("Imagem inserida/o nao eh valida/o",
 					erro.getMessage());
@@ -68,12 +67,12 @@ public class TesteUsuario {
 		try {
 
 			maria = new Usuario("Maria", "maria@email.com", "321",
-					"20/01/95", "");
+					"20/01/1995", "");
 
 			Assert.assertEquals("Maria", maria.getNome());
 			Assert.assertEquals("maria@email.com", maria.getEmail());
 			Assert.assertEquals("321", maria.getSenha());
-			Assert.assertEquals("20/01/95", maria.getNascimento());
+			Assert.assertEquals("1995-01-20", maria.getNascimento());
 			Assert.assertEquals("resources/avatarDefaul.jpg", maria.getImagem());
 
 		} catch (CadastroInvalidoException erro) {
@@ -84,11 +83,11 @@ public class TesteUsuario {
 
 	}
 
-	@Test
+		@Test
 	public void testInformacoesAtualizadas() {
 		try {
-			fred = new Usuario("Fred", "fred@email.com", "0101", "25/12/89",
-					"resources/fred.jpg");
+			fred = new Usuario("Fred", "fred@email.com", "0101", "25/12/1989",
+					 "resources/fred.jpg");
 
 			fred.alterarNome("Fred Silva");
 			Assert.assertEquals("Fred Silva", fred.getNome());
@@ -96,8 +95,8 @@ public class TesteUsuario {
 			fred.alterarEmail("fredsilva@email.com");
 			Assert.assertEquals("fredsilva@email.com", fred.getEmail());
 
-			fred.alterarNascimento("22/12/89");
-			Assert.assertEquals("22/12/89", fred.getNascimento());
+			fred.alterarNascimento("22/12/1989");
+			Assert.assertEquals("1989-12-22", fred.getNascimento());
 
 
 			fred.alterarImagem("");
@@ -116,7 +115,7 @@ public class TesteUsuario {
 	@Test
 	public void testInformacoesAtualizadasException() {
 		try {
-			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/00",
+			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					 "resources/bruna.jpg");
 			bruna.alterarNome("");
 			Assert.assertEquals("Bruna", bruna.getNome());
@@ -130,7 +129,7 @@ public class TesteUsuario {
 		}
 
 		try {
-			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/00",
+			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					"resources/bruna.jpg");
 			bruna.alterarEmail("");
 			Assert.assertEquals("bruna@email.com", bruna.getEmail());
@@ -144,7 +143,7 @@ public class TesteUsuario {
 		}
 
 		try {
-			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/00",
+			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					 "resources/bruna.jpg");
 			bruna.alterarNascimento("");		
 			Assert.assertEquals("12/11/00", bruna.getNascimento());
@@ -157,8 +156,8 @@ public class TesteUsuario {
 		}
 
 		try {
-			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/00",
-					"resources/bruna.jpg");		
+			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
+					"resources/bruna.jpg");
 			bruna.alterarImagem(null);			
 			Assert.assertEquals("resources/bruna.jpg", bruna.getImagem());
 		} catch(CadastroInvalidoException erro) {

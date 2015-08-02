@@ -212,11 +212,9 @@ public class Usuario {
 	// Tratando a data de Nascimento
 	// Falta tratar essa excecao
 	public void recebeDataNascimento(String dataRecebida) throws ParseException  {
-        SimpleDateFormat dateFormatada = new SimpleDateFormat("dd/MM/yy"); //Defeine dataFormatada no formato esperado
-        Date data = dateFormatada.parse(dataRecebida); //Transforma a data recebida(STR) em tipo Date()
-        String dataNascimento = dateFormatada.format(data); // Transforma em String novamente mas do fomato esperado dd/MM/yyyy
-        this.nascimento = dataNascimento;;
-    }	
+		Date data = new SimpleDateFormat("dd/MM/yyyy").parse(dataRecebida);  // transforma o aquivo recebido para Date()
+		this.nascimento = new SimpleDateFormat("yyyy-MM-dd").format(data);
+		}	
 	
 	public String getFoto() {
 		return this.imagem;
