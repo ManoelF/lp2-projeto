@@ -2,5 +2,7 @@ package logica;
 
 public interface TipoPopularidade {
 	
-	public int curtir(Post post);
+	public void curtir(Post post);
+	
+	public void descurtir(Post post);
 }

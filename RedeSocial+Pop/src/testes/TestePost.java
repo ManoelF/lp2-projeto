@@ -3,6 +3,8 @@ package testes;
 import static org.junit.Assert.*;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,9 +23,12 @@ public class TestePost {
 	public void testePost() throws PostException {
 
 		try {
-			textoUm = "bom dia amigos faces #Chang #Italo e #Manoel passem bem!";
+			textoUm = "bom dia amigos faces passem bem! #Chang #Italo #Manoel";
 			data = "01/08/2015 12:00:00";
 			postUm = new Post(textoUm, data);
+			
+			Date data1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse("01/08/2015 12:00:00");
+			System.out.println(data1.equals(postUm.getData()));
 
 			textoDois = "";
 			postDois = new Post(textoDois, data);
@@ -40,6 +45,7 @@ public class TestePost {
 			Assert.assertEquals("oi migs, sdds <3", postTres.getTexto());
 
 		} catch (PostException erro) {
+			System.out.println(erro.getMessage());
 			Assert.fail();
 		} catch (ParseException erro){ 
 			System.out.println(erro.getMessage());
