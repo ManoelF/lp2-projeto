@@ -23,7 +23,7 @@ public class Controller {
 		usuariosCadastrados = new ArrayList<Usuario>();		
 	}
 	
-	public void cadastraUsuario(String nome, String email, String senha, 
+	public Usuario cadastraUsuario(String nome, String email, String senha, 
 								String nascimento, String imagem) 
 								throws EntradaException, ParseException, LogicaException {
 		Usuario novoUsuario;
@@ -31,6 +31,7 @@ public class Controller {
 		if (podeCadastrar == true) {
 			novoUsuario = fabricaUsuario.criaUsuario(nome, email, senha, nascimento, imagem);
 			usuariosCadastrados.add(novoUsuario);
+			return novoUsuario;
 		} else {
 			throw new EmailJaCadastradoException();
 		}
@@ -183,11 +184,44 @@ public class Controller {
 		Post novoPost = new Post(mensagem, data);			
 	}
 	
-	public void removeUsuario(Usuario usuario) {
-		
-	}
-	
 	public void atualizaRanking() {
 		
 	}
+	
+	public String getInfoUsuario(String atributo, String email) {
+		return null;
+	}
+	
+	public String getNextNotificacao() {
+		return this.usuarioLogado.getNextNotificacao();
+	}
+	
+	public int getNotificacao() { 
+		return this.usuarioLogado.getNotificacao();
+	}
+	
+	public int getQtdAmigos() {
+		return this.usuarioLogado.getQtdAmigos();
+	}
+	
+	
+	public void curtirPost(String amigo, int post) throws EmailIncorretoException {
+		Usuario usuario = pesquisaUsuario(amigo);
+		this.usuarioLogado.curtir(usuario, post);
+	}
+	
+	
+	public void removeUsuario(Usuario usuario) {
+		this.usuariosCadastrados.remove(usuario);
+	}
+	
+	
+	public void removeAmigo(String usuario) throws EmailIncorretoException {
+		Usuario usuarioRemover = pesquisaUsuario(usuario);
+		this.usuarioLogado.removeAmigo(usuarioRemover);
+	}
+	
+	
+	
+	
 }

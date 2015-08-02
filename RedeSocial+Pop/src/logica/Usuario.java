@@ -21,6 +21,7 @@ public class Usuario implements Comparable<Usuario> {
 	private List<String> notificacoes;
 	private TipoPopularidade popularidade;
 	private List<Post> posts;
+	private List<Post> feed;
 
 	
 	// Foi adicionado o throws ParseException, deve ser tratado
@@ -54,8 +55,15 @@ public class Usuario implements Comparable<Usuario> {
 		this.solicitacaoAmizade = new ArrayList<>();
 		this.notificacoes = new ArrayList<>();
 		this.posts = new ArrayList<>();
+		this.feed = new ArrayList<>();
+		this.popularidade = new Normal();
 	}
 
+ 	public String getNextNotificacao() {
+ 		String notifi = this.notificacoes.get(0); 
+ 		this.notificacoes.remove(0);
+ 		return notifi;
+ 	}
  	public Post getPost(int indice) {
  		return posts.get(indice);
  	}
@@ -229,13 +237,13 @@ public class Usuario implements Comparable<Usuario> {
 	public void curtir(Usuario usuario, int indice) {
 		Post post = usuario.getPost(indice);
 		this.popularidade.curtir(post);
-		usuario.atualizaPopularidade1();
+		usuario.atualizaPopularidade();
 	}
 	
 	public void descurtir(Usuario usuario, int indice) {
 		Post post = usuario.getPost(indice);
 		this.popularidade.descurtir(post);
-		usuario.atualizaPopularidade1();
+		usuario.atualizaPopularidade();
 	}
 	public String getFoto() {
 		return this.imagem;
@@ -257,6 +265,18 @@ public class Usuario implements Comparable<Usuario> {
 	public int compareTo(Usuario o) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public int getNotificacao() {
+		return this.notificacoes.size();
+	}
+	
+	public int getQtdAmigos() {
+		return this.amigos.size();
+	}
+	
+	public void removeAmigo(Usuario usuario) {
+		this.amigos.remove(usuario);
 	}
 	
 }
