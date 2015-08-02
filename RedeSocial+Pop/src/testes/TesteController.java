@@ -14,7 +14,7 @@ public class TesteController {
 	private Controller controller;
 	
 	@Before
-	public void setUp() throws EntradaException{
+	public void setUp() {
 		controller = new Controller();
 	}
 	

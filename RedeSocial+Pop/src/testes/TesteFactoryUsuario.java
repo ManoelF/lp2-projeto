@@ -22,7 +22,6 @@ public class TesteFactoryUsuario {
 			Assert.assertEquals("kerilinchang@gmail.com", usuario.getEmail());
 			Assert.assertEquals("teste123", usuario.getSenha());
 			Assert.assertEquals("23031994", usuario.getNascimento());
-			Assert.assertEquals("91919191", usuario.getTelefone());
 			Assert.assertEquals("imagem/avatar", usuario.getImagem());
 		} catch (Exception e) {
 			Assert.fail();
