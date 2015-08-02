@@ -214,7 +214,7 @@ public class Usuario implements Comparable<Usuario> {
 	}
 	
 	
-	public void atualizaPopularidade1() {
+	public void atualizaPopularidade() {
 		atualizaPops();
 		if( this.pop < 500) {
 			this.popularidade = new Normal();
@@ -253,10 +253,6 @@ public class Usuario implements Comparable<Usuario> {
 		return null;
 	}
 	
-	public void atualizaPopularidade() {
-		
-	}
-
 	@Override
 	public int compareTo(Usuario o) {
 		// TODO Auto-generated method stub
