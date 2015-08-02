@@ -12,7 +12,6 @@ public class Usuario {
 	
 	private String nome;
 	private String email;
-	private String telefone;
 	private String nascimento;
 	private String senha;
 	private String imagem;
@@ -23,7 +22,7 @@ public class Usuario {
 
 	
 	// Foi adicionado o throws ParseException, deve ser tratado
- 	public Usuario(String nome, String email, String senha, String nascimento, String telefone, String imagem) throws CadastroInvalidoException, ParseException {
+ 	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException, ParseException {
 		if (nome == null || nome.equals("")){
 			throw new CadastroInvalidoException("Nome");
 		}
@@ -36,9 +35,6 @@ public class Usuario {
 		if (nascimento == null || nascimento.equals("")) {
 			throw new CadastroInvalidoException("Nascimento");
 		}
-		if (telefone == null || telefone.equals("")) {
-			throw new CadastroInvalidoException("Telefone");
-		}
 		if (imagem == null) {
 			throw new CadastroInvalidoException("Imagem");
 		}
@@ -50,7 +46,6 @@ public class Usuario {
 		recebeDataNascimento(nascimento);
 		this.nome = nome;
 		this.email = email;
-		this.telefone = telefone;
 		this.senha = senha;
 		this.pop = 0;
 		this.amigos = new ArrayList<>();
@@ -90,13 +85,6 @@ public class Usuario {
 		this.nascimento = nascimento;
 	}
 
-	public String getTelefone() {
-		return this.telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
 
 	public String getImagem() {
 		return this.imagem;
@@ -171,12 +159,6 @@ public class Usuario {
 		recebeDataNascimento(novoNascimento);
 	}
 	
-	public void alterarTelefone(String novoTelefone) throws AtualizaInformacaoExcpetion {
-		if (novoTelefone == null || novoTelefone.equals("")) {
-			throw new AtualizaInformacaoExcpetion("Telefone");
-		}
-		this.telefone = novoTelefone;
-	}
 
 	public void alterarImagem(String novaImagem) throws AtualizaInformacaoExcpetion {
 		if (novaImagem == null) {

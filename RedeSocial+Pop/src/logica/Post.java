@@ -1,5 +1,6 @@
 package logica;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,21 +16,24 @@ public class Post {
 	private int deslike;
 	private int popularidade;
 	private List<String> hashtags;
+	private List<String> arquivos;
 
 	// data e hora
 
-	public Post(String texto) throws PostException {
-		inicializaData();
+	public Post(String texto, String data) throws PostException, ParseException {
+		verificaTam(texto);
 		this.popularidade = 0;
 		this.like = 0;
 		this.deslike = 0;
-		verificaTam(texto);
 		this.hashtags = new ArrayList<>();
-		guardaHashtag();
+		this.arquivos = new ArrayList<>();
+		converteData(data);
+		encontraMidia(texto);
+		encontraHashtag(texto);
 	}
 
 	public void verificaTam(String texto) throws PostTamException {
-		if (texto.length() > 400) {
+		if (texto.length() > 200) {
 			throw new PostTamException();
 		} else {
 			this.texto = texto;
@@ -50,25 +54,6 @@ public class Post {
 
 	public void ganhaDeslike() {
 		this.deslike = this.deslike + 1;
-	}
-
-	private void guardaHashtag() {
-		
-		String novaHashtag = "";
-		
-		for (int i = 0; i < (this.texto.length()); i++) {
-			char c = texto.charAt(i); 
-			String charToString = Character.toString(c); 
-			
-			if (charToString.equals(" ") ) {	// verifica se o item da iteracao eh uma string vazia
-				if (!novaHashtag.equals("")) {  // se a hashtag atual nao for vazia (evita add strings vazias na lista de hash)
-					this.hashtags.add(novaHashtag); // adiciona a hashtag na lista de hashtag 
-					novaHashtag = "";				// e prepara uma nova hashtag
-				}
-			} else if (charToString.equals("#") || novaHashtag.length() >= 1 ) {  
-				novaHashtag = novaHashtag + charToString;  // concatena itens para formar uma hashtag 
-			}
-		} // encerra loop
 	}
 
 	public String getTexto() {
@@ -111,16 +96,82 @@ public class Post {
 		this.hashtags = hashtags;
 	}
 	
-	// Pegando a data no momento do post
-	public void inicializaData() {
-		Date date = new Date();  // Pega a data no instante atual
-		SimpleDateFormat out = new SimpleDateFormat("dd/MM"); // Transforma no formato especificado no post dia/mes
-		SimpleDateFormat hora = new SimpleDateFormat("HH:mm"); // Transforma no formato especificado no post hora;minutos
-
-		String result = out.format(date);   // Converte para String
-		String novaHora = hora.format(date);// Converte para String
-
-		this.dataAtual = result + " " + novaHora; // Deixa no formato especificado no post "dia/mes hora:minutos"
+	// tratando a data
+	public void converteData(String novaData) throws ParseException {
+		
+		Date data = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(novaData);  // transforma o aquivo recebido para Date()
+		String dataBanco = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(data);  // deixa no formato esperado nos arq de teses
+		System.out.println(dataBanco + "\n");
+	}
+	
+	// buscando arquivos de audio ou midia
+	public void encontraMidia(String mensagem) {
+		String tipoMidia = "$arquivo_";  			// variavel para concatenar o arquivo
+		char[] novaMsg = mensagem.toCharArray();	// transformando a mensagem em lista de char para poder iterar
+		boolean inicia = false; 					// variavel para controlar o momento de pegar os caraceres que interecam
+		int cont = 0;								// contador para saber o momento de pegar o proximo arquivo
+			
+		for(char caracter: novaMsg) {				// onde inicia o arquivo
+			if (caracter == '<') {
+				cont += 1;							// um arquivo esta entre 2 '<'
+				if (cont == 2) {					// deposi de dois '<' acaba o arquivo
+					this.arquivos.add(tipoMidia);	// adiciona o arquivo ja encontrado na lista de arquivo
+					tipoMidia = "$arquivo_";		// reinicia a variavel para adicionar o proximo arquivo
+					inicia = false;					// espera o proximo '<' para poder comecar os passos para encotrar o proximo arquivo
+					cont = 0;
+				} else {
+					inicia = true;
+				}
+			} else if (inicia) {
+				if (caracter == '>') {				// no momento que encontra o '>' 
+					tipoMidia += ":";				// adiciona ':' para o arquivo ficar no formato pedido
+				} else {
+					tipoMidia += caracter;			// forma o arquivo
+				}
+			}
+		}
+		if (tipoMidia.equals("")){	
+			this.arquivos.add(tipoMidia); 			// apos o fim do loo, pode ser que haja um aquivo formado
+		}											// e eh necessario adiciona-lo a lista de arquivos
+		System.out.println(this.arquivos);
+	}
+	
+	// buscando as hashtag do testo
+	// logica semelhante a usada na busca de arquivos
+	public void encontraHashtag(String mensagem) {
+		String novaHash = "";
+		char[] novaMsg = mensagem.toCharArray();
+		boolean espaco = false;
+		boolean iniciaVerificacao = false;
+		
+		for(char caracter: novaMsg) {
+			if (caracter == '#') {
+				iniciaVerificacao = true;
+				novaHash += caracter;
+			} 
+			
+			if (iniciaVerificacao) {
+				if (caracter == '#'){
+					espaco = false;
+				} else if (espaco) {
+					System.out.println("parou");
+					break;
+				} else if (caracter != ' ') {
+					novaHash += caracter;
+					
+				} else if (caracter == ' ') {
+					this.hashtags.add(novaHash);
+					novaHash = "";
+					espaco = true;
+				}
+				
+			}
+						
+		}
+		if (!novaHash.equals("")){
+			this.hashtags.add(novaHash);
+		}
+		System.out.println(this.hashtags);
 	}
 
 }

@@ -2,6 +2,8 @@ package testes;
 
 import static org.junit.Assert.*;
 
+import java.text.ParseException;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +14,7 @@ import logica.*;
 
 public class TestePost {
 
-	String textoUm, textoDois, textoTres, textoQuatro;
+	String textoUm, textoDois, textoTres, textoQuatro,data;
 	Post postUm, postDois, postTres, postQuatro;
 
 	@Test
@@ -20,13 +22,14 @@ public class TestePost {
 
 		try {
 			textoUm = "bom dia amigos faces #Chang #Italo e #Manoel passem bem!";
-			postUm = new Post(textoUm);
+			data = "01/08/2015 12:00:00";
+			postUm = new Post(textoUm, data);
 
 			textoDois = "";
-			postDois = new Post(textoDois);
+			postDois = new Post(textoDois, data);
 
 			textoTres = "oi migs, sdds <3";
-			postTres = new Post(textoTres);
+			postTres = new Post(textoTres, data);
 
 			Assert.assertEquals("#Italo", postUm.getHashtags().get(1));
 			Assert.assertEquals("#Chang", postUm.getHashtags().get(0));
@@ -38,6 +41,8 @@ public class TestePost {
 
 		} catch (PostException erro) {
 			Assert.fail();
+		} catch (ParseException erro){ 
+			System.out.println(erro.getMessage());
 		}
 
 	}
@@ -56,11 +61,12 @@ public class TestePost {
 						 + " e a indolencia talvez produzam mais discórdias no mundo do que a duplicidade e a"
 						 + " maldade; pelo menos, estas duas ultimas são mais raras"; 
 			
-			postQuatro = new Post(textoQuatro);
+			postQuatro = new Post(textoQuatro, "10/02/2002 12:21:00");
 			
-		} catch(PostTamException e){
-			Assert.assertEquals("O tamanho do post nao deve exceder 400 caracteres.", e.getMessage());
-			
+		} catch(PostTamException erro){
+			Assert.assertEquals("O tamanho do post nao deve exceder 200 caracteres.", erro.getMessage());
+		} catch(ParseException erro) {
+			System.out.println(erro.getMessage());
 		}
 	}
 }
