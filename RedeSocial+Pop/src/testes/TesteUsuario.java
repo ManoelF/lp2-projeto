@@ -85,27 +85,6 @@ public class TesteUsuario {
 
 	}
 	
-	@Test
-	public void testLiksEDeslikes() throws ParseException  {
-		try {
-			jailsa = new Usuario("Jailsa", "jailsa@email.com", "3a1b",
-					"29/02/2000", "resources/jailsa.jpg");
-			
-			Post meuPost = new Post("Fim de greve #PartiuAula #help", "25/09/2015 06:30:00");
-			
-			jailsa.like(meuPost);
-			Assert.assertTrue(meuPost.getLike() == 1);
-			
-			jailsa.deslike(meuPost);
-			Assert.assertTrue(meuPost.getDeslike() == 1);
-			
-		} catch (CadastroInvalidoException erro) {
-			Assert.fail();
-		} catch (PostException erro) {
-			Assert.fail();
-		}
-	}
-
 	// reorganizar os proximos teste para testarem as novas alterações
 	
 		@Test

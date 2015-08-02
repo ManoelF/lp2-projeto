@@ -214,7 +214,7 @@ public class Usuario implements Comparable<Usuario> {
 	}
 	
 	
-	public void atualizaPopularidade() {
+	public void atualizaPopularidade1() {
 		atualizaPops();
 		if( this.pop < 500) {
 			this.popularidade = new Normal();
@@ -229,13 +229,13 @@ public class Usuario implements Comparable<Usuario> {
 	public void curtir(Usuario usuario, int indice) {
 		Post post = usuario.getPost(indice);
 		this.popularidade.curtir(post);
-		usuario.atualizaPopularidade();
+		usuario.atualizaPopularidade1();
 	}
 	
 	public void descurtir(Usuario usuario, int indice) {
 		Post post = usuario.getPost(indice);
 		this.popularidade.descurtir(post);
-		usuario.atualizaPopularidade();
+		usuario.atualizaPopularidade1();
 	}
 	public String getFoto() {
 		return this.imagem;
