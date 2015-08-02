@@ -19,6 +19,7 @@ public class Usuario implements Comparable<Usuario> {
 	private List<Usuario> amigos;
 	private List<String> solicitacaoAmizade;
 	private List<String> notificacoes;
+	private TipoPopularidade popularidade;
 	private List<Post> posts;
 
 	
@@ -55,6 +56,9 @@ public class Usuario implements Comparable<Usuario> {
 		this.posts = new ArrayList<>();
 	}
 
+ 	public Post getPost(int indice) {
+ 		return posts.get(indice);
+ 	}
 	public String getNome() {
 		return this.nome;
 	}
@@ -184,12 +188,13 @@ public class Usuario implements Comparable<Usuario> {
 		this.amigos.add(usuarioAceito);
 	}
 		
-	public void like(Post post) {
-		post.ganhaLike();
-	}
-	
-	public void deslike(Post post) {
-		post.ganhaDeslike();
+	private void verificaEmail(String email, String mensagem) throws CadastroInvalidoException {
+		if (email.contains("@") && email.contains(".com")) {
+			this.email = email;
+		} else {
+			throw new CadastroInvalidoException("Email");
+		}
+			
 	}
 
 	// Tratando a data de Nascimento
@@ -199,6 +204,39 @@ public class Usuario implements Comparable<Usuario> {
 		this.nascimento = new SimpleDateFormat("yyyy-MM-dd").format(data);
 		}	
 	
+	private void atualizaPops() {
+		int pops = 0;
+		for (Post post: posts) {
+			pops += post.getPopularidade();
+		}
+		
+		this.pop = pops;
+	}
+	
+	
+	public void atualizaPopularidade() {
+		atualizaPops();
+		if( this.pop < 500) {
+			this.popularidade = new Normal();
+		} else if (this.pop > 500 && this.pop < 1000) {
+			this.popularidade = new CelebridadePOP();
+		} else {
+			this.popularidade = new IconePOP();
+		}
+		
+	}
+
+	public void curtir(Usuario usuario, int indice) {
+		Post post = usuario.getPost(indice);
+		this.popularidade.curtir(post);
+		usuario.atualizaPopularidade();
+	}
+	
+	public void descurtir(Usuario usuario, int indice) {
+		Post post = usuario.getPost(indice);
+		this.popularidade.descurtir(post);
+		usuario.atualizaPopularidade();
+	}
 	public String getFoto() {
 		return this.imagem;
 	}

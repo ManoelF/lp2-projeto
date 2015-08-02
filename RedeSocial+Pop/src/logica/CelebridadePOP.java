@@ -3,8 +3,12 @@ package logica;
 public class CelebridadePOP implements TipoPopularidade {
 
 	@Override
-	public int curtir(Post post) {
-		return 0;
+	public void curtir(Post post) {
+		post.curtir(50);
 	}
 
+	@Override
+	public void descurtir(Post post) {
+		post.curtir(50);
+	}
 }

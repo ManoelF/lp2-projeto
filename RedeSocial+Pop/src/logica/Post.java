@@ -13,6 +13,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 
 	private String texto;
 	private String dataAtual;
+	private Date data;
 	private int like;
 	private int deslike;
 	private int popularidade;
@@ -41,13 +42,11 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		}
 	}
 
-	public void ganhaLike() {
-		this.like = this.like + 1;
+	
+	public Date getData() {
+		return this.data;
 	}
-
-	public void ganhaDeslike() {
-		this.deslike = this.deslike + 1;
-	}
+	
 
 	public String getTexto() {
 		return texto;
@@ -92,8 +91,10 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	// tratando a data
 	public void converteData(String novaData) throws ParseException {
 		
-		Date data = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(novaData);  // transforma o aquivo recebido para Date()
-		this.dataAtual = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(data);  // deixa no formato esperado nos arq de teses
+		Date data1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(novaData);  // transforma o aquivo recebido para Date()
+		
+		this.dataAtual = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(data1);  // deixa no formato esperado nos arq de teses
+		this.data = data1;
 		System.out.println(dataAtual+ "\n");
 	}
 	
