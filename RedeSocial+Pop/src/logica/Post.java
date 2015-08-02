@@ -40,14 +40,6 @@ public class Post {
 		}
 	}
 
-	public void insereImagem(String imagem) {
-		this.texto = this.texto + " " + imagem;
-	}
-
-	public void insereAudio(String audio) {
-		this.texto = this.texto + " " + audio;
-	}
-
 	public void ganhaLike() {
 		this.like = this.like + 1;
 	}

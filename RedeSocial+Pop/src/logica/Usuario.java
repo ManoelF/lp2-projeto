@@ -87,7 +87,6 @@ public class Usuario {
 		this.nascimento = nascimento;
 	}
 
-
 	public String getImagem() {
 		return this.imagem;
 	}
@@ -120,29 +119,30 @@ public class Usuario {
 		return this.notificacoes;
 	}
 	
-	//Caso de Uso3: Pesquisar e alterar informacoes do usuario
+	//falta testar os prox codigos
 	
-	public void alterarNome(String novoNome) throws AtualizaInformacaoExcpetion {
+	public void alterarNome(String novoNome) throws AtualizaPerfilException {
 		if (novoNome == null || novoNome.equals("")){
-			throw new AtualizaInformacaoExcpetion("Nome");
+			throw new AtualizaNomeException();
 		}
 		this.nome = novoNome;
 	}
 	
-	public void alterarEmail(String novoEmail) throws AtualizaInformacaoExcpetion {
+	// verificar formatos de email incorretos
+	public void alterarEmail(String novoEmail) throws AtualizaPerfilException {
 		if (novoEmail == null || novoEmail.equals("")) {
-			throw new AtualizaInformacaoExcpetion("Email");
+			throw new AtualizaEmailException();
 		}
 		this.email = novoEmail;
 	}
 	
-	public boolean alterarSenha(String senha, String novaSenha) throws AtualizaInformacaoExcpetion {
+	public boolean alterarSenha(String senha, String novaSenha) throws AtualizaPerfilException {
 		if (senha == null || senha.equals("")) {
-			throw new AtualizaInformacaoExcpetion("Senha");
+			throw new AtualizaSenhaException();
 		}
 		
 		if (novaSenha == null || novaSenha.equals("")) {
-			throw new AtualizaInformacaoExcpetion("Senha");
+			throw new AtualizaSenhaException();
 		}
 		
 		if (this.senha.equals(senha)) {
@@ -153,18 +153,18 @@ public class Usuario {
 			return false;
 		}
 	}	
-	
-	public void alterarNascimento(String novoNascimento) throws AtualizaInformacaoExcpetion, ParseException {
+
+	// controlar as excecoes de formato e data invalidas
+	public void alterarNascimento(String novoNascimento) throws AtualizaPerfilException, ParseException {
 		if (novoNascimento == null || novoNascimento.equals("")) {
-			throw new AtualizaInformacaoExcpetion("Data de nascimento");
+			// lancar excecao
 		}
 		recebeDataNascimento(novoNascimento);
 	}
 	
-
-	public void alterarImagem(String novaImagem) throws AtualizaInformacaoExcpetion {
+	public void alterarImagem(String novaImagem) throws AtualizaPerfilException {
 		if (novaImagem == null) {
-			throw new AtualizaInformacaoExcpetion("Imagem");
+			throw new AtualizaPerfilException("");
 		}
 		if (novaImagem.equals("")) {
 			this.imagem = "resources/avatarDefaul.jpg";
@@ -192,23 +192,6 @@ public class Usuario {
 		post.ganhaDeslike();
 	}
 
-	/*
-	 * public void removeAmigo(Usuario amigo){
-	 * 
-	 * for(int i; i < amigos.size(); i++){
-	 * 	if((amigos.contains(amigo)){
-	 * 		amigos.remove(amigo)
-	 * 		}
-	 * 	}
-	 * TANTO FAZ
-	 * for(int i; i < amigos.size(); i++){
-	 * 		if(amigos.get(i).getEmail().equals(amigo.getEmail())){
-	 * 			amigos.remove(amigo);
-	 * 		}
-	 * }
-	 * 
-	 */
-
 	// Tratando a data de Nascimento
 	// Falta tratar essa excecao
 	public void recebeDataNascimento(String dataRecebida) throws ParseException  {
@@ -220,9 +203,8 @@ public class Usuario {
 		return this.imagem;
 	}
 	
-	public void criaPost(String mensagem, String data) throws PostException {
-		Post novoPost = new Post(mensagem);
-		
+	public void criaPost(String mensagem, String data) throws PostException, ParseException {
+		Post novoPost = new Post(mensagem, data);
 	}
 	
 	public List<Post> getPosts() {

@@ -151,27 +151,35 @@ public class Controller {
 		return atributoRetornado;
 	}
 	
-	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, ParseException {
-		switch (atributo) {
-		case NOME:
-			this.usuarioLogado.alterarNome(novoValor);
-		case EMAIL:
-			this.usuarioLogado.alterarEmail(novoValor);
-		case NASCIMENTO:
-			this.usuarioLogado.alterarNascimento(novoValor);
-		case FOTO:
-			this.usuarioLogado.alterarImagem(novoValor);
-		//lancar excecao de atibuto errado
-		}		
+	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, ParseException, AtualizaPerfilException {
+		
+		if(this.usuarioLogado == null) {
+			throw new AtualizaPerfilException();
+		} else {	
+			switch (atributo) {
+			case NOME:
+				this.usuarioLogado.alterarNome(novoValor);
+			case EMAIL:
+				this.usuarioLogado.alterarEmail(novoValor);
+			case NASCIMENTO:
+				this.usuarioLogado.alterarNascimento(novoValor);
+			case FOTO:
+				this.usuarioLogado.alterarImagem(novoValor);
+				//lancar excecao de atibuto errado
+			}
+		}
 	}
 
-	public void atualizaPerfil(String atributo, String novoValor, String senhaAtual) throws LogicaException {
-		if (atributo == SENHA) {
+	public void atualizaPerfil(String atributo, String novoValor, String senhaAtual) throws LogicaException, AtualizaPerfilException {
+		
+		if(this.usuarioLogado == null) {
+			throw new AtualizaPerfilException();
+		} else if (atributo == SENHA) {
 			this.usuarioLogado.alterarSenha(senhaAtual, novoValor);
 		}
 	}
 
-	public void criaPost(String mensagem, String data) {
+	public void criaPost(String mensagem, String data) throws PostException, ParseException {
 		Post novoPost = new Post(mensagem, data);			
 	}
 	
