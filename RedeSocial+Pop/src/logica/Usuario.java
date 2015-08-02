@@ -20,10 +20,11 @@ public class Usuario {
 	private List<Usuario> amigos;
 	private List<String> solicitacaoAmizade;
 	private List<String> notificacoes;
+	private List<Post> posts;
 
 	
 	// Foi adicionado o throws ParseException, deve ser tratado
- 	public Usuario(String nome, String email, String senha, String nascimento, String telefone, String imagem) throws CadastroInvalidoException, ParseException {
+ 	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException, ParseException {
 		if (nome == null || nome.equals("")){
 			throw new CadastroInvalidoException("Nome");
 		}
@@ -35,9 +36,6 @@ public class Usuario {
 		}
 		if (nascimento == null || nascimento.equals("")) {
 			throw new CadastroInvalidoException("Nascimento");
-		}
-		if (telefone == null || telefone.equals("")) {
-			throw new CadastroInvalidoException("Telefone");
 		}
 		if (imagem == null) {
 			throw new CadastroInvalidoException("Imagem");
@@ -56,6 +54,7 @@ public class Usuario {
 		this.amigos = new ArrayList<>();
 		this.solicitacaoAmizade = new ArrayList<>();
 		this.notificacoes = new ArrayList<>();
+		this.posts = new ArrayList<>();
 	}
 
 	public String getNome() {
@@ -129,9 +128,7 @@ public class Usuario {
 	public List<String> getNotificoes() {
 		return this.notificacoes;
 	}
-	
-	//Caso de Uso3: Pesquisar e alterar informacoes do usuario
-	
+		
 	public void alterarNome(String novoNome) throws LogicaException {
 		if (novoNome == null || novoNome.equals("")){
 			throw new LogicaException("Nome");
@@ -191,12 +188,12 @@ public class Usuario {
 			
 	public void rejeitaAmizade(String emailUserRecusado) {
 		this.solicitacaoAmizade.remove(emailUserRecusado);
-		//remover a notificacao
+		this.notificacoes.remove( this.notificacoes.size() - 1 );
 	}
 	
 	public void aceitaAmizade(Usuario usuarioAceito) {
 		this.solicitacaoAmizade.remove(usuarioAceito.getEmail());
-		//remover a notificacao
+		this.notificacoes.remove( this.notificacoes.size() - 1 );
 		this.amigos.add(usuarioAceito);
 	}
 		
@@ -234,5 +231,19 @@ public class Usuario {
         this.nascimento = dataNascimento;;
     }	
 	
-
+	public String getFoto() {
+		return this.imagem;
+	}
+	
+	public void criaPost(String mensagem, String data) throws PostException {
+		Post novoPost = new Post(mensagem);
+		
+	}
+	
+	public List<Post> getPosts() {
+		return this.posts;
+	}
+	
+	
+	
 }

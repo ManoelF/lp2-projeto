@@ -21,7 +21,7 @@ public class TesteController {
 	@Test
 	public void testCadastraUsuario() throws EntradaException, LogicaException {
 		try {
-			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "XXXXX-XXXX", "imagens/day_perfil");
+			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
 			Assert.assertEquals("day.trindade@email.com", controller.getUsuariosCadastrados().get(0).getEmail());
 		} catch (CadastroInvalidoException erro) {
 			Assert.fail();
@@ -33,7 +33,7 @@ public class TesteController {
 	@Test
 	public void testCadastraUsuarioException() throws EntradaException, LogicaException, ParseException {
 		try {
-			controller.cadastraUsuario("", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "XXXXX-XXXX", "imagens/day_perfil");
+			controller.cadastraUsuario("", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
 		} catch (CadastroInvalidoException erro) {
 			Assert.assertEquals("Nome inserida/o nao eh valida/o", erro.getMessage());
 		} catch(ParseException erro) {
@@ -41,8 +41,8 @@ public class TesteController {
 		}
 		
 		try {
-			controller.cadastraUsuario("Maria Lucia Oliveira", "maria.oliveira@hotmail.com", "feiradefruta", "07/03/1976", "XXXX-XXXXX", "imagens/maria_perfil");
-			controller.cadastraUsuario("Maria Oliveira", "maria.oliveira@hotmail.com", "feiradefruta", "07/03/1976", "XXXX-XXXXX", "imagens/maria_perfil");
+			controller.cadastraUsuario("Maria Lucia Oliveira", "maria.oliveira@hotmail.com", "feiradefruta", "07/03/1976", "imagens/maria_perfil");
+			controller.cadastraUsuario("Maria Oliveira", "maria.oliveira@hotmail.com", "feiradefruta", "07/03/1976", "imagens/maria_perfil");
 		} catch (EmailJaCadastradoException erro) {
 			Assert.assertEquals("Ja exite um usuario cadastrado com esse e-mail! Por favor insira um outro.", erro.getMessage());
 		}
@@ -51,7 +51,7 @@ public class TesteController {
 	@Test
 	public void testLogin() throws LoginException, EntradaException {
 		try {
-			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "XXXXX-XXXX", "imagens/day_perfil");
+			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
 			controller.login("day.trindade@email.com","poxaquecoxa");
 		
 			Assert.assertEquals("Day", controller.getUsuarioLogado().getNome());
@@ -63,12 +63,12 @@ public class TesteController {
 	}
 	
 	@Test
-	public void testLoginException() throws LoginException, EntradaException {
+	public void testLoginException() throws EntradaException, LogicaException {
 		
 		//testa o caso de realizar login quando um outro usuario ja esta logado
 		try { 
-			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "XXXXX-XXXX", "imagens/day_perfil");
-			controller.cadastraUsuario("Stive Andrs", "stive.anderson@email.com", "indiegente", "01/01/1990", "XXXXX-XXXX", "imagens/stive_perfil");
+			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
+			controller.cadastraUsuario("Stive Andrs", "stive.anderson@email.com", "indiegente", "01/01/1990", "imagens/stive_perfil");
 
 			controller.login("day.trindade@email.com","poxaquecoxa");
 			controller.login("stive.anderson@email.com", "indiegente");
@@ -94,7 +94,7 @@ public class TesteController {
 		try {
 	//		controller.cadastraUsuario("Stive Andrs", "stive.anderson@email.com", "indiegente", "01/01/1990", "XXXXX-XXXX", "imagens/stive_perfil");
 			controller.login("stive.anderson@email.com", "indies");
-		} catch (LogicaException erro) {
+		} catch (EntradaException erro) {
 			Assert.assertEquals("Nao foi possivel realizar login. Senha Invalida.", erro.getMessage());
 	//	} catch(ParseException erro) {
 	//		Assert.fail();
@@ -103,7 +103,7 @@ public class TesteController {
 
 	public void testLogout() throws EntradaException, LogicaException {
 		try {
-			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "XXXXX-XXXX", "imagens/day_perfil");
+			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
 			controller.login("day.trindade@email.com","poxaquecoxa");
 			controller.logout();
 			

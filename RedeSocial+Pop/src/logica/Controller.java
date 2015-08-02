@@ -12,18 +12,24 @@ public class Controller {
 	private List<Usuario> usuariosCadastrados;
 	private Usuario usuarioLogado;
 
+	private static final String NOME = "Nome";
+	private static final String EMAIL = "E-mail";
+	private static final String NASCIMENTO = "Data de Nascimento";
+	private static final String SENHA = "Senha";
+	private static final String FOTO = "Foto";	
+	
 	public Controller() {
 		this.fabricaUsuario = new FactoryUsuario();
 		usuariosCadastrados = new ArrayList<Usuario>();		
 	}
 	
 	public void cadastraUsuario(String nome, String email, String senha, 
-								String nascimento, String telefone, String imagem) 
+								String nascimento, String imagem) 
 								throws EntradaException, ParseException, LogicaException {
 		Usuario novoUsuario;
 		boolean podeCadastrar = verificaEmailJaCadastrado(email);
 		if (podeCadastrar == true) {
-			novoUsuario = fabricaUsuario.criaUsuario(nome, email, senha, nascimento, telefone, imagem);
+			novoUsuario = fabricaUsuario.criaUsuario(nome, email, senha, nascimento, imagem);
 			usuariosCadastrados.add(novoUsuario);
 		} else {
 			throw new EmailJaCadastradoException();
@@ -115,4 +121,60 @@ public class Controller {
 		return true;
 	}
 		
+	public String getInfoUsuario(String atributo, Usuario usuario) throws SenhaAcessoException {
+		String atributoRetornado = null;
+		switch (atributo) {
+		case NOME:
+			atributoRetornado = usuario.getNome();
+		case NASCIMENTO:
+			atributoRetornado = usuario.getNascimento();
+		case FOTO:
+			atributoRetornado = usuario.getFoto();
+		case SENHA:
+			throw new SenhaAcessoException();
+		}
+		return atributoRetornado;
+	}
+	
+	public String getInfoUsuario(String atributo) throws SenhaAcessoException {
+		String atributoRetornado = null;
+		switch (atributo) {
+		case NOME:
+			atributoRetornado = this.usuarioLogado.getNome();
+		case NASCIMENTO:
+			atributoRetornado = this.usuarioLogado.getNascimento();
+		case FOTO:
+			atributoRetornado = this.usuarioLogado.getFoto();
+		case SENHA:
+			throw new SenhaAcessoException();
+		}
+		return atributoRetornado;
+	}
+	
+	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, ParseException {
+		switch (atributo) {
+		case NOME:
+			this.usuarioLogado.alterarNome(novoValor);
+		case EMAIL:
+			this.usuarioLogado.alterarEmail(novoValor);
+		case NASCIMENTO:
+			this.usuarioLogado.alterarNascimento(novoValor);
+		case FOTO:
+			this.usuarioLogado.alterarImagem(novoValor);
+		//lancar excecao de atibuto errado
+		}		
+	}
+
+	public void atualizaPerfil(String atributo, String novoValor, String senhaAtual) throws LogicaException {
+		if (atributo == SENHA) {
+			this.usuarioLogado.alterarSenha(senhaAtual, novoValor);
+		}
+	}
+
+	public void criaPost(String mensagem, String data) {
+		
+		
+			
+	}
+	
 }
