@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import exceptions.*;
 
-public class Usuario {
+public class Usuario implements Comparable<Usuario> {
 	
 	private String nome;
 	private String email;
@@ -211,6 +211,18 @@ public class Usuario {
 		return this.posts;
 	}
 	
+	public String getInfoUsuario(String atributo) {
+		return null;
+	}
 	
+	public void atualizaPopularidade() {
+		
+	}
+
+	@Override
+	public int compareTo(Usuario o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

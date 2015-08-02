@@ -183,4 +183,11 @@ public class Controller {
 		Post novoPost = new Post(mensagem, data);			
 	}
 	
+	public void removeUsuario(Usuario usuario) {
+		
+	}
+	
+	public void atualizaRanking() {
+		
+	}
 }

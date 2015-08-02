@@ -3,12 +3,13 @@ package logica;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 import exceptions.*;
 
-public class Post {
+public class Post implements Comparable<Post>, Comparator<Post> {
 
 	private String texto;
 	private String dataAtual;
@@ -172,6 +173,18 @@ public class Post {
 	public void descurtir(int pontos) {
 		this.deslike += 1;
 		this.popularidade -= pontos;
+	}
+
+	@Override
+	public int compareTo(Post o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int compare(Post o1, Post o2) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
