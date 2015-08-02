@@ -16,13 +16,12 @@ public class TesteFactoryUsuario {
 			Usuario usuario;
 		
 			usuario = factory.criaUsuario("kerilin", "kerilinchang@gmail.com", "teste123",
-				"23031994", "91919191", "imagem/avatar");
+				"23031994", "imagem/avatar");
 		
 			Assert.assertEquals("kerilin", usuario.getNome());
 			Assert.assertEquals("kerilinchang@gmail.com", usuario.getEmail());
 			Assert.assertEquals("teste123", usuario.getSenha());
 			Assert.assertEquals("23031994", usuario.getNascimento());
-			Assert.assertEquals("91919191", usuario.getTelefone());
 			Assert.assertEquals("imagem/avatar", usuario.getImagem());
 		} catch (Exception e) {
 			Assert.fail();

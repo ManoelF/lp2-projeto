@@ -41,7 +41,6 @@ public class Post {
 		}
 	}
 
-
 	
 	public Date getData() {
 		return this.data;
