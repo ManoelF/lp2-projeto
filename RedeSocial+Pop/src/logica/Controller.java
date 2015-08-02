@@ -172,9 +172,7 @@ public class Controller {
 	}
 
 	public void criaPost(String mensagem, String data) {
-		
-		
-			
+		Post novoPost = new Post(mensagem, data);			
 	}
 	
 }
