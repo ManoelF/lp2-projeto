@@ -21,7 +21,7 @@ public class IconePOP implements TipoPopularidade {
 		if (post.getData().equals(dataAtual)) {
 			pontos += 10;
 		}
-		post.curtir(pontos);
+		post.descurtir(pontos);
 
 	}
 
