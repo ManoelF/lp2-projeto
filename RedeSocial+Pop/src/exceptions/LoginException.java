@@ -1,14 +1,12 @@
 package exceptions;
 
-import logica.Usuario;
-
 public class LoginException extends LogicaException {
 
-	public LoginException(Usuario usuario) {
-		super("Nao foi possivel realizar login. Um usuario ja esta logado: "+ usuario.getNome());
+	public LoginException() {
+		super("Nao foi possivel realizar login.");
 	}
 	
 	public LoginException(String msg) {
-		super(msg);
+		super("Nao foi possivel realizar login." + msg);
 	}	
 }

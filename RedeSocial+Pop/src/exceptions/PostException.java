@@ -3,7 +3,7 @@ package exceptions;
 public class PostException extends EntradaException {
 
 	public PostException() {
-		super("As caracteristicas do post nao sao validas.");
+		super("Nao eh possivel criar o post.");
 	}
 	
 

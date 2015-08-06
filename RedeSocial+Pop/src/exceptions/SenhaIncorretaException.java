@@ -1,9 +1,9 @@
 package exceptions;
 
-public class SenhaIncorretaException extends DadoIncorretoException {
+public class SenhaIncorretaException extends LoginException {
 
 	public SenhaIncorretaException() {
-		super("Nao foi possivel realizar login. Senha Invalida.");
+		super(" Senha Invalida.");
 	}
 	
 }

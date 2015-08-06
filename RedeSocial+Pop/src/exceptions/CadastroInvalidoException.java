@@ -3,11 +3,11 @@ package exceptions;
 public class CadastroInvalidoException extends EntradaException  {
 
 	public CadastroInvalidoException(){
-		super();
+		super("Erro no cadastro de Usuarios.");
 	}
 	
 	public CadastroInvalidoException(String msg){
-		super(msg +" inserida/o nao eh valida/o");
+		super("Erro no cadastro de Usuarios. " + msg);
 	}
 	
 }

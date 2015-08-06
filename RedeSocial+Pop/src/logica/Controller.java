@@ -122,7 +122,7 @@ public class Controller {
 		return true;
 	}
 		
-	public String getInfoUsuario(String atributo, Usuario usuario) throws SenhaAcessoException {
+	public String getInfoUsuario(String atributo, Usuario usuario) throws SenhaProtegidaException {
 		String atributoRetornado = null;
 		switch (atributo) {
 		case NOME:
@@ -132,12 +132,12 @@ public class Controller {
 		case FOTO:
 			atributoRetornado = usuario.getFoto();
 		case SENHA:
-			throw new SenhaAcessoException();
+			throw new SenhaProtegidaException();
 		}
 		return atributoRetornado;
 	}
 	
-	public String getInfoUsuario(String atributo) throws SenhaAcessoException {
+	public String getInfoUsuario(String atributo) throws SenhaProtegidaException {
 		String atributoRetornado = null;
 		switch (atributo) {
 		case NOME:
@@ -147,7 +147,7 @@ public class Controller {
 		case FOTO:
 			atributoRetornado = this.usuarioLogado.getFoto();
 		case SENHA:
-			throw new SenhaAcessoException();
+			throw new SenhaProtegidaException();
 		}
 		return atributoRetornado;
 	}

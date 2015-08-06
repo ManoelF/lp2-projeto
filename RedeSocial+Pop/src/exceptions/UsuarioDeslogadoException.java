@@ -1,9 +1,9 @@
 package exceptions;
 
-public class UsuarioDeslogadoException extends LoginException {
+public class UsuarioDeslogadoException extends LogoutException {
 
 	public UsuarioDeslogadoException() {
-		super("Nao eh possivel realizar logout. Nenhum usuario esta logado no +pop.");
+		super(" Nenhum usuarix esta logadx no +pop.");
 	}
 	
 }

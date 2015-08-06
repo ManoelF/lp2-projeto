@@ -8,7 +8,7 @@ import exceptions.EntradaException;
 import exceptions.LogicaException;
 import exceptions.LoginException;
 import exceptions.PostException;
-import exceptions.SenhaAcessoException;
+import exceptions.SenhaProtegidaException;
 
 public class Facade {
 	
@@ -44,15 +44,15 @@ public class Facade {
 		
 	}
 	
-	public String getInfoUsuaio(String atributo, Usuario usuario) throws SenhaAcessoException {
+	public String getInfoUsuaio(String atributo, Usuario usuario) throws SenhaProtegidaException {
 		return this.controller.getInfoUsuario(atributo, usuario);
 	}
 	
-	public String getInfoUsuaio(String atributo, String usuario) throws SenhaAcessoException {
+	public String getInfoUsuaio(String atributo, String usuario) throws SenhaProtegidaException {
 		return this.controller.getInfoUsuario(atributo, usuario);
 	}
 	
-	public String getInfoUsuaio(String atributo) throws SenhaAcessoException {
+	public String getInfoUsuaio(String atributo) throws SenhaProtegidaException {
 		return this.controller.getInfoUsuario(atributo);
 	}
 
