@@ -27,19 +27,16 @@ public class Usuario implements Comparable<Usuario> {
 	// Foi adicionado o throws ParseException, deve ser tratado
  	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException, ParseException {
 		if (nome == null || nome.equals("")){
-			throw new CadastroInvalidoException("Nome");
+			throw new CadastroNomeException();
 		}
 		if (email == null || email.equals("")) {
-			throw new CadastroInvalidoException("Email");
+			throw new CadastroEmailException();
 		}
 		if (senha == null || senha.equals("")) {
-			throw new CadastroInvalidoException("Senha");
+			throw new CadastroSenhaException();
 		}
 		if (nascimento == null || nascimento.equals("")) {
-			throw new CadastroInvalidoException("Nascimento");
-		}
-		if (imagem == null) {
-			throw new CadastroInvalidoException("Imagem");
+			throw new CadastroDataException();
 		}
 		if (imagem.equals("")) {
 			this.imagem = "resources/avatarDefaul.jpg";
@@ -64,9 +61,11 @@ public class Usuario implements Comparable<Usuario> {
  		this.notificacoes.remove(0);
  		return notifi;
  	}
- 	public Post getPost(int indice) {
+ 
+	public Post getPost(int indice) {
  		return posts.get(indice);
  	}
+
 	public String getNome() {
 		return this.nome;
 	}

@@ -2,13 +2,7 @@ package logica;
 
 import java.text.ParseException;
 
-import exceptions.AtualizaPerfilException;
-import exceptions.EmailIncorretoException;
-import exceptions.EntradaException;
-import exceptions.LogicaException;
-import exceptions.LoginException;
-import exceptions.PostException;
-import exceptions.SenhaProtegidaException;
+import exceptions.*;
 
 public class Facade {
 	
@@ -27,10 +21,10 @@ public class Facade {
 		
 	}
 
-	
 	public void atualizaRanking() {
 		
 	}
+	
 	public Usuario cadastraUsuario(String nome, String email, String senha, String nascimento, String imagem) throws EntradaException, ParseException, LogicaException {
 		return this.controller.cadastraUsuario(nome, email, senha, nascimento, imagem);
 	}
@@ -39,9 +33,8 @@ public class Facade {
 		this.controller.login(email, senha);
 	}
 	
-	public void logout() throws LoginException {
-		this.controller.logout();
-		
+	public void logout() throws UsuarioDeslogadoException {
+		this.controller.logout();	
 	}
 	
 	public String getInfoUsuaio(String atributo, Usuario usuario) throws SenhaProtegidaException {
@@ -55,7 +48,6 @@ public class Facade {
 	public String getInfoUsuaio(String atributo) throws SenhaProtegidaException {
 		return this.controller.getInfoUsuario(atributo);
 	}
-
 	
 	public void atualizaPerfil(String atributo, String novoValor) throws AtualizaPerfilException, LogicaException, ParseException {
 		this.controller.atualizaPerfil(atributo, novoValor);
@@ -93,7 +85,7 @@ public class Facade {
 		this.controller.rejeitaAmizade(email);
 	}
 	
-	public void adicionaAmigo(String usuario) throws EmailIncorretoException {
+	public void adicionaAmigo(String usuario) throws LogicaException  {
 		this.controller.adicionaAmigo(usuario);
 	}
 	
@@ -105,23 +97,16 @@ public class Facade {
 		this.controller.aceitaAmizade(usuario);
 	}
 	
-	public void curtirPost(String amigo, int post) throws EmailIncorretoException {
+	public void curtirPost(String amigo, int post) throws UsuarioNaoCadastradoException {
 		this.controller.curtirPost(amigo, post);
 	}
 	
-	public void removeAmigo(String usuario) throws EmailIncorretoException {
+	public void removeAmigo(String usuario) throws UsuarioNaoCadastradoException  {
 		this.controller.removeAmigo(usuario);
 	}
 	
 	public void removeUsuario(Usuario usuario) {
 		this.controller.removeUsuario(usuario);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

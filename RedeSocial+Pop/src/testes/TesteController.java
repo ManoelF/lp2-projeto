@@ -35,7 +35,7 @@ public class TesteController {
 		try {
 			controller.cadastraUsuario("", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
 		} catch (CadastroInvalidoException erro) {
-			Assert.assertEquals("Nome inserida/o nao eh valida/o", erro.getMessage());
+			Assert.assertEquals("Erro no cadastro de Usuarios. Nome dx usuarix nao pode ser vazio.", erro.getMessage());
 		} catch(ParseException erro) {
 			Assert.fail();
 		}
@@ -43,7 +43,7 @@ public class TesteController {
 		try {
 			controller.cadastraUsuario("Maria Lucia Oliveira", "maria.oliveira@hotmail.com", "feiradefruta", "07/03/1976", "imagens/maria_perfil");
 			controller.cadastraUsuario("Maria Oliveira", "maria.oliveira@hotmail.com", "feiradefruta", "07/03/1976", "imagens/maria_perfil");
-		} catch (EmailJaCadastradoException erro) {
+		} catch (CadastroEmailJaExistenteException erro) {
 			Assert.assertEquals("Ja exite um usuario cadastrado com esse e-mail! Por favor insira um outro.", erro.getMessage());
 		}
 	}
@@ -73,7 +73,7 @@ public class TesteController {
 			controller.login("day.trindade@email.com","poxaquecoxa");
 			controller.login("stive.anderson@email.com", "indiegente");
 		} catch (LogicaException erro) {
-			Assert.assertEquals("Nao foi possivel realizar login. Um usuario ja esta logado: Day.", erro.getMessage());
+			Assert.assertEquals("Nao foi possivel realizar login. Um usuarix ja esta logadx: Day.", erro.getMessage());
 		} catch(ParseException erro) {
 			Assert.fail();
 		}
@@ -82,22 +82,16 @@ public class TesteController {
 		
 		//testa email inserido incorreto
 		try {
-	//		controller.cadastraUsuario("Stive Andrs", "stive.anderson@email.com", "indiegente", "01/01/1990", "XXXXX-XXXX", "imagens/stive_perfil");
 			controller.login("stive.andrs@email.com", "indiegente");
 		} catch (LogicaException erro) {
-			Assert.assertEquals("Nao foi possivel realizar login. O usuario com email stive.andrs@email.com nao esta cadastrado.", erro.getMessage());
-	//	} catch(ParseException erro) {
-	//		Assert.fail();
+			Assert.assertEquals("Nao foi possivel realizar login. Um usuarix com email stive.andrs@email.com nao esta cadastradx.", erro.getMessage());
 		}
 		
 		//testa senha inserida incorreta
 		try {
-	//		controller.cadastraUsuario("Stive Andrs", "stive.anderson@email.com", "indiegente", "01/01/1990", "XXXXX-XXXX", "imagens/stive_perfil");
 			controller.login("stive.anderson@email.com", "indies");
-		} catch (EntradaException erro) {
+		} catch (SenhaIncorretaException erro) {
 			Assert.assertEquals("Nao foi possivel realizar login. Senha Invalida.", erro.getMessage());
-	//	} catch(ParseException erro) {
-	//		Assert.fail();
 		}
 	}
 
@@ -115,10 +109,10 @@ public class TesteController {
 		}
 	}
 	
-	public void testLogoutException() throws EntradaException {
+	public void testLogoutException() throws UsuarioDeslogadoException {
 		try {
 			controller.logout();
-		} catch (LoginException erro) {
+		} catch (UsuarioDeslogadoException erro) {
 			Assert.assertEquals("Nao eh possivel realizar logout. Nenhum usuario esta logado no +pop.", erro.getMessage());
 		}
 	}
