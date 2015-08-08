@@ -7,6 +7,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.internal.runners.statements.Fail;
+
 import exceptions.*;
 
 public class Post implements Comparable<Post>, Comparator<Post> {
@@ -34,7 +36,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		encontraHashtag(texto);
 	}
 
-	public void verificaTam(String texto) throws PostTamException {
+	private void verificaTam(String texto) throws PostTamException {
 		if (texto.length() > 200) {
 			throw new PostTamException();
 		} else {
@@ -42,11 +44,17 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		}
 	}
 
-	
 	public Date getData() {
 		return this.data;
 	}
 	
+	public String getArquivo(int indice) {
+		return this.arquivos.get(indice);
+	}
+	
+	public String getDataAtual() {
+		return this.dataAtual;
+	}
 
 	public String getTexto() {
 		return texto;
@@ -88,18 +96,43 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		this.hashtags = hashtags;
 	}
 	
+	private String getConteudo() {
+		String conteudo = "";
+		char[] novaMsg = this.texto.toCharArray();
+		for (char caracter: novaMsg) {
+			if (caracter == '#') {
+				break;
+			}
+			conteudo += caracter;
+			
+		}
+		return conteudo;
+	}
+	
+	private String getHashtagsStr() {
+		String hastags = "";
+		int  cont = 0;
+		for(String hash: this.hashtags) {
+			cont += 1;
+			hastags += hash;
+			if (cont < this.hashtags.size()) {
+				hastags += ",";
+			}
+		}
+		return hastags;
+	}
+	
 	// tratando a data
-	public void converteData(String novaData) throws ParseException {
+	private void converteData(String novaData) throws ParseException {
 		
 		Date data1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(novaData);  // transforma o aquivo recebido para Date()
 		
 		this.dataAtual = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(data1);  // deixa no formato esperado nos arq de teses
 		this.data = data1;
-		System.out.println(dataAtual+ "\n");
 	}
 	
 	// buscando arquivos de audio ou midia
-	public void encontraMidia(String mensagem) {
+	private void encontraMidia(String mensagem) {
 		String tipoMidia = "$arquivo_";  			// variavel para concatenar o arquivo
 		char[] novaMsg = mensagem.toCharArray();	// transformando a mensagem em lista de char para poder iterar
 		boolean inicia = false; 					// variavel para controlar o momento de pegar os caraceres que interecam
@@ -125,13 +158,13 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 			}
 		}
 		if (tipoMidia.equals("")){	
-			this.arquivos.add(tipoMidia); 			// apos o fim do loo, pode ser que haja um aquivo formado
+			this.arquivos.add(tipoMidia); 			// apos o fim do loop, pode ser que haja um aquivo formado
 		}											// e eh necessario adiciona-lo a lista de arquivos
 	}
 	
 	// buscando as hashtag do testo
 	// logica semelhante a usada na busca de arquivos
-	public void encontraHashtag(String mensagem) {
+	private void encontraHashtag(String mensagem) throws PostException {
 		String novaHash = "";
 		char[] novaMsg = mensagem.toCharArray();
 		boolean espaco = false;
@@ -147,8 +180,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 				if (caracter == '#'){
 					espaco = false;
 				} else if (espaco) {
-					System.out.println("parou");
-					break;
+					throw new PostException("Hashtag invalida");
 				} else if (caracter != ' ') {
 					novaHash += caracter;
 					
@@ -157,9 +189,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 					novaHash = "";
 					espaco = true;
 				}
-				
 			}
-						
 		}
 		if (!novaHash.equals("")){
 			this.hashtags.add(novaHash);
@@ -176,7 +206,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		this.popularidade -= pontos;
 	}
 
-	@Override
+ 	@Override
 	public int compareTo(Post o) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -188,4 +218,20 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		return 0;
 	}
 
+	public String getPost(String atributo) {
+		if (atributo.equals("Data")) {
+			return this.dataAtual;
+		} else if (atributo.equals("Conteudo")) {
+			return getConteudo();
+		} else if (atributo.equals("Hashtags")) {
+			return getHashtagsStr();
+		} else {
+			return "Aqui tem que lancar exception";
+		}
+	}
+	
+	public String getPost() {
+		return this.texto + " (" + this.dataAtual + ")";
+	}
 }
+

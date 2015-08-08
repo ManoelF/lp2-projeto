@@ -64,8 +64,12 @@ public class Usuario implements Comparable<Usuario> {
  			this.notificacoes.remove(0);
  			return notifi;
  		}
+	}
+
+ 	public int getPop() {
+ 		return this.pop;
  	}
- 
+
 	public Post getPost(int indice) {
  		return posts.get(indice);
  	}
@@ -128,10 +132,6 @@ public class Usuario implements Comparable<Usuario> {
 
 	public List<String> getSolicitacaoAmizade(){
 		return this.solicitacaoAmizade;
-	}
-	
-	public List<String> getNotificoes() {
-		return this.notificacoes;
 	}
 	
 	//falta testar os prox codigos
@@ -210,7 +210,7 @@ public class Usuario implements Comparable<Usuario> {
 
 	// Tratando a data de Nascimento
 	// Falta tratar essa excecao
-	public void recebeDataNascimento(String dataRecebida) throws ParseException  {
+	private void recebeDataNascimento(String dataRecebida) throws ParseException  {
 		Date data = new SimpleDateFormat("dd/MM/yyyy").parse(dataRecebida);  // transforma o aquivo recebido para Date()
 		this.nascimento = new SimpleDateFormat("yyyy-MM-dd").format(data);
 		}	
@@ -223,8 +223,8 @@ public class Usuario implements Comparable<Usuario> {
 		
 		this.pop = pops;
 	}
-	
-	public void atualizaPopularidade() {
+		
+	private void atualizaPopularidade() {
 		atualizaPops();
 		if( this.pop < 500) {
 			this.popularidade = new Normal();
@@ -239,12 +239,14 @@ public class Usuario implements Comparable<Usuario> {
 	public void curtir(Usuario usuario, int indice) {
 		Post post = usuario.getPost(indice);
 		this.popularidade.curtir(post);
+		usuario.notificacoes.add(this.nome + " curtiu seu post de " + post.getDataAtual() + ".");
 		usuario.atualizaPopularidade();
 	}
 	
 	public void descurtir(Usuario usuario, int indice) {
 		Post post = usuario.getPost(indice);
 		this.popularidade.descurtir(post);
+		usuario.notificacoes.add(this.nome + " descurtiu seu post de " + post.getDataAtual() + ".");
 		usuario.atualizaPopularidade();
 	}
 
@@ -254,6 +256,7 @@ public class Usuario implements Comparable<Usuario> {
 	
 	public void criaPost(String mensagem, String data) throws PostException, ParseException {
 		Post novoPost = new Post(mensagem, data);
+		this.posts.add(novoPost);
 	}
 	
 	public List<Post> getPosts() {
@@ -265,23 +268,43 @@ public class Usuario implements Comparable<Usuario> {
 	}
 	
 	@Override
-	public int compareTo(Usuario o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Usuario outroUsuario) {
+		if (this.pop > outroUsuario.getPop()) {
+			return 1;
+		} else if (this.pop == outroUsuario.getPop()) {
+			return 0;
+		} else {
+			return -1;
+		}
 	}
 	
-	public List<String> getNotificacoes() {
-		return this.notificacoes;
+	public int getNotificacoes() {
+		return this.notificacoes.size();
 	}
 	
 	public int getQtdAmigos() {
 		return this.amigos.size();
 	}
 	
+	public String getArquivo(int indiceArquivo, int indicePost) {
+		return this.posts.get(indicePost).getArquivo(indiceArquivo);
+		
+	}
+	
 	public void removeAmigo(Usuario usuario) {
 		this.amigos.remove(usuario);
 	}
+	
+	public int getQtdPost() {
+		return this.posts.size();
+	}
+	
+	public String getConteudo(String atributo, int indicePost) {
+		return this.posts.get(indicePost).getPost(atributo);
+	}
 
-
-
+	public void recebeNotificao(String notificao) {
+		this.notificacoes.add(notificao);
+	}
+	
 }

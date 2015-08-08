@@ -88,7 +88,7 @@ public class Controller {
 		Usuario usuarioDestino = pesquisaUsuario(emailUserDestino);
 		if (usuarioDestino == null) { throw new UsuarioNaoCadastradoException(emailUserDestino); }
 		usuarioDestino.getSolicitacaoAmizade().add( this.usuarioLogado.getEmail() );
-		usuarioDestino.getNotificoes().add(this.usuarioLogado.getNome() +" quer sua amizade.");
+		usuarioDestino.recebeNotificao(this.usuarioLogado.getNome() +" quer sua amizade.");
 	}
 	
 	public void rejeitaAmizade(String emailUserRecusado) throws LogicaException  {
@@ -97,7 +97,7 @@ public class Controller {
 		if (usuarioRecusado == null) {
 			throw new UsuarioNaoCadastradoException(emailUserRecusado);
 		} else if (this.usuarioLogado.getSolicitacaoAmizade().contains(usuarioRecusado.getEmail())) {
-			usuarioRecusado.getNotificoes().add(this.usuarioLogado.getNome() +" rejeitou sua amizade.");
+			usuarioRecusado.recebeNotificao(this.usuarioLogado.getNome() +" rejeitou sua amizade.");
 			this.usuarioLogado.rejeitaAmizade(emailUserRecusado);			
 		} else {
 			throw new NaoSolicitouAmizadeException(usuarioRecusado.getNome());
@@ -217,7 +217,7 @@ public class Controller {
 	}
 	
 	public int getNotificacoes() { 
-		return this.usuarioLogado.getNotificacoes().size();
+		return this.usuarioLogado.getNotificacoes();
 	}
 	
 	public int getQtdAmigos() {

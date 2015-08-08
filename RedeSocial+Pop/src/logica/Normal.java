@@ -9,7 +9,7 @@ public class Normal implements TipoPopularidade  {
 	}
 	
 	public void descurtir(Post post) {
-		post.curtir(10);
+		post.descurtir(10);
 	}
 
 }
