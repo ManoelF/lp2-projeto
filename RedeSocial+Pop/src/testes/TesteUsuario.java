@@ -117,7 +117,7 @@ public class TesteUsuario {
 	}
 
 	@Test
-	public void testInformacoesAtualizadasException() throws AtualizaPerfilException {
+	public void testInformacoesAtualizadasException() {
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					 "resources/bruna.jpg");
@@ -129,6 +129,8 @@ public class TesteUsuario {
 		} catch(AtualizaNomeException erro) {
 			Assert.assertEquals("Erro na atualizacao do perfil. Nome dx usuarix nao pode ser vazio.", erro.getMessage());
 		} catch(ParseException erro) {
+			Assert.fail();
+		} catch (AtualizaPerfilException erro) {
 			Assert.fail();
 		}
 
@@ -144,6 +146,8 @@ public class TesteUsuario {
 			Assert.assertEquals("Erro na atualizacao do perfil. Formato de e-mail esta invalido.", erro.getMessage());
 		} catch(ParseException erro) {
 			Assert.fail();
+		} catch (AtualizaPerfilException erro) {
+			Assert.fail();
 		}
 
 		try {
@@ -158,6 +162,8 @@ public class TesteUsuario {
 			Assert.assertEquals("Erro na atualizacao do perfil.", erro.getMessage());
 		} catch(ParseException erro) {
 			//Assert.assertEquals("Unparseable date: ", erro.getMessage());   <<RESOLVER>>
+			Assert.assertEquals("Data inserida invalida", erro.getMessage());
+			//alterar msg
 		}
 
 		try {
@@ -176,6 +182,53 @@ public class TesteUsuario {
 		
 		// testar atualizacao de senha e de data de nascimento
 
+	}
+	
+	@Test
+	public void testFuncionalidades() {
+		try {
+			joao = new Usuario("Joao", "joao@email.com", "123", "10/10/1990",
+					 "imagem/joao.jpg");
+			fred = new Usuario("Fred", "fred@email.com", "0101", "25/12/1989",
+					 "resources/fred.jpg");
+			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
+					"resources/bruna.jpg");
+			maria = new Usuario("Maria", "maria@email.com", "321",
+					"20/01/1995", "resources/maria.jpg");
+			String post = "O fraco nunca perdoa. O perdão é a característica do forte. "
+					+ "<audio>musicas/perdao.mp3</audio> #Gandhi #Fort #Perdao";
+			String data = "09/08/2015 00:12:32";
+			
+			// Criar Post
+			joao.criaPost(post, data);
+			Assert.assertEquals("O fraco nunca perdoa. O perdão é a característica do forte. <audio>musicas/perdao.mp3</audio> ", joao.getConteudo("Conteudo",  0));
+			Assert.assertEquals("#Gandhi,#Fort,#Perdao", joao.getConteudo("Hashtags", 0));
+			Assert.assertEquals("2015-08-09 00:12:32", joao.getConteudo("Data", 0));
+			
+			// Curtir um post
+			fred.curtir(joao, 0);
+			maria.curtir(joao, 0);
+			
+			// Notificacoes e aquisicao de pops
+			Assert.assertTrue(joao.getNotificacoes() == 2);
+			Assert.assertTrue(joao.getPop() == 20);
+			Assert.assertEquals("Fred curtiu seu post de 2015-08-09 00:12:32.", joao.getNextNotificacao());
+			Assert.assertEquals("Maria curtiu seu post de 2015-08-09 00:12:32.", joao.getNextNotificacao());
+			Assert.assertTrue(joao.getNotificacoes() == 0);
+			
+			// Descurtir um post
+			bruna.descurtir(joao, 0);
+
+			// Notificacoes e aquisicao de pops
+			Assert.assertTrue(joao.getPop() == 10);
+			Assert.assertTrue(joao.getNotificacoes() == 1);
+			Assert.assertEquals("Bruna descurtiu seu post de 2015-08-09 00:12:32.", joao.getNextNotificacao());
+
+			
+		} catch(Exception erro) {
+			Assert.fail();
+		}
+		
 	}
 
 }
