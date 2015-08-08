@@ -38,6 +38,10 @@ public class Controller {
 		}
 	}
 	
+	public Usuario cadastraUsuario(String nome, String email, String senha, String nascimento) throws EntradaException, ParseException, LogicaException {
+		return cadastraUsuario(nome, email, senha, nascimento, "");
+	}
+	
 	public void login(String EmailInserido, String senhaInserida) throws LogicaException, EntradaException {
 		
 		Usuario usuarioLogando;
@@ -206,7 +210,7 @@ public class Controller {
 	public String getInfoUsuario(String atributo, String email) throws LogicaException {
 		Usuario usuario = pesquisaUsuario(email);
 		if (usuario == null) {
-			throw new UsuarioNaoCadastradoException(email);
+			throw new UsuarioNaoCadastradoException(email+"lalal");
 		} else {
 			return getInfoUsuario(atributo, usuario); 
 		}
