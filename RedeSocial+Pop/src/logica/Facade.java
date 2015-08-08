@@ -42,10 +42,6 @@ public class Facade {
 		this.controller.logout();	
 	}
 	
-	public String getInfoUsuario(String atributo, Usuario usuario) throws SenhaProtegidaException {
-		return this.controller.getInfoUsuario(atributo, usuario);
-	}
-	
 	public String getInfoUsuario(String atributo, String usuario) throws LogicaException {
 		return this.controller.getInfoUsuario(atributo, usuario);
 	}

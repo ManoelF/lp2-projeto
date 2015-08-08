@@ -23,7 +23,7 @@ public class TesteController {
 		try {
 			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
 			Assert.assertEquals("day.trindade@email.com", controller.getUsuariosCadastrados().get(0).getEmail());
-			Assert.assertEquals("Day", controller.getInfoUsuario("Nome", controller.getUsuariosCadastrados().get(0)));
+			Assert.assertEquals("Day", controller.getInfoUsuario("Nome", controller.getUsuariosCadastrados().get(0).getEmail()));
 		} catch (CadastroInvalidoException erro) {
 			Assert.fail();
 		} catch(ParseException erro) {
@@ -305,10 +305,10 @@ public class TesteController {
 			
 			controller.cadastraUsuario("Cat Power", "catpower@email.com", "sapatomica", "21/02/1972", "imagem/cat_perfil");
 			
-			Assert.assertEquals("Cat Power", controller.getInfoUsuario("Nome", controller.getUsuariosCadastrados().get(1)));
-			Assert.assertEquals("imagem/cat_perfil", controller.getInfoUsuario("Foto", controller.getUsuariosCadastrados().get(1)));
+			Assert.assertEquals("Cat Power", controller.getInfoUsuario("Nome", controller.getUsuariosCadastrados().get(1).getEmail()));
+			Assert.assertEquals("imagem/cat_perfil", controller.getInfoUsuario("Foto", controller.getUsuariosCadastrados().get(1).getEmail()));
 			
-			controller.getInfoUsuario("Senha", controller.getUsuariosCadastrados().get(1));
+			controller.getInfoUsuario("Senha", controller.getUsuariosCadastrados().get(1).getEmail());
 			
 		} catch (SenhaProtegidaException erro) {
 			Assert.assertEquals("A senha dx usuarix eh protegida.", erro.getMessage());
