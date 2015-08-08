@@ -38,6 +38,9 @@ public class Usuario implements Comparable<Usuario> {
 		if (nascimento == null || nascimento.equals("")) {
 			throw new CadastroDataException();
 		}
+		if (imagem== null){
+			throw new CadastroInvalidoException(" Imagem invalida.");
+		}
 		if (imagem.equals("")) {
 			this.imagem = "resources/avatarDefaul.jpg";
 		} else {

@@ -28,7 +28,7 @@ public class TesteUsuario {
 			joao = new Usuario("", "joao@email.com", "123", "10/10/1990",
 					 "imagem/joao.jpg");
 		} catch (CadastroInvalidoException erro) {
-			Assert.assertEquals("Nome inserida/o nao eh valida/o",
+			Assert.assertEquals("Erro no cadastro de Usuarios. Nome dx usuarix nao pode ser vazio.",
 					erro.getMessage());
 		}
 
@@ -36,7 +36,7 @@ public class TesteUsuario {
 			joao = new Usuario("Joao", "", "123", "10/10/1990",
 					"imagem/joao.jpg");
 		} catch (CadastroInvalidoException erro) {
-			Assert.assertEquals("Email inserida/o nao eh valida/o",
+			Assert.assertEquals("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.",
 					erro.getMessage());
 		}
 
@@ -44,7 +44,7 @@ public class TesteUsuario {
 			joao = new Usuario("Joao", "joao@email.com", "", "10/10/1990",
 					 "imagem/joao.jpg");
 		} catch (CadastroInvalidoException erro) {
-			Assert.assertEquals("Senha inserida/o nao eh valida/o",
+			Assert.assertEquals("Erro no cadastro de Usuarios. Senha dx usuarix nao pode ser vazio.",
 					erro.getMessage());
 		}
 
@@ -52,14 +52,14 @@ public class TesteUsuario {
 			joao = new Usuario("Joao", "joao@email.com", "123", "",
 					 "imagem/joao.jpg");
 		} catch (CadastroInvalidoException erro) {
-			Assert.assertEquals("Nascimento inserida/o nao eh valida/o",
+			Assert.assertEquals("Erro no cadastro de Usuarios. Formato de data esta invalida.",
 					erro.getMessage());
 		}
 
 		try {
 			joao = new Usuario("Joao", "joao@email.com", "123", "10/10/1990", null);
 		} catch (CadastroInvalidoException erro) {
-			Assert.assertEquals("Imagem inserida/o nao eh valida/o",
+			Assert.assertEquals("Erro no cadastro de Usuarios. Imagem invalida.",
 					erro.getMessage());
 		}
 	}
@@ -157,7 +157,7 @@ public class TesteUsuario {
 			//alterar msg
 			Assert.assertEquals("Erro na atualizacao do perfil.", erro.getMessage());
 		} catch(ParseException erro) {
-			Assert.fail();
+			//Assert.assertEquals("Unparseable date: ", erro.getMessage());   <<RESOLVER>>
 		}
 
 		try {

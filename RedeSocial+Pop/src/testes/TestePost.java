@@ -72,7 +72,7 @@ public class TestePost {
 		} catch (ParseException erro) {
 			System.out.println(erro.getMessage());
 		} catch (PostTamException erro){
-			Assert.assertEquals("O tamanho do post nao deve exceder 200 caracteres.", erro.getMessage());
+			Assert.assertEquals("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.", erro.getMessage());
 		} catch (PostException erro) {
 			System.out.println(erro.getMessage());
 		}
