@@ -25,6 +25,9 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	// data e hora
 
 	public Post(String texto, String data) throws PostException, ParseException {
+		if (texto == null || texto.trim().length() == 0) {
+			// lancar Exception
+		}
 		verificaTam(texto);
 		this.popularidade = 0;
 		this.like = 0;
@@ -127,11 +130,14 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	
 	// tratando a data
 	private void converteData(String novaData) throws ParseException {
-		
+		try {
 		Date data1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(novaData);  // transforma o aquivo recebido para Date()
 		
 		this.dataAtual = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(data1);  // deixa no formato esperado nos arq de teses
 		this.data = data1;
+		} catch(ParseException e) {
+			throw new ParseException("Erro aqui em", 0);
+		}
 	}
 	
 	// buscando arquivos de audio ou midia
@@ -229,7 +235,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		} else if (atributo.equals("Hashtags")) {
 			return getHashtagsStr();
 		} else {
-			return "Aqui tem que lancar exception";
+			return "Aqui tem que lancar exception getPost(Atributo)";
 		}
 	}
 	
