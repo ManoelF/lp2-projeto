@@ -129,25 +129,7 @@ public class Controller {
 		}
 		return true;
 	}
-		
-	public String getInfoUsuario(String atributo, Usuario usuario) throws SenhaProtegidaException {
-		String atributoRetornado = null;
-		switch (atributo) {
-		case NOME:
-			atributoRetornado = usuario.getNome();
-			break;
-		case NASCIMENTO:
-			atributoRetornado = usuario.getNascimento();
-			break;
-		case FOTO:
-			atributoRetornado = usuario.getFoto();
-			break;
-		case SENHA:
-			throw new SenhaProtegidaException();
-		}
-		return atributoRetornado;
-	}
-	
+			
 	public String getInfoUsuario(String atributo) throws SenhaProtegidaException {
 		String atributoRetornado = null;
 		switch (atributo) {
@@ -212,7 +194,21 @@ public class Controller {
 		if (usuario == null) {
 			throw new UsuarioNaoCadastradoException(email+"lalal");
 		} else {
-			return getInfoUsuario(atributo, usuario); 
+			String atributoRetornado = null;
+			switch (atributo) {
+			case NOME:
+				atributoRetornado = usuario.getNome();
+				break;
+			case NASCIMENTO:
+				atributoRetornado = usuario.getNascimento();
+				break;
+			case FOTO:
+				atributoRetornado = usuario.getFoto();
+				break;
+			case SENHA:
+				throw new SenhaProtegidaException();
+			}
+			return atributoRetornado;
 		}
 	}
 	
