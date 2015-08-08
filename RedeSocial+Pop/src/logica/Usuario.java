@@ -26,19 +26,23 @@ public class Usuario implements Comparable<Usuario> {
 	
 	// Foi adicionado o throws ParseException, deve ser tratado
  	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException, ParseException {
-		if (nome == null || nome.equals("")){
+
+		if (nome == null || nome.trim().length() == 0){
 			throw new CadastroNomeException();
 		}
-		if (senha == null || senha.equals("")) {
+		if (email == null || email.trim().length() == 0) {
+			throw new CadastroEmailException();
+		}
+		if (senha == null || senha.trim().length() == 0) {
 			throw new CadastroSenhaException();
 		}
-		if (nascimento == null || nascimento.equals("")) {
+		if (nascimento == null || nascimento.trim().length() == 0) {
 			throw new CadastroDataException();
 		}
 		if (imagem== null){
 			throw new CadastroInvalidoException(" Imagem invalida.");
 		}
-		if (imagem.equals("")) {
+		if (imagem.trim().length() == 0) {
 			this.imagem = "resources/avatarDefaul.jpg";
 		} else {
 			this.imagem = imagem;
@@ -166,7 +170,7 @@ public class Usuario implements Comparable<Usuario> {
 	//falta testar os prox codigos
 	
 	public void alterarNome(String novoNome) throws AtualizaPerfilException {
-		if (novoNome == null || novoNome.equals("")){
+		if (novoNome == null || novoNome.trim().length() == 0){
 			throw new AtualizaNomeException();
 		}
 		this.nome = novoNome;
@@ -174,18 +178,18 @@ public class Usuario implements Comparable<Usuario> {
 	
 	// verificar formatos de email incorretos
 	public void alterarEmail(String novoEmail) throws AtualizaPerfilException {
-		if (novoEmail == null || novoEmail.equals("")) {
+		if (novoEmail == null || novoEmail.trim().length() == 0) {
 			throw new AtualizaEmailException();
 		}
 		this.email = novoEmail;
 	}
 	
 	public boolean alterarSenha(String senha, String novaSenha) throws AtualizaPerfilException {
-		if (senha == null || senha.equals("")) {
+		if (senha == null || senha.trim().length() == 0) {
 			throw new AtualizaSenhaException();
 		}
 		
-		if (novaSenha == null || novaSenha.equals("")) {
+		if (novaSenha == null || novaSenha.trim().length() == 0) {
 			throw new AtualizaSenhaException();
 		}
 		
@@ -200,8 +204,8 @@ public class Usuario implements Comparable<Usuario> {
 
 	// controlar as excecoes de formato e data invalidas
 	public void alterarNascimento(String novoNascimento) throws AtualizaPerfilException, ParseException {
-		if (novoNascimento == null || novoNascimento.equals("")) {
-			// lancar excecao
+		if (novoNascimento == null || novoNascimento.trim().length() == 0) {
+			throw new ParseException("Data inserida invalida", 0);
 		}
 		recebeDataNascimento(novoNascimento);
 	}
@@ -210,7 +214,7 @@ public class Usuario implements Comparable<Usuario> {
 		if (novaImagem == null) {
 			throw new AtualizaPerfilException("");
 		}
-		if (novaImagem.equals("")) {
+		if (novaImagem.trim().length() == 0) {
 			this.imagem = "resources/avatarDefaul.jpg";
 		} else {
 			this.imagem = novaImagem;

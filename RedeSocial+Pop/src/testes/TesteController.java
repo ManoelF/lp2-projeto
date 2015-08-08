@@ -23,6 +23,7 @@ public class TesteController {
 		try {
 			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
 			Assert.assertEquals("day.trindade@email.com", controller.getUsuariosCadastrados().get(0).getEmail());
+			Assert.assertEquals("Day", controller.getInfoUsuario("Nome", controller.getUsuariosCadastrados().get(0)));
 		} catch (CadastroInvalidoException erro) {
 			Assert.fail();
 		} catch(ParseException erro) {
@@ -397,4 +398,7 @@ public class TesteController {
 		}
 	}
 	
+		
+
+
 }
