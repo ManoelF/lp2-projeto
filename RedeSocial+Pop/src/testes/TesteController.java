@@ -155,7 +155,7 @@ public class TesteController {
 			controller.login("day.trindade@email.com", "poxaquecoxa");
 			controller.adicionaAmigo("stive.anderson@email.com");
 		} catch (LogicaException erro) {
-			Assert.assertEquals("O usuario stive.anderson@email.com nao esta cadastrado no +pop.", erro.getMessage());
+			Assert.assertEquals("Um usuarix com email stive.anderson@email.com nao esta cadastradx.", erro.getMessage());
 		}
 		
 		// testar solicitar notificacoes quando ja nao ha 
@@ -227,7 +227,7 @@ public class TesteController {
 			controller.logout();
 			
 		} catch (UsuarioNaoCadastradoException erro) {
-			Assert.assertEquals("O usuario italo.batista@email.com nao esta cadastrado no +pop.", erro.getMessage());
+			Assert.assertEquals("Um usuarix com email italo.batista@email.com nao esta cadastradx.", erro.getMessage());
 		}
 		
 	}
@@ -280,7 +280,7 @@ public class TesteController {
 			controller.logout();
 			
 		} catch (UsuarioNaoCadastradoException erro) {
-			Assert.assertEquals("O usuario italo.batista@email.com nao esta cadastrado no +pop.", erro.getMessage());
+			Assert.assertEquals("Um usuarix com email italo.batista@email.com nao esta cadastradx.", erro.getMessage());
 		}
 		
 	}
@@ -326,6 +326,16 @@ public class TesteController {
 		}
 		
 		
+		
+	}
+
+	@Test
+	public void testGetInfoUsuarioException() throws LogicaException {
+		try {
+			controller.getInfoUsuario("Nome", "alguem@email.com");
+		} catch (UsuarioNaoCadastradoException erro) {
+			Assert.assertEquals("Um usuarix com email alguem@email.com nao esta cadastradx.", erro.getMessage());
+		}
 		
 	}
 	

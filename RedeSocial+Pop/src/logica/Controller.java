@@ -148,7 +148,7 @@ public class Controller {
 		return atributoRetornado;
 	}
 	
-	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, ParseException, AtualizaPerfilException {
+	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, ParseException, EntradaException {
 		
 		if(this.usuarioLogado == null) {
 			throw new AtualizaPerfilException();
@@ -171,12 +171,11 @@ public class Controller {
 		}
 	}
 
-	public void atualizaPerfil(String atributo, String novoValor, String senhaAtual) throws LogicaException, AtualizaPerfilException {
-		
+	public void atualizaPerfil(String atributo, String valor, String velhaSenha) throws LogicaException, AtualizaPerfilException {	
 		if(this.usuarioLogado == null) {
-			throw new AtualizaPerfilException();
+			throw new UsuarioDeslogadoException();
 		} else if (atributo == SENHA) {
-			this.usuarioLogado.alterarSenha(senhaAtual, novoValor);
+			this.usuarioLogado.alterarSenha(velhaSenha, valor);
 		}
 	}
 

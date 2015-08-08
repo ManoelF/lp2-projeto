@@ -100,7 +100,6 @@ public class Usuario implements Comparable<Usuario> {
 		this.popularidade = new Normal();
 	}
  	
-
  	public String getNextNotificacao() throws NaoHaNotificacoesException {
  		if (this.notificacoes.size() == 0) {
  			throw new NaoHaNotificacoesException();
@@ -179,8 +178,6 @@ public class Usuario implements Comparable<Usuario> {
 		return this.solicitacaoAmizade;
 	}
 	
-	//falta testar os prox codigos
-	
 	public void alterarNome(String novoNome) throws AtualizaPerfilException {
 		if (novoNome == null || novoNome.trim().length() == 0){
 			throw new AtualizaNomeException();
@@ -188,30 +185,27 @@ public class Usuario implements Comparable<Usuario> {
 		this.nome = novoNome;
 	}
 	
-	// verificar formatos de email incorretos
-	public void alterarEmail(String novoEmail) throws AtualizaPerfilException {
-		if (novoEmail == null || novoEmail.trim().length() == 0) {
-			throw new AtualizaEmailException();
+	public void alterarEmail(String novoEmail) throws EntradaException {
+		if (novoEmail == null || novoEmail.trim().length() == 0
+		   || !novoEmail.contains("@") || !novoEmail.contains(".com")) {		
+				throw new AtualizaEmailException();
 		}
 		this.email = novoEmail;
 	}
 	
-	public boolean alterarSenha(String senha, String novaSenha) throws AtualizaPerfilException {
-		if (senha == null || senha.trim().length() == 0) {
-			throw new AtualizaSenhaException();
-		}
-		
-		if (novaSenha == null || novaSenha.trim().length() == 0) {
-			throw new AtualizaSenhaException();
-		}
-		
-		if (this.senha.equals(senha)) {
-			this.senha = novaSenha;
-			return true;
+	public boolean alterarSenha(String valor, String velhaSenha) throws AtualizaPerfilException {
+		if (this.senha.equals(velhaSenha)) {
+			
+			if (valor == null || valor.trim().length() == 0) {
+				throw new AtualizaSenhaInvalidaException();
+			} else {
+				this.senha = valor;
+				return true;
+			}
+			
 		} else {
-			//Lancar exception
-			return false;
-		}
+			throw new AtualizaSenhaIncorretaException();	
+		} 
 	}	
 
 	// controlar as excecoes de formato e data invalidas
@@ -246,7 +240,7 @@ public class Usuario implements Comparable<Usuario> {
 		
 	private void verificaEmail(String email) throws CadastroInvalidoException {
 		if (email == null || email.equals("")) {
-			throw new CadastroSenhaException();
+			throw new CadastroEmailException();
 		} else if (email.contains("@") && email.contains(".com")) {
 			this.email = email;
 		} else {

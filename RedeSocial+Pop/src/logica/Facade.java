@@ -18,8 +18,12 @@ public class Facade {
 		
 	}
 	
-	public void fechaSistema() {
-		
+	public void fechaSistema() throws FechaSistemaException {
+		if (controller.getUsuarioLogado() != null) {
+			throw new FechaSistemaException();
+		} else {
+			// FechaSistema
+		}
 	}
 
 	public void atualizaRanking() {
@@ -50,7 +54,7 @@ public class Facade {
 		return this.controller.getInfoUsuario(atributo);
 	}
 	
-	public void atualizaPerfil(String atributo, String novoValor) throws AtualizaPerfilException, LogicaException, ParseException {
+	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, ParseException, EntradaException {
 		this.controller.atualizaPerfil(atributo, novoValor);
 	}
 	
@@ -109,11 +113,9 @@ public class Facade {
 	public void removeUsuario(String usuario) {
 		this.controller.removeUsuario(usuario);
 	}
-	
 
 	public static void main(String[] args) {
-	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt"};
-		//args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_2.txt"};
+	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase.txt"};
 	    EasyAccept.main(args);
 	}
 
