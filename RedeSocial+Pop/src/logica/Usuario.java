@@ -63,14 +63,26 @@ public class Usuario implements Comparable<Usuario> {
 	}
  	
  	public Usuario(String nome, String email, String senha, String nascimento) throws CadastroInvalidoException, ParseException {
-		if (nome == null || nome.equals("")){
+
+		if (nome == null || nome.trim().length() == 0){
 			throw new CadastroNomeException();
 		}
-		if (senha == null || senha.equals("")) {
+		if (email == null || email.trim().length() == 0) {
+			throw new CadastroEmailException();
+		}
+		if (senha == null || senha.trim().length() == 0) {
 			throw new CadastroSenhaException();
 		}
-		if (nascimento == null || nascimento.equals("")) {
+		if (nascimento == null || nascimento.trim().length() == 0) {
 			throw new CadastroDataException();
+		}
+		if (imagem== null){
+			throw new CadastroInvalidoException(" Imagem invalida.");
+		}
+		if (imagem.trim().length() == 0) {
+			this.imagem = "resources/avatarDefaul.jpg";
+		} else {
+			this.imagem = imagem;
 		}
 	
 		verificaEmail(email);
