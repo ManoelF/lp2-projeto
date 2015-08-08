@@ -387,7 +387,7 @@ public class TesteController {
 			
 			Assert.assertEquals(3, controller.getUsuariosCadastrados().size());
 			
-			controller.removeUsuario( controller.getUsuariosCadastrados().get(2) );
+			controller.removeUsuario( controller.getUsuariosCadastrados().get(2).getEmail() );
 			Assert.assertEquals(2, controller.getUsuariosCadastrados().size());
 			
 			controller.login("catpower@email.com", "sapatomica");

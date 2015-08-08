@@ -106,7 +106,7 @@ public class Facade {
 		this.controller.removeAmigo(usuario);
 	}
 	
-	public void removeUsuario(Usuario usuario) {
+	public void removeUsuario(String usuario) {
 		this.controller.removeUsuario(usuario);
 	}
 	

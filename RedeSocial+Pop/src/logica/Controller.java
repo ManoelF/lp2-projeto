@@ -192,7 +192,7 @@ public class Controller {
 	public String getInfoUsuario(String atributo, String email) throws LogicaException {
 		Usuario usuario = pesquisaUsuario(email);
 		if (usuario == null) {
-			throw new UsuarioNaoCadastradoException(email+"lalal");
+			throw new UsuarioNaoCadastradoException(email);
 		} else {
 			String atributoRetornado = null;
 			switch (atributo) {
@@ -234,8 +234,9 @@ public class Controller {
 		}
 	}
 		
-	public void removeUsuario(Usuario usuarioRemovido) {
+	public void removeUsuario(String emailUsuario) {
 		
+		Usuario usuarioRemovido = pesquisaUsuario(emailUsuario);
 		for (Usuario usuario : usuariosCadastrados) {
 			
 			Iterator<Usuario> iterator = usuario.getAmigos().iterator();
