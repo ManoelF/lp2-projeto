@@ -2,6 +2,7 @@ package logica;
 
 import java.text.ParseException;
 
+import easyaccept.EasyAccept;
 import exceptions.*;
 
 public class Facade {
@@ -28,6 +29,10 @@ public class Facade {
 	public Usuario cadastraUsuario(String nome, String email, String senha, String nascimento, String imagem) throws EntradaException, ParseException, LogicaException {
 		return this.controller.cadastraUsuario(nome, email, senha, nascimento, imagem);
 	}
+
+	public Usuario cadastraUsuario(String nome, String email, String senha, String nascimento) throws EntradaException, ParseException, LogicaException {
+		return cadastraUsuario(nome, email, senha, nascimento, "");
+	}
 	
 	public void login(String email, String senha) throws LogicaException, EntradaException {
 		this.controller.login(email, senha);
@@ -37,15 +42,15 @@ public class Facade {
 		this.controller.logout();	
 	}
 	
-	public String getInfoUsuaio(String atributo, Usuario usuario) throws SenhaProtegidaException {
+	public String getInfoUsuario(String atributo, Usuario usuario) throws SenhaProtegidaException {
 		return this.controller.getInfoUsuario(atributo, usuario);
 	}
 	
-	public String getInfoUsuaio(String atributo, String usuario) throws LogicaException {
+	public String getInfoUsuario(String atributo, String usuario) throws LogicaException {
 		return this.controller.getInfoUsuario(atributo, usuario);
 	}
 	
-	public String getInfoUsuaio(String atributo) throws SenhaProtegidaException {
+	public String getInfoUsuario(String atributo) throws SenhaProtegidaException {
 		return this.controller.getInfoUsuario(atributo);
 	}
 	
@@ -107,6 +112,13 @@ public class Facade {
 	
 	public void removeUsuario(Usuario usuario) {
 		this.controller.removeUsuario(usuario);
+	}
+	
+
+	public static void main(String[] args) {
+	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt"};
+		//args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_2.txt"};
+	    EasyAccept.main(args);
 	}
 
 }

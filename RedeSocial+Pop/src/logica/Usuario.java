@@ -47,6 +47,8 @@ public class Usuario implements Comparable<Usuario> {
 		} else {
 			this.imagem = imagem;
 		}
+		
+		verificaEmail(email);
 		recebeDataNascimento(nascimento);
 		this.nome = nome;
 		this.email = email;
@@ -59,6 +61,33 @@ public class Usuario implements Comparable<Usuario> {
 		this.feed = new ArrayList<>();
 		this.popularidade = new Normal();
 	}
+ 	
+ 	public Usuario(String nome, String email, String senha, String nascimento) throws CadastroInvalidoException, ParseException {
+		if (nome == null || nome.equals("")){
+			throw new CadastroNomeException();
+		}
+		if (senha == null || senha.equals("")) {
+			throw new CadastroSenhaException();
+		}
+		if (nascimento == null || nascimento.equals("")) {
+			throw new CadastroDataException();
+		}
+	
+		verificaEmail(email);
+		recebeDataNascimento(nascimento);
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+		this.pop = 0;
+		this.imagem = "resources/avatarDefaul.jpg";
+		this.amigos = new ArrayList<>();
+		this.solicitacaoAmizade = new ArrayList<>();
+		this.notificacoes = new ArrayList<>();
+		this.posts = new ArrayList<>();
+		this.feed = new ArrayList<>();
+		this.popularidade = new Normal();
+	}
+ 	
 
  	public String getNextNotificacao() throws NaoHaNotificacoesException {
  		if (this.notificacoes.size() == 0) {
@@ -203,13 +232,14 @@ public class Usuario implements Comparable<Usuario> {
 		this.amigos.add(usuarioAceito);
 	}
 		
-	private void verificaEmail(String email, String mensagem) throws CadastroInvalidoException {
-		if (email.contains("@") && email.contains(".com")) {
+	private void verificaEmail(String email) throws CadastroInvalidoException {
+		if (email == null || email.equals("")) {
+			throw new CadastroSenhaException();
+		} else if (email.contains("@") && email.contains(".com")) {
 			this.email = email;
 		} else {
-			throw new CadastroInvalidoException("Email");
+			throw new CadastroEmailException();
 		}
-			
 	}
 
 	// Tratando a data de Nascimento
@@ -217,7 +247,8 @@ public class Usuario implements Comparable<Usuario> {
 	private void recebeDataNascimento(String dataRecebida) throws ParseException  {
 		Date data = new SimpleDateFormat("dd/MM/yyyy").parse(dataRecebida);  // transforma o aquivo recebido para Date()
 		this.nascimento = new SimpleDateFormat("yyyy-MM-dd").format(data);
-		}	
+
+	}
 	
 	private void atualizaPops() {
 		int pops = 0;
