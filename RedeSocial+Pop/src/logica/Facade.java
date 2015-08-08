@@ -26,11 +26,11 @@ public class Facade {
 		
 	}
 	
-	public Usuario cadastraUsuario(String nome, String email, String senha, String nascimento, String imagem) throws EntradaException, ParseException, LogicaException {
+	public String cadastraUsuario(String nome, String email, String senha, String nascimento, String imagem) throws EntradaException, ParseException, LogicaException {
 		return this.controller.cadastraUsuario(nome, email, senha, nascimento, imagem);
 	}
 
-	public Usuario cadastraUsuario(String nome, String email, String senha, String nascimento) throws EntradaException, ParseException, LogicaException {
+	public String cadastraUsuario(String nome, String email, String senha, String nascimento) throws EntradaException, ParseException, LogicaException {
 		return cadastraUsuario(nome, email, senha, nascimento, "");
 	}
 	

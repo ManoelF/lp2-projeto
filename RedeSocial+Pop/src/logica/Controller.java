@@ -24,7 +24,7 @@ public class Controller {
 		usuariosCadastrados = new ArrayList<Usuario>();		
 	}
 	
-	public Usuario cadastraUsuario(String nome, String email, String senha, 
+	public String cadastraUsuario(String nome, String email, String senha, 
 								String nascimento, String imagem) 
 								throws EntradaException, ParseException, LogicaException {
 		Usuario novoUsuario;
@@ -32,13 +32,13 @@ public class Controller {
 		if (podeCadastrar == true) {
 			novoUsuario = fabricaUsuario.criaUsuario(nome, email, senha, nascimento, imagem);
 			usuariosCadastrados.add(novoUsuario);
-			return novoUsuario;
+			return novoUsuario.getEmail();
 		} else {
 			throw new CadastroEmailJaExistenteException();
 		}
 	}
 	
-	public Usuario cadastraUsuario(String nome, String email, String senha, String nascimento) throws EntradaException, ParseException, LogicaException {
+	public String cadastraUsuario(String nome, String email, String senha, String nascimento) throws EntradaException, ParseException, LogicaException {
 		return cadastraUsuario(nome, email, senha, nascimento, "");
 	}
 	
