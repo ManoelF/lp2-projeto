@@ -166,8 +166,8 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 				}
 			}
 		}
-		if (tipoMidia.equals("")){	
-			this.arquivos.add(tipoMidia); 			// apos o fim do loop, pode ser que haja um aquivo formado
+		//if (!tipoMidia.equals("$arquivo_")){	
+			//this.arquivos.add(tipoMidia); 			// apos o fim do loop, pode ser que haja um aquivo formado
 		}											// e eh necessario adiciona-lo a lista de arquivos
 	}
 	
