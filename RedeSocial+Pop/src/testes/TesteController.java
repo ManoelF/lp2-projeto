@@ -92,7 +92,7 @@ public class TesteController {
 		try {
 			controller.login("stive.anderson@email.com", "indies");
 		} catch (SenhaIncorretaException erro) {
-			Assert.assertEquals("Nao foi possivel realizar login. Senha Invalida.", erro.getMessage());
+			Assert.assertEquals("Nao foi possivel realizar login. Senha invalida.", erro.getMessage());
 		}
 	}
 
