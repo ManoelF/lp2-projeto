@@ -56,10 +56,14 @@ public class Usuario implements Comparable<Usuario> {
 		this.popularidade = new Normal();
 	}
 
- 	public String getNextNotificacao() {
- 		String notifi = this.notificacoes.get(0); 
- 		this.notificacoes.remove(0);
- 		return notifi;
+ 	public String getNextNotificacao() throws NaoHaNotificacoesException {
+ 		if (this.notificacoes.size() == 0) {
+ 			throw new NaoHaNotificacoesException();
+ 		} else {
+ 			String notifi = this.notificacoes.get(0); 
+ 			this.notificacoes.remove(0);
+ 			return notifi;
+ 		}
  	}
  
 	public Post getPost(int indice) {
@@ -220,7 +224,6 @@ public class Usuario implements Comparable<Usuario> {
 		this.pop = pops;
 	}
 	
-	
 	public void atualizaPopularidade() {
 		atualizaPops();
 		if( this.pop < 500) {
@@ -244,6 +247,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.popularidade.descurtir(post);
 		usuario.atualizaPopularidade();
 	}
+
 	public String getFoto() {
 		return this.imagem;
 	}
@@ -266,8 +270,8 @@ public class Usuario implements Comparable<Usuario> {
 		return 0;
 	}
 	
-	public int getNotificacao() {
-		return this.notificacoes.size();
+	public List<String> getNotificacoes() {
+		return this.notificacoes;
 	}
 	
 	public int getQtdAmigos() {
@@ -277,5 +281,7 @@ public class Usuario implements Comparable<Usuario> {
 	public void removeAmigo(Usuario usuario) {
 		this.amigos.remove(usuario);
 	}
-	
+
+
+
 }

@@ -7,6 +7,6 @@ public class LogoutException extends LogicaException{
 	}
 	
 	public LogoutException(String msg){
-		super("Nao eh possivel realizar logout. " + msg);
+		super("Nao eh possivel realizar logout." + msg);
 	}
 }

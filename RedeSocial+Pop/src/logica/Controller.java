@@ -2,6 +2,7 @@ package logica;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import exceptions.*;
@@ -83,12 +84,10 @@ public class Controller {
 		return this.usuarioLogado;
 	}
 
-	//falta testar os prox codigos
-	
 	public void adicionaAmigo(String emailUserDestino) throws LogicaException {
 		Usuario usuarioDestino = pesquisaUsuario(emailUserDestino);
 		if (usuarioDestino == null) { throw new UsuarioNaoCadastradoException(emailUserDestino); }
-		usuarioDestino.getSolicitacaoAmizade().add(emailUserDestino);
+		usuarioDestino.getSolicitacaoAmizade().add( this.usuarioLogado.getEmail() );
 		usuarioDestino.getNotificoes().add(this.usuarioLogado.getNome() +" quer sua amizade.");
 	}
 	
@@ -132,10 +131,13 @@ public class Controller {
 		switch (atributo) {
 		case NOME:
 			atributoRetornado = usuario.getNome();
+			break;
 		case NASCIMENTO:
 			atributoRetornado = usuario.getNascimento();
+			break;
 		case FOTO:
 			atributoRetornado = usuario.getFoto();
+			break;
 		case SENHA:
 			throw new SenhaProtegidaException();
 		}
@@ -147,10 +149,13 @@ public class Controller {
 		switch (atributo) {
 		case NOME:
 			atributoRetornado = this.usuarioLogado.getNome();
+			break;
 		case NASCIMENTO:
 			atributoRetornado = this.usuarioLogado.getNascimento();
+			break;
 		case FOTO:
 			atributoRetornado = this.usuarioLogado.getFoto();
+			break;
 		case SENHA:
 			throw new SenhaProtegidaException();
 		}
@@ -165,12 +170,16 @@ public class Controller {
 			switch (atributo) {
 			case NOME:
 				this.usuarioLogado.alterarNome(novoValor);
+				break;
 			case EMAIL:
 				this.usuarioLogado.alterarEmail(novoValor);
+				break;
 			case NASCIMENTO:
 				this.usuarioLogado.alterarNascimento(novoValor);
+				break;
 			case FOTO:
 				this.usuarioLogado.alterarImagem(novoValor);
+				//break;
 				//lancar excecao de atibuto errado
 			}
 		}
@@ -189,20 +198,26 @@ public class Controller {
 		Post novoPost = new Post(mensagem, data);			
 	}
 	
+	//falta testar
 	public void atualizaRanking() {
 		
 	}
 	
-	public String getInfoUsuario(String atributo, String email) {
-		return null;
+	public String getInfoUsuario(String atributo, String email) throws LogicaException {
+		Usuario usuario = pesquisaUsuario(email);
+		if (usuario == null) {
+			throw new UsuarioNaoCadastradoException(email);
+		} else {
+			return getInfoUsuario(atributo, usuario); 
+		}
 	}
 	
-	public String getNextNotificacao() {
+	public String getNextNotificacao() throws NaoHaNotificacoesException {
 		return this.usuarioLogado.getNextNotificacao();
 	}
 	
-	public int getNotificacao() { 
-		return this.usuarioLogado.getNotificacao();
+	public int getNotificacoes() { 
+		return this.usuarioLogado.getNotificacoes().size();
 	}
 	
 	public int getQtdAmigos() {
@@ -219,9 +234,23 @@ public class Controller {
 		}
 	}
 		
-	public void removeUsuario(Usuario usuario) {
-		this.usuariosCadastrados.remove(usuario);
-	}
+	public void removeUsuario(Usuario usuarioRemovido) {
+		
+		for (Usuario usuario : usuariosCadastrados) {
+			
+			Iterator<Usuario> iterator = usuario.getAmigos().iterator();
+			while (iterator.hasNext()) {
+				Usuario amigo = iterator.next();
+				if (amigo.equals(usuarioRemovido)) {
+					usuario.removeAmigo(amigo);
+					break;
+				}
+			} // fecha while
+		} // fecha for
+		
+		this.usuariosCadastrados.remove(usuarioRemovido);
+		
+	} //fecha metodo
 	
 	public void removeAmigo(String usuario) throws UsuarioNaoCadastradoException {
 		Usuario usuarioRemover = pesquisaUsuario(usuario);
@@ -231,6 +260,8 @@ public class Controller {
 		} else {
 			this.usuarioLogado.removeAmigo(usuarioRemover);
 		}
+		
+		usuarioRemover.removeAmigo(usuarioLogado);
 	}
 		
 }

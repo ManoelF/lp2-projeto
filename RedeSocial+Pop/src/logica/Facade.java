@@ -41,7 +41,7 @@ public class Facade {
 		return this.controller.getInfoUsuario(atributo, usuario);
 	}
 	
-	public String getInfoUsuaio(String atributo, String usuario) throws SenhaProtegidaException {
+	public String getInfoUsuaio(String atributo, String usuario) throws LogicaException {
 		return this.controller.getInfoUsuario(atributo, usuario);
 	}
 	
@@ -73,12 +73,12 @@ public class Facade {
 		return null;
 	}
 	
-	public String getNextNotificacao() {
+	public String getNextNotificacao() throws NaoHaNotificacoesException {
 		return this.controller.getNextNotificacao();
 	}
 	 
-	public int getNotificacao() {
-		return this.controller.getNotificacao();
+	public int getNotificacoes() {
+		return this.controller.getNotificacoes();
 	}
 	
 	public void rejeitaAmizade(String email) throws LogicaException {
