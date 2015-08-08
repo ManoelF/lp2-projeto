@@ -74,7 +74,7 @@ public class TesteUsuario {
 			Assert.assertEquals("Maria", maria.getNome());
 			Assert.assertEquals("maria@email.com", maria.getEmail());
 			Assert.assertEquals("321", maria.getSenha());
-			//Assert.assertEquals("1995-01-32", maria.getNascimento());
+			//Assert.assertEquals("1995-01-32", maria.getNascimento()); LOCALDATE ADIANTA A DADA EM DOIS DIAS
 			Assert.assertEquals("resources/avatarDefaul.jpg", maria.getImagem());
 
 		} catch (CadastroInvalidoException erro) {
