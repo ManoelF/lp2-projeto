@@ -7,7 +7,7 @@ public class AtualizaPerfilException extends EntradaException {
 	}
 
 	public AtualizaPerfilException(String msg) {
-		super("Erro na atualizacao do perfil." + msg);
+		super("Erro na atualizacao de perfil." + msg);
 	}
 	
 }

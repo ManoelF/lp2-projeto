@@ -148,7 +148,7 @@ public class Controller {
 		return atributoRetornado;
 	}
 	
-	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, ParseException, AtualizaPerfilException {
+	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, ParseException, EntradaException {
 		
 		if(this.usuarioLogado == null) {
 			throw new AtualizaPerfilException();
@@ -171,12 +171,11 @@ public class Controller {
 		}
 	}
 
-	public void atualizaPerfil(String atributo, String novoValor, String senhaAtual) throws LogicaException, AtualizaPerfilException {
-		
+	public void atualizaPerfil(String atributo, String valor, String velhaSenha) throws LogicaException, AtualizaPerfilException {	
 		if(this.usuarioLogado == null) {
-			throw new AtualizaPerfilException();
+			throw new UsuarioDeslogadoException();
 		} else if (atributo == SENHA) {
-			this.usuarioLogado.alterarSenha(senhaAtual, novoValor);
+			this.usuarioLogado.alterarSenha(velhaSenha, valor);
 		}
 	}
 
@@ -192,7 +191,7 @@ public class Controller {
 	public String getInfoUsuario(String atributo, String email) throws LogicaException {
 		Usuario usuario = pesquisaUsuario(email);
 		if (usuario == null) {
-			throw new UsuarioNaoCadastradoException(email+"lalal");
+			throw new UsuarioNaoCadastradoException(email);
 		} else {
 			String atributoRetornado = null;
 			switch (atributo) {
@@ -234,8 +233,9 @@ public class Controller {
 		}
 	}
 		
-	public void removeUsuario(Usuario usuarioRemovido) {
+	public void removeUsuario(String emailUsuario) {
 		
+		Usuario usuarioRemovido = pesquisaUsuario(emailUsuario);
 		for (Usuario usuario : usuariosCadastrados) {
 			
 			Iterator<Usuario> iterator = usuario.getAmigos().iterator();

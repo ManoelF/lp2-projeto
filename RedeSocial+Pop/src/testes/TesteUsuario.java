@@ -75,7 +75,7 @@ public class TesteUsuario {
 			Assert.assertEquals("maria@email.com", maria.getEmail());
 			Assert.assertEquals("321", maria.getSenha());
 			//Assert.assertEquals("1995-01-32", maria.getNascimento()); LOCALDATE ADIANTA A DADA EM DOIS DIAS
-			Assert.assertEquals("resources/avatarDefaul.jpg", maria.getImagem());
+			Assert.assertEquals("resources/default.jpg", maria.getImagem());
 
 		} catch (CadastroInvalidoException erro) {
 			Assert.fail();
@@ -88,7 +88,7 @@ public class TesteUsuario {
 	// reorganizar os proximos teste para testarem as novas alterações
 	
 		@Test
-	public void testInformacoesAtualizadas() throws AtualizaPerfilException {
+	public void testInformacoesAtualizadas() throws EntradaException {
 		try {
 			fred = new Usuario("Fred", "fred@email.com", "0101", "25/12/1989",
 					 "resources/fred.jpg");
@@ -117,17 +117,15 @@ public class TesteUsuario {
 	}
 
 	@Test
-	public void testInformacoesAtualizadasException() {
+	public void testInformacoesAtualizadasException() throws EntradaException, ParseException {
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					 "resources/bruna.jpg");
 			bruna.alterarNome("");
 			Assert.assertEquals("Bruna", bruna.getNome());
 
-		} catch (CadastroInvalidoException erro) {
-			Assert.fail();
 		} catch(AtualizaNomeException erro) {
-			Assert.assertEquals("Erro na atualizacao do perfil. Nome dx usuarix nao pode ser vazio.", erro.getMessage());
+			Assert.assertEquals("Erro na atualizacao de perfil. Nome dx usuarix nao pode ser vazio.", erro.getMessage());
 		} catch(ParseException erro) {
 			Assert.fail();
 		} catch (AtualizaPerfilException erro) {
@@ -143,7 +141,7 @@ public class TesteUsuario {
 		} catch(CadastroInvalidoException erro) {
 			Assert.fail();
 		} catch(AtualizaEmailException erro) {
-			Assert.assertEquals("Erro na atualizacao do perfil. Formato de e-mail esta invalido.", erro.getMessage());
+			Assert.assertEquals("Erro na atualizacao de perfil. Formato de e-mail esta invalido.", erro.getMessage());
 		} catch(ParseException erro) {
 			Assert.fail();
 		} catch (AtualizaPerfilException erro) {
@@ -175,11 +173,19 @@ public class TesteUsuario {
 			Assert.fail();
 		} catch(AtualizaPerfilException erro) {
 			//alterar msg
-			Assert.assertEquals("Erro na atualizacao do perfil.", erro.getMessage());
+			Assert.assertEquals("Erro na atualizacao de perfil.", erro.getMessage());
 		} catch(ParseException erro) {
 			Assert.fail();
 		}
 		
+		try {
+			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
+					"resources/bruna.jpg");
+			bruna.alterarSenha("1221", "lalala");			
+		} catch (AtualizaSenhaIncorretaException erro) {
+			Assert.assertEquals("Erro na atualizacao de perfil. A senha fornecida esta incorreta.", erro.getMessage());
+		}
+
 		// testar atualizacao de senha e de data de nascimento
 
 	}
