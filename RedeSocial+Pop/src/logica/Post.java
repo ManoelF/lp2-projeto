@@ -136,37 +136,34 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 			throw new ParseException("Erro aqui em", 0);
 		}
 	}
-	
 	// buscando arquivos de audio ou midia
-	private void encontraMidia(String mensagem) {
-		String tipoMidia = "$arquivo_";  			// variavel para concatenar o arquivo
-		char[] novaMsg = mensagem.toCharArray();	// transformando a mensagem em lista de char para poder iterar
-		boolean inicia = false; 					// variavel para controlar o momento de pegar os caraceres que interecam
-		int cont = 0;								// contador para saber o momento de pegar o proximo arquivo
-			
-		for(char caracter: novaMsg) {				// onde inicia o arquivo
-			if (caracter == '<') {
-				cont += 1;							// um arquivo esta entre 2 '<'
-				if (cont == 2) {					// deposi de dois '<' acaba o arquivo
-					this.arquivos.add(tipoMidia);	// adiciona o arquivo ja encontrado na lista de arquivo
-					tipoMidia = "$arquivo_";		// reinicia a variavel para adicionar o proximo arquivo
-					inicia = false;					// espera o proximo '<' para poder comecar os passos para encotrar o proximo arquivo
-					cont = 0;
-				} else {
+		private void encontraMidia(String mensagem) {
+			String tipoMidia = "$arquivo_";  			// variavel para concatenar o arquivo
+			char[] novaMsg = mensagem.toCharArray();	// transformando a mensagem em lista de char para poder iterar
+			boolean inicia = false; 					// variavel para controlar o momento de pegar os caraceres que interecam
+			int cont = 0;								// contador para saber o momento de pegar o proximo arquivo
+				
+			for(char caracter: novaMsg) {				// onde inicia o arquivo
+				if (caracter == '<') {
 					inicia = true;
-				}
-			} else if (inicia) {
-				if (caracter == '>') {				// no momento que encontra o '>' 
-					tipoMidia += ":";				// adiciona ':' para o arquivo ficar no formato pedido
-				} else {
-					tipoMidia += caracter;			// forma o arquivo
+					cont += 1;							// um arquivo esta entre 2 '<'
+					if (cont == 2) {					// deposi de dois '<' acaba o arquivo
+						if ((tipoMidia.contains("audio") || tipoMidia.contains("imagem"))) {
+							this.arquivos.add(tipoMidia);	// adiciona o arquivo ja encontrado na lista de arquivo
+							inicia = false;					// espera o proximo '<' para poder comecar os passos para encotrar o proximo arquivo
+						}
+						tipoMidia = "$arquivo_";		// reinicia a variavel para adicionar o proximo arquivo
+						cont = 1;
+					}
+				} else if (inicia) {
+					if (caracter == '>') {				// no momento que encontra o '>' 
+						tipoMidia += ":";				// adiciona ':' para o arquivo ficar no formato pedido
+					} else {
+						tipoMidia += caracter;			// forma o arquivo
+					}
 				}
 			}
 		}
-		//if (!tipoMidia.equals("$arquivo_")){	
-			//this.arquivos.add(tipoMidia); 			// apos o fim do loop, pode ser que haja um aquivo formado
-													// e eh necessario adiciona-lo a lista de arquivos
-	}
 
 	
 	// buscando as hashtag do testo
