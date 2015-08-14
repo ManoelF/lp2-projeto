@@ -5,5 +5,5 @@ public class SenhaIncorretaException extends LoginException {
 	public SenhaIncorretaException() {
 		super(" Senha invalida.");
 	}
-	
+
 }

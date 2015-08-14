@@ -63,41 +63,7 @@ public class Usuario implements Comparable<Usuario> {
 	}
  	
  	public Usuario(String nome, String email, String senha, String nascimento) throws CadastroInvalidoException, ParseException {
-
-		if (nome == null || nome.trim().length() == 0){
-			throw new CadastroNomeException();
-		}
-		if (email == null || email.trim().length() == 0) {
-			throw new CadastroEmailException();
-		}
-		if (senha == null || senha.trim().length() == 0) {
-			throw new CadastroSenhaException();
-		}
-		if (nascimento == null || nascimento.trim().length() == 0) {
-			throw new CadastroDataException();
-		}
-		if (imagem== null){
-			throw new CadastroInvalidoException(" Imagem invalida.");
-		}
-		if (imagem.trim().length() == 0) {
-			this.imagem = "resources/default.jpg";
-		} else {
-			this.imagem = imagem;
-		}
-	
-		verificaEmail(email);
-		recebeDataNascimento(nascimento);
-		this.nome = nome;
-		this.email = email;
-		this.senha = senha;
-		this.pop = 0;
-		this.imagem = "resources/avatarDefaul.jpg";
-		this.amigos = new ArrayList<>();
-		this.solicitacaoAmizade = new ArrayList<>();
-		this.notificacoes = new ArrayList<>();
-		this.posts = new ArrayList<>();
-		this.feed = new ArrayList<>();
-		this.popularidade = new Normal();
+ 		this(nome, email, senha, nascimento, "resources/avatarDefaul.jpg");//eu num disse que dava!
 	}
  	
  	public String getNextNotificacao() throws NaoHaNotificacoesException {
@@ -122,48 +88,21 @@ public class Usuario implements Comparable<Usuario> {
 		return this.nome;
 	}
 	
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
 	public String getEmail() {
 		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getSenha() {
 		return this.senha;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
 	public String getNascimento() {
 		return this.nascimento;
 	}
 
-	public void setNascimento(String nascimento) {
-		this.nascimento = nascimento;
-	}
 
 	public String getImagem() {
 		return this.imagem;
-	}
-
-	public void setImagem(String imagem) {
-		this.imagem = imagem;
-	}
-	
-	public String insereSenha(String senha) {
-		return senha;
-	}
-
-	public String insereEmail(String email) {
-		return email;
 	}
 	
 	public List<Usuario> getAmigos() {
@@ -178,14 +117,14 @@ public class Usuario implements Comparable<Usuario> {
 		return this.solicitacaoAmizade;
 	}
 	
-	public void alterarNome(String novoNome) throws AtualizaPerfilException {
+	public void setNome(String novoNome) throws AtualizaPerfilException {
 		if (novoNome == null || novoNome.trim().length() == 0){
 			throw new AtualizaNomeException();
 		}
 		this.nome = novoNome;
 	}
 	
-	public void alterarEmail(String novoEmail) throws EntradaException {
+	public void setEmail(String novoEmail) throws EntradaException {
 		if (novoEmail == null || novoEmail.trim().length() == 0
 		   || !novoEmail.contains("@") || !novoEmail.contains(".com")) {		
 				throw new AtualizaEmailException();
@@ -193,7 +132,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.email = novoEmail;
 	}
 	
-	public boolean alterarSenha(String valor, String velhaSenha) throws AtualizaPerfilException {
+	public boolean setSenha(String valor, String velhaSenha) throws AtualizaPerfilException {
 		if (this.senha.equals(velhaSenha)) {
 			
 			if (valor == null || valor.trim().length() == 0) {
@@ -209,14 +148,14 @@ public class Usuario implements Comparable<Usuario> {
 	}	
 
 	// controlar as excecoes de formato e data invalidas
-	public void alterarNascimento(String novoNascimento) throws AtualizaPerfilException, ParseException {
+	public void setNascimento(String novoNascimento) throws AtualizaPerfilException, ParseException {
 		if (novoNascimento == null || novoNascimento.trim().length() == 0) {
 			throw new ParseException("Data inserida invalida", 0);
 		}
 		recebeDataNascimento(novoNascimento);
 	}
 	
-	public void alterarImagem(String novaImagem) throws AtualizaPerfilException {
+	public void setImagem(String novaImagem) throws AtualizaPerfilException {
 		if (novaImagem == null) {
 			throw new AtualizaPerfilException("");
 		}
@@ -340,6 +279,10 @@ public class Usuario implements Comparable<Usuario> {
 		return this.posts.size();
 	}
 	
+	public String getPost(String atributo, int post) {
+		return this.getPost(post).getPost(atributo);
+	}
+	
 	public String getConteudo(String atributo, int indicePost) {
 		return this.posts.get(indicePost).getPost(atributo);
 	}
@@ -372,6 +315,5 @@ public class Usuario implements Comparable<Usuario> {
 			return false;
 		return true;
 	}
-	
-	
+
 }

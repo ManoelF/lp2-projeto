@@ -408,6 +408,30 @@ public class TesteController {
 		}
 	}
 	
+	@Test
+	public void atualizaInformacoes() {
+		try {
+			controller.cadastraUsuario("Fatima", "fatima@email.com.br", "will_S2", "21/04/1980");
+			controller.login("fatima@email.com.br", "will_S2");
+			controller.atualizaPerfil("Senha", "fafa_S2", "will_S2");
+			controller.atualizaPerfil("Senha", "fafa123", "fafa_S2");
+			//login email="fatima@email.com.br" senha="will_S2"
+			//atualizaPerfil atributo="Senha" valor="fafa_S2" velhaSenha="will_S2"
+			//atualizaPerfil atributo="Senha" valor="fafa123" velhaSenha="fafa_S2"
+			
+			
+		} catch(LogicaException erro) {
+			System.out.println(erro.getMessage());
+		} catch (EntradaException erro) {
+			System.out.println(erro.getMessage());
+		} catch (ParseException erro) {
+			System.out.println(erro.getMessage());
+		}
+		
+		
+		
+		
+	}
 		
 
 

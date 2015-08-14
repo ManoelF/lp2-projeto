@@ -155,16 +155,16 @@ public class Controller {
 		} else {	
 			switch (atributo) {
 			case NOME:
-				this.usuarioLogado.alterarNome(novoValor);
+				this.usuarioLogado.setNome(novoValor);
 				break;
 			case EMAIL:
-				this.usuarioLogado.alterarEmail(novoValor);
+				this.usuarioLogado.setEmail(novoValor);
 				break;
 			case NASCIMENTO:
-				this.usuarioLogado.alterarNascimento(novoValor);
+				this.usuarioLogado.setNascimento(novoValor);
 				break;
 			case FOTO:
-				this.usuarioLogado.alterarImagem(novoValor);
+				this.usuarioLogado.setImagem(novoValor);
 				//break;
 				//lancar excecao de atibuto errado
 			}
@@ -174,13 +174,13 @@ public class Controller {
 	public void atualizaPerfil(String atributo, String valor, String velhaSenha) throws LogicaException, AtualizaPerfilException {	
 		if(this.usuarioLogado == null) {
 			throw new UsuarioDeslogadoException();
-		} else if (atributo == SENHA) {
-			this.usuarioLogado.alterarSenha(velhaSenha, valor);
+		} else if (atributo.equals(SENHA)) {
+			this.usuarioLogado.setSenha(valor, velhaSenha);
 		}
 	}
 
 	public void criaPost(String mensagem, String data) throws PostException, ParseException {
-		Post novoPost = new Post(mensagem, data);			
+		this.usuarioLogado.criaPost(mensagem, data);;			
 	}
 	
 	//falta testar
@@ -263,5 +263,17 @@ public class Controller {
 		
 		usuarioRemover.removeAmigo(usuarioLogado);
 	}
+	
+	public String getPost(int indice) {
+		return this.usuarioLogado.getPost(indice).getTexto();
 		
+	}
+	
+	public String getPost(String atributo, int post) { 
+		return this.usuarioLogado.getPost(atributo, post);
+	}
+	
+	/*public String getConteudoPost(int indice, int post) {
+		return this.usuarioLogado.getConteudo(atributo, indicePost)
+	}*/
 }

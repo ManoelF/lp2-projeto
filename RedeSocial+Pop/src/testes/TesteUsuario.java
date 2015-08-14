@@ -93,17 +93,17 @@ public class TesteUsuario {
 			fred = new Usuario("Fred", "fred@email.com", "0101", "25/12/1989",
 					 "resources/fred.jpg");
 
-			fred.alterarNome("Fred Silva");
+			fred.setNome("Fred Silva");
 			Assert.assertEquals("Fred Silva", fred.getNome());
 
-			fred.alterarEmail("fredsilva@email.com");
+			fred.setEmail("fredsilva@email.com");
 			Assert.assertEquals("fredsilva@email.com", fred.getEmail());
 
-			fred.alterarNascimento("22/12/1989");
+			fred.setNascimento("22/12/1989");
 			Assert.assertEquals("1989-12-22", fred.getNascimento());
 
 
-			fred.alterarImagem("");
+			fred.setImagem("");
 			Assert.assertEquals("resources/avatarDefaul.jpg", fred.getImagem());
 			
 		} catch(CadastroInvalidoException erro) {
@@ -121,7 +121,7 @@ public class TesteUsuario {
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					 "resources/bruna.jpg");
-			bruna.alterarNome("");
+			bruna.setNome("");
 			Assert.assertEquals("Bruna", bruna.getNome());
 
 		} catch(AtualizaNomeException erro) {
@@ -135,7 +135,7 @@ public class TesteUsuario {
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					"resources/bruna.jpg");
-			bruna.alterarEmail("");
+			bruna.setEmail("");
 			Assert.assertEquals("bruna@email.com", bruna.getEmail());
 
 		} catch(CadastroInvalidoException erro) {
@@ -151,7 +151,7 @@ public class TesteUsuario {
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					 "resources/bruna.jpg");
-			bruna.alterarNascimento("");		
+			bruna.setNascimento("");		
 			Assert.assertEquals("12/11/00", bruna.getNascimento());
 		} catch(CadastroInvalidoException erro) {
 			Assert.fail();
@@ -167,7 +167,7 @@ public class TesteUsuario {
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					"resources/bruna.jpg");
-			bruna.alterarImagem(null);			
+			bruna.setImagem(null);			
 			Assert.assertEquals("resources/bruna.jpg", bruna.getImagem());
 		} catch(CadastroInvalidoException erro) {
 			Assert.fail();
@@ -181,7 +181,7 @@ public class TesteUsuario {
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					"resources/bruna.jpg");
-			bruna.alterarSenha("1221", "lalala");			
+			bruna.setSenha("1221", "lalala");			
 		} catch (AtualizaSenhaIncorretaException erro) {
 			Assert.assertEquals("Erro na atualizacao de perfil. A senha fornecida esta incorreta.", erro.getMessage());
 		}

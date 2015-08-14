@@ -67,11 +67,11 @@ public class Facade {
 	}
 	
 	public String getPost(int post) {
-		return null;
+		return this.controller.getPost(post);
 	}
 	
 	public String getPost(String atributo, int post) {
-		return null;
+		return this.getPost(atributo, post);
 	}	
 	
 	public String getConteudoPost(int indice, int post) {
@@ -115,8 +115,15 @@ public class Facade {
 	}
 
 	public static void main(String[] args) {
-	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase.txt"};
+	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt", "lib/ScriptsTeste/usecase_4.txt"};
 	    EasyAccept.main(args);
 	}
-
+/*
+ * erros
+ * inciaSistema --> iniciaSistema// usecase_4.txt
+ * fecharSistema --> fechaSistema// usecase_2.txt
+ * At line 58: gal_costa@email.com --> gal_costa@email.com.br // usecase_1.txt
+ * At line 54: "madonna@email.com" --> "madona@email.com"
+ * At line 26: Nao deveria dar erro pq a senha esta correta por ter sido alterada anteriomente (mudado para will_S2) // usecase_2.txt
+ */
 }

@@ -28,7 +28,8 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		if (texto == null || texto.trim().length() == 0) {
 			// lancar Exception
 		}
-		verificaTam(texto);
+		//verificaTam(texto);
+		this.texto = texto;
 		this.popularidade = 0;
 		this.like = 0;
 		this.deslike = 0;
@@ -37,6 +38,10 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		converteData(data);
 		encontraMidia(texto);
 		encontraHashtag(texto);
+		
+		if (getConteudo().length() > 200) {
+			throw new PostTamException();
+		}
 	}
 
 	private void verificaTam(String texto) throws PostTamException {
@@ -104,7 +109,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		String conteudo = "";
 		char[] novaMsg = this.texto.toCharArray();
 		for (char caracter: novaMsg) {
-			if (caracter == '#') {
+			if (caracter == '#' || caracter == '<' ) {
 				break;
 			}
 			conteudo += caracter;
