@@ -1,6 +1,6 @@
 package exceptions;
 
-public class DadoIncorretoException extends LoginException {
+public class DadoIncorretoException extends EntradaException {
 
 	public DadoIncorretoException() {
 		super("Dado inserido nao esta correto.");

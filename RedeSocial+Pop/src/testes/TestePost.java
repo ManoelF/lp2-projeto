@@ -2,48 +2,47 @@ package testes;
 
 import static org.junit.Assert.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-import exceptions.PostException;
-import exceptions.PostTamException;
+import exceptions.*;
 import logica.*;
 
 public class TestePost {
-
-	String textoUm, textoDois, textoTres, textoQuatro;
-	Post postUm, postDois, postTres, postQuatro;
+	
+	String textoUm, textoDois, textoTres, textoQuatro, textoMario, data, mensagem;
+	Post postUm, postDois, novoDia, perdao, frio, recalque;
+	
 
 	@Test
-	public void testePost() throws PostException {
+	public void testePost() {
 
 		try {
-			textoUm = "bom dia amigos faces #Chang #Italo e #Manoel passem bem!";
-			postUm = new Post(textoUm);
+			textoUm = "bom dia amigos faces passem bem! <imagem>imagens/bomDia.jpg</imagem> #Chang #Italo #Manoel";
+			data = "01/08/2015 12:00:00";
+			postUm = new Post(textoUm, data);
+			
+			Assert.assertEquals("bom dia amigos faces passem bem! <imagem>imagens/bomDia.jpg</imagem> ", postUm.getPost("Conteudo"));
+			Assert.assertEquals("#Chang,#Italo,#Manoel", postUm.getPost("Hashtags"));
+			Assert.assertEquals("2015-08-01 12:00:00", postUm.getPost("Data"));
+			Assert.assertEquals("$arquivo_imagem:imagens/bomDia.jpg", postUm.getArquivo(0));
 
-			textoDois = "";
-			postDois = new Post(textoDois);
 
-			textoTres = "oi migs, sdds <3";
-			postTres = new Post(textoTres);
-
-			Assert.assertEquals("#Italo", postUm.getHashtags().get(1));
-			Assert.assertEquals("#Chang", postUm.getHashtags().get(0));
-			Assert.assertNotEquals("#Jose", postUm.getHashtags().get(2));
-
-			Assert.assertTrue(postDois.getHashtags().size() == 0);
-			Assert.assertTrue(postTres.getHashtags().size() == 0);
-			Assert.assertEquals("oi migs, sdds <3", postTres.getTexto());
 
 		} catch (PostException erro) {
+			Assert.fail();
+		} catch (ParseException erro){ 
 			Assert.fail();
 		}
 
 	}
 
 	@Test
-	public void testPostInvalido() throws PostException {
+	public void testPostInvalido(){
 		
 		try{
 			textoQuatro = "Tenha a bondade de dizer à minha mãe que me ocuparei, da melhor forma possível, do negócio de"
@@ -56,11 +55,66 @@ public class TestePost {
 						 + " e a indolencia talvez produzam mais discórdias no mundo do que a duplicidade e a"
 						 + " maldade; pelo menos, estas duas ultimas são mais raras"; 
 			
-			postQuatro = new Post(textoQuatro);
+			postDois = new Post(textoQuatro, "10/02/2002 12:21:00");
 			
-		} catch(PostTamException e){
-			Assert.assertEquals("O tamanho do post nao deve exceder 400 caracteres.", e.getMessage());
-			
+		} catch (ParseException erro) {
+			System.out.println(erro.getMessage());
+		} catch (PostTamException erro){
+			Assert.assertEquals("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.", erro.getMessage());
+		} catch (PostException erro) {
+			System.out.println(erro.getMessage());
 		}
+	}
+
+	@Test
+	public void testCurtirDescurtir() throws NaoHaNotificacoesException {
+		try {
+			
+			textoMario = "A importância de lutar vivendo sempre o amor "
+					          + "Agradecendo a este dia que brilha Presente igual não há #novoDia";
+			
+			perdao = new Post(textoMario, "04/08/2015 21:08:00");
+			perdao.curtir(100);
+			
+			Assert.assertTrue(perdao.getLike() == 1);
+			Assert.assertTrue(perdao.getPopularidade() == 100);
+			
+			perdao.descurtir(5);
+			Assert.assertTrue(perdao.getDeslike() == 1);
+			Assert.assertTrue(perdao.getPopularidade() == 95);
+			
+		} catch (EntradaException erro) {
+			System.out.println(erro.getMessage());
+		} catch (ParseException erro) {
+			System.out.println(erro.getMessage());
+		}
+	}
+	
+	@Test
+	public void testConteudos() {
+		try {
+			
+			
+			mensagem = "Esse frio esta mim deixando doida. #alucicrazy #CGDaDepressao";
+			data = "01/08/2015 21:35:00";
+			frio = new Post(mensagem, data);
+			
+			mensagem = "Nao sei porque tanto recalque, o que eh bonito eh pra se mostrar. "
+					 + "<audio>musicas/poderosas.mp3</audio> #soulinda #naza";
+			data = "03/08/2015 08:21:00";
+			
+			recalque = new Post(mensagem, data);
+			
+			Assert.assertEquals("Esse frio esta mim deixando doida. ", frio.getPost("Conteudo"));
+			Assert.assertEquals("#alucicrazy,#CGDaDepressao", frio.getPost("Hashtags"));
+			Assert.assertEquals("$arquivo_audio:musicas/poderosas.mp3", recalque.getArquivo(0));
+			Assert.assertEquals("2015-08-01 21:35:00", frio.getPost("Data"));
+			
+		} catch(EntradaException erro) {
+			Assert.fail();
+		} catch(ParseException erro) {
+			Assert.fail();
+		}
+
 	}
 }

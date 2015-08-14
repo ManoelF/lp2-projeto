@@ -8,53 +8,115 @@ import java.util.ArrayList;
 
 import exceptions.*;
 
-public class Usuario {
+public class Usuario implements Comparable<Usuario> {
 	
 	private String nome;
 	private String email;
-	private String telefone;
 	private String nascimento;
 	private String senha;
 	private String imagem;
 	private int pop;
 	private List<Usuario> amigos;
-	private List<String> solicitacaoAmizades;
+	private List<String> solicitacaoAmizade;
+	private List<String> notificacoes;
+	private TipoPopularidade popularidade;
+	private List<Post> posts;
+	private List<Post> feed;
 
 	
 	// Foi adicionado o throws ParseException, deve ser tratado
-	public Usuario(String nome, String email, String senha, String nascimento, String telefone, String imagem) throws CadastroInvalidoException, ParseException {
-		if (nome == null || nome.equals("")){
-			throw new CadastroInvalidoException("Nome");
+ 	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException, ParseException {
+
+		if (nome == null || nome.trim().length() == 0){
+			throw new CadastroNomeException();
 		}
-		if (email == null || email.equals("")) {
-			throw new CadastroInvalidoException("Email");
+		if (email == null || email.trim().length() == 0) {
+			throw new CadastroEmailException();
 		}
-		if (senha == null || senha.equals("")) {
-			throw new CadastroInvalidoException("Senha");
+		if (senha == null || senha.trim().length() == 0) {
+			throw new CadastroSenhaException();
 		}
-		if (nascimento == null || nascimento.equals("")) {
-			throw new CadastroInvalidoException("Nascimento");
+		if (nascimento == null || nascimento.trim().length() == 0) {
+			throw new CadastroDataException();
 		}
-		if (telefone == null || telefone.equals("")) {
-			throw new CadastroInvalidoException("Telefone");
+		if (imagem== null){
+			throw new CadastroInvalidoException(" Imagem invalida.");
 		}
-		if (imagem == null) {
-			throw new CadastroInvalidoException("Imagem");
-		}
-		if (imagem.equals("")) {
-			this.imagem = "resources/avatarDefaul.jpg";
+		if (imagem.trim().length() == 0) {
+			this.imagem = "resources/default.jpg";
 		} else {
 			this.imagem = imagem;
 		}
+		
+		verificaEmail(email);
 		recebeDataNascimento(nascimento);
 		this.nome = nome;
 		this.email = email;
-		this.telefone = telefone;
 		this.senha = senha;
 		this.pop = 0;
 		this.amigos = new ArrayList<>();
-		this.solicitacaoAmizades = new ArrayList<>();
+		this.solicitacaoAmizade = new ArrayList<>();
+		this.notificacoes = new ArrayList<>();
+		this.posts = new ArrayList<>();
+		this.feed = new ArrayList<>();
+		this.popularidade = new Normal();
 	}
+ 	
+ 	public Usuario(String nome, String email, String senha, String nascimento) throws CadastroInvalidoException, ParseException {
+
+		if (nome == null || nome.trim().length() == 0){
+			throw new CadastroNomeException();
+		}
+		if (email == null || email.trim().length() == 0) {
+			throw new CadastroEmailException();
+		}
+		if (senha == null || senha.trim().length() == 0) {
+			throw new CadastroSenhaException();
+		}
+		if (nascimento == null || nascimento.trim().length() == 0) {
+			throw new CadastroDataException();
+		}
+		if (imagem== null){
+			throw new CadastroInvalidoException(" Imagem invalida.");
+		}
+		if (imagem.trim().length() == 0) {
+			this.imagem = "resources/default.jpg";
+		} else {
+			this.imagem = imagem;
+		}
+	
+		verificaEmail(email);
+		recebeDataNascimento(nascimento);
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+		this.pop = 0;
+		this.imagem = "resources/avatarDefaul.jpg";
+		this.amigos = new ArrayList<>();
+		this.solicitacaoAmizade = new ArrayList<>();
+		this.notificacoes = new ArrayList<>();
+		this.posts = new ArrayList<>();
+		this.feed = new ArrayList<>();
+		this.popularidade = new Normal();
+	}
+ 	
+ 	public String getNextNotificacao() throws NaoHaNotificacoesException {
+ 		if (this.notificacoes.size() == 0) {
+ 			throw new NaoHaNotificacoesException();
+ 		} else {
+ 			String notifi = this.notificacoes.get(0); 
+ 			this.notificacoes.remove(0);
+ 			return notifi;
+ 		}
+	}
+
+ 	public int getPop() {
+ 		return this.pop;
+ 	}
+
+	public Post getPost(int indice) {
+ 		return posts.get(indice);
+ 	}
 
 	public String getNome() {
 		return this.nome;
@@ -88,14 +150,6 @@ public class Usuario {
 		this.nascimento = nascimento;
 	}
 
-	public String getTelefone() {
-		return this.telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
 	public String getImagem() {
 		return this.imagem;
 	}
@@ -120,111 +174,204 @@ public class Usuario {
 		this.amigos = amigos;
 	}
 
-	public List<String> getSolicitacaoAmizades(){
-		return this.solicitacaoAmizades;
+	public List<String> getSolicitacaoAmizade(){
+		return this.solicitacaoAmizade;
 	}
 	
-	//Caso de Uso3: Pesquisar e alterar informacoes do usuario
-	
-	public void alterarNome(String novoNome) throws LogicaException {
-		if (novoNome == null || novoNome.equals("")){
-			throw new LogicaException("Nome");
+	public void alterarNome(String novoNome) throws AtualizaPerfilException {
+		if (novoNome == null || novoNome.trim().length() == 0){
+			throw new AtualizaNomeException();
 		}
 		this.nome = novoNome;
 	}
 	
-	public void alterarEmail(String novoEmail) throws LogicaException {
-		if (novoEmail == null || novoEmail.equals("")) {
-			throw new LogicaException("Email");
+	public void alterarEmail(String novoEmail) throws EntradaException {
+		if (novoEmail == null || novoEmail.trim().length() == 0
+		   || !novoEmail.contains("@") || !novoEmail.contains(".com")) {		
+				throw new AtualizaEmailException();
 		}
 		this.email = novoEmail;
 	}
 	
-	public boolean alterarSenha(String senha, String novaSenha) throws LogicaException {
-		if (senha == null || senha.equals("")) {
-			throw new LogicaException("Senha");
-		}
-		
-		if (novaSenha == null || novaSenha.equals("")) {
-			throw new LogicaException("Senha");
-		}
-		
-		if (this.senha.equals(senha)) {
-			this.senha = novaSenha;
-			return true;
+	public boolean alterarSenha(String valor, String velhaSenha) throws AtualizaPerfilException {
+		if (this.senha.equals(velhaSenha)) {
+			
+			if (valor == null || valor.trim().length() == 0) {
+				throw new AtualizaSenhaInvalidaException();
+			} else {
+				this.senha = valor;
+				return true;
+			}
+			
 		} else {
-			//Lancar exception
-			return false;
-		}
+			throw new AtualizaSenhaIncorretaException();	
+		} 
 	}	
-	
-	public void alterarNascimento(String novoNascimento) throws LogicaException, ParseException {
-		if (novoNascimento == null || novoNascimento.equals("")) {
-			throw new LogicaException("Data de nascimento invalida");
+
+	// controlar as excecoes de formato e data invalidas
+	public void alterarNascimento(String novoNascimento) throws AtualizaPerfilException, ParseException {
+		if (novoNascimento == null || novoNascimento.trim().length() == 0) {
+			throw new ParseException("Data inserida invalida", 0);
 		}
 		recebeDataNascimento(novoNascimento);
 	}
 	
-	public void alterarTelefone(String novoTelefone) throws LogicaException {
-		if (novoTelefone == null || novoTelefone.equals("")) {
-			throw new LogicaException("Telefone");
-		}
-		this.telefone = novoTelefone;
-	}
-
-	public void alterarImagem(String novaImagem) throws LogicaException {
+	public void alterarImagem(String novaImagem) throws AtualizaPerfilException {
 		if (novaImagem == null) {
-			throw new LogicaException("Imagem");
+			throw new AtualizaPerfilException("");
 		}
-		if (novaImagem.equals("")) {
+		if (novaImagem.trim().length() == 0) {
 			this.imagem = "resources/avatarDefaul.jpg";
 		} else {
 			this.imagem = novaImagem;
 		}
 	}
-	
-	public void recebeSolicitacaoAmizade(String usuarioSolicitante) {
-		this.solicitacaoAmizades.add(usuarioSolicitante);
-	}
-		
-	public String respostaDeAmizade(String emailUsuarioSolicitante) {
-		this.solicitacaoAmizades.remove(emailUsuarioSolicitante);
-		return emailUsuarioSolicitante;
-	}
-		
-	public void like(Post post) {
-		post.ganhaLike();
+			
+	public void rejeitaAmizade(String emailUserRecusado) {
+		this.solicitacaoAmizade.remove(emailUserRecusado);
+		this.notificacoes.remove( this.notificacoes.size() - 1 );
 	}
 	
-	public void deslike(Post post) {
-		post.ganhaDeslike();
+	public void aceitaAmizade(Usuario usuarioAceito) {
+		this.solicitacaoAmizade.remove(usuarioAceito.getEmail());
+		this.notificacoes.remove( this.notificacoes.size() - 1 );
+		this.amigos.add(usuarioAceito);
 	}
-
-	/*
-	 * public void removeAmigo(Usuario amigo){
-	 * 
-	 * for(int i; i < amigos.size(); i++){
-	 * 	if((amigos.contains(amigo)){
-	 * 		amigos.remove(amigo)
-	 * 		}
-	 * 	}
-	 * TANTO FAZ
-	 * for(int i; i < amigos.size(); i++){
-	 * 		if(amigos.get(i).getEmail().equals(amigo.getEmail())){
-	 * 			amigos.remove(amigo);
-	 * 		}
-	 * }
-	 * 
-	 */
+		
+	private void verificaEmail(String email) throws CadastroInvalidoException {
+		if (email == null || email.equals("")) {
+			throw new CadastroEmailException();
+		} else if (email.contains("@") && email.contains(".com")) {
+			this.email = email;
+		} else {
+			throw new CadastroEmailException();
+		}
+	}
 
 	// Tratando a data de Nascimento
 	// Falta tratar essa excecao
-	public void recebeDataNascimento(String dataRecebida) throws ParseException  {
-        SimpleDateFormat dateFormatada = new SimpleDateFormat("dd/MM/yy"); //Defeine dataFormatada no formato esperado
-        Date data = dateFormatada.parse(dataRecebida); //Transforma a data recebida(STR) em tipo Date()
-        String dataNascimento = dateFormatada.format(data); // Transforma em String novamente mas do fomato esperado dd/MM/yyyy
-        this.nascimento = dataNascimento;;
-    }	
-	
+	private void recebeDataNascimento(String dataRecebida) throws ParseException  {
+		Date data = new SimpleDateFormat("dd/MM/yyyy").parse(dataRecebida);  // transforma o aquivo recebido para Date()
+		this.nascimento = new SimpleDateFormat("yyyy-MM-dd").format(data);
 
+	}
+	
+	private void atualizaPops() {
+		int pops = 0;
+		for (Post post: posts) {
+			pops += post.getPopularidade();
+		}
+		
+		this.pop = pops;
+	}
+		
+	private void atualizaPopularidade() {
+		atualizaPops();
+		if( this.pop < 500) {
+			this.popularidade = new Normal();
+		} else if (this.pop > 500 && this.pop < 1000) {
+			this.popularidade = new CelebridadePOP();
+		} else {
+			this.popularidade = new IconePOP();
+		}
+		
+	}
+
+	public void curtir(Usuario usuario, int indice) {
+		Post post = usuario.getPost(indice);
+		this.popularidade.curtir(post);
+		usuario.notificacoes.add(this.nome + " curtiu seu post de " + post.getDataAtual() + ".");
+		usuario.atualizaPopularidade();
+	}
+	
+	public void descurtir(Usuario usuario, int indice) {
+		Post post = usuario.getPost(indice);
+		this.popularidade.descurtir(post);
+		usuario.notificacoes.add(this.nome + " descurtiu seu post de " + post.getDataAtual() + ".");
+		usuario.atualizaPopularidade();
+	}
+
+	public String getFoto() {
+		return this.imagem;
+	}
+	
+	public void criaPost(String mensagem, String data) throws PostException, ParseException {
+		Post novoPost = new Post(mensagem, data);
+		this.posts.add(novoPost);
+	}
+	
+	public List<Post> getPosts() {
+		return this.posts;
+	}
+	
+	public String getInfoUsuario(String atributo) {
+		return null;
+	}
+	
+	@Override
+	public int compareTo(Usuario outroUsuario) {
+		if (this.pop > outroUsuario.getPop()) {
+			return 1;
+		} else if (this.pop == outroUsuario.getPop()) {
+			return 0;
+		} else {
+			return -1;
+		}
+	}
+	
+	public int getNotificacoes() {
+		return this.notificacoes.size();
+	}
+	
+	public int getQtdAmigos() {
+		return this.amigos.size();
+	}
+	
+	public String getArquivo(int indiceArquivo, int indicePost) {
+		return this.posts.get(indicePost).getArquivo(indiceArquivo);
+		
+	}
+	
+	public void removeAmigo(Usuario usuario) {
+		this.amigos.remove(usuario);
+	}
+	
+	public int getQtdPost() {
+		return this.posts.size();
+	}
+	
+	public String getConteudo(String atributo, int indicePost) {
+		return this.posts.get(indicePost).getPost(atributo);
+	}
+
+	public void recebeNotificao(String notificao) {
+		this.notificacoes.add(notificao);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		return true;
+	}
+	
+	
 }
