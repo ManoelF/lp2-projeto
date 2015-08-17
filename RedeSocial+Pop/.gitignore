@@ -1,2 +1,6 @@
 bin/
-lib/
+*.class
+*.classpath
+*.project
+.metadata*
+.settings*

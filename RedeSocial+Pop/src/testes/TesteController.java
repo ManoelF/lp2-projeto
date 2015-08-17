@@ -435,4 +435,5 @@ public class TesteController {
 			Assert.assertEquals("Nao eh possivel realizar logout. Nenhum usuarix esta logadx no +pop.", erro.getMessage());
 		}
 	}
+
 }
