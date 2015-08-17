@@ -430,9 +430,11 @@ public class TesteController {
 			
 			controller.logout();
 			controller.atualizaPerfil("Nome", "Ftm Bern");
-			
+			System.out.println("OAAA");
+			Assert.fail();
 		} catch(LogicaException erro) {
-			Assert.assertEquals("Nao eh possivel realizar logout. Nenhum usuarix esta logadx no +pop.", erro.getMessage());
+			Assert.fail();
+			//Assert.assertEquals("Nao eh possivel realizar logout. Nenhum usuarix esta logadx no +pop.", erro.getMessage());
 		}
 	}
 }
