@@ -276,4 +276,8 @@ public class Controller {
 	/*public String getConteudoPost(int indice, int post) {
 		return this.usuarioLogado.getConteudo(atributo, indicePost)
 	}*/
+	
+	public String getsenha(){
+		return this.usuarioLogado.getSenha();
+	}
 }

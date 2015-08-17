@@ -409,7 +409,7 @@ public class TesteController {
 	}
 	
 	@Test
-	public void atualizaInformacoes() {
+	public void atualizaInformacoes() throws EntradaException, ParseException, LogicaException {
 		try {
 			controller.cadastraUsuario("Fatima", "fatima@email.com.br", "will_S2", "21/04/1980");
 			controller.login("fatima@email.com.br", "will_S2");
@@ -419,20 +419,20 @@ public class TesteController {
 			//atualizaPerfil atributo="Senha" valor="fafa_S2" velhaSenha="will_S2"
 			//atualizaPerfil atributo="Senha" valor="fafa123" velhaSenha="fafa_S2"
 			
+			Assert.assertEquals("fatima@email.com.br", controller.getUsuariosCadastrados().get(0).getEmail());
+			Assert.assertEquals("fafa13",  controller.getsenha());
+			
+			controller.atualizaPerfil("Nome", "Fati Ma");
+			controller.atualizaPerfil("E-mail", "fatxi@globo.com");
+			
+			Assert.assertEquals("Fati Ma", controller.getUsuarioLogado().getNome());
+			Assert.assertEquals("fatxi@globo.com", controller.getUsuarioLogado().getEmail());
+			
+			controller.logout();
+			controller.atualizaPerfil("Nome", "Ftm Bern");
 			
 		} catch(LogicaException erro) {
-			System.out.println(erro.getMessage());
-		} catch (EntradaException erro) {
-			System.out.println(erro.getMessage());
-		} catch (ParseException erro) {
-			System.out.println(erro.getMessage());
+			Assert.assertEquals("Nao eh possivel realizar logout. Nenhum usuarix esta logadx no +pop.", erro.getMessage());
 		}
-		
-		
-		
-		
 	}
-		
-
-
 }
