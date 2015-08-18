@@ -173,7 +173,7 @@ public class Controller {
 
 	public void atualizaPerfil(String atributo, String valor, String velhaSenha) throws LogicaException, AtualizaPerfilException {	
 		if(this.usuarioLogado == null) {
-			throw new UsuarioDeslogadoException();
+			throw new AtualizaPerfilException();
 		} else if (atributo.equals(SENHA)) {
 			this.usuarioLogado.setSenha(valor, velhaSenha);
 		}

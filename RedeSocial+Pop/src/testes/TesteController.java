@@ -402,7 +402,7 @@ public class TesteController {
 			
 			controller.login("catpower@email.com", "sapatomica");
 			Assert.assertEquals(1, controller.getQtdAmigos());
-						
+
 		} catch (LogicaException erro) {
 			Assert.fail();
 		}
@@ -420,7 +420,7 @@ public class TesteController {
 			//atualizaPerfil atributo="Senha" valor="fafa123" velhaSenha="fafa_S2"
 			
 			Assert.assertEquals("fatima@email.com.br", controller.getUsuariosCadastrados().get(0).getEmail());
-			Assert.assertEquals("fafa13",  controller.getsenha());
+			Assert.assertEquals("fafa123",  controller.getsenha());
 			
 			controller.atualizaPerfil("Nome", "Fati Ma");
 			controller.atualizaPerfil("E-mail", "fatxi@globo.com");
@@ -430,11 +430,18 @@ public class TesteController {
 			
 			controller.logout();
 			controller.atualizaPerfil("Nome", "Ftm Bern");
+//<<<<<<< HEAD
 			System.out.println("OAAA");
 			Assert.fail();
 		} catch(LogicaException erro) {
 			Assert.fail();
 			//Assert.assertEquals("Nao eh possivel realizar logout. Nenhum usuarix esta logadx no +pop.", erro.getMessage());
+//=======
+			
+		} catch(AtualizaPerfilException erro) {
+			Assert.assertEquals("Nao eh possivel atualizar um perfil. Nenhum usuarix esta logadx no +pop.", erro.getMessage());
+//>>>>>>> 653bf2744f2d192602605ec3f3be7c18fd8b5aa1
 		}
 	}
+
 }
