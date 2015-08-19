@@ -88,7 +88,7 @@ public class TesteUsuario {
 	// reorganizar os proximos teste para testarem as novas alterações
 	
 		@Test
-	public void testInformacoesAtualizadas() throws EntradaException {
+	public void testInformacoesAtualizadas()  {
 		try {
 			fred = new Usuario("Fred", "fred@email.com", "0101", "25/12/1989",
 					 "resources/fred.jpg");
@@ -111,6 +111,8 @@ public class TesteUsuario {
 		} catch(AtualizaPerfilException erro) {
 			Assert.fail();
 		} catch(ParseException erro) {
+			Assert.fail();
+		} catch (EntradaException erro) {
 			Assert.fail();
 		}
 
