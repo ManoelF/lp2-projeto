@@ -42,7 +42,7 @@ public class Facade {
 		this.controller.login(email, senha);
 	}
 	
-	public void logout() throws UsuarioDeslogadoException {
+	public void logout() throws LogicaException {
 		this.controller.logout();	
 	}
 	

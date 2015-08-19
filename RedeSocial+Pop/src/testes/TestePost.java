@@ -58,11 +58,9 @@ public class TestePost {
 			postDois = new Post(textoQuatro, "10/02/2002 12:21:00");
 			
 		} catch (ParseException erro) {
-			System.out.println(erro.getMessage());
-		} catch (PostTamException erro){
+			//System.out.println(erro.getMessage());
+		} catch (PostException erro){
 			Assert.assertEquals("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.", erro.getMessage());
-		} catch (PostException erro) {
-			System.out.println(erro.getMessage());
 		}
 	}
 

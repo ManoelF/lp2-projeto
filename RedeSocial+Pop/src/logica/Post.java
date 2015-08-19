@@ -40,13 +40,13 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		encontraHashtag(texto);
 		
 		if (getConteudo().length() > 200) {
-			throw new PostTamException();
+			throw new PostException(" O limite maximo da mensagem sao 200 caracteres.");
 		}
 	}
 
-	private void verificaTam(String texto) throws PostTamException {
+	private void verificaTam(String texto) throws PostException {
 		if (texto.length() > 200) {
-			throw new PostTamException();
+			throw new PostException(" O limite maximo da mensagem sao 200 caracteres.");
 		} else {
 			this.texto = texto;
 		}
