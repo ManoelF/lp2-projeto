@@ -47,12 +47,12 @@ public class Controller {
 		Usuario usuarioLogando;
 		
 		if (usuarioLogado != null) {
-			throw new UsuarioLogadoException(usuarioLogado.getNome());
+			throw new LoginException(" Um usuarix ja esta logadx: " + usuarioLogado.getNome() + ".");
 		} else { 
 			usuarioLogando = pesquisaUsuario(EmailInserido);
 			
 			if (usuarioLogando == null) {
-				throw new LoginEmailException(EmailInserido);
+				throw new LoginException(" Um usuarix com email " + EmailInserido + " nao esta cadastradx.");
 			} else if (usuarioLogando.getSenha().equals(senhaInserida)){
 				usuarioLogado = usuarioLogando;
 			} else {
@@ -71,10 +71,10 @@ public class Controller {
 		return null;
 	}
 	
-	public void logout() throws UsuarioDeslogadoException {
+	public void logout() throws LogicaException {
 
 		if (this.usuarioLogado == null) {
-			throw new UsuarioDeslogadoException();
+			throw new LogoutException(" Nenhum usuarix esta logadx no +pop.");
 		} else {
 			this.usuarioLogado = null;
 		}

@@ -112,10 +112,10 @@ public class TesteController {
 	}
 	
 	@Test
-	public void testLogoutException() throws UsuarioDeslogadoException {
+	public void testLogoutException() throws LogicaException {
 		try {
 			controller.logout();
-		} catch (UsuarioDeslogadoException erro) {
+		} catch (LogicaException erro) {
 			Assert.assertEquals("Nao eh possivel realizar logout. Nenhum usuarix esta logadx no +pop.", erro.getMessage());
 		}
 	}

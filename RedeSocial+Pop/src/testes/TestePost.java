@@ -31,8 +31,6 @@ public class TestePost {
 			Assert.assertEquals("2015-08-01 12:00:00", postUm.getPost("Data"));
 			Assert.assertEquals("$arquivo_imagem:imagens/bomDia.jpg", postUm.getMidias(0));
 
-
-
 		} catch (PostException erro) {
 			Assert.fail();
 		} catch (ParseException erro){ 
@@ -59,10 +57,8 @@ public class TestePost {
 			
 		} catch (ParseException erro) {
 			Assert.fail();
-		} catch (PostTamException erro){
+		} catch (PostException erro){
 			Assert.assertEquals("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.", erro.getMessage());
-		} catch (PostException erro) {
-			Assert.fail();
 		}
 	}
 

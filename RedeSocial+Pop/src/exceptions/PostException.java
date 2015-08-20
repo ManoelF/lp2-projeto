@@ -11,4 +11,9 @@ public class PostException extends EntradaException {
 		super("Nao eh possivel criar o post."+ msg);
 	}
 	
+	/*PostTamException: " O limite maximo da mensagem sao 200 caracteres."
+	 *PostHashtagException: " As hashtags devem comecar com '#'.")
+	 *PostItemInexistenteException(int item): "Item #"+ item +" nao existe nesse post, ele possui apenas 3 itens distintos."
+	 *PostItemInvalidoException: "Requisicao invalida. O indice deve ser maior ou igual a zero."
+	 */
 }

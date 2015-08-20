@@ -10,4 +10,14 @@ public class AtualizaPerfilException extends EntradaException {
 		super("Erro na atualizacao de perfil." + msg);
 	}
 	
+	/*AtualizaDataInexistenteException: " Data nao existe."
+	 *AtualizaDataInvalidaException: " Formato de data esta invalida."
+	 *AtualizaEmailException: " Formato de e-mail esta invalido."
+	 *AtualizaNomeException: " Nome dx usuarix nao pode ser vazio."
+	 *AtualizaSenhaIncorretaException: " A senha fornecida esta incorreta."
+	 *AtualizaSenhaInvalidaException: " Senha invalida."
+	 * 
+	 * 
+	 */
+	
 }

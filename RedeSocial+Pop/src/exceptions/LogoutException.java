@@ -9,4 +9,10 @@ public class LogoutException extends LogicaException{
 	public LogoutException(String msg){
 		super("Nao eh possivel realizar logout." + msg);
 	}
+	
+	/*UsuarioDeslogadoException: " Nenhum usuarix esta logadx no +pop."
+	 * 
+	 * 
+	 * 
+	 */
 }

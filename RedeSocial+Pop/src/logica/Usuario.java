@@ -28,16 +28,16 @@ public class Usuario implements Comparable<Usuario> {
  	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException, ParseException {
 
 		if (nome == null || nome.trim().length() == 0){
-			throw new CadastroNomeException();
+			throw new CadastroInvalidoException(" Nome dx usuarix nao pode ser vazio.");
 		}
 		if (email == null || email.trim().length() == 0) {
-			throw new CadastroEmailException();
+			throw new CadastroInvalidoException(" Formato de e-mail esta invalido.");
 		}
 		if (senha == null || senha.trim().length() == 0) {
-			throw new CadastroSenhaException();
+			throw new CadastroInvalidoException(" Senha dx usuarix nao pode ser vazio.");
 		}
 		if (nascimento == null || nascimento.trim().length() == 0) {
-			throw new CadastroDataException();
+			throw new CadastroInvalidoException(" Formato de data esta invalida.");
 		}
 		if (imagem== null){
 			throw new CadastroInvalidoException(" Imagem invalida.");
@@ -100,7 +100,6 @@ public class Usuario implements Comparable<Usuario> {
 		return this.nascimento;
 	}
 
-
 	public String getImagem() {
 		return this.imagem;
 	}
@@ -119,7 +118,7 @@ public class Usuario implements Comparable<Usuario> {
 	
 	public void setNome(String novoNome) throws AtualizaPerfilException {
 		if (novoNome == null || novoNome.trim().length() == 0){
-			throw new AtualizaNomeException();
+			throw new AtualizaPerfilException(" Nome dx usuarix nao pode ser vazio.");
 		}
 		this.nome = novoNome;
 	}
@@ -127,7 +126,7 @@ public class Usuario implements Comparable<Usuario> {
 	public void setEmail(String novoEmail) throws EntradaException {
 		if (novoEmail == null || novoEmail.trim().length() == 0
 		   || !novoEmail.contains("@") || !novoEmail.contains(".com")) {		
-				throw new AtualizaEmailException();
+				throw new AtualizaPerfilException(" Formato de e-mail esta invalido.");
 		}
 		this.email = novoEmail;
 	}
@@ -136,14 +135,14 @@ public class Usuario implements Comparable<Usuario> {
 		if (this.senha.equals(velhaSenha)) {
 			
 			if (valor == null || valor.trim().length() == 0) {
-				throw new AtualizaSenhaInvalidaException();
+				throw new AtualizaPerfilException(" Senha invalida.");
 			} else {
 				this.senha = valor;
 				return true;
 			}
 			
 		} else {
-			throw new AtualizaSenhaIncorretaException();	
+			throw new AtualizaPerfilException(" A senha fornecida esta incorreta.");	
 		} 
 	}	
 
@@ -179,11 +178,11 @@ public class Usuario implements Comparable<Usuario> {
 		
 	private void verificaEmail(String email) throws CadastroInvalidoException {
 		if (email == null || email.equals("")) {
-			throw new CadastroEmailException();
+			throw new CadastroInvalidoException(" Formato de e-mail esta invalido.");
 		} else if (email.contains("@") && email.contains(".com")) {
 			this.email = email;
 		} else {
-			throw new CadastroEmailException();
+			throw new CadastroInvalidoException(" Formato de e-mail esta invalido.");
 		}
 	}
 
