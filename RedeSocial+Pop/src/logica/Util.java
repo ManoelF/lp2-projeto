@@ -3,6 +3,8 @@ package logica;
 import java.util.List;
 import java.util.ArrayList;
 
+import exceptions.PostException;
+
 public class Util {
 	
 	public static final Util INSTANCIA = new Util();
@@ -40,5 +42,43 @@ public class Util {
 			}
 		}
 		return arquivos;
+	}
+	
+	
+
+	// buscando as hashtag do texto
+	// logica semelhante a usada na busca de arquivos
+	public List<String> encontraHashtag(String mensagem) throws PostException {
+		List<String> hashtags = new ArrayList<>();
+		String novaHash = "";
+		char[] novaMsg = mensagem.toCharArray();
+		boolean espaco = false;
+		boolean iniciaVerificacao = false;
+		
+		for(char caracter: novaMsg) {
+			if (caracter == '#') {
+				iniciaVerificacao = true;
+				novaHash += caracter;
+			} 
+			
+			if (iniciaVerificacao) {
+				if (caracter == '#'){
+					espaco = false;
+				} else if (espaco) {
+					throw new PostException("Hashtag invalida");
+				} else if (caracter != ' ') {
+					novaHash += caracter;
+					
+				} else if (caracter == ' ') {
+					hashtags.add(novaHash);
+					novaHash = "";
+					espaco = true;
+				}
+			}
+		}
+		if (!novaHash.equals("")){
+			hashtags.add(novaHash);
+		}
+		return hashtags;
 	}
 }

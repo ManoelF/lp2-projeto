@@ -32,12 +32,12 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		this.popularidade = 0;
 		this.like = 0;
 		this.deslike = 0;
-		this.hashtags = new ArrayList<>();
+		this.hashtags = Util.INSTANCIA.encontraHashtag(texto);
 		this.midias = new ArrayList<>();
 		buscaConteudo(texto);
 		converteData(data);
 		buscaMidia(texto);
-		encontraHashtag(texto);
+		//encontraHashtag(texto);
 		buscaMidia(texto);
 				
 		if (getConteudo().length() > 200) {
@@ -112,10 +112,10 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		String novoConteudo = "";
 		char[] novaMsg = this.texto.toCharArray();
 		for (char caracter: novaMsg) {
-			if (caracter == '#'  ) {
+			if (caracter == '#' ) {
 				break;
 			}
-			conteudo += caracter;
+			novoConteudo += caracter;
 			
 		}
 		this.conteudo = novoConteudo;
@@ -150,39 +150,6 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	
 
 	
-	// buscando as hashtag do texto
-	// logica semelhante a usada na busca de arquivos
-	private void encontraHashtag(String mensagem) throws PostException {
-		String novaHash = "";
-		char[] novaMsg = mensagem.toCharArray();
-		boolean espaco = false;
-		boolean iniciaVerificacao = false;
-		
-		for(char caracter: novaMsg) {
-			if (caracter == '#') {
-				iniciaVerificacao = true;
-				novaHash += caracter;
-			} 
-			
-			if (iniciaVerificacao) {
-				if (caracter == '#'){
-					espaco = false;
-				} else if (espaco) {
-					throw new PostException("Hashtag invalida");
-				} else if (caracter != ' ') {
-					novaHash += caracter;
-					
-				} else if (caracter == ' ') {
-					this.hashtags.add(novaHash);
-					novaHash = "";
-					espaco = true;
-				}
-			}
-		}
-		if (!novaHash.equals("")){
-			this.hashtags.add(novaHash);
-		}
-	}
 	
 	public void curtir(int pontos) {
 		this.like += 1;
