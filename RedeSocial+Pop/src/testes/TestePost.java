@@ -29,7 +29,7 @@ public class TestePost {
 			Assert.assertEquals("bom dia amigos faces passem bem! <imagem>imagens/bomDia.jpg</imagem> ", postUm.getPost("Conteudo"));
 			Assert.assertEquals("#Chang,#Italo,#Manoel", postUm.getPost("Hashtags"));
 			Assert.assertEquals("2015-08-01 12:00:00", postUm.getPost("Data"));
-			Assert.assertEquals("$arquivo_imagem:imagens/bomDia.jpg", postUm.getArquivo(0));
+			Assert.assertEquals("$arquivo_imagem:imagens/bomDia.jpg", postUm.getMidias(0));
 
 
 
@@ -58,11 +58,11 @@ public class TestePost {
 			postDois = new Post(textoQuatro, "10/02/2002 12:21:00");
 			
 		} catch (ParseException erro) {
-			System.out.println(erro.getMessage());
+			Assert.fail();
 		} catch (PostTamException erro){
 			Assert.assertEquals("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.", erro.getMessage());
 		} catch (PostException erro) {
-			System.out.println(erro.getMessage());
+			Assert.fail();
 		}
 	}
 
@@ -84,9 +84,9 @@ public class TestePost {
 			Assert.assertTrue(perdao.getPopularidade() == 95);
 			
 		} catch (EntradaException erro) {
-			System.out.println(erro.getMessage());
+			Assert.fail();
 		} catch (ParseException erro) {
-			System.out.println(erro.getMessage());
+			Assert.fail();
 		}
 	}
 	
@@ -107,7 +107,7 @@ public class TestePost {
 			
 			Assert.assertEquals("Esse frio esta mim deixando doida. ", frio.getPost("Conteudo"));
 			Assert.assertEquals("#alucicrazy,#CGDaDepressao", frio.getPost("Hashtags"));
-			Assert.assertEquals("$arquivo_audio:musicas/poderosas.mp3", recalque.getArquivo(0));
+			Assert.assertEquals("$arquivo_audio:musicas/poderosas.mp3", recalque.getMidias(0));
 			Assert.assertEquals("2015-08-01 21:35:00", frio.getPost("Data"));
 			
 		} catch(EntradaException erro) {
@@ -117,4 +117,5 @@ public class TestePost {
 		}
 
 	}
+	
 }

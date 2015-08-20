@@ -22,8 +22,8 @@ public class Datastest {
 			// Exception de entrada invalida
 		}
 		if (!(dataS[0].matches("^[0-9]*$")) ||
-		    !(dataS[0].matches("^[0-9]*$")) ||
-			!(dataS[0].matches("^[0-9]*$")) ) {
+		    !(dataS[1].matches("^[0-9]*$")) ||
+			!(dataS[2].matches("^[0-9]*$")) ) {
 		    // Exception de formatacao (ha caracteres nos numeros)	
 		    }
 		int dia = Integer.parseInt(dataS[0]);

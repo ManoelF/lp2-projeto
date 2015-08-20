@@ -427,20 +427,11 @@ public class TesteController {
 			
 			Assert.assertEquals("Fati Ma", controller.getUsuarioLogado().getNome());
 			Assert.assertEquals("fatxi@globo.com", controller.getUsuarioLogado().getEmail());
-			
 			controller.logout();
 			controller.atualizaPerfil("Nome", "Ftm Bern");
-//<<<<<<< HEAD
-			System.out.println("OAAA");
-			Assert.fail();
-		} catch(LogicaException erro) {
-			Assert.fail();
-			//Assert.assertEquals("Nao eh possivel realizar logout. Nenhum usuarix esta logadx no +pop.", erro.getMessage());
-//=======
 			
 		} catch(AtualizaPerfilException erro) {
 			Assert.assertEquals("Nao eh possivel atualizar um perfil. Nenhum usuarix esta logadx no +pop.", erro.getMessage());
-//>>>>>>> 653bf2744f2d192602605ec3f3be7c18fd8b5aa1
 		}
 	}
 

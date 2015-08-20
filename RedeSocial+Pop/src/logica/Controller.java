@@ -12,7 +12,7 @@ public class Controller {
 	private FactoryUsuario fabricaUsuario;
 	private List<Usuario> usuariosCadastrados;
 	private Usuario usuarioLogado;
-
+	public Util util;
 	private static final String NOME = "Nome";
 	private static final String EMAIL = "E-mail";
 	private static final String NASCIMENTO = "Data de Nascimento";

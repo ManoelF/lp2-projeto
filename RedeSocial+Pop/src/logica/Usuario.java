@@ -267,7 +267,7 @@ public class Usuario implements Comparable<Usuario> {
 	}
 	
 	public String getArquivo(int indiceArquivo, int indicePost) {
-		return this.posts.get(indicePost).getArquivo(indiceArquivo);
+		return this.posts.get(indicePost).getMidias(indiceArquivo);
 		
 	}
 	

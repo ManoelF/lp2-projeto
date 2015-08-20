@@ -7,8 +7,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.internal.runners.statements.Fail;
-
 import exceptions.*;
 
 public class Post implements Comparable<Post>, Comparator<Post> {
@@ -16,11 +14,12 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	private String texto;
 	private String dataAtual;
 	private Date data;
+	private String conteudo; 
 	private int like;
 	private int deslike;
 	private int popularidade;
 	private List<String> hashtags;
-	private List<String> arquivos;
+	private List<Midia> midias;
 
 	// data e hora
 
@@ -34,22 +33,22 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		this.like = 0;
 		this.deslike = 0;
 		this.hashtags = new ArrayList<>();
-		this.arquivos = new ArrayList<>();
+		this.midias = new ArrayList<>();
+		buscaConteudo(texto);
 		converteData(data);
-		encontraMidia(texto);
+		buscaMidia(texto);
 		encontraHashtag(texto);
-		
+		buscaMidia(texto);
+				
 		if (getConteudo().length() > 200) {
 			throw new PostTamException();
 		}
 	}
 
-	private void verificaTam(String texto) throws PostTamException {
-		if (texto.length() > 200) {
+	private void verificaTam(String conteudo) throws PostTamException {
+		if (conteudo.length() > 200) {
 			throw new PostTamException();
-		} else {
-			this.texto = texto;
-		}
+		} 
 	}
 
 	
@@ -57,8 +56,8 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		return this.data;
 	}
 	
-	public String getArquivo(int indice) {
-		return this.arquivos.get(indice);
+	public String getMidias(int indice) {
+		return this.midias.get(indice).getCaminho();
 	}
 	
 	public String getDataAtual() {
@@ -105,18 +104,22 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		this.hashtags = hashtags;
 	}
 	
-	private String getConteudo() {
-		String conteudo = "";
+	public String getConteudo() {
+		return this.conteudo;
+	}
+	
+	private void buscaConteudo(String conteudo) {
+		String novoConteudo = "";
 		char[] novaMsg = this.texto.toCharArray();
 		for (char caracter: novaMsg) {
-			if (caracter == '#' || caracter == '<' ) {
+			if (caracter == '#'  ) {
 				break;
 			}
 			conteudo += caracter;
 			
 		}
-		return conteudo;
-	}
+		this.conteudo = novoConteudo;
+	} 
 	
 	
 	private String getHashtagsStr() {
@@ -145,36 +148,9 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		}
 	}
 	
-	// buscando arquivos de audio ou midia
-	private void encontraMidia(String mensagem) {
-		String tipoMidia = "$arquivo_";  			// variavel para concatenar o arquivo
-		char[] novaMsg = mensagem.toCharArray();	// transformando a mensagem em lista de char para poder iterar
-		boolean inicia = false; 					// variavel para controlar o momento de pegar os caraceres que interecam
-		int cont = 0;								// contador para saber o momento de pegar o proximo arquivo
-			
-		for(char caracter: novaMsg) {				// onde inicia o arquivo
-			if (caracter == '<') {
-				inicia = true;
-				cont += 1;							// um arquivo esta entre 2 '<'
-				if (cont == 2) {					// deposi de dois '<' acaba o arquivo
-					if ((tipoMidia.contains("audio") || tipoMidia.contains("imagem"))) {
-						this.arquivos.add(tipoMidia);	// adiciona o arquivo ja encontrado na lista de arquivo
-						inicia = false;					// espera o proximo '<' para poder comecar os passos para encotrar o proximo arquivo
-					}
-					tipoMidia = "$arquivo_";		// reinicia a variavel para adicionar o proximo arquivo
-					cont = 1;
-				}
-			} else if (inicia) {
-				if (caracter == '>') {				// no momento que encontra o '>' 
-					tipoMidia += ":";				// adiciona ':' para o arquivo ficar no formato pedido
-				} else {
-					tipoMidia += caracter;			// forma o arquivo
-				}
-			}
-		}
-	}
+
 	
-	// buscando as hashtag do testo
+	// buscando as hashtag do texto
 	// logica semelhante a usada na busca de arquivos
 	private void encontraHashtag(String mensagem) throws PostException {
 		String novaHash = "";
@@ -219,9 +195,8 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	}
 
  	@Override
-	public int compareTo(Post o) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Post outroPost) {
+ 		return this.data.compareTo(outroPost.getData());
 	}
 
 	@Override
@@ -238,11 +213,21 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		} else if (atributo.equals("Hashtags")) {
 			return getHashtagsStr();
 		} else {
-			return "Aqui tem que lancar exception getPost(Atributo)";
+			return "Aqui temM que lancar exception getPost(Atributo)";
 		}
 	}
 	
 	public String getPost() {
 		return this.texto + " (" + this.dataAtual + ")";
 	}
+	
+	
+	private void buscaMidia(String mensagem) {
+		FactoryMidia factoryMidia = new FactoryMidia();
+		List<String> listMidias = Util.INSTANCIA.getMidia(mensagem);
+		for (String arquivo: listMidias) {
+			this.midias.add(factoryMidia.obtemMidias(arquivo));
+		}
+	}
+	
 }
