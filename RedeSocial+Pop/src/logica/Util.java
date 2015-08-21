@@ -13,7 +13,6 @@ public class Util {
 		
 	}
 
-	
 	public List<String> getMidia(String mensagem) {
 		List<String> arquivos = new ArrayList<>();
 		String tipoMidia = "$arquivo_";  			// variavel para concatenar o arquivo
@@ -44,8 +43,6 @@ public class Util {
 		return arquivos;
 	}
 	
-	
-
 	// buscando as hashtag do texto
 	// logica semelhante a usada na busca de arquivos
 	public List<String> encontraHashtag(String mensagem) throws PostException {
@@ -81,4 +78,7 @@ public class Util {
 		}
 		return hashtags;
 	}
+
+	
+
 }
