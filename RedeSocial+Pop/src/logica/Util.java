@@ -1,5 +1,7 @@
 package logica;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -78,7 +80,5 @@ public class Util {
 		}
 		return hashtags;
 	}
-
 	
-
 }

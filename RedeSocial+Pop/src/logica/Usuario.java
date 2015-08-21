@@ -21,7 +21,7 @@ public class Usuario implements Comparable<Usuario> {
 	private List<String> notificacoes;
 	private TipoPopularidade popularidade;
 	private List<Post> posts;
-	private List<Post> feed;
+	private Feed feed;
 
 	
 	// Foi adicionado o throws ParseException, deve ser tratado
@@ -58,7 +58,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.solicitacaoAmizade = new ArrayList<>();
 		this.notificacoes = new ArrayList<>();
 		this.posts = new ArrayList<>();
-		this.feed = new ArrayList<>();
+		this.feed = new Feed();
 		this.popularidade = new Normal();
 	}
  	
@@ -314,5 +314,13 @@ public class Usuario implements Comparable<Usuario> {
 			return false;
 		return true;
 	}
+	
+	public TipoPopularidade getPopularidade() {
+		return this.popularidade;
+	}
 
+	public void atualizaFeed() {
+		this.feed.atualizaFeed(this.amigos);
+	}
+	
 }
