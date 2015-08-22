@@ -265,7 +265,7 @@ public class Controller {
 	}
 	
 	public String getPost(int indice) {
-		return this.usuarioLogado.getPost(indice).getTexto();
+		return this.usuarioLogado.getPost(indice).getPost();
 		
 	}
 	
@@ -273,9 +273,9 @@ public class Controller {
 		return this.usuarioLogado.getPost(atributo, post);
 	}
 	
-	/*public String getConteudoPost(int indice, int post) {
-		return this.usuarioLogado.getConteudo(atributo, indicePost)
-	}*/
+	public String getConteudoPost(int indice, int post) {
+		return this.usuarioLogado.getConteudoPost(indice, post);
+	}
 	
 	public String getsenha(){
 		return this.usuarioLogado.getSenha();

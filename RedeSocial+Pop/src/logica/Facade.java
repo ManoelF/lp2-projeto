@@ -71,11 +71,12 @@ public class Facade {
 	}
 	
 	public String getPost(String atributo, int post) {
-		return this.getPost(atributo, post);
+		return this.controller.getPost(atributo, post);
 	}	
 	
 	public String getConteudoPost(int indice, int post) {
-		return null;
+		System.out.println(this.controller.getConteudoPost(indice, post));
+		return this.controller.getConteudoPost(indice, post);
 	}
 	
 	public String getNextNotificacao() throws NaoHaNotificacoesException {

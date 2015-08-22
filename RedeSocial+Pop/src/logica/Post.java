@@ -32,21 +32,20 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		this.popularidade = 0;
 		this.like = 0;
 		this.deslike = 0;
-		this.hashtags = Util.INSTANCIA.encontraHashtag(texto);
+		this.hashtags = Util.getInstancia().encontraHashtag(texto);
 		this.midias = new ArrayList<>();
 		buscaConteudo(texto);
 		converteData(data);
 		buscaMidia(texto);
-		//encontraHashtag(texto);
 		buscaMidia(texto);
+		verificaTam(texto);
 				
-		if (getConteudo().length() > 200) {
-			throw new PostException(" O limite maximo da mensagem sao 200 caracteres.");
-		}
+		
 	}
 
 	private void verificaTam(String texto) throws PostException {
-		if (texto.length() > 200) {
+		String novoTexto = Util.getInstancia().encontraTexto(texto);
+		if (novoTexto.length() >= 200) {
 			throw new PostException(" O limite maximo da mensagem sao 200 caracteres.");
 		} else {
 			this.texto = texto;
@@ -115,6 +114,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		char[] novaMsg = this.texto.toCharArray();
 		for (char caracter: novaMsg) {
 			if (caracter == '#' ) {
+				novoConteudo = novoConteudo.substring(0, novoConteudo.length() -1);
 				break;
 			}
 			novoConteudo += caracter;
@@ -182,7 +182,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		} else if (atributo.equals("Hashtags")) {
 			return getHashtagsStr();
 		} else {
-			return "Aqui temM que lancar exception getPost(Atributo)";
+			return "Aqui tem que lancar exception getPost(Atributo)";
 		}
 	}
 	
@@ -193,10 +193,15 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	
 	private void buscaMidia(String mensagem) {
 		FactoryMidia factoryMidia = new FactoryMidia();
-		List<String> listMidias = Util.INSTANCIA.getMidia(mensagem);
+		List<String> listMidias = Util.getInstancia().getMidia(mensagem);
+		System.out.println(Util.getInstancia().encontraTexto(mensagem) + "-->");
+		Midia mensagem2 = new Mensagem(Util.getInstancia().encontraTexto(mensagem));
+		this.midias.add(mensagem2);
 		for (String arquivo: listMidias) {
 			this.midias.add(factoryMidia.obtemMidias(arquivo));
 		}
 	}
-	
+	public String getMidias() {
+		return this.midias.toString();
+	}
 }

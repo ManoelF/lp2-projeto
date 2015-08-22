@@ -2,6 +2,7 @@ package logica;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class Usuario implements Comparable<Usuario> {
 	
 	private String nome;
 	private String email;
-	private String nascimento;
+	private LocalDate nascimento;
 	private String senha;
 	private String imagem;
 	private int pop;
@@ -39,6 +40,13 @@ public class Usuario implements Comparable<Usuario> {
 		if (nascimento == null || nascimento.trim().length() == 0) {
 			throw new CadastroInvalidoException(" Formato de data esta invalida.");
 		}
+		if (Util.getInstancia().verificaFormatoData(nascimento) == false) {
+			throw new CadastroInvalidoException(" Formato de data esta invalida.");
+		}
+		if (Util.getInstancia().verificaDataValida(nascimento) == false) {
+			throw new CadastroInvalidoException(" Data nao existe.");
+		}
+		
 		if (imagem== null){
 			throw new CadastroInvalidoException(" Imagem invalida.");
 		}
@@ -49,7 +57,7 @@ public class Usuario implements Comparable<Usuario> {
 		}
 		
 		verificaEmail(email);
-		recebeDataNascimento(nascimento);
+		this.nascimento = Util.getInstancia().recebeData(nascimento);
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
@@ -83,6 +91,10 @@ public class Usuario implements Comparable<Usuario> {
 	public Post getPost(int indice) {
  		return posts.get(indice);
  	}
+	
+/*	public String getPost(int indice) {
+		return posts.get(indice).getPost();
+	}*/
 
 	public String getNome() {
 		return this.nome;
@@ -97,7 +109,7 @@ public class Usuario implements Comparable<Usuario> {
 	}
 
 	public String getNascimento() {
-		return this.nascimento;
+		return this.nascimento.toString();
 	}
 
 	public String getImagem() {
@@ -147,11 +159,17 @@ public class Usuario implements Comparable<Usuario> {
 	}	
 
 	// controlar as excecoes de formato e data invalidas
-	public void setNascimento(String novoNascimento) throws AtualizaPerfilException, ParseException {
+	public void setNascimento(String novoNascimento) throws AtualizaPerfilException {
 		if (novoNascimento == null || novoNascimento.trim().length() == 0) {
-			throw new ParseException("Data inserida invalida", 0);
+			throw new AtualizaPerfilException("Data inserida invalida");
 		}
-		recebeDataNascimento(novoNascimento);
+		if (Util.getInstancia().verificaFormatoData(novoNascimento) == false) {
+			throw new AtualizaPerfilException(" Formato de data esta invalida.");
+		}
+		if (Util.getInstancia().verificaDataValida(novoNascimento) == false) {
+			throw new AtualizaPerfilException(" Data nao existe.");
+		}
+		this.nascimento = Util.getInstancia().recebeData(novoNascimento);;
 	}
 	
 	public void setImagem(String novaImagem) throws AtualizaPerfilException {
@@ -186,14 +204,6 @@ public class Usuario implements Comparable<Usuario> {
 		}
 	}
 
-	// Tratando a data de Nascimento
-	// Falta tratar essa excecao
-	private void recebeDataNascimento(String dataRecebida) throws ParseException  {
-		Date data = new SimpleDateFormat("dd/MM/yyyy").parse(dataRecebida);  // transforma o aquivo recebido para Date()
-		this.nascimento = new SimpleDateFormat("yyyy-MM-dd").format(data);
-
-	}
-	
 	private void atualizaPops() {
 		int pops = 0;
 		for (Post post: posts) {
@@ -323,4 +333,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.feed.atualizaFeed(this.amigos);
 	}
 	
+	public String getConteudoPost(int indice, int post) {
+		return this.posts.get(post).getMidias(indice);
+	}
 }
