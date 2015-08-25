@@ -2,6 +2,7 @@ package logica;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -95,7 +96,10 @@ public class Util {
 	
 	public boolean verificaFormatoData(String data) {
 		
-		String[] dataS = data.split("/");
+		String[] dataHorario = data.split(" ");
+			if(dataHorario.length != 2) { return false; }
+		String[] dataS = dataHorario[0].split("/");
+		
 		if (dataS.length != 3) {
 			return false;
 		}
@@ -115,7 +119,8 @@ public class Util {
 	
 	public boolean verificaDataValida(String data) {
 		try {	
-			String[] dataS = data.split("/");
+			String[] dataHorario = data.split(" ");
+			String[] dataS = dataHorario[0].split("/");
 			int dia = Integer.parseInt(dataS[0]);
 			int mes = Integer.parseInt(dataS[1]);
 			int ano = Integer.parseInt(dataS[2]);
@@ -164,6 +169,69 @@ public class Util {
 			
 		}
 		return conteudo;
+	}
+	
+	public boolean verificaFormatoHora(String data) {
+	
+		String[] dataHorario = data.split(" ");
+			if(dataHorario.length != 2) { return false; }
+		String[] horaS = dataHorario[1].split(":");
+		
+		if (horaS.length != 3) {
+			return false;
+		}
+		
+		for (String item: horaS) {
+			if (item.length() != 2) {
+				return false;
+			}
+
+		if (!(horaS[0].matches("^[0-9]*$")) ||
+		    !(horaS[1].matches("^[0-9]*$")) ||
+			!(horaS[2].matches("^[0-9]*$")) ) {
+			return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean verificaHoraValida(String data) {
+
+		String[] dataHorario = data.split(" ");
+		String[] horaS = dataHorario[1].split(":");
+		
+		int hora = Integer.parseInt(horaS[0]); 
+		int minuto = Integer.parseInt(horaS[1]); 
+		int segundo = Integer.parseInt(horaS[2]); 
+		
+		if (hora < 0 || hora >= 24) {
+			return false;
+		} 
+		if (minuto < 0 || minuto >= 60) {
+			return false;
+		}
+		if (segundo < 0 || segundo >= 60) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public LocalDateTime converteParaData(String data) {
+		
+		String[] dataHora = data.split(" ");
+		
+		String[] dataS = dataHora[0].split("/");
+		int ano = Integer.parseInt(dataS[2]);
+		int mes = Integer.parseInt(dataS[1]);
+		int dia = Integer.parseInt(dataS[0]);
+		
+		String[] horaS = dataHora[1].split(":");
+		int hora = Integer.parseInt(horaS[0]);
+		int min = Integer.parseInt(horaS[1]);
+		int seg = Integer.parseInt(horaS[2]);
+		
+		return LocalDateTime.of(ano, mes, dia, hora, min, seg);
 	}
 	
 }

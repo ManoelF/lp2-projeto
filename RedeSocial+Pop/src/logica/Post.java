@@ -2,18 +2,18 @@ package logica;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
+import util.ConverterException;
 import exceptions.*;
 
 public class Post implements Comparable<Post>, Comparator<Post> {
 
 	private String texto;
-	private String dataAtual;
-	private Date data;
+	private LocalDateTime data;
 	private String conteudo; 
 	private int like;
 	private int deslike;
@@ -26,6 +26,19 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		if (texto == null || texto.trim().length() == 0) {
 			// lancar Exception
 		}
+		if (Util.getInstancia().verificaFormatoData(data) == false) {
+			// lanca execao data formato invalido
+		}
+		if (Util.getInstancia().verificaFormatoHora(data) == false) {
+			// lanca execao data formato invalido
+		}
+		if (Util.getInstancia().verificaDataValida(data) == false) {
+			// lanca excecao data invalida
+		}
+		if (Util.getInstancia().verificaHoraValida(data) == false) {
+			// lanca excecao data invalida
+		}
+
 		
 		this.texto = texto;
 		this.popularidade = 0;
@@ -33,13 +46,11 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		this.deslike = 0;
 		this.hashtags = Util.getInstancia().encontraHashtag(texto);
 		this.midias = new ArrayList<>();
-		buscaConteudo(texto);
-		converteData(data);
-		buscaMidia(texto);
-		buscaMidia(texto);
-		verificaTam(texto);
-				
+		this.data = Util.getInstancia().converteParaData(data);
 		
+		buscaConteudo(texto);
+		buscaMidia(texto);
+		verificaTam(texto);			
 	}
 
 	private void verificaTam(String texto) throws PostException {
@@ -51,7 +62,11 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		}
 	}
 	
-	public Date getData() {
+	public String getDataString() {
+		return this.data.toString().replace("T", " ");
+	}
+	
+	public LocalDateTime getData() {
 		return this.data;
 	}
 	
@@ -59,10 +74,6 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		return this.midias.get(indice).getCaminho();
 	}
 	
-	public String getDataAtual() {
-		return this.dataAtual;
-	}
-
 	public String getTexto() {
 		return texto;
 	}
@@ -133,19 +144,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		}
 		return hastags;
 	}
-		
-	// tratando a data
-	private void converteData(String novaData) throws ParseException {
-		try {
-		Date data1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(novaData);  // transforma o aquivo recebido para Date()
-		
-		this.dataAtual = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(data1);  // deixa no formato esperado nos arq de teses
-		this.data = data1;
-		} catch(ParseException e) {
-			throw new ParseException("Erro aqui em", 0);
-		}
-	}
-	
+			
 	public void curtir(int pontos) {
 		this.like += 1;
 		this.popularidade += pontos;
@@ -159,7 +158,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
  	@Override
 	public int compareTo(Post outroPost) {
  		return this.data.compareTo(outroPost.getData());
-	}
+ 	}
 
 	@Override
 	public int compare(Post o1, Post o2) {
@@ -169,7 +168,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 
 	public String getPost(String atributo) {
 		if (atributo.equals("Data")) {
-			return this.dataAtual;
+			return getDataString();
 		} else if (atributo.equals("Conteudo")) {
 			return getConteudo();
 		} else if (atributo.equals("Hashtags")) {
@@ -180,7 +179,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	}
 	
 	public String getPost() {
-		return this.texto + " (" + this.dataAtual + ")";
+		return this.texto + " (" + getDataString() + ")";
 	}
 	
 	private void buscaMidia(String mensagem) {
@@ -197,4 +196,14 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	public String getMidias() {
 		return this.midias.toString();
 	}
+
+	public boolean comparaData(LocalDateTime outroData) {
+		if (this.data.getMonth() != outroData.getMonth() &&
+			this.data.getYear() != outroData.getYear() &&
+			this.data.getDayOfMonth() != outroData.getDayOfMonth() ) {
+				return false;
+			}
+		return true;		
+	}
+		
 }

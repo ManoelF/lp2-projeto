@@ -228,14 +228,14 @@ public class Usuario implements Comparable<Usuario> {
 	public void curtir(Usuario usuario, int indice) {
 		Post post = usuario.getPost(indice);
 		this.popularidade.curtir(post);
-		usuario.notificacoes.add(this.nome + " curtiu seu post de " + post.getDataAtual() + ".");
+		usuario.notificacoes.add(this.nome + " curtiu seu post de " + post.getDataString() + ".");
 		usuario.atualizaPopularidade();
 	}
 	
 	public void descurtir(Usuario usuario, int indice) {
 		Post post = usuario.getPost(indice);
 		this.popularidade.descurtir(post);
-		usuario.notificacoes.add(this.nome + " descurtiu seu post de " + post.getDataAtual() + ".");
+		usuario.notificacoes.add(this.nome + " descurtiu seu post de " + post.getDataString() + ".");
 		usuario.atualizaPopularidade();
 	}
 

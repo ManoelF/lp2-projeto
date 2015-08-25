@@ -230,6 +230,7 @@ public class TesteUsuario {
 
 			
 		} catch(Exception erro) {
+			System.out.println(erro.getMessage());
 			Assert.fail();
 		}
 		
