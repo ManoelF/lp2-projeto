@@ -16,91 +16,10 @@ public class Datastest {
 	@Test
 	public void test() {
 
-		String data = "2001/02/22 11:40:13";
+		//String data = "2001/02/22 11:40:13";
 		//String texto = "Nao sei porque tanto recalque, o que eh bonito eh pra se mostrar.";
 		//System.out.println(encontraTexto(texto));
-		
-		String[] dataHora = data.split(" ");
-		
-		String[] dataS = dataHora[0].split("/");
-		int ano = Integer.parseInt(dataS[0]);
-		int mes = Integer.parseInt(dataS[1]);
-		int dia = Integer.parseInt(dataS[2]);
-		
-		String[] horaS = dataHora[1].split(":");
-		int hora = Integer.parseInt(horaS[0]);
-		int min = Integer.parseInt(horaS[1]);
-		int seg = Integer.parseInt(horaS[2]);
-		
-		LocalDateTime.of(ano, mes, dia, hora, min, seg);
-		
-		//Util.getInstancia().converteParaData(data);
-
 	}
 
-			
-	public boolean verificaFormatoData(String data) {
-			
-		String[] dataS = data.split("/");
-		if (dataS.length != 3) {
-			return false;
-		}
-		if (!(dataS[0].matches("^[0-9]*$")) ||
-		    !(dataS[1].matches("^[0-9]*$")) ||
-			!(dataS[2].matches("^[0-9]*$")) ) {
-				return false;
-		    }
-				
-		return true;
-	}
-	
-	public boolean verificaDataValida(String data) {
-		try {	
-			String[] dataS = data.split("/");
-			int dia = Integer.parseInt(dataS[0]);
-			int mes = Integer.parseInt(dataS[1]);
-			int ano = Integer.parseInt(dataS[2]);
-			LocalDate dat = LocalDate.of(ano, mes, dia);
-			System.out.println(dat.toString());
-			return true;
-		} catch (DateTimeException erro) {
-			System.out.println(erro.getMessage());
-			return false;
-		}
-	
-	}
-	
-	public String encontraTexto(String texto) {
-		char[] novoTexto = texto.toCharArray();
-		String conteudo = "";
-		String chave = "";
-		boolean inicia = false;
-		int pos = 0;
-		int cont = 0;
-		for (char caracter: novoTexto) {
-			cont += 1;
-			if (caracter == '<') {
-				pos = cont;
-				inicia = true;
-			}else if (caracter == '>' ) { 
-				if (chave.contains("audio") || chave.contains("imagem")) {
-					
-					return conteudo.substring(0, pos - 2);
-				}
-				
-			} else if (inicia) {
-				chave += caracter;
-			} else if (caracter == '#') {
-				pos = cont;
-				return conteudo.substring(0, pos - 2);
-			} else {
-				conteudo += caracter;
-			}
-			
-		}
-		return conteudo;
-	}
 
-	
-	
 }
