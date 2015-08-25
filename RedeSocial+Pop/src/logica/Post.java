@@ -13,7 +13,6 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 
 	private String texto;
 	private LocalDateTime data;
-	private String conteudo; 
 	private int like;
 	private int deslike;
 	private int popularidade;
@@ -52,7 +51,6 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		this.midias = new ArrayList<>();
 		this.data = Util.getInstancia().converteParaData(data);
 		
-		buscaConteudo(texto);
 		buscaMidia(texto);
 		verificaTam(texto);			
 	}
@@ -67,6 +65,9 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	}
 	
 	public String getDataString() {
+		if (this.data.getSecond() == 0) {
+			return this.data.toString().replace("T", " ") + ":00";
+		}
 		return this.data.toString().replace("T", " ");
 	}
 	
@@ -75,7 +76,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	}
 	
 	public String getMidias(int indice) {
-		return this.midias.get(indice).getCaminho();
+		return this.midias.get(indice).toString();
 	}
 	
 	public String getTexto() {
@@ -102,6 +103,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		this.deslike = deslike;
 	}
 
+	
 	public int getPopularidade() {
 		return popularidade;
 	}
@@ -110,31 +112,18 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		this.popularidade = popularidade;
 	}
 
+	
 	public List<String> getHashtags() {
 		return hashtags;
 	}
 
+	
 	public void setHashtags(List<String> hashtags) {
 		this.hashtags = hashtags;
 	}
 	
-	public String getConteudo() {
-		return this.conteudo;
-	}
 	
-	private void buscaConteudo(String conteudo) {
-		String novoConteudo = "";
-		char[] novaMsg = this.texto.toCharArray();
-		for (char caracter: novaMsg) {
-			if (caracter == '#' ) {
-				novoConteudo = novoConteudo.substring(0, novoConteudo.length() -1);
-				break;
-			}
-			novoConteudo += caracter;
-			
-		}
-		this.conteudo = novoConteudo;
-	} 
+	
 	
 	private String getHashtagsStr() {
 		String hastags = "";
@@ -149,20 +138,24 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		return hastags;
 	}
 			
+	
 	public void curtir(int pontos) {
 		this.like += 1;
 		this.popularidade += pontos;
 	}
 	
+	
 	public void descurtir(int pontos) {
 		this.deslike += 1;
 		this.popularidade -= pontos;
 	}
+	
 
  	@Override
-	public int compareTo(Post outroPost) {
+ 	public int compareTo(Post outroPost) {
  		return this.data.compareTo(outroPost.getData());
  	}
+ 	
 
 	@Override
 	public int compare(Post o1, Post o2) {
@@ -170,6 +163,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		return 0;
 	}
 
+	
 	public String getPost(String atributo) {
 		if (atributo.equals("Data")) {
 			return getDataString();
@@ -182,25 +176,32 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		}
 	}
 	
+	
 	public String getPost() {
 		return this.texto + " (" + getDataString() + ")";
 	}
 	
+	
 	private void buscaMidia(String mensagem) {
 		FactoryMidia factoryMidia = new FactoryMidia();
 		List<String> listMidias = Util.getInstancia().getMidia(mensagem);
-		//System.out.println(Util.getInstancia().encontraTexto(mensagem) + "-->");
+		
 		Midia mensagem2 = new Mensagem(Util.getInstancia().encontraTexto(mensagem));
-		this.midias.add(mensagem2);
+		if (!mensagem2.toString().equals("")) {
+			this.midias.add(mensagem2);
+		}
+		
 		for (String arquivo: listMidias) {
 			this.midias.add(factoryMidia.obtemMidias(arquivo));
 		}
 	}
 	
+	
 	public String getMidias() {
 		return this.midias.toString();
 	}
 
+	
 	public boolean comparaData(LocalDateTime outroData) {
 		if (this.data.getMonth() != outroData.getMonth() &&
 			this.data.getYear() != outroData.getYear() &&
@@ -210,4 +211,31 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		return true;		
 	}
 		
+
+	private String getConteudo() {
+		String novoConteudo = "";
+		char[] novaMsg = this.texto.toCharArray();
+		for (char caracter: novaMsg) {
+			if (caracter == '#' ) {
+				novoConteudo = novoConteudo.substring(0, novoConteudo.length() -1);
+				break;
+			}
+			novoConteudo += caracter;
+			
+		}
+		return novoConteudo;
+	} 
+	
+	public String getConteudoPost(int indice) throws LogicaException {
+		if (indice > this.midias.size()) {
+			// lancar excecao de indice fora do tam
+			throw new LogicaException("Alterar essa excecao.");
+		} else if (indice < 0) {
+			// lancar excecao indice invalido
+			throw new LogicaException("Alterar essa excecao.");
+		} else {
+			return this.midias.get(indice).toString();
+		}
+		
+	}		
 }

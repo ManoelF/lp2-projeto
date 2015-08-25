@@ -273,7 +273,7 @@ public class Controller {
 		return this.usuarioLogado.getPost(atributo, post);
 	}
 	
-	public String getConteudoPost(int indice, int post) {
+	public String getConteudoPost(int indice, int post) throws LogicaException {
 		return this.usuarioLogado.getConteudoPost(indice, post);
 	}
 	
