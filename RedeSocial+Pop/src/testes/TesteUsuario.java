@@ -78,10 +78,8 @@ public class TesteUsuario {
 			Assert.assertEquals("resources/default.jpg", maria.getImagem());
 
 		} catch (CadastroInvalidoException erro) {
-			Assert.fail();
-		} catch(ParseException erro) {
-			Assert.fail();
-		}
+			System.out.println(erro.getMessage());
+		} 
 
 	}
 	
@@ -110,8 +108,6 @@ public class TesteUsuario {
 			Assert.fail();
 		} catch(AtualizaPerfilException erro) {
 			Assert.fail();
-		} catch(ParseException erro) {
-			Assert.fail();
 		} catch (EntradaException erro) {
 			Assert.fail();
 		}
@@ -128,8 +124,6 @@ public class TesteUsuario {
 
 		} catch(AtualizaPerfilException erro) {
 			Assert.assertEquals("Erro na atualizacao de perfil. Nome dx usuarix nao pode ser vazio.", erro.getMessage());
-		} catch(ParseException erro) {
-			Assert.fail();
 		}
 
 		try {
@@ -142,8 +136,6 @@ public class TesteUsuario {
 			Assert.fail();
 		} catch(AtualizaPerfilException erro) {
 			Assert.assertEquals("Erro na atualizacao de perfil. Formato de e-mail esta invalido.", erro.getMessage());
-		} catch(ParseException erro) {
-			Assert.fail();
 		}
 
 		try {
@@ -155,11 +147,7 @@ public class TesteUsuario {
 			Assert.fail();
 		} catch(AtualizaPerfilException erro) {
 			//alterar msg
-			Assert.assertEquals("Erro na atualizacao do perfil.", erro.getMessage());
-		} catch(ParseException erro) {
-			//Assert.assertEquals("Unparseable date: ", erro.getMessage());   <<RESOLVER>>
-			Assert.assertEquals("Data inserida invalida", erro.getMessage());
-			//alterar msg
+			Assert.assertEquals("Erro na atualizacao de perfil. Formato de data esta invalida.", erro.getMessage());
 		}
 
 		try {
@@ -172,8 +160,6 @@ public class TesteUsuario {
 		} catch(AtualizaPerfilException erro) {
 			//alterar msg
 			Assert.assertEquals("Erro na atualizacao de perfil.", erro.getMessage());
-		} catch(ParseException erro) {
-			Assert.fail();
 		}
 		
 		try {
@@ -205,7 +191,7 @@ public class TesteUsuario {
 			
 			// Criar Post
 			joao.criaPost(post, data);
-			Assert.assertEquals("O fraco nunca perdoa. O perdão é a característica do forte. <audio>musicas/perdao.mp3</audio> ", joao.getConteudo("Conteudo",  0));
+			Assert.assertEquals("O fraco nunca perdoa. O perdão é a característica do forte. <audio>musicas/perdao.mp3</audio>", joao.getConteudo("Conteudo",  0));
 			Assert.assertEquals("#Gandhi,#Fort,#Perdao", joao.getConteudo("Hashtags", 0));
 			Assert.assertEquals("2015-08-09 00:12:32", joao.getConteudo("Data", 0));
 			

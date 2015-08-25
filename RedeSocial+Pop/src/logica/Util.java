@@ -90,9 +90,7 @@ public class Util {
 	
 	public boolean verificaFormatoData(String data) {
 		
-		String[] dataHorario = data.split(" ");
-			if(dataHorario.length != 2) { return false; }
-		String[] dataS = dataHorario[0].split("/");
+		String[] dataS = data.split("/");
 		
 		if (dataS.length != 3) {
 			return false;
@@ -101,10 +99,10 @@ public class Util {
 		    !(dataS[1].matches("^[0-9]*$")) ||
 			!(dataS[2].matches("^[0-9]*$")) ) {
 				return false;
-		    }
+		}
 		if (dataS[0].length() > 2 ||
-			dataS[0].length() > 12 ||
-			dataS[0].length() > 4 ) {
+			dataS[1].length() > 2 ||
+			dataS[2].length() > 4 ) {
 			return false;
 		}
 				
@@ -113,8 +111,7 @@ public class Util {
 	
 	public boolean verificaDataValida(String data) {
 		try {	
-			String[] dataHorario = data.split(" ");
-			String[] dataS = dataHorario[0].split("/");
+			String[] dataS = data.split("/");
 			int dia = Integer.parseInt(dataS[0]);
 			int mes = Integer.parseInt(dataS[1]);
 			int ano = Integer.parseInt(dataS[2]);
@@ -165,11 +162,9 @@ public class Util {
 		return conteudo;
 	}
 	
-	public boolean verificaFormatoHora(String data) {
+	public boolean verificaFormatoHora(String hora) {
 	
-		String[] dataHorario = data.split(" ");
-			if(dataHorario.length != 2) { return false; }
-		String[] horaS = dataHorario[1].split(":");
+		String[] horaS = hora.split(":");
 		
 		if (horaS.length != 3) {
 			return false;
@@ -189,10 +184,9 @@ public class Util {
 		return true;
 	}
 	
-	public boolean verificaHoraValida(String data) {
+	public boolean verificaHoraValida(String horario) {
 
-		String[] dataHorario = data.split(" ");
-		String[] horaS = dataHorario[1].split(":");
+		String[] horaS = horario.split(":");
 		
 		int hora = Integer.parseInt(horaS[0]); 
 		int minuto = Integer.parseInt(horaS[1]); 

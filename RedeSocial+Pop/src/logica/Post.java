@@ -1,6 +1,5 @@
 package logica;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,20 +21,25 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	private List<Midia> midias;
 
 	// data e hora
-	public Post(String texto, String data) throws PostException, ParseException {
+	public Post(String texto, String data) throws PostException {
 		if (texto == null || texto.trim().length() == 0) {
 			// lancar Exception
 		}
-		if (Util.getInstancia().verificaFormatoData(data) == false) {
+		
+		String[] dataHorario = data.split(" ");
+		String dataS = dataHorario[0];
+		String horaS = dataHorario[1];
+		
+		if (Util.getInstancia().verificaFormatoData(dataS) == false) {
 			// lanca execao data formato invalido
 		}
-		if (Util.getInstancia().verificaFormatoHora(data) == false) {
+		if (Util.getInstancia().verificaFormatoHora(horaS) == false) {
 			// lanca execao data formato invalido
 		}
-		if (Util.getInstancia().verificaDataValida(data) == false) {
+		if (Util.getInstancia().verificaDataValida(dataS) == false) {
 			// lanca excecao data invalida
 		}
-		if (Util.getInstancia().verificaHoraValida(data) == false) {
+		if (Util.getInstancia().verificaHoraValida(horaS) == false) {
 			// lanca excecao data invalida
 		}
 
