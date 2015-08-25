@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.junit.Test;
 
@@ -13,9 +14,11 @@ public class Datastest {
 	@Test
 	public void test() {
 
-		String data = "29/02/2001" ;
-		String texto = "Nao sei porque tanto recalque, o que eh bonito eh pra se mostrar.";
-		System.out.println(encontraTexto(texto));
+		//String data = "29/02/2001" ;
+		//String texto = "Nao sei porque tanto recalque, o que eh bonito eh pra se mostrar.";
+		//System.out.println(encontraTexto(texto));
+		LocalDateTime tempo = LocalDateTime.of(2014, 10, 10, 12, 20, 30); 
+		System.out.println(tempo.toString().replace("T", " "));
 
 	}
 

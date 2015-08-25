@@ -2,6 +2,7 @@ package logica;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;

@@ -128,5 +128,9 @@ public class Facade {
  * At line 58: gal_costa@email.com --> gal_costa@email.com.br // usecase_1.txt
  * At line 54: "madonna@email.com" --> "madona@email.com"
  * At line 26: Nao deveria dar erro pq a senha esta correta por ter sido alterada anteriomente (mudado para will_S2) // usecase_2.txt
+ * At line 39, 40 e 43 --> erro nos test. Estão pedindo as informações de um post e comparando com a de outros
+ * mais especificamente, pedem as informacoes do post=1 mas querrem realmente a do post=2
+ * 
+ * 
  */
 }
