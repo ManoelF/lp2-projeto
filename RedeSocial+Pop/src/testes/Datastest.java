@@ -6,6 +6,8 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import logica.Util;
+
 import org.junit.Test;
 
 public class Datastest {
@@ -14,16 +16,29 @@ public class Datastest {
 	@Test
 	public void test() {
 
-		//String data = "29/02/2001" ;
+		String data = "2001/02/22 11:40:13";
 		//String texto = "Nao sei porque tanto recalque, o que eh bonito eh pra se mostrar.";
 		//System.out.println(encontraTexto(texto));
-		LocalDateTime tempo = LocalDateTime.of(2014, 10, 10, 12, 20, 30); 
-		System.out.println(tempo.toString().replace("T", " "));
+		
+		String[] dataHora = data.split(" ");
+		
+		String[] dataS = dataHora[0].split("/");
+		int ano = Integer.parseInt(dataS[0]);
+		int mes = Integer.parseInt(dataS[1]);
+		int dia = Integer.parseInt(dataS[2]);
+		
+		String[] horaS = dataHora[1].split(":");
+		int hora = Integer.parseInt(horaS[0]);
+		int min = Integer.parseInt(horaS[1]);
+		int seg = Integer.parseInt(horaS[2]);
+		
+		LocalDateTime.of(ano, mes, dia, hora, min, seg);
+		
+		//Util.getInstancia().converteParaData(data);
 
 	}
 
-	
-	
+			
 	public boolean verificaFormatoData(String data) {
 			
 		String[] dataS = data.split("/");
@@ -85,4 +100,7 @@ public class Datastest {
 		}
 		return conteudo;
 	}
+
+	
+	
 }

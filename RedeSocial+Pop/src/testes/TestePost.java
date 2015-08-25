@@ -21,12 +21,12 @@ public class TestePost {
 
 		try {
 			textoUm = "bom dia amigos faces passem bem! <imagem>imagens/bomDia.jpg</imagem> #Chang #Italo #Manoel";
-			data = "01/08/2015 12:00:00";
+			data = "01/08/2015 12:00:10";
 			postUm = new Post(textoUm, data);
 			
 			Assert.assertEquals("bom dia amigos faces passem bem! <imagem>imagens/bomDia.jpg</imagem>", postUm.getPost("Conteudo"));
 			Assert.assertEquals("#Chang,#Italo,#Manoel", postUm.getPost("Hashtags"));
-			Assert.assertEquals("2015-08-01 12:00:00", postUm.getPost("Data"));
+			Assert.assertEquals("2015-08-01 12:00:10", postUm.getPost("Data"));
 //			Assert.assertEquals("$arquivo_imagem:imagens/bomDia.jpg", postUm.getMidias(0));
 			
 			textoUm = "Hoje o sol me acordou. Foi muito cansativo sair da cama pois ainda estava com muito sono. Gostaria ter mais tempo para dormir. Ainda bem que tinha tapioca e cuscuz no cafe da manha para dar  energia. <imagem>imagens/bomDia.jpg</imagem> #cafe #acorda";
@@ -38,6 +38,8 @@ public class TestePost {
 			System.out.println(erro.getMessage());
 			Assert.fail();
 		} catch (ParseException erro){ 
+			Assert.fail();
+			System.out.println(erro.getMessage());
 			Assert.fail();
 		}
 
