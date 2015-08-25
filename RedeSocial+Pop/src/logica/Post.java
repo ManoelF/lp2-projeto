@@ -22,12 +22,11 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	private List<Midia> midias;
 
 	// data e hora
-
 	public Post(String texto, String data) throws PostException, ParseException {
 		if (texto == null || texto.trim().length() == 0) {
 			// lancar Exception
 		}
-		//verificaTam(texto);
+		
 		this.texto = texto;
 		this.popularidade = 0;
 		this.like = 0;
@@ -51,7 +50,6 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 			this.texto = texto;
 		}
 	}
-
 	
 	public Date getData() {
 		return this.data;
@@ -123,7 +121,6 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		this.conteudo = novoConteudo;
 	} 
 	
-	
 	private String getHashtagsStr() {
 		String hastags = "";
 		int  cont = 0;
@@ -136,8 +133,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		}
 		return hastags;
 	}
-	
-	
+		
 	// tratando a data
 	private void converteData(String novaData) throws ParseException {
 		try {
@@ -149,9 +145,6 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 			throw new ParseException("Erro aqui em", 0);
 		}
 	}
-	
-
-	
 	
 	public void curtir(int pontos) {
 		this.like += 1;
@@ -190,17 +183,17 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		return this.texto + " (" + this.dataAtual + ")";
 	}
 	
-	
 	private void buscaMidia(String mensagem) {
 		FactoryMidia factoryMidia = new FactoryMidia();
 		List<String> listMidias = Util.getInstancia().getMidia(mensagem);
-		System.out.println(Util.getInstancia().encontraTexto(mensagem) + "-->");
+		//System.out.println(Util.getInstancia().encontraTexto(mensagem) + "-->");
 		Midia mensagem2 = new Mensagem(Util.getInstancia().encontraTexto(mensagem));
 		this.midias.add(mensagem2);
 		for (String arquivo: listMidias) {
 			this.midias.add(factoryMidia.obtemMidias(arquivo));
 		}
 	}
+	
 	public String getMidias() {
 		return this.midias.toString();
 	}

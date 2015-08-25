@@ -12,18 +12,14 @@ import exceptions.PostException;
 
 public class Util {
 	
-	private static Util INSTANCIA;
+	private static Util INSTANCIA = new Util();
 	
 	private Util() {
 		
 	}
 
-
-    public static Util getInstancia() {  
-    	if (INSTANCIA == null) {  
-    		INSTANCIA = new Util();
-    	}
-        return INSTANCIA;  
+    public static Util getInstancia() {
+        return INSTANCIA;
      }
 
 	public List<String> getMidia(String mensagem) {
@@ -91,8 +87,6 @@ public class Util {
 		}
 		return hashtags;
 	}
-	
-	
 	
 	public boolean verificaFormatoData(String data) {
 		
