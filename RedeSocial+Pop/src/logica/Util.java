@@ -2,7 +2,6 @@ package logica;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -12,14 +11,18 @@ import exceptions.PostException;
 
 public class Util {
 	
-	private static Util INSTANCIA = new Util();
+	private static Util INSTANCIA;
 	
 	private Util() {
 		
 	}
 
-    public static Util getInstancia() {
-        return INSTANCIA;
+
+    public static Util getInstancia() {  
+    	if (INSTANCIA == null) {  
+    		INSTANCIA = new Util();
+    	}
+        return INSTANCIA;  
      }
 
 	public List<String> getMidia(String mensagem) {
@@ -87,6 +90,8 @@ public class Util {
 		}
 		return hashtags;
 	}
+	
+	
 	
 	public boolean verificaFormatoData(String data) {
 		
