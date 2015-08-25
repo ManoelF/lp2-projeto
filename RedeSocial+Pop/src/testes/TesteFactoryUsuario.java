@@ -21,7 +21,7 @@ public class TesteFactoryUsuario {
 		
 			usuario = factory.criaUsuario("kerilin", "kerilinchang@gmail.com", "teste123",
 				"23/03/1994", "imagem/avatar");
-		
+					
 			Assert.assertEquals("kerilin", usuario.getNome());
 			Assert.assertEquals("kerilinchang@gmail.com", usuario.getEmail());
 			Assert.assertEquals("teste123", usuario.getSenha());

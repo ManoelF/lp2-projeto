@@ -26,7 +26,7 @@ public class Usuario implements Comparable<Usuario> {
 
 	
 	// Foi adicionado o throws ParseException, deve ser tratado
- 	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException, ParseException {
+ 	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException {
 
 		if (nome == null || nome.trim().length() == 0){
 			throw new CadastroInvalidoException(" Nome dx usuarix nao pode ser vazio.");
@@ -70,7 +70,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.popularidade = new Normal();
 	}
  	
- 	public Usuario(String nome, String email, String senha, String nascimento) throws CadastroInvalidoException, ParseException {
+ 	public Usuario(String nome, String email, String senha, String nascimento) throws CadastroInvalidoException {
  		this(nome, email, senha, nascimento, "resources/avatarDefaul.jpg");//eu num disse que dava!
 	}
  	
@@ -161,7 +161,7 @@ public class Usuario implements Comparable<Usuario> {
 	// controlar as excecoes de formato e data invalidas
 	public void setNascimento(String novoNascimento) throws AtualizaPerfilException {
 		if (novoNascimento == null || novoNascimento.trim().length() == 0) {
-			throw new AtualizaPerfilException("Data inserida invalida");
+			throw new AtualizaPerfilException(" Formato de data esta invalida.");
 		}
 		if (Util.getInstancia().verificaFormatoData(novoNascimento) == false) {
 			throw new AtualizaPerfilException(" Formato de data esta invalida.");
@@ -243,7 +243,7 @@ public class Usuario implements Comparable<Usuario> {
 		return this.imagem;
 	}
 	
-	public void criaPost(String mensagem, String data) throws PostException, ParseException {
+	public void criaPost(String mensagem, String data) throws PostException {
 		Post novoPost = new Post(mensagem, data);
 		this.posts.add(novoPost);
 	}

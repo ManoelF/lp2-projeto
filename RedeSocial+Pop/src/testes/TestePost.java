@@ -33,13 +33,9 @@ public class TestePost {
 			postUm = new Post(textoUm, data);
 			//System.out.println(postUm.getPost("Conteudo"));
 		//	System.out.println(postUm.getMidias(1));
-			System.out.println(postUm.getMidias());
+		//	System.out.println(postUm.getMidias());
 		} catch (PostException erro) {
-			System.out.println(erro.getMessage());
-			Assert.fail();
-		} catch (ParseException erro){ 
-			Assert.fail();
-			System.out.println(erro.getMessage());
+		//	System.out.println(erro.getMessage());
 			Assert.fail();
 		}
 
