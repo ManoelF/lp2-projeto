@@ -333,7 +333,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.feed.atualizaFeed(this.amigos);
 	}
 	
-	public String getConteudoPost(int indice, int post) {
-		return this.posts.get(post).getMidias(indice);
+	public String getConteudoPost(int indice, int post) throws LogicaException {
+		return this.posts.get(post).getConteudoPost(indice);
 	}
 }

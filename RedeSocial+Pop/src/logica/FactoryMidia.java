@@ -13,8 +13,11 @@ public class FactoryMidia {
 		} else if (midia.contains("$arquivo_audio")) {
 			this.midia = new Audio(midia);
 			return this.midia;
-		} else {
-			this.midia = new Video("$arquivo_video");
+		} else if (midia.contains("$arquivo_video")) {
+			this.midia = new Video(midia);
+			return this.midia;
+		} else { //Mensagem
+			this.midia = new Mensagem(midia);
 			return this.midia;
 		}
 	}

@@ -74,8 +74,7 @@ public class Facade {
 		return this.controller.getPost(atributo, post);
 	}	
 	
-	public String getConteudoPost(int indice, int post) {
-		System.out.println(this.controller.getConteudoPost(indice, post));
+	public String getConteudoPost(int indice, int post) throws LogicaException {
 		return this.controller.getConteudoPost(indice, post);
 	}
 	

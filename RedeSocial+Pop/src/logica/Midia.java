@@ -2,10 +2,10 @@ package logica;
 
 public abstract class Midia {
 	
-	protected String caminho;
+	protected String valor;
 	
-	public String getCaminho() {
-		return this.caminho;
+	public String toString() {
+		return this.valor;
 	}
 	
 }
