@@ -20,7 +20,7 @@ public class Datastest {
 	public void test() {
 		try {
 			Usuario user = new Usuario("ze", "ze@email.com", "1213", "10/05/1990");
-		} catch (CadastroInvalidoException | ParseException e) {
+		} catch (CadastroInvalidoException e) {
 			System.out.println(e.getMessage());
 		}
 	}
