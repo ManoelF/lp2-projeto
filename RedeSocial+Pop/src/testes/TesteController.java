@@ -1,6 +1,8 @@
 package testes;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import logica.*;
 import exceptions.*;
@@ -26,9 +28,7 @@ public class TesteController {
 			Assert.assertEquals("Day", controller.getInfoUsuario("Nome", controller.getUsuariosCadastrados().get(0).getEmail()));
 		} catch (CadastroInvalidoException erro) {
 			Assert.fail();
-		} catch(ParseException erro) {
-			Assert.fail();
-		}
+		} 
 	}
 	
 	@Test
@@ -37,9 +37,7 @@ public class TesteController {
 			controller.cadastraUsuario("", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
 		} catch (CadastroInvalidoException erro) {
 			Assert.assertEquals("Erro no cadastro de Usuarios. Nome dx usuarix nao pode ser vazio.", erro.getMessage());
-		} catch(ParseException erro) {
-			Assert.fail();
-		}
+		} 
 		
 		try {
 			controller.cadastraUsuario("Maria Lucia Oliveira", "maria.oliveira@hotmail.com", "feiradefruta", "07/03/1976", "imagens/maria_perfil");
@@ -58,9 +56,7 @@ public class TesteController {
 			Assert.assertEquals("Day", controller.getUsuarioLogado().getNome());
 		} catch (LogicaException erro) {
 			Assert.fail();
-		} catch(ParseException erro) {
-			Assert.fail();
-		}
+		} 
 	}
 	
 	@Test
@@ -75,9 +71,7 @@ public class TesteController {
 			controller.login("stive.anderson@email.com", "indiegente");
 		} catch (LogicaException erro) {
 			Assert.assertEquals("Nao foi possivel realizar login. Um usuarix ja esta logadx: Day.", erro.getMessage());
-		} catch(ParseException erro) {
-			Assert.fail();
-		}
+		} 
 		
 		controller.logout();
 		
@@ -106,9 +100,7 @@ public class TesteController {
 			Assert.assertEquals(null, controller.getUsuarioLogado());
 		} catch (LoginException erro) {
 			Assert.fail();
-		} catch(ParseException erro) {
-			Assert.fail();
-		}
+		} 
 	}
 	
 	@Test
@@ -141,9 +133,7 @@ public class TesteController {
 			Assert.fail();
 		} catch (EntradaException erro) {
 			Assert.fail();
-		} catch (ParseException erro) {
-			Assert.fail();
-		}		
+		} 		
 	}
 	
 	@Test
@@ -415,9 +405,6 @@ public class TesteController {
 			controller.login("fatima@email.com.br", "will_S2");
 			controller.atualizaPerfil("Senha", "fafa_S2", "will_S2");
 			controller.atualizaPerfil("Senha", "fafa123", "fafa_S2");
-			//login email="fatima@email.com.br" senha="will_S2"
-			//atualizaPerfil atributo="Senha" valor="fafa_S2" velhaSenha="will_S2"
-			//atualizaPerfil atributo="Senha" valor="fafa123" velhaSenha="fafa_S2"
 			
 			Assert.assertEquals("fatima@email.com.br", controller.getUsuariosCadastrados().get(0).getEmail());
 			Assert.assertEquals("fafa123",  controller.getsenha());
@@ -433,6 +420,42 @@ public class TesteController {
 		} catch(AtualizaPerfilException erro) {
 			Assert.assertEquals("Nao eh possivel atualizar um perfil. Nenhum usuarix esta logadx no +pop.", erro.getMessage());
 		}
+	}
+
+	@Test
+	public void notificacoes() {
+		
+		try {
+			controller.cadastraUsuario("Cat Power", "catpower@email.com", "sapatomica", "21/02/1972", "imagem/cat_perfil");
+			controller.cadastraUsuario("Lana Del Rey", "lizzygrant@email.com", "wishiwasdead", "21/06/1985", "imagem/lana_perfil");
+			
+			controller.login("catpower@email.com", "sapatomica");
+			controller.adicionaAmigo("lizzygrant@email.com");
+			controller.criaPost("Bom dia.", "21/05/2015 12:00:11");
+			controller.logout();
+			
+			controller.login("lizzygrant@email.com", "wishiwasdead");
+			controller.aceitaAmizade("catpower@email.com");
+			controller.curtirPost("catpower@email.com", 0);
+			controller.descurtirPost("catpower@email.com", 0);
+			controller.logout();
+			
+			controller.login("catpower@email.com", "sapatomica");
+			Assert.assertTrue(controller.getNotificacoes() == 2);
+			Assert.assertEquals("Cat Power curtiu seu post de 2015-05-21 12:00:11.", controller.getNextNotificacao());
+			Assert.assertEquals("Cat Power descurtiu seu post de 2015-05-21 12:00:11.", controller.getNextNotificacao());
+		
+		
+		
+		
+		
+		
+		} catch (EntradaException | LogicaException e) {
+			e.printStackTrace();
+		}
+		
+		
+	
 	}
 
 }

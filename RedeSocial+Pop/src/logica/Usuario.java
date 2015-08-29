@@ -17,7 +17,7 @@ public class Usuario implements Comparable<Usuario> {
 	private String senha;
 	private String imagem;
 	private int pop;
-	private List<Usuario> amigos;
+	private List<String> amigos;
 	private List<String> solicitacaoAmizade;
 	private List<String> notificacoes;
 	private TipoPopularidade popularidade;
@@ -51,7 +51,8 @@ public class Usuario implements Comparable<Usuario> {
 			throw new CadastroInvalidoException(" Imagem invalida.");
 		}
 		if (imagem.trim().length() == 0) {
-			this.imagem = "resources/default.jpg";
+			//this.imagem = "resources/default.jpg";
+			// Acho que deve lancar excecao
 		} else {
 			this.imagem = imagem;
 		}
@@ -116,11 +117,11 @@ public class Usuario implements Comparable<Usuario> {
 		return this.imagem;
 	}
 	
-	public List<Usuario> getAmigos() {
+	public List<String> getAmigos() {
 		return amigos;
 	}
 
-	public void setAmigos(List<Usuario> amigos) {
+	public void setAmigos(List<String> amigos) {
 		this.amigos = amigos;
 	}
 
@@ -188,8 +189,8 @@ public class Usuario implements Comparable<Usuario> {
 		this.notificacoes.remove( this.notificacoes.size() - 1 );
 	}
 	
-	public void aceitaAmizade(Usuario usuarioAceito) {
-		this.solicitacaoAmizade.remove(usuarioAceito.getEmail());
+	public void aceitaAmizade(String usuarioAceito) {
+		this.solicitacaoAmizade.remove(usuarioAceito);
 		this.notificacoes.remove( this.notificacoes.size() - 1 );
 		this.amigos.add(usuarioAceito);
 	}
@@ -213,7 +214,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.pop = pops;
 	}
 		
-	private void atualizaPopularidade() {
+	public void atualizaPopularidade() {
 		atualizaPops();
 		if( this.pop < 500) {
 			this.popularidade = new Normal();
@@ -225,18 +226,12 @@ public class Usuario implements Comparable<Usuario> {
 		
 	}
 
-	public void curtir(Usuario usuario, int indice) {
-		Post post = usuario.getPost(indice);
+	public void curtir(Post post) {
 		this.popularidade.curtir(post);
-		usuario.notificacoes.add(this.nome + " curtiu seu post de " + post.getDataString() + ".");
-		usuario.atualizaPopularidade();
 	}
 	
-	public void descurtir(Usuario usuario, int indice) {
-		Post post = usuario.getPost(indice);
+	public void descurtir(Post post) {
 		this.popularidade.descurtir(post);
-		usuario.notificacoes.add(this.nome + " descurtiu seu post de " + post.getDataString() + ".");
-		usuario.atualizaPopularidade();
 	}
 
 	public String getFoto() {
@@ -280,7 +275,7 @@ public class Usuario implements Comparable<Usuario> {
 		
 	}
 	
-	public void removeAmigo(Usuario usuario) {
+	public void removeAmigo(String usuario) {
 		this.amigos.remove(usuario);
 	}
 	
@@ -296,8 +291,8 @@ public class Usuario implements Comparable<Usuario> {
 		return this.posts.get(indicePost).getPost(atributo);
 	}
 
-	public void recebeNotificao(String notificao) {
-		this.notificacoes.add(notificao);
+	public void recebeNotificacao(String notificacao) {
+		this.notificacoes.add(notificacao);
 	}
 
 	@Override
@@ -329,11 +324,18 @@ public class Usuario implements Comparable<Usuario> {
 		return this.popularidade;
 	}
 
-	public void atualizaFeed() {
+	/*public void atualizaFeed() {
 		this.feed.atualizaFeed(this.amigos);
-	}
+	}*/
 	
 	public String getConteudoPost(int indice, int post) throws LogicaException {
 		return this.posts.get(post).getConteudoPost(indice);
+	}
+	
+	
+	public boolean buscaAmigo(String email) {
+		return this.amigos.contains(email);
+		
+		
 	}
 }

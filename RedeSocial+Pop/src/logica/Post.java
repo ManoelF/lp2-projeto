@@ -238,4 +238,8 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		}
 		
 	}		
+	
+	public void adicionaHashtag(String hashtag) {
+		this.hashtags.add(hashtag);
+	}
 }

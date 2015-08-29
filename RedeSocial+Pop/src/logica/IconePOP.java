@@ -1,27 +1,17 @@
 package logica;
 
-import java.util.Date;
-
 public class IconePOP implements TipoPopularidade {
-
+	private final int POPS = 50;
+	
 	@Override
 	public void curtir(Post post) {
-		Date dataAtual = new Date();
-		int pontos = 25;
-		if (post.getData().equals(dataAtual)) {
-			pontos += 10;
-		}
-		post.curtir(pontos);
+		post.curtir(50);
+		post.adicionaHashtag("#epicwin");
 	}
 
 	@Override
 	public void descurtir(Post post) {
-		Date dataAtual = new Date();
-		int pontos = 25;
-		if (post.getData().equals(dataAtual)) {
-			pontos += 10;
-		}
-		post.descurtir(pontos);
-
+		post.descurtir(50);
+		post.adicionaHashtag("#epicfail");
 	}
 }
