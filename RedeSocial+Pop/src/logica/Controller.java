@@ -1,11 +1,16 @@
 package logica;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import exceptions.CadastroEmailJaExistenteException;
+import exceptions.EntradaException;
+import exceptions.LogicaException;
+import exceptions.LoginException;
+import exceptions.SenhaIncorretaException;
 import exceptions.*;
+
 
 public class Controller {
 
@@ -26,7 +31,7 @@ public class Controller {
 	
 	public String cadastraUsuario(String nome, String email, String senha, 
 								String nascimento, String imagem) 
-								throws EntradaException, ParseException, LogicaException {
+								throws EntradaException,  LogicaException {
 		Usuario novoUsuario;
 		boolean podeCadastrar = verificaEmailJaCadastrado(email);
 		if (podeCadastrar == true) {
@@ -36,10 +41,6 @@ public class Controller {
 		} else {
 			throw new CadastroEmailJaExistenteException();
 		}
-	}
-	
-	public String cadastraUsuario(String nome, String email, String senha, String nascimento) throws EntradaException, ParseException, LogicaException {
-		return cadastraUsuario(nome, email, senha, nascimento, "");
 	}
 	
 	public void login(String EmailInserido, String senhaInserida) throws LogicaException, EntradaException {
@@ -92,7 +93,7 @@ public class Controller {
 		Usuario usuarioDestino = pesquisaUsuario(emailUserDestino);
 		if (usuarioDestino == null) { throw new UsuarioNaoCadastradoException(emailUserDestino); }
 		usuarioDestino.getSolicitacaoAmizade().add( this.usuarioLogado.getEmail() );
-		usuarioDestino.recebeNotificao(this.usuarioLogado.getNome() +" quer sua amizade.");
+		usuarioDestino.recebeNotificacao(this.usuarioLogado.getNome() +" quer sua amizade.");
 	}
 	
 	public void rejeitaAmizade(String emailUserRecusado) throws LogicaException  {
@@ -101,7 +102,7 @@ public class Controller {
 		if (usuarioRecusado == null) {
 			throw new UsuarioNaoCadastradoException(emailUserRecusado);
 		} else if (this.usuarioLogado.getSolicitacaoAmizade().contains(usuarioRecusado.getEmail())) {
-			usuarioRecusado.recebeNotificao(this.usuarioLogado.getNome() +" rejeitou sua amizade.");
+			usuarioRecusado.recebeNotificacao(this.usuarioLogado.getNome() +" rejeitou sua amizade.");
 			this.usuarioLogado.rejeitaAmizade(emailUserRecusado);			
 		} else {
 			throw new NaoSolicitouAmizadeException(usuarioRecusado.getNome());
@@ -113,9 +114,9 @@ public class Controller {
 		
 		if (usuarioAceito == null) {
 			throw new UsuarioNaoCadastradoException(emailUserAceito);
-		} else if (this.usuarioLogado.getSolicitacaoAmizade().contains(usuarioAceito.getEmail())) {
-			this.usuarioLogado.aceitaAmizade(usuarioAceito);
-			usuarioAceito.getAmigos().add(this.usuarioLogado);			
+		} else if (this.usuarioLogado.getSolicitacaoAmizade().contains(emailUserAceito)) {
+			this.usuarioLogado.aceitaAmizade(emailUserAceito);
+			usuarioAceito.getAmigos().add(this.usuarioLogado.getEmail());			
 		} else {
 			throw new NaoSolicitouAmizadeException(usuarioAceito.getNome());
 		}
@@ -140,7 +141,7 @@ public class Controller {
 			atributoRetornado = this.usuarioLogado.getNascimento();
 			break;
 		case FOTO:
-			atributoRetornado = this.usuarioLogado.getFoto();
+			atributoRetornado = this.usuarioLogado.getImagem();
 			break;
 		case SENHA:
 			throw new SenhaProtegidaException();
@@ -148,7 +149,7 @@ public class Controller {
 		return atributoRetornado;
 	}
 	
-	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, ParseException, EntradaException {
+	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, EntradaException {
 		
 		if(this.usuarioLogado == null) {
 			throw new AtualizaPerfilException();
@@ -179,14 +180,10 @@ public class Controller {
 		}
 	}
 
-	public void criaPost(String mensagem, String data) throws PostException, ParseException {
+	public void criaPost(String mensagem, String data) throws PostException {
 		this.usuarioLogado.criaPost(mensagem, data);;			
 	}
 	
-	//falta testar
-	public void atualizaRanking() {
-		
-	}
 	
 	public String getInfoUsuario(String atributo, String email) throws LogicaException {
 		Usuario usuario = pesquisaUsuario(email);
@@ -202,7 +199,7 @@ public class Controller {
 				atributoRetornado = usuario.getNascimento();
 				break;
 			case FOTO:
-				atributoRetornado = usuario.getFoto();
+				atributoRetornado = usuario.getImagem();
 				break;
 			case SENHA:
 				throw new SenhaProtegidaException();
@@ -229,7 +226,31 @@ public class Controller {
 		if (usuario == null) {
 			throw new UsuarioNaoCadastradoException(amigo);
 		} else {
-			this.usuarioLogado.curtir(usuario, post);
+			if (this.usuarioLogado.temAmigo(amigo)) {
+				this.usuarioLogado.curtir(usuario.getPost(post));
+				usuario.recebeNotificacao(usuario.getNome() + " curtiu seu post de " + usuario.getPost(post).getDataString() + ".");
+				usuario.atualizaPopularidade();
+			} else {
+				// Lancar excecao que usuario nao tem esse amigo
+				System.out.println("Não é seu amigo!!!");
+			}
+		}
+	}
+	
+	public void descurtirPost(String amigo, int post) throws UsuarioNaoCadastradoException {
+		Usuario usuario = pesquisaUsuario(amigo);
+		
+		if (usuario == null) {
+			throw new UsuarioNaoCadastradoException(amigo);
+		} else {
+			if (this.usuarioLogado.temAmigo(amigo)) {
+				this.usuarioLogado.descurtir(usuario.getPost(post));
+				usuario.recebeNotificacao(usuario.getNome() + " descurtiu seu post de " + usuario.getPost(post).getDataString() + ".");
+				usuario.atualizaPopularidade();
+			} else {
+				// Lancar excecao que usuario nao tem esse amigo
+				System.out.println("Não é seu amigo!!!");
+			}
 		}
 	}
 		
@@ -238,10 +259,10 @@ public class Controller {
 		Usuario usuarioRemovido = pesquisaUsuario(emailUsuario);
 		for (Usuario usuario : usuariosCadastrados) {
 			
-			Iterator<Usuario> iterator = usuario.getAmigos().iterator();
+			Iterator<String> iterator = usuario.getAmigos().iterator();
 			while (iterator.hasNext()) {
-				Usuario amigo = iterator.next();
-				if (amigo.equals(usuarioRemovido)) {
+				String amigo = iterator.next();
+				if (amigo.equals(emailUsuario)) {
 					usuario.removeAmigo(amigo);
 					break;
 				}
@@ -258,10 +279,10 @@ public class Controller {
 		if (usuarioRemover == null) {
 			throw new UsuarioNaoCadastradoException(usuario);
 		} else {
-			this.usuarioLogado.removeAmigo(usuarioRemover);
+			this.usuarioLogado.removeAmigo(usuario);
 		}
 		
-		usuarioRemover.removeAmigo(usuarioLogado);
+		usuarioRemover.removeAmigo(usuarioLogado.getEmail());
 	}
 	
 	public String getPost(int indice) {
@@ -280,4 +301,16 @@ public class Controller {
 	public String getsenha(){
 		return this.usuarioLogado.getSenha();
 	}
-}
+	
+	/*public String atualizaRanking() {
+		String atualiza = "";
+		for (int i = 0; i < ranked.comMaisX2p.length; i++) {
+			atualiza += ranked.comMaisX2p[i] + "\n";
+		}
+		for (int i = 0; i < ranked.comMenosX2p.length; i++) {
+			atualiza += ranked.comMenosX2p[i] + "\n";
+		}
+		
+		return atualiza;
+	} // fecha ranking
+*/}

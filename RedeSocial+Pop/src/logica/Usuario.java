@@ -3,7 +3,9 @@ package logica;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayDeque;
 import java.util.Date;
+import java.util.Deque;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -17,16 +19,18 @@ public class Usuario implements Comparable<Usuario> {
 	private String senha;
 	private String imagem;
 	private int pop;
-	private List<Usuario> amigos;
+	private List<String> amigos;
 	private List<String> solicitacaoAmizade;
-	private List<String> notificacoes;
+	private Deque<String> notificacoes;
 	private TipoPopularidade popularidade;
 	private List<Post> posts;
 	private Feed feed;
+	private Util util;
 
 	
 	// Foi adicionado o throws ParseException, deve ser tratado
  	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException {
+ 		this.util = Util.getInstancia();
 
 		if (nome == null || nome.trim().length() == 0){
 			throw new CadastroInvalidoException(" Nome dx usuarix nao pode ser vazio.");
@@ -40,47 +44,39 @@ public class Usuario implements Comparable<Usuario> {
 		if (nascimento == null || nascimento.trim().length() == 0) {
 			throw new CadastroInvalidoException(" Formato de data esta invalida.");
 		}
-		if (Util.getInstancia().verificaFormatoData(nascimento) == false) {
+		if (util.verificaFormatoData(nascimento) == false) {
 			throw new CadastroInvalidoException(" Formato de data esta invalida.");
 		}
-		if (Util.getInstancia().verificaDataValida(nascimento) == false) {
+		if (util.verificaDataValida(nascimento) == false) {
 			throw new CadastroInvalidoException(" Data nao existe.");
 		}
 		
-		if (imagem== null){
+		if (imagem == null || imagem.trim().length() == 0) {
 			throw new CadastroInvalidoException(" Imagem invalida.");
-		}
-		if (imagem.trim().length() == 0) {
-			this.imagem = "resources/default.jpg";
 		} else {
 			this.imagem = imagem;
 		}
 		
 		verificaEmail(email);
-		this.nascimento = Util.getInstancia().recebeData(nascimento);
+		this.nascimento = util.recebeData(nascimento);
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
 		this.pop = 0;
 		this.amigos = new ArrayList<>();
 		this.solicitacaoAmizade = new ArrayList<>();
-		this.notificacoes = new ArrayList<>();
+		this.notificacoes = new ArrayDeque<>();
 		this.posts = new ArrayList<>();
 		this.feed = new Feed();
 		this.popularidade = new Normal();
 	}
  	
- 	public Usuario(String nome, String email, String senha, String nascimento) throws CadastroInvalidoException {
- 		this(nome, email, senha, nascimento, "resources/avatarDefaul.jpg");//eu num disse que dava!
-	}
- 	
  	public String getNextNotificacao() throws NaoHaNotificacoesException {
- 		if (this.notificacoes.size() == 0) {
+ 		String notificacaoAtual = this.notificacoes.pollFirst(); 
+ 		if (notificacaoAtual == null) {
  			throw new NaoHaNotificacoesException();
  		} else {
- 			String notifi = this.notificacoes.get(0); 
- 			this.notificacoes.remove(0);
- 			return notifi;
+ 			return notificacaoAtual;
  		}
 	}
 
@@ -116,11 +112,11 @@ public class Usuario implements Comparable<Usuario> {
 		return this.imagem;
 	}
 	
-	public List<Usuario> getAmigos() {
+	public List<String> getAmigos() {
 		return amigos;
 	}
 
-	public void setAmigos(List<Usuario> amigos) {
+	public void setAmigos(List<String> amigos) {
 		this.amigos = amigos;
 	}
 
@@ -163,13 +159,13 @@ public class Usuario implements Comparable<Usuario> {
 		if (novoNascimento == null || novoNascimento.trim().length() == 0) {
 			throw new AtualizaPerfilException(" Formato de data esta invalida.");
 		}
-		if (Util.getInstancia().verificaFormatoData(novoNascimento) == false) {
+		if (util.verificaFormatoData(novoNascimento) == false) {
 			throw new AtualizaPerfilException(" Formato de data esta invalida.");
 		}
-		if (Util.getInstancia().verificaDataValida(novoNascimento) == false) {
+		if (util.verificaDataValida(novoNascimento) == false) {
 			throw new AtualizaPerfilException(" Data nao existe.");
 		}
-		this.nascimento = Util.getInstancia().recebeData(novoNascimento);;
+		this.nascimento = util.recebeData(novoNascimento);;
 	}
 	
 	public void setImagem(String novaImagem) throws AtualizaPerfilException {
@@ -188,8 +184,8 @@ public class Usuario implements Comparable<Usuario> {
 		this.notificacoes.remove( this.notificacoes.size() - 1 );
 	}
 	
-	public void aceitaAmizade(Usuario usuarioAceito) {
-		this.solicitacaoAmizade.remove(usuarioAceito.getEmail());
+	public void aceitaAmizade(String usuarioAceito) {
+		this.solicitacaoAmizade.remove(usuarioAceito);
 		this.notificacoes.remove( this.notificacoes.size() - 1 );
 		this.amigos.add(usuarioAceito);
 	}
@@ -213,7 +209,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.pop = pops;
 	}
 		
-	private void atualizaPopularidade() {
+	public void atualizaPopularidade() {
 		atualizaPops();
 		if( this.pop < 500) {
 			this.popularidade = new Normal();
@@ -225,23 +221,15 @@ public class Usuario implements Comparable<Usuario> {
 		
 	}
 
-	public void curtir(Usuario usuario, int indice) {
-		Post post = usuario.getPost(indice);
+	public void curtir(Post post) {
 		this.popularidade.curtir(post);
-		usuario.notificacoes.add(this.nome + " curtiu seu post de " + post.getDataString() + ".");
-		usuario.atualizaPopularidade();
 	}
 	
-	public void descurtir(Usuario usuario, int indice) {
-		Post post = usuario.getPost(indice);
+	public void descurtir(Post post) {
 		this.popularidade.descurtir(post);
-		usuario.notificacoes.add(this.nome + " descurtiu seu post de " + post.getDataString() + ".");
-		usuario.atualizaPopularidade();
 	}
 
-	public String getFoto() {
-		return this.imagem;
-	}
+
 	
 	public void criaPost(String mensagem, String data) throws PostException {
 		Post novoPost = new Post(mensagem, data);
@@ -252,9 +240,9 @@ public class Usuario implements Comparable<Usuario> {
 		return this.posts;
 	}
 	
-	public String getInfoUsuario(String atributo) {
+	/*public String getInfoUsuario(String atributo) {
 		return null;
-	}
+	}*/
 	
 	@Override
 	public int compareTo(Usuario outroUsuario) {
@@ -280,7 +268,7 @@ public class Usuario implements Comparable<Usuario> {
 		
 	}
 	
-	public void removeAmigo(Usuario usuario) {
+	public void removeAmigo(String usuario) {
 		this.amigos.remove(usuario);
 	}
 	
@@ -296,8 +284,8 @@ public class Usuario implements Comparable<Usuario> {
 		return this.posts.get(indicePost).getPost(atributo);
 	}
 
-	public void recebeNotificao(String notificao) {
-		this.notificacoes.add(notificao);
+	public void recebeNotificacao(String notificacao) {
+		this.notificacoes.addFirst(notificacao);
 	}
 
 	@Override
@@ -329,11 +317,18 @@ public class Usuario implements Comparable<Usuario> {
 		return this.popularidade;
 	}
 
-	public void atualizaFeed() {
+	/*public void atualizaFeed() {
 		this.feed.atualizaFeed(this.amigos);
-	}
+	}*/
 	
 	public String getConteudoPost(int indice, int post) throws LogicaException {
 		return this.posts.get(post).getConteudoPost(indice);
+	}
+	
+	
+	public boolean temAmigo(String email) {
+		return this.amigos.contains(email);
+		
+		
 	}
 }

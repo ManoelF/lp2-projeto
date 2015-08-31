@@ -1,7 +1,5 @@
 package logica;
 
-import java.text.ParseException;
-
 import easyaccept.EasyAccept;
 import exceptions.*;
 
@@ -30,12 +28,12 @@ public class Facade {
 		
 	}
 	
-	public String cadastraUsuario(String nome, String email, String senha, String nascimento, String imagem) throws EntradaException, ParseException, LogicaException {
+	public String cadastraUsuario(String nome, String email, String senha, String nascimento, String imagem) throws EntradaException,  LogicaException {
 		return this.controller.cadastraUsuario(nome, email, senha, nascimento, imagem);
 	}
 
-	public String cadastraUsuario(String nome, String email, String senha, String nascimento) throws EntradaException, ParseException, LogicaException {
-		return cadastraUsuario(nome, email, senha, nascimento, "");
+	public String cadastraUsuario(String nome, String email, String senha, String nascimento) throws EntradaException, LogicaException {
+		return cadastraUsuario(nome, email, senha, nascimento, "resources/default.jpg");
 	}
 	
 	public void login(String email, String senha) throws LogicaException, EntradaException {
@@ -54,7 +52,7 @@ public class Facade {
 		return this.controller.getInfoUsuario(atributo);
 	}
 	
-	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, ParseException, EntradaException {
+	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, EntradaException {
 		this.controller.atualizaPerfil(atributo, novoValor);
 	}
 	
@@ -62,7 +60,7 @@ public class Facade {
 		this.controller.atualizaPerfil(atributo, valor, velhaSenha);
 	}
 	
-	public void criaPost(String mensagem, String data) throws PostException, ParseException {
+	public void criaPost(String mensagem, String data) throws PostException {
 		this.controller.criaPost(mensagem, data);
 	}
 	
@@ -113,6 +111,11 @@ public class Facade {
 	public void removeUsuario(String usuario) {
 		this.controller.removeUsuario(usuario);
 	}
+	/*
+	public void atualizaRanked(){
+		this.controller.atualizaRanking();
+	}*/
+
 
 	public static void main(String[] args) {
 	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt", "lib/ScriptsTeste/usecase_4.txt"};

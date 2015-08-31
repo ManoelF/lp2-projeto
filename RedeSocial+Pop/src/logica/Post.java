@@ -1,12 +1,9 @@
 package logica;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
-import util.ConverterException;
 import exceptions.*;
 
 public class Post implements Comparable<Post>, Comparator<Post> {
@@ -18,9 +15,12 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	private int popularidade;
 	private List<String> hashtags;
 	private List<Midia> midias;
+	private Util util;
 
 	// data e hora
 	public Post(String texto, String data) throws PostException {
+		this.util = Util.getInstancia();
+
 		if (texto == null || texto.trim().length() == 0) {
 			// lancar Exception
 		}
@@ -29,27 +29,26 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		String dataS = dataHorario[0];
 		String horaS = dataHorario[1];
 		
-		if (Util.getInstancia().verificaFormatoData(dataS) == false) {
+		if (util.verificaFormatoData(dataS) == false) {
 			// lanca execao data formato invalido
 		}
-		if (Util.getInstancia().verificaFormatoHora(horaS) == false) {
+		if (util.verificaFormatoHora(horaS) == false) {
 			// lanca execao data formato invalido
 		}
-		if (Util.getInstancia().verificaDataValida(dataS) == false) {
+		if (util.verificaDataValida(dataS) == false) {
 			// lanca excecao data invalida
 		}
-		if (Util.getInstancia().verificaHoraValida(horaS) == false) {
+		if (util.verificaHoraValida(horaS) == false) {
 			// lanca excecao data invalida
 		}
 
-		
 		this.texto = texto;
 		this.popularidade = 0;
 		this.like = 0;
 		this.deslike = 0;
-		this.hashtags = Util.getInstancia().encontraHashtag(texto);
+		this.hashtags = util.encontraHashtag(texto);
 		this.midias = new ArrayList<>();
-		this.data = Util.getInstancia().converteParaData(data);
+		this.data = util.converteParaData(data);
 		
 		buscaMidia(texto);
 		verificaTam(texto);			
@@ -184,9 +183,9 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	
 	private void buscaMidia(String mensagem) {
 		FactoryMidia factoryMidia = new FactoryMidia();
-		List<String> listMidias = Util.getInstancia().getMidia(mensagem);
+		List<String> listMidias = util.getMidia(mensagem);
 		
-		Midia mensagem2 = new Mensagem(Util.getInstancia().encontraTexto(mensagem));
+		Midia mensagem2 = new Mensagem(util.encontraTexto(mensagem));
 		if (!mensagem2.toString().equals("")) {
 			this.midias.add(mensagem2);
 		}
@@ -238,4 +237,8 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		}
 		
 	}		
+	
+	public void adicionaHashtag(String hashtag) {
+		this.hashtags.add(hashtag);
+	}
 }
