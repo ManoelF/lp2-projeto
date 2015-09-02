@@ -24,11 +24,11 @@ public class TesteUsuario {
 	}
 
 	@Test
-	public void testUsuarioException() throws ParseException  {
+	public void testUsuarioException() {
 		try {
 			joao = new Usuario("", "joao@email.com", "123", "10/10/1990",
 					 "imagem/joao.jpg");
-		} catch (CadastroInvalidoException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro no cadastro de Usuarios. Nome dx usuarix nao pode ser vazio.",
 					erro.getMessage());
 		}
@@ -36,7 +36,7 @@ public class TesteUsuario {
 		try {
 			joao = new Usuario("Joao", "", "123", "10/10/1990",
 					"imagem/joao.jpg");
-		} catch (CadastroInvalidoException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.",
 					erro.getMessage());
 		}
@@ -44,7 +44,7 @@ public class TesteUsuario {
 		try {
 			joao = new Usuario("Joao", "joao@email.com", "", "10/10/1990",
 					 "imagem/joao.jpg");
-		} catch (CadastroInvalidoException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro no cadastro de Usuarios. Senha dx usuarix nao pode ser vazio.",
 					erro.getMessage());
 		}
@@ -52,14 +52,14 @@ public class TesteUsuario {
 		try {
 			joao = new Usuario("Joao", "joao@email.com", "123", "",
 					 "imagem/joao.jpg");
-		} catch (CadastroInvalidoException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro no cadastro de Usuarios. Formato de data esta invalida.",
 					erro.getMessage());
 		}
 
 		try {
 			joao = new Usuario("Joao", "joao@email.com", "123", "10/10/1990", null);
-		} catch (CadastroInvalidoException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro no cadastro de Usuarios. Imagem invalida.",
 					erro.getMessage());
 		}
@@ -78,8 +78,8 @@ public class TesteUsuario {
 			Assert.assertEquals("1995-01-30", maria.getNascimento()); 
 			Assert.assertEquals("resources/maria.jpg", maria.getImagem());
 
-		} catch (CadastroInvalidoException erro) {
-			System.out.println(erro.getMessage());
+		} catch (RedeSocialMaisPopException erro) {
+			Assert.fail();
 		} 
 
 	}
@@ -105,25 +105,20 @@ public class TesteUsuario {
 			fred.setImagem("");
 			Assert.assertEquals("resources/avatarDefaul.jpg", fred.getImagem());
 			
-		} catch(CadastroInvalidoException erro) {
-			Assert.fail();
-		} catch(AtualizaPerfilException erro) {
-			Assert.fail();
-		} catch (EntradaException erro) {
+		} catch(RedeSocialMaisPopException erro) {
 			Assert.fail();
 		}
-
 	}
 
 	@Test
-	public void testInformacoesAtualizadasException() throws EntradaException, ParseException {
+	public void testInformacoesAtualizadasException() {
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					 "resources/bruna.jpg");
 			bruna.setNome("");
 			Assert.assertEquals("Bruna", bruna.getNome());
 
-		} catch(AtualizaPerfilException erro) {
+		} catch(RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro na atualizacao de perfil. Nome dx usuarix nao pode ser vazio.", erro.getMessage());
 		}
 
@@ -132,10 +127,8 @@ public class TesteUsuario {
 					"resources/bruna.jpg");
 			bruna.setEmail("");
 			Assert.assertEquals("bruna@email.com", bruna.getEmail());
-
-		} catch(CadastroInvalidoException erro) {
-			Assert.fail();
-		} catch(AtualizaPerfilException erro) {
+			
+		} catch(RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro na atualizacao de perfil. Formato de e-mail esta invalido.", erro.getMessage());
 		}
 
@@ -144,9 +137,8 @@ public class TesteUsuario {
 					 "resources/bruna.jpg");
 			bruna.setNascimento("");		
 			Assert.assertEquals("12/11/00", bruna.getNascimento());
-		} catch(CadastroInvalidoException erro) {
-			Assert.fail();
-		} catch(AtualizaPerfilException erro) {
+	
+		} catch(RedeSocialMaisPopException erro) {
 			//alterar msg
 			Assert.assertEquals("Erro na atualizacao de perfil. Formato de data esta invalida.", erro.getMessage());
 		}
@@ -156,9 +148,8 @@ public class TesteUsuario {
 					"resources/bruna.jpg");
 			bruna.setImagem(null);			
 			Assert.assertEquals("resources/bruna.jpg", bruna.getImagem());
-		} catch(CadastroInvalidoException erro) {
-			Assert.fail();
-		} catch(AtualizaPerfilException erro) {
+	
+		} catch(RedeSocialMaisPopException erro) {
 			//alterar msg
 			Assert.assertEquals("Erro na atualizacao de perfil.", erro.getMessage());
 		}
@@ -167,7 +158,7 @@ public class TesteUsuario {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					"resources/bruna.jpg");
 			bruna.setSenha("1221", "lalala");			
-		} catch (AtualizaPerfilException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro na atualizacao de perfil. A senha fornecida esta incorreta.", erro.getMessage());
 		}
 
@@ -217,8 +208,7 @@ public class TesteUsuario {
 			Assert.assertEquals("Bruna descurtiu seu post de 2015-08-09 00:12:32.", joao.getNextNotificacao());*/
 
 			
-		} catch(Exception erro) {
-			System.out.println(erro.getMessage());
+		} catch(RedeSocialMaisPopException erro) {
 			Assert.fail();
 		}
 		

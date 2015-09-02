@@ -34,8 +34,7 @@ public class TestePost {
 			//System.out.println(postUm.getPost("Conteudo"));
 		//	System.out.println(postUm.getMidias(1));
 		//	System.out.println(postUm.getMidias());
-		} catch (PostException erro) {
-		//	System.out.println(erro.getMessage());
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.fail();
 		}
 

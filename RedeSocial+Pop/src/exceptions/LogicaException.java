@@ -1,6 +1,6 @@
 package exceptions;
 
-public class LogicaException extends Exception {
+public class LogicaException extends RedeSocialMaisPopException {
 
 	public LogicaException() {
 		super("Erro de execucao");

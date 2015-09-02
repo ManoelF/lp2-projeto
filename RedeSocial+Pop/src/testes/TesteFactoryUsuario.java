@@ -13,7 +13,7 @@ import exceptions.*;
 public class TesteFactoryUsuario {
 
 	@Test
-	public void testeCriaUsuario() throws CadastroInvalidoException, ParseException {
+	public void testeCriaUsuario() {
 		try {
 		
 			FactoryUsuario factory = new FactoryUsuario();
@@ -27,7 +27,7 @@ public class TesteFactoryUsuario {
 			Assert.assertEquals("teste123", usuario.getSenha());
 			Assert.assertEquals("1994-03-23", usuario.getNascimento());
 			Assert.assertEquals("imagem/avatar", usuario.getImagem());
-		} catch (CadastroInvalidoException e) {
+		} catch (RedeSocialMaisPopException e) {
 			Assert.fail();
 		}
 		

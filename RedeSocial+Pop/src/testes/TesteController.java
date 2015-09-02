@@ -21,46 +21,46 @@ public class TesteController {
 	}
 	
 	@Test
-	public void testCadastraUsuario() throws EntradaException, LogicaException {
+	public void testCadastraUsuario() {
 		try {
 			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
 			Assert.assertEquals("day.trindade@email.com", controller.getUsuariosCadastrados().get(0).getEmail());
 			Assert.assertEquals("Day", controller.getInfoUsuario("Nome", controller.getUsuariosCadastrados().get(0).getEmail()));
-		} catch (CadastroInvalidoException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.fail();
 		} 
 	}
 	
 	@Test
-	public void testCadastraUsuarioException() throws EntradaException, LogicaException, ParseException {
+	public void testCadastraUsuarioException() {
 		try {
 			controller.cadastraUsuario("", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
-		} catch (CadastroInvalidoException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro no cadastro de Usuarios. Nome dx usuarix nao pode ser vazio.", erro.getMessage());
 		} 
 		
 		try {
 			controller.cadastraUsuario("Maria Lucia Oliveira", "maria.oliveira@hotmail.com", "feiradefruta", "07/03/1976", "imagens/maria_perfil");
 			controller.cadastraUsuario("Maria Oliveira", "maria.oliveira@hotmail.com", "feiradefruta", "07/03/1976", "imagens/maria_perfil");
-		} catch (CadastroEmailJaExistenteException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Ja exite um usuario cadastrado com esse e-mail! Por favor insira um outro.", erro.getMessage());
 		}
 	}
 	
 	@Test
-	public void testLogin() throws LoginException, EntradaException {
+	public void testLogin() {
 		try {
 			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
 			controller.login("day.trindade@email.com","poxaquecoxa");
 		
 			Assert.assertEquals("Day", controller.getUsuarioLogado().getNome());
-		} catch (LogicaException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.fail();
 		} 
 	}
 	
 	@Test
-	public void testLoginException() throws EntradaException, LogicaException {
+	public void testLoginException() {
 		
 		//testa o caso de realizar login quando um outro usuario ja esta logado
 		try { 
@@ -69,36 +69,36 @@ public class TesteController {
 
 			controller.login("day.trindade@email.com","poxaquecoxa");
 			controller.login("stive.anderson@email.com", "indiegente");
-		} catch (LogicaException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Nao foi possivel realizar login. Um usuarix ja esta logadx: Day.", erro.getMessage());
 		} 
 		
-		controller.logout();
 		
 		//testa email inserido incorreto
 		try {
+			controller.logout();
 			controller.login("stive.andrs@email.com", "indiegente");
-		} catch (LogicaException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Nao foi possivel realizar login. Um usuarix com email stive.andrs@email.com nao esta cadastradx.", erro.getMessage());
 		}
 		
 		//testa senha inserida incorreta
 		try {
 			controller.login("stive.anderson@email.com", "indies");
-		} catch (SenhaIncorretaException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Nao foi possivel realizar login. Senha invalida.", erro.getMessage());
 		}
 	}
 
 	@Test
-	public void testLogout() throws EntradaException, LogicaException {
+	public void testLogout() {
 		try {
 			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
 			controller.login("day.trindade@email.com","poxaquecoxa");
 			controller.logout();
 			
 			Assert.assertEquals(null, controller.getUsuarioLogado());
-		} catch (LoginException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.fail();
 		} 
 	}
@@ -107,13 +107,13 @@ public class TesteController {
 	public void testLogoutException() throws LogicaException {
 		try {
 			controller.logout();
-		} catch (LogicaException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Nao eh possivel realizar logout. Nenhum usuarix esta logadx no +pop.", erro.getMessage());
 		}
 	}
 	
 	@Test
-	public void testAddAmigo() throws LogicaException, EntradaException, ParseException {
+	public void testAddAmigo() {
 		
 		try {
 			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
@@ -129,9 +129,7 @@ public class TesteController {
 			Assert.assertEquals("Day quer sua amizade.", controller.getNextNotificacao());
 			Assert.assertEquals("day.trindade@email.com", controller.getUsuarioLogado().getSolicitacaoAmizade().get(0));
 						
-		} catch (LogicaException erro) {
-			Assert.fail();
-		} catch (EntradaException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.fail();
 		} 		
 	}
@@ -144,7 +142,7 @@ public class TesteController {
 			
 			controller.login("day.trindade@email.com", "poxaquecoxa");
 			controller.adicionaAmigo("stive.anderson@email.com");
-		} catch (LogicaException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Um usuarix com email stive.anderson@email.com nao esta cadastradx.", erro.getMessage());
 		}
 		
@@ -170,7 +168,7 @@ public class TesteController {
 	}
 
 	@Test
-	public void testRejeitaAmizade() throws EntradaException, ParseException, LogicaException {
+	public void testRejeitaAmizade() {
 	
 		try {
 			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
@@ -188,14 +186,14 @@ public class TesteController {
 			controller.login("day.trindade@email.com", "poxaquecoxa");
 			Assert.assertEquals("Stive Andrs rejeitou sua amizade.", controller.getNextNotificacao());
 			
-		} catch (LogicaException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.fail();
 		} 
 		
 	}
 	
 	@Test
-	public void testRejeitaAmizadeException() throws EntradaException, ParseException, LogicaException {
+	public void testRejeitaAmizadeException() {
 		// testar erro de rejeicao de amizade nao solicitada
 		try {
 			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
@@ -205,7 +203,7 @@ public class TesteController {
 			controller.rejeitaAmizade("day.trindade@email.com");
 			controller.logout();
 			
-		} catch (NaoSolicitouAmizadeException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Day nao lhe enviou solicitacoes de amizade.", erro.getMessage());
 		} 
 	
@@ -216,14 +214,14 @@ public class TesteController {
 			controller.rejeitaAmizade("italo.batista@email.com");
 			controller.logout();
 			
-		} catch (UsuarioNaoCadastradoException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Um usuarix com email italo.batista@email.com nao esta cadastradx.", erro.getMessage());
 		}
 		
 	}
 
 	@Test
-	public void testAceitaAmizade() throws EntradaException, ParseException, LogicaException {
+	public void testAceitaAmizade() {
 		try {
 			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
 			controller.cadastraUsuario("Stive Andrs", "stive.anderson@email.com", "indiegente", "01/01/1990", "imagens/stive_perfil");
@@ -241,14 +239,14 @@ public class TesteController {
 			controller.login("day.trindade@email.com", "poxaquecoxa");
 			Assert.assertEquals(1, controller.getQtdAmigos());
 			
-		} catch (LogicaException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.fail();
 		}
 		
 	}
 
 	@Test
-	public void testAceitaAmizadeException() throws EntradaException, ParseException, LogicaException {
+	public void testAceitaAmizadeException() {
 		// testar erro de rejeicao de amizade nao solicitada
 		try {
 			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
@@ -258,7 +256,7 @@ public class TesteController {
 			controller.aceitaAmizade("day.trindade@email.com");
 			controller.logout();
 			
-		} catch (NaoSolicitouAmizadeException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Day nao lhe enviou solicitacoes de amizade.", erro.getMessage());
 		} 
 	
@@ -269,14 +267,14 @@ public class TesteController {
 			controller.aceitaAmizade("italo.batista@email.com");
 			controller.logout();
 			
-		} catch (UsuarioNaoCadastradoException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Um usuarix com email italo.batista@email.com nao esta cadastradx.", erro.getMessage());
 		}
 		
 	}
 	
 	@Test
-	public void testGetInfoUsuario() throws EntradaException, ParseException, LogicaException {
+	public void testGetInfoUsuario() {
 		try {
 			controller.cadastraUsuario("Lana Del Rey", "lizzygrant@email.com", "wishiwasdead", "21/06/1985", "imagem/lana_perfil");
 			controller.login("lizzygrant@email.com", "wishiwasdead");
@@ -286,7 +284,7 @@ public class TesteController {
 			
 			controller.getInfoUsuario("Senha");
 			
-		} catch (SenhaProtegidaException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("A senha dx usuarix eh protegida.", erro.getMessage());
 		}
 		
@@ -300,7 +298,7 @@ public class TesteController {
 			
 			controller.getInfoUsuario("Senha", controller.getUsuariosCadastrados().get(1).getEmail());
 			
-		} catch (SenhaProtegidaException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("A senha dx usuarix eh protegida.", erro.getMessage());
 		}
 		
@@ -311,7 +309,7 @@ public class TesteController {
 			Assert.assertEquals("imagem/ceU", controller.getInfoUsuario("Foto", "ceumusic@email.com" ));
 
 			controller.getInfoUsuario("Senha", "ceumusic@email.com");
-		} catch (SenhaProtegidaException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("A senha dx usuarix eh protegida.", erro.getMessage());
 		}
 		
@@ -320,17 +318,17 @@ public class TesteController {
 	}
 
 	@Test
-	public void testGetInfoUsuarioException() throws LogicaException {
+	public void testGetInfoUsuarioException() {
 		try {
 			controller.getInfoUsuario("Nome", "alguem@email.com");
-		} catch (UsuarioNaoCadastradoException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Um usuarix com email alguem@email.com nao esta cadastradx.", erro.getMessage());
 		}
 		
 	}
 	
 	@Test
-	public void testRemoveAmigo() throws EntradaException, ParseException {
+	public void testRemoveAmigo() {
 		try {
 			controller.cadastraUsuario("Lana Del Rey", "lizzygrant@email.com", "wishiwasdead", "21/06/1985", "imagem/lana_perfil");
 			controller.cadastraUsuario("Cat Power", "catpower@email.com", "sapatomica", "21/02/1972", "imagem/cat_perfil");
@@ -360,13 +358,13 @@ public class TesteController {
 			controller.login("ceumusic@email.com", "Fffrree");
 			Assert.assertEquals(0, controller.getQtdAmigos());
 			
-		} catch (LogicaException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.fail();
 		}
 	}
 	
 	@Test
-	public void testRemoveUsuario() throws EntradaException, ParseException, LogicaException {
+	public void testRemoveUsuario() {
 		try{
 			controller.cadastraUsuario("Lana Del Rey", "lizzygrant@email.com", "wishiwasdead", "21/06/1985", "imagem/lana_perfil");
 			controller.cadastraUsuario("Cat Power", "catpower@email.com", "sapatomica", "21/02/1972", "imagem/cat_perfil");
@@ -393,13 +391,13 @@ public class TesteController {
 			controller.login("catpower@email.com", "sapatomica");
 			Assert.assertEquals(1, controller.getQtdAmigos());
 
-		} catch (LogicaException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.fail();
 		}
 	}
 	
 	@Test
-	public void atualizaInformacoes() throws EntradaException, ParseException, LogicaException {
+	public void atualizaInformacoes() {
 		try {
 			controller.cadastraUsuario("Fatima", "fatima@email.com.br", "will_S2", "21/04/1980", "resources/fatima.jpg");
 			controller.login("fatima@email.com.br", "will_S2");
@@ -417,7 +415,7 @@ public class TesteController {
 			controller.logout();
 			controller.atualizaPerfil("Nome", "Ftm Bern");
 			
-		} catch(AtualizaPerfilException erro) {
+		} catch(RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Nao eh possivel atualizar um perfil. Nenhum usuarix esta logadx no +pop.", erro.getMessage());
 		}
 	}
@@ -445,11 +443,7 @@ public class TesteController {
 			Assert.assertEquals("Cat Power descurtiu seu post de 2015-05-21 12:00:11.", controller.getNextNotificacao());
 			Assert.assertEquals("Cat Power curtiu seu post de 2015-05-21 12:00:11.", controller.getNextNotificacao());
 		
-		
-		
-		
-		
-		
+
 		} catch (EntradaException | LogicaException e) {
 			e.printStackTrace();
 		}
