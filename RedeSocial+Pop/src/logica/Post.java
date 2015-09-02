@@ -16,10 +16,12 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	private List<String> hashtags;
 	private List<Midia> midias;
 	private Util util;
+	//FactoryMidia fabricaMidia;
 
 	// data e hora
 	public Post(String texto, String data) throws PostException {
 		this.util = Util.getInstancia();
+	//	fabricaMidia = new FactoryMidia();
 
 		if (texto == null || texto.trim().length() == 0) {
 			// lancar Exception

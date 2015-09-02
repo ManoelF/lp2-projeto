@@ -27,6 +27,7 @@ public class Controller {
 	public Controller() {
 		this.fabricaUsuario = new FactoryUsuario();
 		usuariosCadastrados = new ArrayList<Usuario>();		
+		
 	}
 	
 	public String cadastraUsuario(String nome, String email, String senha, 
