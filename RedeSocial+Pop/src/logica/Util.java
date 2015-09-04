@@ -75,7 +75,7 @@ public class Util {
 				if (caracter == '#'){
 					espaco = false;
 				} else if (espaco) {
-					throw new PostException("Hashtag invalida");
+					throw new PostException("Nao eh possivel criar o post. Hashtag invalida");
 				} else if (caracter != ' ') {
 					novaHash += caracter;
 					
@@ -91,8 +91,6 @@ public class Util {
 		}
 		return hashtags;
 	}
-	
-	
 	
 	public boolean verificaFormatoData(String data) {
 		

@@ -7,7 +7,7 @@ public class AtualizaPerfilException extends EntradaException {
 	}
 
 	public AtualizaPerfilException(String msg) {
-		super("Erro na atualizacao de perfil." + msg);
+		super(msg);
 	}
 	
 	/*AtualizaDataInexistenteException: " Data nao existe."

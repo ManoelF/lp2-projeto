@@ -33,26 +33,26 @@ public class Usuario implements Comparable<Usuario> {
  		this.util = Util.getInstancia();
 
 		if (nome == null || nome.trim().length() == 0){
-			throw new CadastroInvalidoException(" Nome dx usuarix nao pode ser vazio.");
+			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Nome dx usuarix nao pode ser vazio.");
 		}
 		if (email == null || email.trim().length() == 0) {
-			throw new CadastroInvalidoException(" Formato de e-mail esta invalido.");
+			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
 		}
 		if (senha == null || senha.trim().length() == 0) {
-			throw new CadastroInvalidoException(" Senha dx usuarix nao pode ser vazio.");
+			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Senha dx usuarix nao pode ser vazio.");
 		}
 		if (nascimento == null || nascimento.trim().length() == 0) {
-			throw new CadastroInvalidoException(" Formato de data esta invalida.");
+			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de data esta invalida.");
 		}
 		if (util.verificaFormatoData(nascimento) == false) {
-			throw new CadastroInvalidoException(" Formato de data esta invalida.");
+			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de data esta invalida.");
 		}
 		if (util.verificaDataValida(nascimento) == false) {
-			throw new CadastroInvalidoException(" Data nao existe.");
+			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Data nao existe.");
 		}
 		
 		if (imagem == null || imagem.trim().length() == 0) {
-			throw new CadastroInvalidoException(" Imagem invalida.");
+			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Imagem invalida.");
 		} else {
 			this.imagem = imagem;
 		}
@@ -126,7 +126,7 @@ public class Usuario implements Comparable<Usuario> {
 	
 	public void setNome(String novoNome) throws AtualizaPerfilException {
 		if (novoNome == null || novoNome.trim().length() == 0){
-			throw new AtualizaPerfilException(" Nome dx usuarix nao pode ser vazio.");
+			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Nome dx usuarix nao pode ser vazio.");
 		}
 		this.nome = novoNome;
 	}
@@ -134,7 +134,7 @@ public class Usuario implements Comparable<Usuario> {
 	public void setEmail(String novoEmail) throws EntradaException {
 		if (novoEmail == null || novoEmail.trim().length() == 0
 		   || !novoEmail.contains("@") || !novoEmail.contains(".com")) {		
-				throw new AtualizaPerfilException(" Formato de e-mail esta invalido.");
+				throw new AtualizaPerfilException("Erro na atualizacao de perfil. Formato de e-mail esta invalido.");
 		}
 		this.email = novoEmail;
 	}
@@ -143,34 +143,34 @@ public class Usuario implements Comparable<Usuario> {
 		if (this.senha.equals(velhaSenha)) {
 			
 			if (valor == null || valor.trim().length() == 0) {
-				throw new AtualizaPerfilException(" Senha invalida.");
+				throw new AtualizaPerfilException("Erro na atualizacao de perfil. Senha invalida.");
 			} else {
 				this.senha = valor;
 				return true;
 			}
 			
 		} else {
-			throw new AtualizaPerfilException(" A senha fornecida esta incorreta.");	
+			throw new AtualizaPerfilException("Erro na atualizacao de perfil. A senha fornecida esta incorreta.");	
 		} 
 	}	
 
 	// controlar as excecoes de formato e data invalidas
 	public void setNascimento(String novoNascimento) throws AtualizaPerfilException {
 		if (novoNascimento == null || novoNascimento.trim().length() == 0) {
-			throw new AtualizaPerfilException(" Formato de data esta invalida.");
+			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Formato de data esta invalida.");
 		}
 		if (util.verificaFormatoData(novoNascimento) == false) {
-			throw new AtualizaPerfilException(" Formato de data esta invalida.");
+			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Formato de data esta invalida.");
 		}
 		if (util.verificaDataValida(novoNascimento) == false) {
-			throw new AtualizaPerfilException(" Data nao existe.");
+			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Data nao existe.");
 		}
 		this.nascimento = util.recebeData(novoNascimento);;
 	}
 	
 	public void setImagem(String novaImagem) throws AtualizaPerfilException {
 		if (novaImagem == null) {
-			throw new AtualizaPerfilException("");
+			throw new AtualizaPerfilException("Erro na atualizacao de perfil.");
 		}
 		if (novaImagem.trim().length() == 0) {
 			this.imagem = "resources/avatarDefaul.jpg";
@@ -192,11 +192,11 @@ public class Usuario implements Comparable<Usuario> {
 		
 	private void verificaEmail(String email) throws CadastroInvalidoException {
 		if (email == null || email.equals("")) {
-			throw new CadastroInvalidoException(" Formato de e-mail esta invalido.");
+			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
 		} else if (email.contains("@") && email.contains(".com")) {
 			this.email = email;
 		} else {
-			throw new CadastroInvalidoException(" Formato de e-mail esta invalido.");
+			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
 		}
 	}
 
@@ -228,8 +228,6 @@ public class Usuario implements Comparable<Usuario> {
 	public void descurtir(Post post) {
 		this.popularidade.descurtir(post);
 	}
-
-
 	
 	public void criaPost(String mensagem, String data) throws PostException {
 		Post novoPost = new Post(mensagem, data);
@@ -325,10 +323,8 @@ public class Usuario implements Comparable<Usuario> {
 		return this.posts.get(post).getConteudoPost(indice);
 	}
 	
-	
 	public boolean temAmigo(String email) {
-		return this.amigos.contains(email);
-		
-		
+		return this.amigos.contains(email);	
 	}
+	
 }

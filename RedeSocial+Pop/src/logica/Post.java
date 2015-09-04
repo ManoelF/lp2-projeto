@@ -59,7 +59,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	private void verificaTam(String texto) throws PostException {
 		String novoTexto = Util.getInstancia().encontraTexto(texto);
 		if (novoTexto.length() >= 200) {
-			throw new PostException(" O limite maximo da mensagem sao 200 caracteres.");
+			throw new PostException("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.");
 		} else {
 			this.texto = texto;
 		}
@@ -112,20 +112,15 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	public void setPopularidade(int popularidade) {
 		this.popularidade = popularidade;
 	}
-
 	
 	public List<String> getHashtags() {
 		return hashtags;
 	}
-
 	
 	public void setHashtags(List<String> hashtags) {
 		this.hashtags = hashtags;
 	}
-	
-	
-	
-	
+		
 	private String getHashtagsStr() {
 		String hastags = "";
 		int  cont = 0;
@@ -138,32 +133,27 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		}
 		return hastags;
 	}
-			
-	
+				
 	public void curtir(int pontos) {
 		this.like += 1;
 		this.popularidade += pontos;
 	}
-	
 	
 	public void descurtir(int pontos) {
 		this.deslike += 1;
 		this.popularidade -= pontos;
 	}
 	
-
  	@Override
  	public int compareTo(Post outroPost) {
  		return this.data.compareTo(outroPost.getData());
  	}
  	
-
 	@Override
 	public int compare(Post o1, Post o2) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 	
 	public String getPost(String atributo) {
 		if (atributo.equals("Data")) {
@@ -177,11 +167,9 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		}
 	}
 	
-	
 	public String getPost() {
 		return this.texto + " (" + getDataString() + ")";
 	}
-	
 	
 	private void buscaMidia(String mensagem) {
 		FactoryMidia factoryMidia = new FactoryMidia();
@@ -196,13 +184,11 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 			this.midias.add(factoryMidia.obtemMidias(arquivo));
 		}
 	}
-	
-	
+		
 	public String getMidias() {
 		return this.midias.toString();
 	}
 
-	
 	public boolean comparaData(LocalDateTime outroData) {
 		if (this.data.getMonth() != outroData.getMonth() &&
 			this.data.getYear() != outroData.getYear() &&
@@ -212,7 +198,6 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		return true;		
 	}
 		
-
 	private String getConteudo() {
 		String novoConteudo = "";
 		char[] novaMsg = this.texto.toCharArray();
