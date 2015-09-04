@@ -162,6 +162,8 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 			return getConteudo();
 		} else if (atributo.equals("Hashtags")) {
 			return getHashtagsStr();
+		} else if (atributo.equals("Mensagem")) {
+			return getConteudo();
 		} else {
 			return "Aqui tem que lancar exception getPost(Atributo)";
 		}

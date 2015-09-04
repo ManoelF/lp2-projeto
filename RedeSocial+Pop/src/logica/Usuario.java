@@ -72,7 +72,7 @@ public class Usuario implements Comparable<Usuario> {
 	}
  	
  	public String getNextNotificacao() throws NaoHaNotificacoesException {
- 		String notificacaoAtual = this.notificacoes.pollFirst(); 
+ 		String notificacaoAtual = this.notificacoes.pollLast(); 
  		if (notificacaoAtual == null) {
  			throw new NaoHaNotificacoesException();
  		} else {

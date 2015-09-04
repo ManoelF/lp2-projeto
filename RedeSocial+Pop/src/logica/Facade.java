@@ -118,8 +118,8 @@ public class Facade {
 
 
 	public static void main(String[] args) {
-	    args = new String[] {"logica.Facade", "lib/ScriptsTeste_NetoAtualizado/usecase_1.txt", "lib/ScriptsTeste_NetoAtualizado/usecase_2.txt", "lib/ScriptsTeste_NetoAtualizado/usecase_3.txt", "lib/ScriptsTeste_NetoAtualizado/usecase_4.txt"};
-// 	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt", "lib/ScriptsTeste/usecase_4.txt"};
+//	    args = new String[] {"logica.Facade", "lib/ScriptsTeste_NetoAtualizado/usecase_1.txt", "lib/ScriptsTeste_NetoAtualizado/usecase_2.txt", "lib/ScriptsTeste_NetoAtualizado/usecase_3.txt", "lib/ScriptsTeste_NetoAtualizado/usecase_4.txt"};
+ 	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt", "lib/ScriptsTeste/usecase_4.txt"};
 //	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase.txt"};
 
 	    EasyAccept.main(args);
@@ -134,6 +134,8 @@ public class Facade {
  * At line 39, 40 e 43 --> erro nos test. Estão pedindo as informações de um post e comparando com a de outros
  * mais especificamente, pedem as informacoes do post=1 mas querrem realmente a do post=2
  * 
- * 
+ * --------------------------------
+ * Erro na linha 43 do caso de usuo 4 -> login email"madonna@email.com" senha="iamawesome" (Falta o "=" apois o email)
+ * Erro duarnte o teste no nome de "Fatima Bernardes Bonner"  pois esta -> "Fatima Bernades Bonner" (falta um "r" em Bernades)
  */
 }
