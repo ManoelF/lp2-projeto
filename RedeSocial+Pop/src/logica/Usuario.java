@@ -32,13 +32,14 @@ public class Usuario implements Comparable<Usuario> {
  	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException {
  		this.util = Util.getInstancia();
 
-		if (nome == null || nome.trim().length() == 0){
+		if (nome == null || !util.verificaAtributo(nome)){
 			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Nome dx usuarix nao pode ser vazio.");
 		}
-		if (email == null || email.trim().length() == 0) {
+
+		if (email == null || !util.verificaEmail(email)) {
 			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
 		}
-		if (senha == null || senha.trim().length() == 0) {
+		if (senha == null || !util.verificaSenha(senha)) {
 			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Senha dx usuarix nao pode ser vazio.");
 		}
 		if (nascimento == null || nascimento.trim().length() == 0) {
@@ -87,10 +88,6 @@ public class Usuario implements Comparable<Usuario> {
 	public Post getPost(int indice) {
  		return posts.get(indice);
  	}
-	
-/*	public String getPost(int indice) {
-		return posts.get(indice).getPost();
-	}*/
 
 	public String getNome() {
 		return this.nome;
@@ -125,16 +122,15 @@ public class Usuario implements Comparable<Usuario> {
 	}
 	
 	public void setNome(String novoNome) throws AtualizaPerfilException {
-		if (novoNome == null || novoNome.trim().length() == 0){
+		if (novoNome == null || !util.verificaAtributo(novoNome)){
 			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Nome dx usuarix nao pode ser vazio.");
 		}
 		this.nome = novoNome;
 	}
 	
 	public void setEmail(String novoEmail) throws EntradaException {
-		if (novoEmail == null || novoEmail.trim().length() == 0
-		   || !novoEmail.contains("@") || !novoEmail.contains(".com")) {		
-				throw new AtualizaPerfilException("Erro na atualizacao de perfil. Formato de e-mail esta invalido.");
+		if (novoEmail == null ||!util.verificaEmail(novoEmail)) {
+			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Formato de e-mail esta invalido.");
 		}
 		this.email = novoEmail;
 	}
@@ -142,7 +138,7 @@ public class Usuario implements Comparable<Usuario> {
 	public boolean setSenha(String valor, String velhaSenha) throws AtualizaPerfilException {
 		if (this.senha.equals(velhaSenha)) {
 			
-			if (valor == null || valor.trim().length() == 0) {
+			if (valor == null || !util.verificaSenha(valor)) {
 				throw new AtualizaPerfilException("Erro na atualizacao de perfil. Senha invalida.");
 			} else {
 				this.senha = valor;
@@ -319,8 +315,14 @@ public class Usuario implements Comparable<Usuario> {
 		this.feed.atualizaFeed(this.amigos);
 	}*/
 	
-	public String getConteudoPost(int indice, int post) throws LogicaException {
-		return this.posts.get(post).getConteudoPost(indice);
+	public String getConteudoPost(int indice, int post) throws LogicaException, PostException {
+		if (post > this.posts.size()) {
+			throw new LogicaException("Post #" + post + " nao existe na lista posts.");
+		} else if (indice < 0) {
+			throw new PostException("Requisicao invalida. O indice deve ser maior ou igual a zero.");
+		} else {
+			return this.posts.get(post).getConteudoPost(indice);
+		}
 	}
 	
 	public boolean temAmigo(String email) {

@@ -44,11 +44,11 @@ public class Facade {
 		this.controller.logout();	
 	}
 	
-	public String getInfoUsuario(String atributo, String usuario) throws LogicaException {
+	public String getInfoUsuario(String atributo, String usuario) throws LogicaException, EntradaException {
 		return this.controller.getInfoUsuario(atributo, usuario);
 	}
 	
-	public String getInfoUsuario(String atributo) throws SenhaProtegidaException {
+	public String getInfoUsuario(String atributo) throws SenhaProtegidaException, EntradaException {
 		return this.controller.getInfoUsuario(atributo);
 	}
 	
@@ -72,7 +72,7 @@ public class Facade {
 		return this.controller.getPost(atributo, post);
 	}	
 	
-	public String getConteudoPost(int indice, int post) throws LogicaException {
+	public String getConteudoPost(int indice, int post) throws LogicaException, PostException {
 		return this.controller.getConteudoPost(indice, post);
 	}
 	

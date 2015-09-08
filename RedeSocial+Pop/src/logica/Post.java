@@ -214,13 +214,11 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		return novoConteudo;
 	} 
 	
-	public String getConteudoPost(int indice) throws LogicaException {
-		if (indice > this.midias.size()) {
-			// lancar excecao de indice fora do tam
-			throw new LogicaException("Alterar essa excecao.");
+	public String getConteudoPost(int indice) throws LogicaException, PostException {
+		if (indice > this.midias.size() - 1) {
+			throw new LogicaException("Item #" + indice + " nao existe nesse post, ele possui apenas " + this.midias.size() + " itens distintos.");
 		} else if (indice < 0) {
-			// lancar excecao indice invalido
-			throw new LogicaException("Alterar essa excecao.");
+			throw new PostException("Requisicao invalida. O indice deve ser maior ou igual a zero.");
 		} else {
 			return this.midias.get(indice).toString();
 		}

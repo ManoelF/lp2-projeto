@@ -23,19 +23,12 @@ public class Datastest {
 	@Test
 	public void test() throws EntradaException, LogicaException {
 
-		try {
-			Facade facade = new Facade();
-			Controller ctr = new Controller();
-			Usuario user = new Usuario("ze", "ze@email.com", "1213", "10/05/1990", "imagem");
-			String jo = facade.cadastraUsuario("Jo Soares", "jo@uol.com.br", "!soares!", "16/01/1938");
-			System.out.println(user.getImagem());
-			System.out.println(facade.getInfoUsuario("Foto", jo));
-			
-			
-		} catch (CadastroInvalidoException e) {
-			System.out.println(e.getMessage());
-		} 
-
+		System.out.println(verificaSenha("!mario !"));
 	}
 
+	public boolean verificaSenha(String senha) {
+		String validacaoNome = "^[.^\\S].+";
+		return senha.matches(validacaoNome);
+	}
+	
 }

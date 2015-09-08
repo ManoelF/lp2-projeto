@@ -225,5 +225,20 @@ public class Util {
 		
 		return LocalDateTime.of(ano, mes, dia, hora, min, seg);
 	}
+
+
+	public boolean verificaEmail(String email) {
+		String validacaoNome = "^[a-zA-Z]{1}.+@[a-z]{2,}\\.[a-z]{2,4}(\\.[a-z]{2,3})*"; 
+		return email.matches(validacaoNome);
+	}	
 	
+	public boolean verificaAtributo(String atributo) {
+		String validacaoNome = "^\\w+.+";
+		return atributo.matches(validacaoNome);
+	}
+	
+	public boolean verificaSenha(String senha) {
+		String validacaoNome = "^[.^\\S].+";
+		return senha.matches(validacaoNome);
+	}
 }

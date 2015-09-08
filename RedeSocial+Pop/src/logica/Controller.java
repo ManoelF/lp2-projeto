@@ -134,7 +134,7 @@ public class Controller {
 		return true;
 	}
 			
-	public String getInfoUsuario(String atributo) throws SenhaProtegidaException {
+	public String getInfoUsuario(String atributo) throws SenhaProtegidaException , EntradaException{
 		String atributoRetornado = null;
 		switch (atributo) {
 		case NOME:
@@ -148,6 +148,8 @@ public class Controller {
 			break;
 		case SENHA:
 			throw new SenhaProtegidaException();
+		default:
+			throw new EntradaException("Este atributo nao existe!");
 		}
 		return atributoRetornado;
 	}
@@ -169,8 +171,10 @@ public class Controller {
 				break;
 			case FOTO:
 				this.usuarioLogado.setImagem(novoValor);
-				//break;
-				//lancar excecao de atibuto errado
+				break;
+			default:
+				throw new EntradaException("Este atributo nao existe!");
+				
 			}
 		}
 	}
@@ -188,7 +192,7 @@ public class Controller {
 	}
 	
 	
-	public String getInfoUsuario(String atributo, String email) throws LogicaException {
+	public String getInfoUsuario(String atributo, String email) throws LogicaException, EntradaException {
 		Usuario usuario = pesquisaUsuario(email);
 		if (usuario == null) {
 			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ email +" nao esta cadastradx.");
@@ -206,6 +210,8 @@ public class Controller {
 				break;
 			case SENHA:
 				throw new SenhaProtegidaException();
+			default:
+				throw new EntradaException("Este atributo nao existe!");
 			}
 			return atributoRetornado;
 		}
@@ -240,7 +246,7 @@ public class Controller {
 		}
 	}
 	
-	public void descurtirPost(String amigo, int post) throws UsuarioNaoCadastradoException {
+	public void descurtirPost(String amigo, int post) throws LogicaException {
 		Usuario usuario = pesquisaUsuario(amigo);
 		
 		if (usuario == null) {
@@ -251,7 +257,7 @@ public class Controller {
 				usuario.recebeNotificacao(usuario.getNome() + " descurtiu seu post de " + usuario.getPost(post).getDataString() + ".");
 				usuario.atualizaPopularidade();
 			} else {
-				// Lancar excecao que usuario nao tem esse amigo   "Não é seu amigo!!!~
+				throw new LogicaException("Este usuario nao esta na sua lista de amigos.");
 			}
 		}
 	}
@@ -297,7 +303,7 @@ public class Controller {
 		return this.usuarioLogado.getPost(atributo, post);
 	}
 	
-	public String getConteudoPost(int indice, int post) throws LogicaException {
+	public String getConteudoPost(int indice, int post) throws LogicaException, PostException {
 		return this.usuarioLogado.getConteudoPost(indice, post);
 	}
 	
