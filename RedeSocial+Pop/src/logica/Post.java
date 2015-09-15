@@ -150,9 +150,13 @@ public class Post implements Comparable<Post>, Comparator<Post> {
  	}
  	
 	@Override
-	public int compare(Post o1, Post o2) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compare(Post postI, Post postII) {
+		if (postI.getPopularidade() > postII.getPopularidade()) {
+			return 1;
+		} if (postI.getPopularidade() < postII.getPopularidade()) {
+			return -1;
+		}
+			return 0;
 	}
 	
 	public String getPost(String atributo) {

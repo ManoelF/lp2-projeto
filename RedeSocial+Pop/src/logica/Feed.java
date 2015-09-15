@@ -16,9 +16,6 @@ public class Feed  {
 
 	public List<Post> atualizaFeed(List<Usuario> amigos) {
 		
-		List<Post> listaNormal = new ArrayList<Post>();
-		List<Post> listaCelebridade = new ArrayList<Post>();
-		List<Post> listaIcone = new ArrayList<Post>();
 		int conta;
 		
 		for (Usuario amigo : amigos) {
@@ -29,39 +26,40 @@ public class Feed  {
 			if (amigo.getPopularidade() instanceof Normal) {				
 				conta = 0; 
 				while (iterator.hasNext() && conta < 2) {
-					listaNormal.add( amigo.getPosts().get(conta) );
-					conta++;
+					if (!this.feed.contains(amigo.getPosts().get(conta))) {
+						addOrdenado( amigo.getPosts().get(conta) );
+						conta++;
+					}
 				}		
 			} else if (amigo.getPopularidade() instanceof CelebridadePOP) {
 				conta = 0; 
 				while (iterator.hasNext() && conta < 4) {
-					listaCelebridade.add( amigo.getPosts().get(conta) );
-					conta++;
+					if (!this.feed.contains(amigo.getPosts().get(conta))) {
+						addOrdenado( amigo.getPosts().get(conta) );
+						conta++;
+					}
 				}
 			} else { //(amigo.getPopularidade() instanceof IconePOP) {
 				conta = 0; 
 				while (iterator.hasNext() && conta < 6) {
-					listaIcone.add( amigo.getPosts().get(conta) );
-					conta++;
+					if (!this.feed.contains(amigo.getPosts().get(conta))) {
+						addOrdenado( amigo.getPosts().get(conta) );
+						conta++;
+					}
 				}
 			} // encerra bloco de if
+			
 		} // encerra for
 
-		List<Post> novoFeed =  concatenaListas(listaNormal, listaCelebridade, listaIcone);
-		return novoFeed;
+
+		return feed;
 	}
 	
-	public List<Post> concatenaListas(List<Post> listaNormal, List<Post> listaCelebridade, List<Post> listaIcone) {
-	
-		Collections.sort(listaNormal);
-		Collections.sort(listaCelebridade);
-		Collections.sort(listaIcone);
-		
-		List<Post> novoFeed = new ArrayList<Post>();
-		novoFeed.addAll(listaIcone);
-		novoFeed.addAll(listaCelebridade);
-		novoFeed.addAll(listaNormal);
-		return novoFeed;
+	private void addOrdenado(Post post) {
+		// por hora este metodo apenas add. mas futuramente sera implementado para add ordenado
+		this.feed.add(post);
 	}
+	
+
 
 }
