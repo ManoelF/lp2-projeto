@@ -311,6 +311,7 @@ public class Controller {
 		return this.usuarioLogado.getSenha();
 	}
 	
+	
 	/*public String atualizaRanking() {
 		String atualiza = "";
 		for (int i = 0; i < ranked.comMaisX2p.length; i++) {

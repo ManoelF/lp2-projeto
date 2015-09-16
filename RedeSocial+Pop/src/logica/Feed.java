@@ -6,12 +6,19 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import logica.ordenacao.OrdenaFeedData;
+import logica.ordenacao.OrdenaFeedPopularidade;
+
 public class Feed  {
 
 	private List<Post> feed;
+	private Comparator<Post> tipoOrdenacao; 
+	private Util util;
 	
 	public Feed() {
 		this.feed = new ArrayList<>();
+		this.tipoOrdenacao = new OrdenaFeedData();
+ 		this.util = Util.getInstancia();
 	}
 
 	public List<Post> atualizaFeed(List<Usuario> amigos) {
@@ -27,7 +34,7 @@ public class Feed  {
 				conta = 0; 
 				while (iterator.hasNext() && conta < 2) {
 					if (!this.feed.contains(amigo.getPosts().get(conta))) {
-						addOrdenado( amigo.getPosts().get(conta) );
+						this.feed.add( amigo.getPosts().get(conta) );
 						conta++;
 					}
 				}		
@@ -35,7 +42,7 @@ public class Feed  {
 				conta = 0; 
 				while (iterator.hasNext() && conta < 4) {
 					if (!this.feed.contains(amigo.getPosts().get(conta))) {
-						addOrdenado( amigo.getPosts().get(conta) );
+						this.feed.add( amigo.getPosts().get(conta) );
 						conta++;
 					}
 				}
@@ -43,23 +50,26 @@ public class Feed  {
 				conta = 0; 
 				while (iterator.hasNext() && conta < 6) {
 					if (!this.feed.contains(amigo.getPosts().get(conta))) {
-						addOrdenado( amigo.getPosts().get(conta) );
+						this.feed.add( amigo.getPosts().get(conta) );
 						conta++;
 					}
 				}
 			} // encerra bloco de if
 			
 		} // encerra for
+		
 
-
+		Collections.sort(this.feed, this.tipoOrdenacao);
 		return feed;
 	}
 	
-	private void addOrdenado(Post post) {
-		// por hora este metodo apenas add. mas futuramente sera implementado para add ordenado
-		this.feed.add(post);
+	public void ordenaPorData() {
+		this.tipoOrdenacao = new OrdenaFeedData();
 	}
 	
+	public void ordenaPorPopularidade() {
+		this.tipoOrdenacao = new OrdenaFeedPopularidade();
+	}
 
 
 }

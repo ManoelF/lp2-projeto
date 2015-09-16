@@ -241,4 +241,7 @@ public class Util {
 		String validacaoNome = "^[.^\\S].+";
 		return senha.matches(validacaoNome);
 	}
+	
+
+	
 }

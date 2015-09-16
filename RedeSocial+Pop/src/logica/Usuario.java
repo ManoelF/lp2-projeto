@@ -328,5 +328,9 @@ public class Usuario implements Comparable<Usuario> {
 	public boolean temAmigo(String email) {
 		return this.amigos.contains(email);	
 	}
+
+	public Feed getFeed() {
+		return this.feed;
+	}
 	
 }

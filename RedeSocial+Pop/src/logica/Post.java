@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import exceptions.*;
 
-public class Post implements Comparable<Post>, Comparator<Post> {
+public class Post implements Comparable<Post> {
 
 	private String texto;
 	private LocalDateTime data;
@@ -103,7 +103,6 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	public void setDeslike(int deslike) {
 		this.deslike = deslike;
 	}
-
 	
 	public int getPopularidade() {
 		return popularidade;
@@ -143,22 +142,7 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 		this.deslike += 1;
 		this.popularidade -= pontos;
 	}
-	
- 	@Override
- 	public int compareTo(Post outroPost) {
- 		return this.data.compareTo(outroPost.getData());
- 	}
- 	
-	@Override
-	public int compare(Post postI, Post postII) {
-		if (postI.getPopularidade() > postII.getPopularidade()) {
-			return 1;
-		} if (postI.getPopularidade() < postII.getPopularidade()) {
-			return -1;
-		}
-			return 0;
-	}
-	
+	 		
 	public String getPost(String atributo) {
 		if (atributo.equals("Data")) {
 			return getDataString();
@@ -231,5 +215,10 @@ public class Post implements Comparable<Post>, Comparator<Post> {
 	
 	public void adicionaHashtag(String hashtag) {
 		this.hashtags.add(hashtag);
+	}
+
+	@Override
+	public int compareTo(Post outroPost) {
+		return this.data.compareTo(outroPost.getData());
 	}
 }
