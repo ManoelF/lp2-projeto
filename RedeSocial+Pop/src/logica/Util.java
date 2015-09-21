@@ -226,7 +226,6 @@ public class Util {
 		return LocalDateTime.of(ano, mes, dia, hora, min, seg);
 	}
 
-
 	public boolean verificaEmail(String email) {
 		String validacaoNome = "^[a-zA-Z]{1}.+@[a-z]{2,}\\.[a-z]{2,4}(\\.[a-z]{2,3})*"; 
 		return email.matches(validacaoNome);

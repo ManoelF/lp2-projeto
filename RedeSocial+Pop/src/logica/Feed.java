@@ -14,11 +14,13 @@ public class Feed  {
 	private List<Post> feed;
 	private Comparator<Post> tipoOrdenacao; 
 	private Util util;
+	//private List<Usuario> amigos;
 	
 	public Feed() {
 		this.feed = new ArrayList<>();
 		this.tipoOrdenacao = new OrdenaFeedData();
  		this.util = Util.getInstancia();
+ 		//this.amigos = amigos;
 	}
 
 	public List<Post> atualizaFeed(List<Usuario> amigos) {
@@ -69,6 +71,10 @@ public class Feed  {
 	
 	public void ordenaPorPopularidade() {
 		this.tipoOrdenacao = new OrdenaFeedPopularidade();
+	}
+	
+	public List<Post> getFeed() {
+		return this.feed;
 	}
 
 

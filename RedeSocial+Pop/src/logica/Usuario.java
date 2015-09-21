@@ -329,8 +329,12 @@ public class Usuario implements Comparable<Usuario> {
 		return this.amigos.contains(email);	
 	}
 
-	public Feed getFeed() {
-		return this.feed;
+	public List<Post> getFeed() {
+		return this.feed.getFeed();
+	}
+	
+	public void atualizaFeed(List<Usuario> amigos) {
+		this.feed.atualizaFeed(amigos);
 	}
 	
 }
