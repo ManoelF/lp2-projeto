@@ -58,7 +58,7 @@ public class Util {
 	
 	// buscando as hashtag do texto
 	// logica semelhante a usada na busca de arquivos
-	public List<String> encontraHashtag(String mensagem) throws PostException {
+	public List<String> encontraHashtag2(String mensagem) throws PostException {
 		List<String> hashtags = new ArrayList<>();
 		String novaHash = "";
 		char[] novaMsg = mensagem.toCharArray();
@@ -241,6 +241,33 @@ public class Util {
 		return senha.matches(validacaoNome);
 	}
 	
-
+	public List<String> encontraHashtag(String texto) throws PostException {
+		String[] hashtags; 
+		String novaHash = "";
+		List<String> listaHashtags = new ArrayList<>();//String[] hashtags;
+		char[] campoHash = texto.toCharArray();
+		boolean inicia = false;
+		
+		for(char caracter: campoHash){
+			if (caracter == '#') {
+				inicia = true;
+			}
+			if (inicia == true) {
+				novaHash += caracter;
+			}
+		}
+		
+		hashtags = novaHash.split(" ");
+		for (int i = 0; i < hashtags.length; i++) {
+			listaHashtags.add(hashtags[i]);
+			if (hashtags[i].charAt(0) != '#') {
+				throw new PostException("Nao eh possivel criar o post. As hashtags devem comecar com '#'. Erro na hashtag: '" + hashtags[i] + "'.");
+				
+			}
+			
+		}
+		
+		return listaHashtags;
+	}
 	
 }
