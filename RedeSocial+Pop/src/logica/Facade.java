@@ -100,7 +100,7 @@ public class Facade {
 		this.controller.aceitaAmizade(usuario);
 	}
 	
-	public void curtirPost(String amigo, int post) throws UsuarioNaoCadastradoException {
+	public void curtirPost(String amigo, int post) throws LogicaException {
 		this.controller.curtirPost(amigo, post);
 	}
 	
@@ -116,11 +116,8 @@ public class Facade {
 		this.controller.atualizaRanking();
 	}*/
 
-
 	public static void main(String[] args) {
-//        args = new String[] {"logica.Facade", "lib/ScriptsTeste_NetoAtualizado/usecase_1.txt", "lib/ScriptsTeste_NetoAtualizado/usecase_2.txt", "lib/ScriptsTeste_NetoAtualizado/usecase_3.txt", "lib/ScriptsTeste_NetoAtualizado/usecase_4.txt"};
  	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt", "lib/ScriptsTeste/usecase_4.txt"};
-
 	    EasyAccept.main(args);
 	}
 /*

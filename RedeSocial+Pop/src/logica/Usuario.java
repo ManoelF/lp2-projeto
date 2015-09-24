@@ -1,10 +1,7 @@
 package logica;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayDeque;
-import java.util.Date;
 import java.util.Deque;
 import java.util.List;
 import java.util.ArrayList;
@@ -19,7 +16,7 @@ public class Usuario implements Comparable<Usuario> {
 	private String senha;
 	private String imagem;
 	private int pop;
-	private List<String> amigos;
+	private List<Usuario> amigos;
 	private List<String> solicitacaoAmizade;
 	private Deque<String> notificacoes;
 	private TipoPopularidade popularidade;
@@ -109,11 +106,11 @@ public class Usuario implements Comparable<Usuario> {
 		return this.imagem;
 	}
 	
-	public List<String> getAmigos() {
+	public List<Usuario> getAmigos() {
 		return amigos;
 	}
 
-	public void setAmigos(List<String> amigos) {
+	public void setAmigos(List<Usuario> amigos) {
 		this.amigos = amigos;
 	}
 
@@ -175,15 +172,22 @@ public class Usuario implements Comparable<Usuario> {
 		}
 	}
 			
-	public void rejeitaAmizade(String emailUserRecusado) {
-		this.solicitacaoAmizade.remove(emailUserRecusado);
+	public void adicionaAmigo(Usuario userDestino) throws LogicaException {
+		userDestino.getSolicitacaoAmizade().add( this.email );
+		userDestino.recebeNotificacao(this.nome +" quer sua amizade.");
+	}
+	
+	public void rejeitaAmizade(Usuario userRecusado) {
+		userRecusado.recebeNotificacao(this.nome +" rejeitou sua amizade.");
+		this.solicitacaoAmizade.remove(userRecusado);
 		this.notificacoes.remove( this.notificacoes.size() - 1 );
 	}
 	
-	public void aceitaAmizade(String usuarioAceito) {
+	public void aceitaAmizade(Usuario usuarioAceito) {
 		this.solicitacaoAmizade.remove(usuarioAceito);
 		this.notificacoes.remove( this.notificacoes.size() - 1 );
 		this.amigos.add(usuarioAceito);
+		System.out.println("Aceitou!!!");
 	}
 		
 	private void verificaEmail(String email) throws CadastroInvalidoException {
@@ -262,7 +266,7 @@ public class Usuario implements Comparable<Usuario> {
 		
 	}
 	
-	public void removeAmigo(String usuario) {
+	public void removeAmigo(Usuario usuario) {
 		this.amigos.remove(usuario);
 	}
 	
@@ -325,8 +329,8 @@ public class Usuario implements Comparable<Usuario> {
 		}
 	}
 	
-	public boolean temAmigo(String email) {
-		return this.amigos.contains(email);	
+	public boolean temAmigo(Usuario usuario) {
+		return this.amigos.contains(usuario);	
 	}
 
 	public List<Post> getFeed() {
