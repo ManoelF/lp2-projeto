@@ -345,4 +345,8 @@ public class Usuario implements Comparable<Usuario> {
 		this.feed.atualizaFeed();
 	}
 	
+	public int qntPostsFeed() {
+		return this.popularidade.qntPostFeed();
+	}
+	
 }

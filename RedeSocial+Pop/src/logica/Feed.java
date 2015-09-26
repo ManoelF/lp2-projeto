@@ -34,33 +34,15 @@ public class Feed  {
 			
 			Collections.sort(amigo.getPosts());
 			Iterator iterator = amigo.getPosts().iterator();
+			int qnt = amigo.qntPostsFeed();
 			
-			if (amigo.getPopularidade() instanceof Normal) {				
-				conta = 0; 
-				while (iterator.hasNext() && conta < 2) {
-					if (!this.feed.contains(amigo.getPosts().get(conta))) {
-						this.feed.add( amigo.getPosts().get(conta) );
-						conta++;
-					}
-				}		
-			} else if (amigo.getPopularidade() instanceof CelebridadePOP) {
-				conta = 0; 
-				while (iterator.hasNext() && conta < 4) {
-					if (!this.feed.contains(amigo.getPosts().get(conta))) {
-						this.feed.add( amigo.getPosts().get(conta) );
-						conta++;
-					}
+			conta = 0; 
+			while (iterator.hasNext() && conta < qnt) {
+				if (!this.feed.contains(amigo.getPosts().get(conta))) {
+					this.feed.add( amigo.getPosts().get(conta) );
+					conta++;
 				}
-			} else { //(amigo.getPopularidade() instanceof IconePOP) {
-				conta = 0; 
-				while (iterator.hasNext() && conta < 6) {
-					if (!this.feed.contains(amigo.getPosts().get(conta))) {
-						this.feed.add( amigo.getPosts().get(conta) );
-						conta++;
-					}
-				}
-			} // encerra bloco de if
-			
+			}		
 		} // encerra for
 		
 
