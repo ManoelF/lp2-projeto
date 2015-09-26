@@ -6,8 +6,7 @@ import exceptions.*;
 public class Facade {
 	
 	private Controller controller;
-	
-	
+		
 	public Facade() {
 		this.controller = new Controller();
 	}
@@ -23,10 +22,6 @@ public class Facade {
 			// FechaSistema
 		}
 	}
-
-	public void atualizaRanking() {
-		
-	}
 	
 	public String cadastraUsuario(String nome, String email, String senha, String nascimento, String imagem) throws EntradaException,  LogicaException {
 		return this.controller.cadastraUsuario(nome, email, senha, nascimento, imagem);
@@ -34,6 +29,14 @@ public class Facade {
 
 	public String cadastraUsuario(String nome, String email, String senha, String nascimento) throws EntradaException, LogicaException {
 		return cadastraUsuario(nome, email, senha, nascimento, "resources/default.jpg");
+	}
+	
+	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, EntradaException {
+		this.controller.atualizaPerfil(atributo, novoValor);
+	}
+	
+	public void atualizaPerfil(String atributo, String valor, String velhaSenha) throws AtualizaPerfilException, LogicaException {
+		this.controller.atualizaPerfil(atributo, valor, velhaSenha);
 	}
 	
 	public void login(String email, String senha) throws LogicaException, EntradaException {
@@ -44,20 +47,28 @@ public class Facade {
 		this.controller.logout();	
 	}
 	
-	public String getInfoUsuario(String atributo, String usuario) throws LogicaException, EntradaException {
-		return this.controller.getInfoUsuario(atributo, usuario);
+	public void adicionaAmigo(String usuario) throws LogicaException  {
+		this.controller.adicionaAmigo(usuario);
 	}
 	
-	public String getInfoUsuario(String atributo) throws SenhaProtegidaException, EntradaException {
-		return this.controller.getInfoUsuario(atributo);
+	public void rejeitaAmizade(String email) throws LogicaException {
+		this.controller.rejeitaAmizade(email);
+	}
+		
+	public void aceitaAmizade(String usuario) throws LogicaException {
+		this.controller.aceitaAmizade(usuario);
 	}
 	
-	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, EntradaException {
-		this.controller.atualizaPerfil(atributo, novoValor);
+	public void removeAmigo(String usuario) throws UsuarioNaoCadastradoException  {
+		this.controller.removeAmigo(usuario);
 	}
 	
-	public void atualizaPerfil(String atributo, String valor, String velhaSenha) throws AtualizaPerfilException, LogicaException {
-		this.controller.atualizaPerfil(atributo, valor, velhaSenha);
+	public void removeUsuario(String usuario) {
+		this.controller.removeUsuario(usuario);
+	}
+	
+	public void curtirPost(String amigo, int post) throws LogicaException {
+		this.controller.curtirPost(amigo, post);
 	}
 	
 	public void criaPost(String mensagem, String data) throws PostException {
@@ -76,6 +87,14 @@ public class Facade {
 		return this.controller.getConteudoPost(indice, post);
 	}
 	
+	public String getInfoUsuario(String atributo, String usuario) throws LogicaException, EntradaException {
+		return this.controller.getInfoUsuario(atributo, usuario);
+	}
+	
+	public String getInfoUsuario(String atributo) throws SenhaProtegidaException, EntradaException {
+		return this.controller.getInfoUsuario(atributo);
+	}
+	
 	public String getNextNotificacao() throws NaoHaNotificacoesException {
 		return this.controller.getNextNotificacao();
 	}
@@ -84,33 +103,14 @@ public class Facade {
 		return this.controller.getNotificacoes();
 	}
 	
-	public void rejeitaAmizade(String email) throws LogicaException {
-		this.controller.rejeitaAmizade(email);
-	}
-	
-	public void adicionaAmigo(String usuario) throws LogicaException  {
-		this.controller.adicionaAmigo(usuario);
-	}
-	
 	public int getQtdAmigos() {
 		return this.controller.getQtdAmigos();
 	}
 	
-	public void aceitaAmizade(String usuario) throws LogicaException {
-		this.controller.aceitaAmizade(usuario);
+	public void atualizaRanking() {
+		
 	}
 	
-	public void curtirPost(String amigo, int post) throws LogicaException {
-		this.controller.curtirPost(amigo, post);
-	}
-	
-	public void removeAmigo(String usuario) throws UsuarioNaoCadastradoException  {
-		this.controller.removeAmigo(usuario);
-	}
-	
-	public void removeUsuario(String usuario) {
-		this.controller.removeUsuario(usuario);
-	}
 	/*
 	public void atualizaRanked(){
 		this.controller.atualizaRanking();

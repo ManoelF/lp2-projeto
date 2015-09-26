@@ -119,9 +119,7 @@ public class Controller {
 		} else if (this.usuarioLogado.getSolicitacaoAmizade().contains(emailUserAceito)) {
 			this.usuarioLogado.aceitaAmizade(userAceito);
 			userAceito.getAmigos().add(this.usuarioLogado);	
-			userAceito.recebeNotificacao(this.usuarioLogado.getNome() + " aceitou sua amizade.");
-			
-			System.out.println("Aceitou a amizade!!!");
+			userAceito.recebeNotificacao(this.usuarioLogado.getNome() + " aceitou sua amizade.");			
 		} else {
 			throw new NaoSolicitouAmizadeException(userAceito.getNome() + " nao lhe enviou solicitacoes de amizade.");
 		}
@@ -243,7 +241,6 @@ public class Controller {
 				usuario.atualizaPopularidade();
 			} else {
 				// Lancar excecao que usuario nao tem esse amigo
-				System.out.println(this.usuarioLogado.getAmigos().contains(usuario));
 				throw new LogicaException(amigo + " nao e seu amigo.");
 			}
 		}

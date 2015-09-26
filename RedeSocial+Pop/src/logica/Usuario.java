@@ -191,7 +191,6 @@ public class Usuario implements Comparable<Usuario> {
 		this.solicitacaoAmizade.remove(usuarioAceito);
 		this.notificacoes.remove( this.notificacoes.size() - 1 );
 		this.amigos.add(usuarioAceito);
-		System.out.println("Aceitou!!!");
 	}
 		
 	private void verificaEmail(String email) throws CadastroInvalidoException {
