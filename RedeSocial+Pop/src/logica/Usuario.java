@@ -345,4 +345,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.feed.atualizaFeed();
 	}
 	
+	public Post getUltimoPost() {
+		return this.posts.get(posts.size() - 1);
+	}
 }
