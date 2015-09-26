@@ -1,4 +1,4 @@
-package logica;
+package logica.midia;
 
 public class Video extends Midia {
 	

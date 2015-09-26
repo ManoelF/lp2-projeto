@@ -1,8 +1,10 @@
-package logica;
+package logica.tipopopularidade;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+
+import logica.Post;
 
 public class CelebridadePOP implements TipoPopularidade {
 	private final int POPS = 25;
@@ -17,7 +19,6 @@ public class CelebridadePOP implements TipoPopularidade {
 			pontos += 10;
 		}
 		post.curtir(pontos);
-		
 	}
 
 	@Override
@@ -27,11 +28,7 @@ public class CelebridadePOP implements TipoPopularidade {
 			pontos += 10;
 		}
 		post.descurtir(pontos);
-		
-	
-		
 	}
-	
 	
 	private boolean isActual(LocalDateTime dataPost) {
 		String data = dataPost.toString();

@@ -6,6 +6,10 @@ import java.util.Deque;
 import java.util.List;
 import java.util.ArrayList;
 
+import logica.tipopopularidade.CelebridadePOP;
+import logica.tipopopularidade.IconePOP;
+import logica.tipopopularidade.Normal;
+import logica.tipopopularidade.TipoPopularidade;
 import exceptions.*;
 
 public class Usuario implements Comparable<Usuario> {
@@ -65,7 +69,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.solicitacaoAmizade = new ArrayList<>();
 		this.notificacoes = new ArrayDeque<>();
 		this.posts = new ArrayList<>();
-		this.feed = new Feed();
+		this.feed = new Feed(this.amigos);
 		this.popularidade = new Normal();
 	}
  	
@@ -337,8 +341,8 @@ public class Usuario implements Comparable<Usuario> {
 		return this.feed.getFeed();
 	}
 	
-	public void atualizaFeed(List<Usuario> amigos) {
-		this.feed.atualizaFeed(amigos);
+	public void atualizaFeed() {
+		this.feed.atualizaFeed();
 	}
 	
 }

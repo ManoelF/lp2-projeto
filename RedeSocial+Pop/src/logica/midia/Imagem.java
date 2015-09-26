@@ -1,4 +1,5 @@
-package logica;
+package logica.midia;
+
 
 public class Imagem extends Midia {
 	
