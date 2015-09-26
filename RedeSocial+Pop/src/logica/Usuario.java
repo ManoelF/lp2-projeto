@@ -348,4 +348,7 @@ public class Usuario implements Comparable<Usuario> {
 		return this.popularidade.qntPostFeed();
 	}
 	
+	public Post getUltimoPost() {
+		return this.posts.get(posts.size() - 1);
+	}
 }

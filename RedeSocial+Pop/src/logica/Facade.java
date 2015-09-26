@@ -1,7 +1,14 @@
 package logica;
 
 import easyaccept.EasyAccept;
-import exceptions.*;
+import exceptions.AtualizaPerfilException;
+import exceptions.EntradaException;
+import exceptions.FechaSistemaException;
+import exceptions.LogicaException;
+import exceptions.NaoHaNotificacoesException;
+import exceptions.PostException;
+import exceptions.SenhaProtegidaException;
+import exceptions.UsuarioNaoCadastradoException;
 
 public class Facade {
 	
@@ -111,6 +118,18 @@ public class Facade {
 		
 	}
 	
+	public void atualizaFeed() {
+		controller.atualizaFeed();
+	}
+	
+	public void ordenaFeedPorData(){
+		
+	}
+	
+	public void ordenaFeedPorPopularidade(){
+		
+	}
+	
 	/*
 	public void atualizaRanked(){
 		this.controller.atualizaRanking();
@@ -120,18 +139,5 @@ public class Facade {
  	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt", "lib/ScriptsTeste/usecase_4.txt"};
 	    EasyAccept.main(args);
 	}
-/*
- * erros
- * inciaSistema --> iniciaSistema// usecase_4.txt
- * fecharSistema --> fechaSistema// usecase_2.txt
- * At line 58: gal_costa@email.com --> gal_costa@email.com.br // usecase_1.txt
- * At line 54: "madonna@email.com" --> "madona@email.com"
- * At line 26: Nao deveria dar erro pq a senha esta correta por ter sido alterada anteriomente (mudado para will_S2) // usecase_2.txt
- * At line 39, 40 e 43 --> erro nos test. Estão pedindo as informações de um post e comparando com a de outros
- * mais especificamente, pedem as informacoes do post=1 mas querrem realmente a do post=2
- * 
- * --------------------------------
- * Erro na linha 43 do caso de usuo 4 -> login email"madonna@email.com" senha="iamawesome" (Falta o "=" apois o email)
- * Erro duarnte o teste no nome de "Fatima Bernardes Bonner"  pois esta -> "Fatima Bernades Bonner" (falta um "r" em Bernades)
- */
+
 }

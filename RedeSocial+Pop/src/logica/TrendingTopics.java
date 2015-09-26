@@ -1,5 +1,9 @@
 package logica;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+
 public class TrendingTopics {
 
 	
@@ -17,4 +21,48 @@ public class TrendingTopics {
 	 * para fazer a concatenação no formato desejado.
 	 * 
 	 */
+	private HashMap<String, Integer> tagsUsadas;
+	private String trending; 
+	
+	public TrendingTopics() {
+		this.tagsUsadas = new HashMap<>();
+		this.trending = "";
+		
+	}
+	
+	public void adicionaHashtag(List<String> hashtags) {
+		for (String tag: hashtags) {
+			if (this.tagsUsadas.containsKey(tag)) {
+				tagsUsadas.put(tag, tagsUsadas.get(tag) + 1 );
+			} else {
+				tagsUsadas.put(tag, 1);
+			}
+		}
+	}
+	
+	private void buscaTagsMaisPopulares() {
+		Set<String> hashtags = this.tagsUsadas.keySet();
+		int cont = 0;
+		
+		int quantidade = 0;
+		String maisUsada = "";
+		
+		while (cont < 3) {
+			for (String tag: hashtags) {
+				if  (this.tagsUsadas.get(tag) >= quantidade) {
+					if (!trending.contains(tag)) {
+						quantidade = this.tagsUsadas.get(tag);
+						maisUsada = tag;
+					}
+				}
+			}
+			this.trending += maisUsada;
+			
+		}
+	}
+	
+	public String getTrendingTopicHashtag() {
+		buscaTagsMaisPopulares();
+		return this.trending;
+	}
 }
