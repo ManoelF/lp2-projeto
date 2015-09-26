@@ -2,9 +2,12 @@ package logica;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import exceptions.*;
+
+import exceptions.LogicaException;
+import exceptions.PostException;
+import logica.midia.Mensagem;
+import logica.midia.Midia;
 
 public class Post implements Comparable<Post> {
 
@@ -16,12 +19,12 @@ public class Post implements Comparable<Post> {
 	private List<String> hashtags;
 	private List<Midia> midias;
 	private Util util;
-	//FactoryMidia fabricaMidia;
+	FactoryMidia fabricaMidia;
 
 	// data e hora
 	public Post(String texto, String data) throws PostException {
 		this.util = Util.getInstancia();
-	//	fabricaMidia = new FactoryMidia();
+		this.fabricaMidia = new FactoryMidia();
 
 		if (texto == null || texto.trim().length() == 0) {
 			// lancar Exception
@@ -56,83 +59,6 @@ public class Post implements Comparable<Post> {
 		verificaTam(texto);			
 	}
 
-	private void verificaTam(String texto) throws PostException {
-		String novoTexto = Util.getInstancia().encontraTexto(texto);
-		if (novoTexto.length() >= 200) {
-			throw new PostException("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.");
-		} else {
-			this.texto = texto;
-		}
-	}
-	
-	public String getDataString() {
-		if (this.data.getSecond() == 0) {
-			return this.data.toString().replace("T", " ") + ":00";
-		}
-		return this.data.toString().replace("T", " ");
-	}
-	
-	public LocalDateTime getData() {
-		return this.data;
-	}
-	
-	public String getMidias(int indice) {
-		return this.midias.get(indice).toString();
-	}
-	
-	public String getTexto() {
-		return texto;
-	}
-	
-	public void setTexto(String texto) {
-		this.texto = texto;
-	}
-
-	public int getLike() {
-		return like;
-	}
-
-	public void setLike(int like) {
-		this.like = like;
-	}
-
-	public int getDeslike() {
-		return deslike;
-	}
-
-	public void setDeslike(int deslike) {
-		this.deslike = deslike;
-	}
-	
-	public int getPopularidade() {
-		return popularidade;
-	}
-
-	public void setPopularidade(int popularidade) {
-		this.popularidade = popularidade;
-	}
-	
-	public List<String> getHashtags() {
-		return hashtags;
-	}
-	
-	public void setHashtags(List<String> hashtags) {
-		this.hashtags = hashtags;
-	}
-		
-	private String getHashtagsStr() {
-		String hastags = "";
-		int  cont = 0;
-		for(String hash: this.hashtags) {
-			cont += 1;
-			hastags += hash;
-			if (cont < this.hashtags.size()) {
-				hastags += ",";
-			}
-		}
-		return hastags;
-	}
-				
 	public void curtir(int pontos) {
 		this.like += 1;
 		this.popularidade += pontos;
@@ -142,7 +68,59 @@ public class Post implements Comparable<Post> {
 		this.deslike += 1;
 		this.popularidade -= pontos;
 	}
-	 		
+	
+	private void verificaTam(String texto) throws PostException {
+		String novoTexto = Util.getInstancia().encontraTexto(texto);
+		if (novoTexto.length() >= 200) {
+			throw new PostException("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.");
+		} else {
+			this.texto = texto;
+		}
+	}
+	
+	public LocalDateTime getData() {
+		return this.data;
+	}
+		
+	public boolean comparaData(LocalDateTime outroData) {
+		if (this.data.getMonth() != outroData.getMonth() &&
+			this.data.getYear() != outroData.getYear() &&
+			this.data.getDayOfMonth() != outroData.getDayOfMonth() ) {
+				return false;
+			}
+		return true;		
+	}
+	
+	public List<String> getHashtags() {
+		return hashtags;
+	}
+	
+	public void adicionaHashtag(String hashtag) {
+		this.hashtags.add(hashtag);
+	}
+	 			
+	private void buscaMidia(String mensagem) {
+		this.fabricaMidia = new FactoryMidia();
+		List<String> listMidias = util.getMidia(mensagem);
+		
+		Midia mensagem2 = new Mensagem(util.encontraTexto(mensagem));
+		if (!mensagem2.toString().equals("")) {
+			this.midias.add(mensagem2);
+		}
+		
+		for (String arquivo: listMidias) {
+			this.midias.add(this.fabricaMidia.obtemMidias(arquivo));
+		}
+	}
+	
+	public String getMidias() {
+		return this.midias.toString();
+	}
+	
+	public String getMidias(int indice) {
+		return this.midias.get(indice).toString();
+	}
+	
 	public String getPost(String atributo) {
 		if (atributo.equals("Data")) {
 			return getDataString();
@@ -161,33 +139,6 @@ public class Post implements Comparable<Post> {
 		return this.texto + " (" + getDataString() + ")";
 	}
 	
-	private void buscaMidia(String mensagem) {
-		FactoryMidia factoryMidia = new FactoryMidia();
-		List<String> listMidias = util.getMidia(mensagem);
-		
-		Midia mensagem2 = new Mensagem(util.encontraTexto(mensagem));
-		if (!mensagem2.toString().equals("")) {
-			this.midias.add(mensagem2);
-		}
-		
-		for (String arquivo: listMidias) {
-			this.midias.add(factoryMidia.obtemMidias(arquivo));
-		}
-	}
-		
-	public String getMidias() {
-		return this.midias.toString();
-	}
-
-	public boolean comparaData(LocalDateTime outroData) {
-		if (this.data.getMonth() != outroData.getMonth() &&
-			this.data.getYear() != outroData.getYear() &&
-			this.data.getDayOfMonth() != outroData.getDayOfMonth() ) {
-				return false;
-			}
-		return true;		
-	}
-		
 	private String getConteudo() {
 		String novoConteudo = "";
 		char[] novaMsg = this.texto.toCharArray();
@@ -213,10 +164,62 @@ public class Post implements Comparable<Post> {
 		
 	}		
 	
-	public void adicionaHashtag(String hashtag) {
-		this.hashtags.add(hashtag);
+	public String getDataString() {
+		if (this.data.getSecond() == 0) {
+			return this.data.toString().replace("T", " ") + ":00";
+		}
+		return this.data.toString().replace("T", " ");
+	}
+		
+	public String getTexto() {
+		return texto;
+	}
+	
+	public void setTexto(String texto) {
+		this.texto = texto;
 	}
 
+	public int getLike() {
+		return like;
+	}
+
+	public void setLike(int like) {
+		this.like = like;
+	}
+
+	public int getDeslike() {
+		return deslike;
+	}
+
+	public void setDeslike(int deslike) {
+		this.deslike = deslike;
+	}
+	
+	public void setHashtags(List<String> hashtags) {
+		this.hashtags = hashtags;
+	}
+		
+	private String getHashtagsStr() {
+		String hastags = "";
+		int  cont = 0;
+		for(String hash: this.hashtags) {
+			cont += 1;
+			hastags += hash;
+			if (cont < this.hashtags.size()) {
+				hastags += ",";
+			}
+		}
+		return hastags;
+	}
+	
+	public int getPopularidade() {
+		return popularidade;
+	}
+
+	public void setPopularidade(int popularidade) {
+		this.popularidade = popularidade;
+	}
+	
 	@Override
 	public int compareTo(Post outroPost) {
 		return this.data.compareTo(outroPost.getData());

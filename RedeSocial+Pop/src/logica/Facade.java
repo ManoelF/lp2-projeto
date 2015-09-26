@@ -1,13 +1,19 @@
 package logica;
 
 import easyaccept.EasyAccept;
-import exceptions.*;
+import exceptions.AtualizaPerfilException;
+import exceptions.EntradaException;
+import exceptions.FechaSistemaException;
+import exceptions.LogicaException;
+import exceptions.NaoHaNotificacoesException;
+import exceptions.PostException;
+import exceptions.SenhaProtegidaException;
+import exceptions.UsuarioNaoCadastradoException;
 
 public class Facade {
 	
 	private Controller controller;
-	
-	
+		
 	public Facade() {
 		this.controller = new Controller();
 	}
@@ -23,10 +29,6 @@ public class Facade {
 			// FechaSistema
 		}
 	}
-
-	public void atualizaRanking() {
-		
-	}
 	
 	public String cadastraUsuario(String nome, String email, String senha, String nascimento, String imagem) throws EntradaException,  LogicaException {
 		return this.controller.cadastraUsuario(nome, email, senha, nascimento, imagem);
@@ -34,6 +36,14 @@ public class Facade {
 
 	public String cadastraUsuario(String nome, String email, String senha, String nascimento) throws EntradaException, LogicaException {
 		return cadastraUsuario(nome, email, senha, nascimento, "resources/default.jpg");
+	}
+	
+	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, EntradaException {
+		this.controller.atualizaPerfil(atributo, novoValor);
+	}
+	
+	public void atualizaPerfil(String atributo, String valor, String velhaSenha) throws AtualizaPerfilException, LogicaException {
+		this.controller.atualizaPerfil(atributo, valor, velhaSenha);
 	}
 	
 	public void login(String email, String senha) throws LogicaException, EntradaException {
@@ -44,20 +54,28 @@ public class Facade {
 		this.controller.logout();	
 	}
 	
-	public String getInfoUsuario(String atributo, String usuario) throws LogicaException, EntradaException {
-		return this.controller.getInfoUsuario(atributo, usuario);
+	public void adicionaAmigo(String usuario) throws LogicaException  {
+		this.controller.adicionaAmigo(usuario);
 	}
 	
-	public String getInfoUsuario(String atributo) throws SenhaProtegidaException, EntradaException {
-		return this.controller.getInfoUsuario(atributo);
+	public void rejeitaAmizade(String email) throws LogicaException {
+		this.controller.rejeitaAmizade(email);
+	}
+		
+	public void aceitaAmizade(String usuario) throws LogicaException {
+		this.controller.aceitaAmizade(usuario);
 	}
 	
-	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, EntradaException {
-		this.controller.atualizaPerfil(atributo, novoValor);
+	public void removeAmigo(String usuario) throws UsuarioNaoCadastradoException  {
+		this.controller.removeAmigo(usuario);
 	}
 	
-	public void atualizaPerfil(String atributo, String valor, String velhaSenha) throws AtualizaPerfilException, LogicaException {
-		this.controller.atualizaPerfil(atributo, valor, velhaSenha);
+	public void removeUsuario(String usuario) {
+		this.controller.removeUsuario(usuario);
+	}
+	
+	public void curtirPost(String amigo, int post) throws LogicaException {
+		this.controller.curtirPost(amigo, post);
 	}
 	
 	public void criaPost(String mensagem, String data) throws PostException {
@@ -76,6 +94,14 @@ public class Facade {
 		return this.controller.getConteudoPost(indice, post);
 	}
 	
+	public String getInfoUsuario(String atributo, String usuario) throws LogicaException, EntradaException {
+		return this.controller.getInfoUsuario(atributo, usuario);
+	}
+	
+	public String getInfoUsuario(String atributo) throws SenhaProtegidaException, EntradaException {
+		return this.controller.getInfoUsuario(atributo);
+	}
+	
 	public String getNextNotificacao() throws NaoHaNotificacoesException {
 		return this.controller.getNextNotificacao();
 	}
@@ -84,33 +110,26 @@ public class Facade {
 		return this.controller.getNotificacoes();
 	}
 	
-	public void rejeitaAmizade(String email) throws LogicaException {
-		this.controller.rejeitaAmizade(email);
-	}
-	
-	public void adicionaAmigo(String usuario) throws LogicaException  {
-		this.controller.adicionaAmigo(usuario);
-	}
-	
 	public int getQtdAmigos() {
 		return this.controller.getQtdAmigos();
 	}
 	
-	public void aceitaAmizade(String usuario) throws LogicaException {
-		this.controller.aceitaAmizade(usuario);
+	public void atualizaRanking() {
+		
 	}
 	
-	public void curtirPost(String amigo, int post) throws UsuarioNaoCadastradoException {
-		this.controller.curtirPost(amigo, post);
+	public void atualizaFeed() {
+		controller.atualizaFeed();
 	}
 	
-	public void removeAmigo(String usuario) throws UsuarioNaoCadastradoException  {
-		this.controller.removeAmigo(usuario);
+	public void ordenaFeedPorData(){
+		
 	}
 	
-	public void removeUsuario(String usuario) {
-		this.controller.removeUsuario(usuario);
+	public void ordenaFeedPorPopularidade(){
+		
 	}
+	
 	/*
 	public void atualizaRanked(){
 		this.controller.atualizaRanking();
@@ -120,18 +139,5 @@ public class Facade {
  	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt", "lib/ScriptsTeste/usecase_4.txt"};
 	    EasyAccept.main(args);
 	}
-/*
- * erros
- * inciaSistema --> iniciaSistema// usecase_4.txt
- * fecharSistema --> fechaSistema// usecase_2.txt
- * At line 58: gal_costa@email.com --> gal_costa@email.com.br // usecase_1.txt
- * At line 54: "madonna@email.com" --> "madona@email.com"
- * At line 26: Nao deveria dar erro pq a senha esta correta por ter sido alterada anteriomente (mudado para will_S2) // usecase_2.txt
- * At line 39, 40 e 43 --> erro nos test. Estão pedindo as informações de um post e comparando com a de outros
- * mais especificamente, pedem as informacoes do post=1 mas querrem realmente a do post=2
- * 
- * --------------------------------
- * Erro na linha 43 do caso de usuo 4 -> login email"madonna@email.com" senha="iamawesome" (Falta o "=" apois o email)
- * Erro duarnte o teste no nome de "Fatima Bernardes Bonner"  pois esta -> "Fatima Bernades Bonner" (falta um "r" em Bernades)
- */
+
 }

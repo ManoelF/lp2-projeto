@@ -17,7 +17,6 @@ public class Controller {
 	private FactoryUsuario fabricaUsuario;
 	private List<Usuario> usuariosCadastrados;
 	private Usuario usuarioLogado;
-	private List<Usuario> meusAmigos;
 	public Util util;
 	private static final String NOME = "Nome";
 	private static final String EMAIL = "E-mail";
@@ -28,7 +27,6 @@ public class Controller {
 	public Controller() {
 		this.fabricaUsuario = new FactoryUsuario();
 		this.usuariosCadastrados = new ArrayList<Usuario>();
-		this.meusAmigos = new ArrayList<Usuario>();
 	}
 	
 	public String cadastraUsuario(String nome, String email, String senha, 
@@ -58,7 +56,6 @@ public class Controller {
 				throw new LoginException("Nao foi possivel realizar login. Um usuarix com email " + EmailInserido + " nao esta cadastradx.");
 			} else if (usuarioLogando.getSenha().equals(senhaInserida)){
 				usuarioLogado = usuarioLogando;
-				setMeusAmigos(); // atualiza lista de amigos do usuario logado
 			} else {
 				throw new SenhaIncorretaException();
 			}			
@@ -93,37 +90,38 @@ public class Controller {
 	}
 
 	public void adicionaAmigo(String emailUserDestino) throws LogicaException {
-		Usuario usuarioDestino = pesquisaUsuario(emailUserDestino);
-		if (usuarioDestino == null) { throw new UsuarioNaoCadastradoException("Um usuarix com email "+ emailUserDestino +" nao esta cadastradx."); }
-		usuarioDestino.getSolicitacaoAmizade().add( this.usuarioLogado.getEmail() );
-		usuarioDestino.recebeNotificacao(this.usuarioLogado.getNome() +" quer sua amizade.");
+		Usuario userDestino = pesquisaUsuario(emailUserDestino);
+		if (userDestino == null) {
+			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ emailUserDestino +" nao esta cadastradx.");
+		} else {
+			this.usuarioLogado.adicionaAmigo(userDestino);
+		}
+
 	}
 	
 	public void rejeitaAmizade(String emailUserRecusado) throws LogicaException  {
-		Usuario usuarioRecusado = pesquisaUsuario(emailUserRecusado);
+		Usuario userRecusado = pesquisaUsuario(emailUserRecusado);
 		
-		
-		if (usuarioRecusado == null) {
-			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ emailUserRecusado +" nao esta cadastradx.");
-		} else if (this.usuarioLogado.getSolicitacaoAmizade().contains(usuarioRecusado.getEmail())) {
-			usuarioRecusado.recebeNotificacao(this.usuarioLogado.getNome() +" rejeitou sua amizade.");
-			this.usuarioLogado.rejeitaAmizade(emailUserRecusado);			
+		if (userRecusado == null) {
+			throw new UsuarioNaoCadastradoException("Um usuarix com email " + emailUserRecusado + " nao esta cadastradx.");
+		} else if (this.usuarioLogado.getSolicitacaoAmizade().contains(userRecusado.getEmail())) {
+			this.usuarioLogado.rejeitaAmizade(userRecusado);
 		} else {
-			throw new NaoSolicitouAmizadeException(usuarioRecusado.getNome() + " nao lhe enviou solicitacoes de amizade.");
+			throw new NaoSolicitouAmizadeException(userRecusado.getNome() + " nao lhe enviou solicitacoes de amizade.");
 		}
 	}
 	
 	public void aceitaAmizade(String emailUserAceito) throws LogicaException {
-		Usuario usuarioAceito = pesquisaUsuario(emailUserAceito);
+		Usuario userAceito = pesquisaUsuario(emailUserAceito);
 		
-		if (usuarioAceito == null) {
+		if (userAceito == null) {
 			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ emailUserAceito +" nao esta cadastradx.");
 		} else if (this.usuarioLogado.getSolicitacaoAmizade().contains(emailUserAceito)) {
-			this.usuarioLogado.aceitaAmizade(emailUserAceito);
-			usuarioAceito.getAmigos().add(this.usuarioLogado.getEmail());	
-			usuarioAceito.recebeNotificacao(this.usuarioLogado.getNome() + " aceitou sua amizade.");
+			this.usuarioLogado.aceitaAmizade(userAceito);
+			userAceito.getAmigos().add(this.usuarioLogado);	
+			userAceito.recebeNotificacao(this.usuarioLogado.getNome() + " aceitou sua amizade.");			
 		} else {
-			throw new NaoSolicitouAmizadeException(usuarioAceito.getNome() + " nao lhe enviou solicitacoes de amizade.");
+			throw new NaoSolicitouAmizadeException(userAceito.getNome() + " nao lhe enviou solicitacoes de amizade.");
 		}
 	}
 	
@@ -231,19 +229,19 @@ public class Controller {
 		return this.usuarioLogado.getQtdAmigos();
 	}
 	
-	public void curtirPost(String amigo, int post) throws UsuarioNaoCadastradoException {
+	public void curtirPost(String amigo, int post) throws LogicaException {
 		Usuario usuario = pesquisaUsuario(amigo);
 		
 		if (usuario == null) {
 			throw new UsuarioNaoCadastradoException(amigo);
 		} else {
-			if (this.usuarioLogado.temAmigo(amigo)) {
+			if (this.usuarioLogado.temAmigo(usuario)) {
 				this.usuarioLogado.curtir(usuario.getPost(post));
 				usuario.recebeNotificacao(this.usuarioLogado.getNome() + " curtiu seu post de " + usuario.getPost(post).getDataString() + ".");
 				usuario.atualizaPopularidade();
 			} else {
 				// Lancar excecao que usuario nao tem esse amigo
-				System.out.println("Não é seu amigo!!!");
+				throw new LogicaException(amigo + " nao e seu amigo.");
 			}
 		}
 	}
@@ -254,7 +252,7 @@ public class Controller {
 		if (usuario == null) {
 			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ amigo +" nao esta cadastradx.");
 		} else {
-			if (this.usuarioLogado.temAmigo(amigo)) {
+			if (this.usuarioLogado.temAmigo(usuario)) {
 				this.usuarioLogado.descurtir(usuario.getPost(post));
 				usuario.recebeNotificacao(usuario.getNome() + " descurtiu seu post de " + usuario.getPost(post).getDataString() + ".");
 				usuario.atualizaPopularidade();
@@ -269,10 +267,10 @@ public class Controller {
 		Usuario usuarioRemovido = pesquisaUsuario(emailUsuario);
 		for (Usuario usuario : usuariosCadastrados) {
 			
-			Iterator<String> iterator = usuario.getAmigos().iterator();
+			Iterator<Usuario> iterator = usuario.getAmigos().iterator();
 			while (iterator.hasNext()) {
-				String amigo = iterator.next();
-				if (amigo.equals(emailUsuario)) {
+				Usuario amigo = iterator.next();
+				if (amigo.equals(usuarioRemovido)) {
 					usuario.removeAmigo(amigo);
 					break;
 				}
@@ -289,11 +287,11 @@ public class Controller {
 		if (usuarioRemover == null) {
 			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ usuario +" nao esta cadastradx.");
 		} else {
-			this.usuarioLogado.removeAmigo(usuario);
+			this.usuarioLogado.removeAmigo(usuarioRemover);
 			usuarioRemover.recebeNotificacao(this.usuarioLogado.getNome() + " removeu a sua amizade.");
 		}
 		
-		usuarioRemover.removeAmigo(usuarioLogado.getEmail());
+		usuarioRemover.removeAmigo(this.usuarioLogado);
 	}
 	
 	public String getPost(int indice) {
@@ -312,19 +310,9 @@ public class Controller {
 	public String getsenha(){
 		return this.usuarioLogado.getSenha();
 	}
-
-	private void setMeusAmigos() {
-		Usuario meuAmigo;
-		this.meusAmigos.clear();
-		
-		for (String email : this.usuarioLogado.getAmigos()) {
-			meuAmigo = pesquisaUsuario(email);
-			this.meusAmigos.add(meuAmigo);
-		}
-	}
 	
 	public void atualizaFeed() {
-		this.usuarioLogado.atualizaFeed(this.meusAmigos);	
+		this.usuarioLogado.atualizaFeed();	
 	}
 	
 	/*public String atualizaRanking() {
