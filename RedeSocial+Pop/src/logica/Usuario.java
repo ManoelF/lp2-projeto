@@ -2,15 +2,20 @@ package logica;
 
 import java.time.LocalDate;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
-import java.util.ArrayList;
 
+import exceptions.AtualizaPerfilException;
+import exceptions.CadastroInvalidoException;
+import exceptions.EntradaException;
+import exceptions.LogicaException;
+import exceptions.NaoHaNotificacoesException;
+import exceptions.PostException;
 import logica.tipopopularidade.CelebridadePOP;
 import logica.tipopopularidade.IconePOP;
 import logica.tipopopularidade.Normal;
 import logica.tipopopularidade.TipoPopularidade;
-import exceptions.*;
 
 public class Usuario implements Comparable<Usuario> {
 	
@@ -27,7 +32,6 @@ public class Usuario implements Comparable<Usuario> {
 	private List<Post> posts;
 	private Feed feed;
 	private Util util;
-
 	
 	// Foi adicionado o throws ParseException, deve ser tratado
  	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException {
@@ -73,6 +77,95 @@ public class Usuario implements Comparable<Usuario> {
 		this.popularidade = new Normal();
 	}
  	
+	private void verificaEmail(String email) throws CadastroInvalidoException {
+		if (email == null || email.equals("")) {
+			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
+		} else if (email.contains("@") && email.contains(".com")) {
+			this.email = email;
+		} else {
+			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
+		}
+	}
+ 	
+	public boolean temAmigo(Usuario usuario) {
+		return this.amigos.contains(usuario);	
+	}
+	
+	public void adicionaAmigo(Usuario userDestino) throws LogicaException {
+		userDestino.getSolicitacaoAmizade().add( this.email );
+		userDestino.recebeNotificacao(this.nome +" quer sua amizade.");
+	}
+	
+	public void rejeitaAmizade(Usuario userRecusado) {
+		userRecusado.recebeNotificacao(this.nome +" rejeitou sua amizade.");
+		this.solicitacaoAmizade.remove(userRecusado);
+		this.notificacoes.remove( this.notificacoes.size() - 1 );
+	}
+	
+	public void aceitaAmizade(Usuario usuarioAceito) {
+		this.solicitacaoAmizade.remove(usuarioAceito);
+		this.notificacoes.remove( this.notificacoes.size() - 1 );
+		this.amigos.add(usuarioAceito);
+	}
+
+	public void removeAmigo(Usuario usuario) {
+		this.amigos.remove(usuario);
+	}
+	
+	public void criaPost(String mensagem, String data) throws PostException {
+		Post novoPost = new Post(mensagem, data);
+		this.posts.add(novoPost);
+	}
+	
+	public void curtir(Post post) {
+		this.popularidade.curtir(post);
+	}
+	
+	public void descurtir(Post post) {
+		this.popularidade.descurtir(post);
+	}
+								
+	private void atualizaPops() {
+		int pops = 0;
+		for (Post post: posts) {
+			pops += post.getPopularidade();
+		}
+		
+		this.pop = pops;
+	}
+		
+	public void atualizaPopularidade() {
+		atualizaPops();
+		if( this.pop < 500) {
+			this.popularidade = new Normal();
+		} else if (this.pop > 500 && this.pop < 1000) {
+			this.popularidade = new CelebridadePOP();
+		} else {
+			this.popularidade = new IconePOP();
+		}
+		
+	}
+	
+	public void atualizaFeed() {
+		this.feed.atualizaFeed();
+	}
+	
+	public int qntPostsFeed() {
+		return this.popularidade.qntPostFeed();
+	}
+		
+	public void ordenaFeedPorData(){
+		this.feed.ordenaPorData();
+	}
+	
+	public void ordenaFeedPorPopularidade(){
+		this.feed.ordenaPorPopularidade();
+	}
+	
+	public void recebeNotificacao(String notificacao) {
+		this.notificacoes.addFirst(notificacao);
+	}
+	
  	public String getNextNotificacao() throws NaoHaNotificacoesException {
  		String notificacaoAtual = this.notificacoes.pollLast(); 
  		if (notificacaoAtual == null) {
@@ -81,14 +174,6 @@ public class Usuario implements Comparable<Usuario> {
  			return notificacaoAtual;
  		}
 	}
-
- 	public int getPop() {
- 		return this.pop;
- 	}
-
-	public Post getPost(int indice) {
- 		return posts.get(indice);
- 	}
 
 	public String getNome() {
 		return this.nome;
@@ -105,11 +190,61 @@ public class Usuario implements Comparable<Usuario> {
 	public String getNascimento() {
 		return this.nascimento.toString();
 	}
-
+	
 	public String getImagem() {
 		return this.imagem;
 	}
 	
+ 	public int getPop() {
+ 		return this.pop;
+ 	}
+
+	public Post getPost(int indice) {
+ 		return posts.get(indice);
+ 	}
+	
+	public Post getUltimoPost() {
+		return this.posts.get(posts.size() - 1);
+	}
+	
+	public String getPost(String atributo, int post) {
+		return this.getPost(post).getPost(atributo);
+	}
+	
+	public int getQtdPost() {
+		return this.posts.size();
+	}
+		
+	public List<Post> getPosts() {
+		return this.posts;
+	}
+	
+	public String getConteudo(String atributo, int indicePost) {
+		return this.posts.get(indicePost).getPost(atributo);
+	}
+	
+	public String getConteudoPost(int indice, int post) throws LogicaException, PostException {
+		if (post > this.posts.size()) {
+			throw new LogicaException("Post #" + post + " nao existe na lista posts.");
+		} else if (indice < 0) {
+			throw new PostException("Requisicao invalida. O indice deve ser maior ou igual a zero.");
+		} else {
+			return this.posts.get(post).getConteudoPost(indice);
+		}
+	}
+	
+	public int getNotificacoes() {
+		return this.notificacoes.size();
+	}
+	
+	public int getQtdAmigos() {
+		return this.amigos.size();
+	}
+
+	public String getArquivo(int indiceArquivo, int indicePost) {
+		return this.posts.get(indicePost).getMidias(indiceArquivo);	
+	}
+		
 	public List<Usuario> getAmigos() {
 		return amigos;
 	}
@@ -176,75 +311,10 @@ public class Usuario implements Comparable<Usuario> {
 		}
 	}
 			
-	public void adicionaAmigo(Usuario userDestino) throws LogicaException {
-		userDestino.getSolicitacaoAmizade().add( this.email );
-		userDestino.recebeNotificacao(this.nome +" quer sua amizade.");
-	}
-	
-	public void rejeitaAmizade(Usuario userRecusado) {
-		userRecusado.recebeNotificacao(this.nome +" rejeitou sua amizade.");
-		this.solicitacaoAmizade.remove(userRecusado);
-		this.notificacoes.remove( this.notificacoes.size() - 1 );
-	}
-	
-	public void aceitaAmizade(Usuario usuarioAceito) {
-		this.solicitacaoAmizade.remove(usuarioAceito);
-		this.notificacoes.remove( this.notificacoes.size() - 1 );
-		this.amigos.add(usuarioAceito);
-	}
-		
-	private void verificaEmail(String email) throws CadastroInvalidoException {
-		if (email == null || email.equals("")) {
-			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
-		} else if (email.contains("@") && email.contains(".com")) {
-			this.email = email;
-		} else {
-			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
-		}
+	public List<Post> getFeed() {
+		return this.feed.getFeed();
 	}
 
-	private void atualizaPops() {
-		int pops = 0;
-		for (Post post: posts) {
-			pops += post.getPopularidade();
-		}
-		
-		this.pop = pops;
-	}
-		
-	public void atualizaPopularidade() {
-		atualizaPops();
-		if( this.pop < 500) {
-			this.popularidade = new Normal();
-		} else if (this.pop > 500 && this.pop < 1000) {
-			this.popularidade = new CelebridadePOP();
-		} else {
-			this.popularidade = new IconePOP();
-		}
-		
-	}
-
-	public void curtir(Post post) {
-		this.popularidade.curtir(post);
-	}
-	
-	public void descurtir(Post post) {
-		this.popularidade.descurtir(post);
-	}
-	
-	public void criaPost(String mensagem, String data) throws PostException {
-		Post novoPost = new Post(mensagem, data);
-		this.posts.add(novoPost);
-	}
-	
-	public List<Post> getPosts() {
-		return this.posts;
-	}
-	
-	/*public String getInfoUsuario(String atributo) {
-		return null;
-	}*/
-	
 	@Override
 	public int compareTo(Usuario outroUsuario) {
 		if (this.pop > outroUsuario.getPop()) {
@@ -256,39 +326,6 @@ public class Usuario implements Comparable<Usuario> {
 		}
 	}
 	
-	public int getNotificacoes() {
-		return this.notificacoes.size();
-	}
-	
-	public int getQtdAmigos() {
-		return this.amigos.size();
-	}
-	
-	public String getArquivo(int indiceArquivo, int indicePost) {
-		return this.posts.get(indicePost).getMidias(indiceArquivo);
-		
-	}
-	
-	public void removeAmigo(Usuario usuario) {
-		this.amigos.remove(usuario);
-	}
-	
-	public int getQtdPost() {
-		return this.posts.size();
-	}
-	
-	public String getPost(String atributo, int post) {
-		return this.getPost(post).getPost(atributo);
-	}
-	
-	public String getConteudo(String atributo, int indicePost) {
-		return this.posts.get(indicePost).getPost(atributo);
-	}
-
-	public void recebeNotificacao(String notificacao) {
-		this.notificacoes.addFirst(notificacao);
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -314,41 +351,4 @@ public class Usuario implements Comparable<Usuario> {
 		return true;
 	}
 	
-	public TipoPopularidade getPopularidade() {
-		return this.popularidade;
-	}
-
-	/*public void atualizaFeed() {
-		this.feed.atualizaFeed(this.amigos);
-	}*/
-	
-	public String getConteudoPost(int indice, int post) throws LogicaException, PostException {
-		if (post > this.posts.size()) {
-			throw new LogicaException("Post #" + post + " nao existe na lista posts.");
-		} else if (indice < 0) {
-			throw new PostException("Requisicao invalida. O indice deve ser maior ou igual a zero.");
-		} else {
-			return this.posts.get(post).getConteudoPost(indice);
-		}
-	}
-	
-	public boolean temAmigo(Usuario usuario) {
-		return this.amigos.contains(usuario);	
-	}
-
-	public List<Post> getFeed() {
-		return this.feed.getFeed();
-	}
-	
-	public void atualizaFeed() {
-		this.feed.atualizaFeed();
-	}
-	
-	public int qntPostsFeed() {
-		return this.popularidade.qntPostFeed();
-	}
-	
-	public Post getUltimoPost() {
-		return this.posts.get(posts.size() - 1);
-	}
 }
