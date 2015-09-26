@@ -17,7 +17,6 @@ public class Controller {
 	private FactoryUsuario fabricaUsuario;
 	private List<Usuario> usuariosCadastrados;
 	private Usuario usuarioLogado;
-	private List<Usuario> meusAmigos;
 	public Util util;
 	private static final String NOME = "Nome";
 	private static final String EMAIL = "E-mail";
@@ -28,7 +27,6 @@ public class Controller {
 	public Controller() {
 		this.fabricaUsuario = new FactoryUsuario();
 		this.usuariosCadastrados = new ArrayList<Usuario>();
-		this.meusAmigos = new ArrayList<Usuario>();
 	}
 	
 	public String cadastraUsuario(String nome, String email, String senha, 
@@ -58,7 +56,6 @@ public class Controller {
 				throw new LoginException("Nao foi possivel realizar login. Um usuarix com email " + EmailInserido + " nao esta cadastradx.");
 			} else if (usuarioLogando.getSenha().equals(senhaInserida)){
 				usuarioLogado = usuarioLogando;
-				setMeusAmigos(); // atualiza lista de amigos do usuario logado
 			} else {
 				throw new SenhaIncorretaException();
 			}			
@@ -316,19 +313,9 @@ public class Controller {
 	public String getsenha(){
 		return this.usuarioLogado.getSenha();
 	}
-
-	private void setMeusAmigos() {
-		Usuario meuAmigo;
-		this.meusAmigos.clear();
-		
-		for (Usuario outroUsuario: this.usuarioLogado.getAmigos()) {
-			meuAmigo = pesquisaUsuario(outroUsuario.getEmail());
-			this.meusAmigos.add(meuAmigo);
-		}
-	}
 	
 	public void atualizaFeed() {
-		this.usuarioLogado.atualizaFeed(this.meusAmigos);	
+		this.usuarioLogado.atualizaFeed();	
 	}
 	
 	/*public String atualizaRanking() {

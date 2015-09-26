@@ -1,5 +1,11 @@
 package logica;
 
+import logica.midia.Audio;
+import logica.midia.Imagem;
+import logica.midia.Mensagem;
+import logica.midia.Midia;
+import logica.midia.Video;
+
 public class FactoryMidia {
 	
 	Midia midia;

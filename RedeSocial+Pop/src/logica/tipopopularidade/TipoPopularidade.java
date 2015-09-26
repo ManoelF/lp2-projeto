@@ -1,4 +1,6 @@
-package logica;
+package logica.tipopopularidade;
+
+import logica.Post;
 
 public interface TipoPopularidade {
 	

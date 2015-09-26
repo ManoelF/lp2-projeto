@@ -8,26 +8,29 @@ import java.util.List;
 
 import logica.ordenacao.OrdenaFeedData;
 import logica.ordenacao.OrdenaFeedPopularidade;
+import logica.tipopopularidade.CelebridadePOP;
+import logica.tipopopularidade.Normal;
 
 public class Feed  {
 
 	private List<Post> feed;
 	private Comparator<Post> tipoOrdenacao; 
 	private Util util;
+	private List<Usuario> amigos;
 	//private List<Usuario> amigos;
 	
-	public Feed() {
+	public Feed(List<Usuario> amigos) {
 		this.feed = new ArrayList<>();
 		this.tipoOrdenacao = new OrdenaFeedData();
  		this.util = Util.getInstancia();
- 		//this.amigos = amigos;
+ 		this.amigos = amigos;
 	}
 
-	public List<Post> atualizaFeed(List<Usuario> amigos) {
+	public List<Post> atualizaFeed() {
 		
 		int conta;
 		
-		for (Usuario amigo : amigos) {
+		for (Usuario amigo : this.amigos) {
 			
 			Collections.sort(amigo.getPosts());
 			Iterator iterator = amigo.getPosts().iterator();

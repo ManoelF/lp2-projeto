@@ -1,6 +1,8 @@
-package logica;
+package logica.ordenacao;
 
 import java.util.Comparator;
+
+import logica.Usuario;
 
 public class OrdenaDecrescente implements Comparator<Usuario> {
 	

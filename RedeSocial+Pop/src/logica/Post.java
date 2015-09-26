@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import logica.midia.Mensagem;
+import logica.midia.Midia;
 import exceptions.*;
 
 public class Post implements Comparable<Post> {
