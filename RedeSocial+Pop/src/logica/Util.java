@@ -17,11 +17,13 @@ public class Util {
 	}
 
 
-    public static Util getInstancia() {  
-    	if (INSTANCIA == null) {  
-    		INSTANCIA = new Util();
+    public static Util getInstancia() {
+    	synchronized (Util.class) {
+	    	if (INSTANCIA == null) {  
+	    		INSTANCIA = new Util();
+	    	}
+	        return INSTANCIA;  
     	}
-        return INSTANCIA;  
      }
 
 	public List<String> getMidia(String mensagem) {
