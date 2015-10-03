@@ -106,7 +106,7 @@ public class Util {
 		hashtags = novaHash.split(" ");
 		for (int i = 0; i < hashtags.length; i++) {
 			listaHashtags.add(hashtags[i]);
-			if (hashtags[i].charAt(0) != '#') {
+			if (!hashtags[0].toString().equals("") && hashtags[i].charAt(0) != '#') {
 				throw new PostException("Nao eh possivel criar o post. As hashtags devem comecar com '#'. Erro na hashtag: '" + hashtags[i] + "'.");
 				
 			}
@@ -168,9 +168,9 @@ public class Util {
 			!(dataS[2].matches("^[0-9]*$")) ) {
 				return false;
 		}
-		if (dataS[0].length() > 2 ||
-			dataS[1].length() > 2 ||
-			dataS[2].length() > 4 ) {
+		if (dataS[0].length() != 2 ||
+			dataS[1].length() != 2 ||
+			dataS[2].length() != 4 ) {
 			return false;
 		}
 				
@@ -183,7 +183,8 @@ public class Util {
 			int dia = Integer.parseInt(dataS[0]);
 			int mes = Integer.parseInt(dataS[1]);
 			int ano = Integer.parseInt(dataS[2]);
-			LocalDate dat = LocalDate.of(ano, mes, dia);
+			LocalDate.of(ano, mes, dia);
+
 			return true;
 		} catch (DateTimeException erro) {
 			return false;

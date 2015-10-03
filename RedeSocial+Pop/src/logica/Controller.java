@@ -75,7 +75,7 @@ public class Controller {
 	private boolean verificaEmailJaCadastrado(String email) {
 		for (Usuario usuario : usuariosCadastrados) {
 			if (usuario.getEmail().equals(email)) {
-			return false;
+				return false;
 			}
 		}
 		return true;
@@ -163,7 +163,11 @@ public class Controller {
 				this.usuarioLogado.setNome(novoValor);
 				break;
 			case EMAIL:
-				this.usuarioLogado.setEmail(novoValor);
+				if (verificaEmailJaCadastrado(novoValor)) {
+					this.usuarioLogado.setEmail(novoValor);
+				} else {
+					throw new  EntradaException("Ja existe um usuarix com esse email.");
+				}
 				break;
 			case NASCIMENTO:
 				this.usuarioLogado.setNascimento(novoValor);
@@ -231,7 +235,6 @@ public class Controller {
 			userAceito.getAmigos().add(this.usuarioLogado);	
 			userAceito.recebeNotificacao(this.usuarioLogado.getNome() + " aceitou sua amizade.");
 			
-			System.out.println("Aceitou a amizade!!!");
 		} else {
 			throw new NaoSolicitouAmizadeException(userAceito.getNome() + " nao lhe enviou solicitacoes de amizade.");
 		}
@@ -354,11 +357,4 @@ public class Controller {
 		}
 		return null;
 	}
-
-
-
-
-
-
-
 }

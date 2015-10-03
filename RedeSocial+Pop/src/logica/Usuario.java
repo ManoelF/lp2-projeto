@@ -33,8 +33,8 @@ public class Usuario implements Comparable<Usuario> {
 	private Feed feed;
 	private Util util;
 	
-	// Foi adicionado o throws ParseException, deve ser tratado
- 	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException {
+
+	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException {
  		this.util = Util.getInstancia();
 
 		if (nome == null || !util.verificaAtributo(nome)){
@@ -58,7 +58,7 @@ public class Usuario implements Comparable<Usuario> {
 		}
 		
 		if (imagem == null || imagem.trim().length() == 0) {
-			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Imagem invalida.");
+			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Imagem inserida esta invalida.");
 		} else {
 			this.imagem = imagem;
 		}
@@ -77,6 +77,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.popularidade = new Normal();
 	}
  	
+
 	private void verificaEmail(String email) throws CadastroInvalidoException {
 		if (email == null || email.equals("")) {
 			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
@@ -90,18 +91,18 @@ public class Usuario implements Comparable<Usuario> {
 	public boolean temAmigo(Usuario usuario) {
 		return this.amigos.contains(usuario);	
 	}
-	
-	public void adicionaAmigo(Usuario userDestino) throws LogicaException {
+
+	public void adicionaAmigo(Usuario userDestino) {
 		userDestino.getSolicitacaoAmizade().add( this.email );
 		userDestino.recebeNotificacao(this.nome +" quer sua amizade.");
 	}
-	
+
 	public void rejeitaAmizade(Usuario userRecusado) {
 		userRecusado.recebeNotificacao(this.nome +" rejeitou sua amizade.");
 		this.solicitacaoAmizade.remove(userRecusado);
 		this.notificacoes.remove( this.notificacoes.size() - 1 );
 	}
-	
+
 	public void aceitaAmizade(Usuario usuarioAceito) {
 		this.solicitacaoAmizade.remove(usuarioAceito);
 		this.notificacoes.remove( this.notificacoes.size() - 1 );
@@ -111,12 +112,12 @@ public class Usuario implements Comparable<Usuario> {
 	public void removeAmigo(Usuario usuario) {
 		this.amigos.remove(usuario);
 	}
-	
+
 	public void criaPost(String mensagem, String data) throws PostException {
 		Post novoPost = new Post(mensagem, data);
 		this.posts.add(novoPost);
 	}
-	
+
 	public void curtir(Post post) {
 		this.popularidade.curtir(post);
 	}
@@ -124,16 +125,15 @@ public class Usuario implements Comparable<Usuario> {
 	public void descurtir(Post post) {
 		this.popularidade.descurtir(post);
 	}
-								
+	
 	private void atualizaPops() {
 		int pops = 0;
 		for (Post post: posts) {
 			pops += post.getPopularidade();
 		}
-		
 		this.pop = pops;
 	}
-		
+	
 	public void atualizaPopularidade() {
 		atualizaPops();
 		if( this.pop < 500) {
@@ -145,19 +145,19 @@ public class Usuario implements Comparable<Usuario> {
 		}
 		
 	}
-	
+
 	public void atualizaFeed() {
 		this.feed.atualizaFeed();
 	}
-	
+
 	public int qntPostsFeed() {
 		return this.popularidade.qntPostFeed();
 	}
-		
+	
 	public void ordenaFeedPorData(){
 		this.feed.ordenaPorData();
 	}
-	
+
 	public void ordenaFeedPorPopularidade(){
 		this.feed.ordenaPorPopularidade();
 	}
@@ -166,7 +166,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.notificacoes.addFirst(notificacao);
 	}
 	
- 	public String getNextNotificacao() throws NaoHaNotificacoesException {
+	public String getNextNotificacao() throws NaoHaNotificacoesException {
  		String notificacaoAtual = this.notificacoes.pollLast(); 
  		if (notificacaoAtual == null) {
  			throw new NaoHaNotificacoesException();
@@ -302,7 +302,7 @@ public class Usuario implements Comparable<Usuario> {
 	
 	public void setImagem(String novaImagem) throws AtualizaPerfilException {
 		if (novaImagem == null) {
-			throw new AtualizaPerfilException("Erro na atualizacao de perfil.");
+			throw new AtualizaPerfilException("Erro na atualizacao de prefil. Imagem inserida esta invalida.");
 		}
 		if (novaImagem.trim().length() == 0) {
 			this.imagem = "resources/avatarDefaul.jpg";
@@ -334,6 +334,7 @@ public class Usuario implements Comparable<Usuario> {
 		return result;
 	}
 
+	// PRECISA SER MELHORADO
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
