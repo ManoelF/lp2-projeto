@@ -206,7 +206,7 @@ public class Usuario implements Comparable<Usuario> {
 	public Post getUltimoPost() {
 		return this.posts.get(posts.size() - 1);
 	}
-	
+
 	public String getPost(String atributo, int post) {
 		return this.getPost(post).getPost(atributo);
 	}
@@ -240,7 +240,7 @@ public class Usuario implements Comparable<Usuario> {
 	public int getQtdAmigos() {
 		return this.amigos.size();
 	}
-
+	
 	public String getArquivo(int indiceArquivo, int indicePost) {
 		return this.posts.get(indicePost).getMidias(indiceArquivo);	
 	}
@@ -252,7 +252,7 @@ public class Usuario implements Comparable<Usuario> {
 	public void setAmigos(List<Usuario> amigos) {
 		this.amigos = amigos;
 	}
-
+	
 	public List<String> getSolicitacaoAmizade(){
 		return this.solicitacaoAmizade;
 	}

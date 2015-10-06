@@ -120,6 +120,7 @@ public class Post implements Comparable<Post> {
 		return this.midias.get(indice).toString();
 	}
 	
+	//Lançar excecao
 	public String getPost(String atributo) {
 		if (atributo.equals("Data")) {
 			return getDataString();

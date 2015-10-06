@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 import logica.Usuario;
-import logica.Controller;
 import logica.ordenacao.OrdenaDecrescente;
 
 public class Ranking{
@@ -15,6 +14,7 @@ public class Ranking{
 	private List<Usuario> comMenosPop;
 	private Comparator<Usuario> comparador;
 	private List<Usuario> usuarios;
+	private final int TAMANHO_MAXIMO = 3;
 	
 	public Ranking(List<Usuario> usuarios){
 		this.comparador = new OrdenaDecrescente();
@@ -33,31 +33,50 @@ public class Ranking{
 	}
 	
 	public void rankingUsuario(){
-	
-		if(usuarios.size() == 1){
-			for(int i = 0; i < usuarios.size(); i++){	
+		ordenaCrescente(usuarios);
+		
+		int cont = 0;
+		for (int i = 0; i < usuarios.size(); i++) {
+			if(usuarios.get(i) != null){
 				comMaisPop.add(usuarios.get(i));
+				cont++;
 			}
-		} // fecha o if
-		else if(usuarios.size() == 2){
-			ordenaCrescente(usuarios);
-			for(int i = 0; i < usuarios.size(); i++){	
-				comMaisPop.add(usuarios.get(i));
+			if(cont == 3){
+				break;
 			}
-		} // fecha o if else
-		else if(usuarios.size() == 3){
-			ordenaCrescente(usuarios);
-			for(int i = 0; i < usuarios.size(); i++){	
-				comMaisPop.add(usuarios.get(i));
-			}
-		} // fecha o if else
-		else{
-			ordenaCrescente(usuarios);
-			for(int i = 0; i < usuarios.size(); i++){	
-				comMaisPop.add(usuarios.get(i));
-			}
+		}
+		
+		if(usuarios.size() > 3){
+			ordenaDecrescente(usuarios);
 			
-			
-		}			
+			int contador = 0;
+			for (int i = 0; i < usuarios.size() - TAMANHO_MAXIMO; i++) {
+				if(usuarios.get(i) != null){
+					comMenosPop.add(usuarios.get(i));
+					contador++;
+				}
+				if(contador == 3){
+					break;
+				}
+			}
+		}
 	}
-} // fecha ranking
+	
+	
+	public String toString(){
+		String imprime = "";
+		
+		for(int i = 0; i < comMaisPop.size(); i++){
+			imprime += comMaisPop.get(i);
+		}
+	
+		for(int i = 0; i < comMenosPop.size(); i++){
+			imprime += comMenosPop.get(i);
+			}
+		
+		return imprime;
+		
+	}
+			
+	
+} // fecha a classe ranking
