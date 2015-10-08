@@ -130,10 +130,10 @@ public class Facade {
 		
 	}
 	
-	/*
+	/////	
 	public void atualizaRanked(){
-		this.controller.atualizaRanking();
-	}*/
+		controller.atualizaRanking();
+	}
 
 	public static void main(String[] args) {
  	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt", "lib/ScriptsTeste/usecase_4.txt"};

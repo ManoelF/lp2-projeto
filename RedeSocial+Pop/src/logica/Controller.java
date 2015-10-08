@@ -18,6 +18,7 @@ public class Controller {
 	private List<Usuario> usuariosCadastrados;
 	private Usuario usuarioLogado;
 	public Util util;
+	private Ranking ranking;
 	private static final String NOME = "Nome";
 	private static final String EMAIL = "E-mail";
 	private static final String NASCIMENTO = "Data de Nascimento";
@@ -27,6 +28,7 @@ public class Controller {
 	public Controller() {
 		this.fabricaUsuario = new FactoryUsuario();
 		this.usuariosCadastrados = new ArrayList<Usuario>();
+		this.ranking = new Ranking(usuariosCadastrados);
 	}
 	
 	public String cadastraUsuario(String nome, String email, String senha, 
@@ -315,15 +317,10 @@ public class Controller {
 		this.usuarioLogado.atualizaFeed();	
 	}
 	
-	/*public String atualizaRanking() {
-		String atualiza = "";
-		for (int i = 0; i < ranked.comMaisX2p.length; i++) {
-			atualiza += ranked.comMaisX2p[i] + "\n";
-		}
-		for (int i = 0; i < ranked.comMenosX2p.length; i++) {
-			atualiza += ranked.comMenosX2p[i] + "\n";
-		}
+	/////
+	public void atualizaRanking() {
+		this.usuarioLogado.atualizaRanking();
 		
-		return atualiza;
+		
 	} // fecha ranking
-*/}
+}

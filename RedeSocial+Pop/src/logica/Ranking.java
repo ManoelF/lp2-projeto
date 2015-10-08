@@ -4,8 +4,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
+
 import logica.Usuario;
 import logica.Controller;
+import logica.ordenacao.OrdenaDecrescente;
 
 
 public class Ranking{
@@ -14,6 +16,7 @@ public class Ranking{
 	private List<Usuario> comMenosPop;
 	private Comparator<Usuario> comparador;
 	private List<Usuario> usuarios;
+	private final int TAMANHO_MAXIMO = 3;
 	
 	public Ranking(List<Usuario> usuarios){
 		this.comparador = new OrdenaDecrescente();
@@ -32,31 +35,68 @@ public class Ranking{
 	}
 	
 	public void rankingUsuario(){
-	
-		if(usuarios.size() == 1){
-			for(int i = 0; i < usuarios.size(); i++){	
-				comMaisPop.add(usuarios.get(i));
-			}
-		} // fecha o if
-		else if(usuarios.size() == 2){
-			ordenaCrescente(usuarios);
-			for(int i = 0; i < usuarios.size(); i++){	
-				comMaisPop.add(usuarios.get(i));
-			}
-		} // fecha o if else
-		else if(usuarios.size() == 3){
-			ordenaCrescente(usuarios);
-			for(int i = 0; i < usuarios.size(); i++){	
-				comMaisPop.add(usuarios.get(i));
-			}
-		} // fecha o if else
-		else{
-			ordenaCrescente(usuarios);
-			for(int i = 0; i < usuarios.size(); i++){	
-				comMaisPop.add(usuarios.get(i));
-			}
-			
-			
-		}			
+		
 	}
-} // fecha ranking
+
+
+	public void atualizaRanking() {
+ordenaCrescente(usuarios);
+		
+		int cont = 0;
+		for (int i = 0; i < usuarios.size(); i++) {
+			if(usuarios.get(i) != null){
+				comMaisPop.add(usuarios.get(i));
+				cont++;
+			}
+			if(cont == 3){
+				break;
+			}	
+		}
+		
+		if(usuarios.size() > TAMANHO_MAXIMO){
+			ordenaCrescente(usuarios);
+			ordenaDecrescente(usuarios);
+			
+			int contador = 0;
+			for (int i = 0; i < usuarios.size() - TAMANHO_MAXIMO; i++) {
+				if(usuarios.get(i) != null){
+					comMenosPop.add(usuarios.get(i));
+					contador++;
+				}
+				if(contador == 3){
+					break;
+				}else{
+					System.out.println("o tamanho da lista eh menor do que 3");
+				}
+			}
+			
+			/*for (int j = 0; j <  comMaisPop.size(); j++) {
+				System.out.println(comMaisPop.get(j).getNome() + " " + comMaisPop.get(j).getPop());
+			}
+			
+			for (int j = 0; j <  comMenosPop.size(); j++) {
+				System.out.println(comMenosPop.get(j).getNome() + " " + comMenosPop.get(j).getPop());
+			}*/
+			
+		}
+		
+	}
+	
+	
+	public String toString(){
+		String imprime = "";
+		
+		for(int i = 0; i < comMaisPop.size(); i++){
+			imprime += comMaisPop.get(i);
+		}
+	
+		for(int i = 0; i < comMenosPop.size(); i++){
+			imprime += comMenosPop.get(i);
+			}
+		
+		return imprime;
+		
+	}
+		
+	
+} // fecha a classe ranking
