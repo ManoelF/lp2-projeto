@@ -191,9 +191,6 @@ public class Controller {
 		}
 	}
 
-	/*public void atualizaRanking() throws LogicaException {
-		this.ranking.atualizaRanking(this.usuariosCadastrados);
-	}*/
 	
 	public void atualizaFeed() {
 		this.usuarioLogado.atualizaFeed();	
@@ -360,19 +357,15 @@ public class Controller {
 		return this.usuarioLogado.getSenha();
 	}
 	
-<<<<<<< HEAD
 	public void atualizaRanking() throws LogicaException {
 		//ranking = new Ranking();
 		
 		ranking.atualizaRanking(getUsuariosCadastrados());
-=======
+	} // fecha ranking
+	
+
 	public void setPops(int pop) {
 		this.usuarioLogado.setPops(pop);
 	}
->>>>>>> ebec954a19aa6f1151a4165de3492aba67e97d11
-	
-	} // fecha ranking
-
-
 
 }
