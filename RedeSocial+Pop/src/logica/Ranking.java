@@ -17,7 +17,8 @@ public class Ranking {
 	private List<Usuario> listaDeUsuarios;
 	private final int TAMANHO_MAXIMO = 3;
 
-	public Ranking() throws LogicaException {
+	public Ranking() {
+
 		this.comparador = new OrdenaDecrescente();
 		comMaisPop = new ArrayList<Usuario>();
 		comMenosPop = new ArrayList<Usuario>();

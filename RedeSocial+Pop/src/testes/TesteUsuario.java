@@ -1,15 +1,14 @@
 package testes;
 
-import static org.junit.Assert.*;
-import logica.*;
-
-import java.text.ParseException;
+import logica.Post;
+import logica.Usuario;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import exceptions.*;
+import exceptions.RedeSocialMaisPopException;
+
 
 public class TesteUsuario {
 	Usuario joao;
@@ -25,6 +24,8 @@ public class TesteUsuario {
 
 	@Test
 	public void testUsuarioException() {
+		
+		// EXCECAO NOME
 		try {
 			joao = new Usuario("", "joao@email.com", "123", "10/10/1990",
 					 "imagem/joao.jpg");
@@ -33,6 +34,7 @@ public class TesteUsuario {
 					erro.getMessage());
 		}
 
+		// EXCECAO EMAIL
 		try {
 			joao = new Usuario("Joao", "", "123", "10/10/1990",
 					"imagem/joao.jpg");
@@ -41,6 +43,7 @@ public class TesteUsuario {
 					erro.getMessage());
 		}
 
+		// EXCECAO SENHA
 		try {
 			joao = new Usuario("Joao", "joao@email.com", "", "10/10/1990",
 					 "imagem/joao.jpg");
@@ -49,6 +52,7 @@ public class TesteUsuario {
 					erro.getMessage());
 		}
 
+		// EXCECAO DATA NASCIMENTO
 		try {
 			joao = new Usuario("Joao", "joao@email.com", "123", "",
 					 "imagem/joao.jpg");
@@ -57,16 +61,19 @@ public class TesteUsuario {
 					erro.getMessage());
 		}
 
+		// EXCECAO IMAGEM
 		try {
 			joao = new Usuario("Joao", "joao@email.com", "123", "10/10/1990", null);
 		} catch (RedeSocialMaisPopException erro) {
-			Assert.assertEquals("Erro no cadastro de Usuarios. Imagem invalida.",
+			Assert.assertEquals("Erro no cadastro de Usuarios. Imagem inserida esta invalida.",
 					erro.getMessage());
 		}
 	}
 
 	@Test
 	public void testUsuario() {
+		
+		// CRIACAO DE USUARIOS
 		try {
 
 			maria = new Usuario("Maria", "maria@email.com", "321",
@@ -86,8 +93,10 @@ public class TesteUsuario {
 	
 	// reorganizar os proximos teste para testarem as novas alterações
 	
-		@Test
+	@Test
 	public void testInformacoesAtualizadas()  {
+			
+		// ATUALIZACAO DE USUARIOS
 		try {
 			fred = new Usuario("Fred", "fred@email.com", "0101", "25/12/1989",
 					 "resources/fred.jpg");
@@ -112,6 +121,7 @@ public class TesteUsuario {
 
 	@Test
 	public void testInformacoesAtualizadasException() {
+		// SET NOME INVALIDO
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					 "resources/bruna.jpg");
@@ -121,7 +131,8 @@ public class TesteUsuario {
 		} catch(RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro na atualizacao de perfil. Nome dx usuarix nao pode ser vazio.", erro.getMessage());
 		}
-
+		
+		// SET EMAIL INVALIDO
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					"resources/bruna.jpg");
@@ -131,7 +142,8 @@ public class TesteUsuario {
 		} catch(RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro na atualizacao de perfil. Formato de e-mail esta invalido.", erro.getMessage());
 		}
-
+		
+		// SET NASCIMENTO INVALIDO
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					 "resources/bruna.jpg");
@@ -143,6 +155,16 @@ public class TesteUsuario {
 			Assert.assertEquals("Erro na atualizacao de perfil. Formato de data esta invalida.", erro.getMessage());
 		}
 
+		// SET NASCIMENTO IVALIDO
+			try {
+				bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
+						"resources/bruna.jpg");
+				bruna.setNascimento("12/11/00");
+			} catch (RedeSocialMaisPopException erro) {
+				Assert.assertEquals("Erro na atualizacao de perfil. Formato de data esta invalida.", erro.getMessage());
+			}
+			
+		// SET IMAGEM INVALIDA
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					"resources/bruna.jpg");
@@ -150,10 +172,10 @@ public class TesteUsuario {
 			Assert.assertEquals("resources/bruna.jpg", bruna.getImagem());
 	
 		} catch(RedeSocialMaisPopException erro) {
-			//alterar msg
-			Assert.assertEquals("Erro na atualizacao de perfil.", erro.getMessage());
+			Assert.assertEquals("Erro na atualizacao de prefil. Imagem inserida esta invalida.", erro.getMessage());
 		}
 		
+		// SET SENHA INVALIDA
 		try {
 			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					"resources/bruna.jpg");
@@ -161,14 +183,16 @@ public class TesteUsuario {
 		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro na atualizacao de perfil. A senha fornecida esta incorreta.", erro.getMessage());
 		}
-
-		// testar atualizacao de senha e de data de nascimento
+		
+		
 
 	}
 	
 	@Test
 	public void testFuncionalidades() {
 		try {
+			
+			// CRIANDO USUARIOS
 			joao = new Usuario("Joao", "joao@email.com", "123", "10/10/1990",
 					 "imagem/joao.jpg");
 			fred = new Usuario("Fred", "fred@email.com", "0101", "25/12/1989",
@@ -177,36 +201,56 @@ public class TesteUsuario {
 					"resources/bruna.jpg");
 			maria = new Usuario("Maria", "maria@email.com", "321",
 					"20/01/1995", "resources/maria.jpg");
+			
+			
+			// ADICIONAR AMIGOS
+			joao.adicionaAmigo(fred);
+			joao.adicionaAmigo(bruna);
+			joao.adicionaAmigo(maria);
+
+			// ACEITA AMIZADE
+			fred.aceitaAmizade(joao);
+			bruna.aceitaAmizade(joao);
+			Assert.assertTrue(fred.getQtdAmigos() == 1);
+			Assert.assertTrue(bruna.getQtdAmigos() == 1);
+			
+			// REJEITA AMIZADE
+			maria.rejeitaAmizade(joao);
+			//Assert.assertTrue(joao.getQtdAmigos() == 2); ajustar o metodo que adiciona amigos
+			
+			// VERIFICA NOTIFICACOES
+			Assert.assertTrue(fred.getNotificacoes() == 1);
+			Assert.assertTrue(bruna.getNotificacoes() == 1);
+			Assert.assertTrue(maria.getNotificacoes() == 1);
+			Assert.assertTrue(joao.getNotificacoes() == 1); // Referente ao pedido de amizade rejeitado
+			
+			Assert.assertEquals("Joao quer sua amizade.", fred.getNextNotificacao());
+			Assert.assertEquals("Maria rejeitou sua amizade.", joao.getNextNotificacao());
+			
+			// CRIA POST
 			String post = "O fraco nunca perdoa. O perdão é a característica do forte. "
-					+ "<audio>musicas/perdao.mp3</audio> #Gandhi #Fort #Perdao";
+					+ "<audio>musicas/perdao.mp3</audio> #Gandhi #Forte #Perdao";
 			String data = "09/08/2015 00:12:32";
 			
-			// Criar Post
 			joao.criaPost(post, data);
-			Assert.assertEquals("O fraco nunca perdoa. O perdão é a característica do forte. <audio>musicas/perdao.mp3</audio>", joao.getConteudo("Conteudo",  0));
-			Assert.assertEquals("#Gandhi,#Fort,#Perdao", joao.getConteudo("Hashtags", 0));
-			Assert.assertEquals("2015-08-09 00:12:32", joao.getConteudo("Data", 0));
 			
-			/*// Curtir um post
+			Assert.assertTrue(joao.getQtdPost() == 1);
+			Assert.assertEquals("O fraco nunca perdoa. O perdão é a característica do forte. <audio>musicas/perdao.mp3</audio>", joao.getConteudo("Conteudo",  0));
+			Assert.assertEquals("#Gandhi,#Forte,#Perdao", joao.getConteudo("Hashtags", 0));
+			Assert.assertEquals("2015-08-09 00:12:32", joao.getConteudo("Data", 0));
+
+			// CURTIR POST / POPULARIDADE DO POST
 			poster = joao.getPost(0);
+			
 			fred.curtir(poster);
 			maria.curtir(poster);
 			
-			// Notificacoes e aquisicao de pops
-			Assert.assertTrue(joao.getNotificacoes() == 2);
-			Assert.assertTrue(joao.getPop() == 20);
-			Assert.assertEquals("Fred curtiu seu post de 2015-08-09 00:12:32.", joao.getNextNotificacao());
-			Assert.assertEquals("Maria curtiu seu post de 2015-08-09 00:12:32.", joao.getNextNotificacao());
-			Assert.assertTrue(joao.getNotificacoes() == 0);
+			Assert.assertTrue(joao.getPost(0).getPopularidade() == 20);
 			
-			// Descurtir um post
-			bruna.descurtir(joao, 0);
-
-			// Notificacoes e aquisicao de pops
-			Assert.assertTrue(joao.getPop() == 10);
-			Assert.assertTrue(joao.getNotificacoes() == 1);
-			Assert.assertEquals("Bruna descurtiu seu post de 2015-08-09 00:12:32.", joao.getNextNotificacao());*/
-
+			// DESCURTIR POST / POPULARIDADE DO POST
+			bruna.descurtir(poster);
+			
+			Assert.assertTrue(joao.getPost(0).getPopularidade() == 10);
 			
 		} catch(RedeSocialMaisPopException erro) {
 			Assert.fail();

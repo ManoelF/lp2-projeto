@@ -21,7 +21,6 @@ public class Post implements Comparable<Post> {
 	private Util util;
 	FactoryMidia fabricaMidia;
 
-	// data e hora
 	public Post(String texto, String data) throws PostException {
 		this.util = Util.getInstancia();
 		this.fabricaMidia = new FactoryMidia();
@@ -121,6 +120,7 @@ public class Post implements Comparable<Post> {
 		return this.midias.get(indice).toString();
 	}
 	
+	//Lançar excecao
 	public String getPost(String atributo) {
 		if (atributo.equals("Data")) {
 			return getDataString();
@@ -171,7 +171,7 @@ public class Post implements Comparable<Post> {
 		return this.data.toString().replace("T", " ");
 	}
 		
-	public String getTexto() {
+	private String getTexto() {
 		return texto;
 	}
 	
@@ -183,7 +183,7 @@ public class Post implements Comparable<Post> {
 		return like;
 	}
 
-	public void setLike(int like) {
+	private void setLike(int like) {
 		this.like = like;
 	}
 
@@ -191,11 +191,11 @@ public class Post implements Comparable<Post> {
 		return deslike;
 	}
 
-	public void setDeslike(int deslike) {
+	private void setDeslike(int deslike) {
 		this.deslike = deslike;
 	}
 	
-	public void setHashtags(List<String> hashtags) {
+	private void setHashtags(List<String> hashtags) {
 		this.hashtags = hashtags;
 	}
 		
@@ -216,7 +216,7 @@ public class Post implements Comparable<Post> {
 		return popularidade;
 	}
 
-	public void setPopularidade(int popularidade) {
+	private void setPopularidade(int popularidade) {
 		this.popularidade = popularidade;
 	}
 	

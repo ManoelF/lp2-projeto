@@ -1,9 +1,5 @@
 package testes;
 
-import static org.junit.Assert.*;
-
-import java.text.ParseException;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,22 +21,22 @@ public class TestePost {
 			postUm = new Post(textoUm, data);
 			
 			Assert.assertEquals("bom dia amigos faces passem bem! <imagem>imagens/bomDia.jpg</imagem>", postUm.getPost("Conteudo"));
+			Assert.assertEquals("bom dia amigos faces passem bem! <imagem>imagens/bomDia.jpg</imagem>", postUm.getPost("Mensagem"));
 			Assert.assertEquals("#Chang,#Italo,#Manoel", postUm.getPost("Hashtags"));
 			Assert.assertEquals("2015-08-01 12:00:10", postUm.getPost("Data"));
-//			Assert.assertEquals("$arquivo_imagem:imagens/bomDia.jpg", postUm.getMidias(0));
+			Assert.assertEquals("$arquivo_imagem:imagens/bomDia.jpg", postUm.getMidias(1));
 			
-			textoUm = "Hoje o sol me acordou. Foi muito cansativo sair da cama pois ainda estava com muito sono. Gostaria ter mais tempo para dormir. Ainda bem que tinha tapioca e cuscuz no cafe da manha para dar  energia. <imagem>imagens/bomDia.jpg</imagem> #cafe #acorda";
-			postUm = new Post(textoUm, data);
-			//System.out.println(postUm.getPost("Conteudo"));
-		//	System.out.println(postUm.getMidias(1));
-		//	System.out.println(postUm.getMidias());
+			Assert.assertEquals("2015-08-01 12:00:10", postUm.getDataString());
+			Assert.assertEquals("bom dia amigos faces passem bem!", postUm.getMidias(0));
+			Assert.assertEquals("$arquivo_imagem:imagens/bomDia.jpg", postUm.getMidias(1));
+			
 		} catch (RedeSocialMaisPopException erro) {
 			Assert.fail();
 		}
 
 	}
 
-	/*@Test
+	@Test
 	public void testPostInvalido(){
 		
 		try{
@@ -49,15 +45,10 @@ public class TestePost {
 						 + " tão má como a pitam em nossa casa. É uma mulher vivaz, arrebatada, de excelente coração. Expuslhe" 
 						 + " os prejuízos causados à minha mãe pela retenção da parte que lhe cabe na herança; minha tia"
 						 + " contou-me os motivos, dizendo-me as condições mediante as quais está disposta a enviar-nos tudo"
-						 + " quanto reclamamos, e até mais alguma coisa. A respeito, é o que há por hoje; fale à minha mãe que"
-						 + " tudo se arranjara. Esse pequeno caso, meu amigo, demonstrou-me, ainda uma vez, que os malentendidos"
-						 + " e a indolencia talvez produzam mais discórdias no mundo do que a duplicidade e a"
-						 + " maldade; pelo menos, estas duas ultimas são mais raras"; 
+						 + " quanto reclamamos, e até mais alguma coisa.[...]"; 
 			
 			postDois = new Post(textoQuatro, "10/02/2002 12:21:00");
 			
-		} catch (ParseException erro) {
-			Assert.fail();
 		} catch (PostException erro){
 			Assert.assertEquals("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.", erro.getMessage());
 		}
@@ -82,8 +73,6 @@ public class TestePost {
 			
 		} catch (EntradaException erro) {
 			Assert.fail();
-		} catch (ParseException erro) {
-			Assert.fail();
 		}
 	}
 	
@@ -104,15 +93,13 @@ public class TestePost {
 			
 			Assert.assertEquals("Esse frio esta mim deixando doida.", frio.getPost("Conteudo"));
 			Assert.assertEquals("#alucicrazy,#CGDaDepressao", frio.getPost("Hashtags"));
-			//Assert.assertEquals("$arquivo_audio:musicas/poderosas.mp3", recalque.getMidias(0));
+			Assert.assertEquals("$arquivo_audio:musicas/poderosas.mp3", recalque.getMidias(1));
 			Assert.assertEquals("2015-08-01 21:35:00", frio.getPost("Data"));
 			
 		} catch(EntradaException erro) {
 			Assert.fail();
-		} catch(ParseException erro) {
-			Assert.fail();
 		}
 
 	}
-	*/
+	
 }

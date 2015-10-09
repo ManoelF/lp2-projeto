@@ -115,7 +115,7 @@ public class Facade {
 	}
 	
 	public void atualizaRanking() throws LogicaException {
-		this.controller.atualizaRanking();
+		this.controller.atualizaRanking();	
 	}
 	
 	public void atualizaFeed() {
@@ -129,7 +129,7 @@ public class Facade {
 	public void ordenaFeedPorPopularidade(){
 		
 	}
-
+	
 	public static void main(String[] args) {
  	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt", "lib/ScriptsTeste/usecase_4.txt"};
 	    EasyAccept.main(args);

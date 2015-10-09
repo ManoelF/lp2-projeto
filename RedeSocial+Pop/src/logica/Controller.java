@@ -4,7 +4,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import exceptions.*;
+
+import exceptions.AtualizaPerfilException;
+import exceptions.CadastroEmailJaExistenteException;
+import exceptions.EntradaException;
+import exceptions.LogicaException;
+import exceptions.LoginException;
+import exceptions.LogoutException;
+import exceptions.NaoHaNotificacoesException;
+import exceptions.NaoSolicitouAmizadeException;
+import exceptions.PostException;
+import exceptions.SenhaIncorretaException;
+import exceptions.SenhaProtegidaException;
+import exceptions.UsuarioNaoCadastradoException;
 
 
 public class Controller {
@@ -12,6 +24,7 @@ public class Controller {
 	private FactoryUsuario fabricaUsuario;
 	private List<Usuario> usuariosCadastrados;
 	private Usuario usuarioLogado;
+	private TrendingTopics trendingTopics;
 	public Util util;
 	private Ranking ranking;
 	private static final String NOME = "Nome";
@@ -23,6 +36,10 @@ public class Controller {
 	public Controller() {
 		this.fabricaUsuario = new FactoryUsuario();
 		this.usuariosCadastrados = new ArrayList<Usuario>();
+		this.trendingTopics = new TrendingTopics();
+		this.ranking = new Ranking();
+
+
 	}
 	
 	public String cadastraUsuario(String nome, String email, String senha, 
@@ -37,6 +54,35 @@ public class Controller {
 		} else {
 			throw new CadastroEmailJaExistenteException();
 		}
+	}
+	
+	public void removeUsuario(String emailUsuario) {
+		
+		Usuario usuarioRemovido = pesquisaUsuario(emailUsuario);
+		for (Usuario usuario : usuariosCadastrados) {
+			
+			Iterator<Usuario> iterator = usuario.getAmigos().iterator();
+			while (iterator.hasNext()) {
+				Usuario amigo = iterator.next();
+				if (amigo.equals(usuarioRemovido)) {
+					usuario.removeAmigo(amigo);
+					break;
+				}
+			} // fecha while
+		} // fecha for
+		
+		this.usuariosCadastrados.remove(usuarioRemovido);
+		
+	} //fecha metodo
+	
+	
+	private boolean verificaEmailJaCadastrado(String email) {
+		for (Usuario usuario : usuariosCadastrados) {
+			if (usuario.getEmail().equals(email)) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public void login(String EmailInserido, String senhaInserida) throws LogicaException, EntradaException {
@@ -58,16 +104,6 @@ public class Controller {
 		}	
 	}
 
-	private Usuario pesquisaUsuario(String EmailInserido) {
-		
-		for (Usuario usuario : usuariosCadastrados) {
-			if (usuario.getEmail().equals(EmailInserido)) {
-				return usuario;
-			}
-		}
-		return null;
-	}
-	
 	public void logout() throws LogicaException {
 
 		if (this.usuarioLogado == null) {
@@ -76,78 +112,49 @@ public class Controller {
 			this.usuarioLogado = null;
 		}
 	}
-
-	public List<Usuario> getUsuariosCadastrados(){
-		return this.usuariosCadastrados;	
-	}
-
-	public Usuario getUsuarioLogado(){
-		return this.usuarioLogado;
-	}
-
-	public void adicionaAmigo(String emailUserDestino) throws LogicaException {
-		Usuario userDestino = pesquisaUsuario(emailUserDestino);
-		if (userDestino == null) {
-			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ emailUserDestino +" nao esta cadastradx.");
-		} else {
-			this.usuarioLogado.adicionaAmigo(userDestino);
-		}
-
-	}
 	
-	public void rejeitaAmizade(String emailUserRecusado) throws LogicaException  {
-		Usuario userRecusado = pesquisaUsuario(emailUserRecusado);
+
+	public void criaPost(String mensagem, String data) throws PostException {
+		this.usuarioLogado.criaPost(mensagem, data);
 		
-		if (userRecusado == null) {
-			throw new UsuarioNaoCadastradoException("Um usuarix com email " + emailUserRecusado + " nao esta cadastradx.");
-		} else if (this.usuarioLogado.getSolicitacaoAmizade().contains(userRecusado.getEmail())) {
-			this.usuarioLogado.rejeitaAmizade(userRecusado);
-		} else {
-			throw new NaoSolicitouAmizadeException(userRecusado.getNome() + " nao lhe enviou solicitacoes de amizade.");
-		}
-	}
-	
-	public void aceitaAmizade(String emailUserAceito) throws LogicaException {
-		Usuario userAceito = pesquisaUsuario(emailUserAceito);
+		List<String> hashtags = this.usuarioLogado.getUltimoPost().getHashtags();
+		addicionaTags(hashtags);
 		
-		if (userAceito == null) {
-			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ emailUserAceito +" nao esta cadastradx.");
-		} else if (this.usuarioLogado.getSolicitacaoAmizade().contains(emailUserAceito)) {
-			this.usuarioLogado.aceitaAmizade(userAceito);
-			userAceito.getAmigos().add(this.usuarioLogado);	
-			userAceito.recebeNotificacao(this.usuarioLogado.getNome() + " aceitou sua amizade.");			
-		} else {
-			throw new NaoSolicitouAmizadeException(userAceito.getNome() + " nao lhe enviou solicitacoes de amizade.");
-		}
 	}
 	
-	public boolean verificaEmailJaCadastrado(String email) {
-		for (Usuario usuario : usuariosCadastrados) {
-			if (usuario.getEmail().equals(email)) {
-			return false;
+	
+	public void curtirPost(String amigo, int post) throws LogicaException {
+		Usuario usuario = pesquisaUsuario(amigo);
+		
+		if (usuario == null) {
+			throw new UsuarioNaoCadastradoException(amigo);
+		} else {
+			if (this.usuarioLogado.temAmigo(usuario)) {
+				this.usuarioLogado.curtir(usuario.getPost(post));
+				usuario.recebeNotificacao(this.usuarioLogado.getNome() + " curtiu seu post de " + usuario.getPost(post).getDataString() + ".");
+				usuario.atualizaPopularidade();
+			} else {
+				// Lancar excecao que usuario nao tem esse amigo
+				System.out.println(this.usuarioLogado.getAmigos().contains(usuario));
+				throw new LogicaException(amigo + " nao e seu amigo.");
 			}
 		}
-		return true;
 	}
-			
-	public String getInfoUsuario(String atributo) throws SenhaProtegidaException , EntradaException{
-		String atributoRetornado = null;
-		switch (atributo) {
-		case NOME:
-			atributoRetornado = this.usuarioLogado.getNome();
-			break;
-		case NASCIMENTO:
-			atributoRetornado = this.usuarioLogado.getNascimento();
-			break;
-		case FOTO:
-			atributoRetornado = this.usuarioLogado.getImagem();
-			break;
-		case SENHA:
-			throw new SenhaProtegidaException();
-		default:
-			throw new EntradaException("Este atributo nao existe!");
+	
+	public void descurtirPost(String amigo, int post) throws LogicaException {
+		Usuario usuario = pesquisaUsuario(amigo);
+		
+		if (usuario == null) {
+			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ amigo +" nao esta cadastradx.");
+		} else {
+			if (this.usuarioLogado.temAmigo(usuario)) {
+				this.usuarioLogado.descurtir(usuario.getPost(post));
+				usuario.recebeNotificacao(usuario.getNome() + " descurtiu seu post de " + usuario.getPost(post).getDataString() + ".");
+				usuario.atualizaPopularidade();
+			} else {
+				throw new LogicaException("Este usuario nao esta na sua lista de amigos.");
+			}
 		}
-		return atributoRetornado;
 	}
 	
 	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, EntradaException {
@@ -160,7 +167,11 @@ public class Controller {
 				this.usuarioLogado.setNome(novoValor);
 				break;
 			case EMAIL:
-				this.usuarioLogado.setEmail(novoValor);
+				if (verificaEmailJaCadastrado(novoValor)) {
+					this.usuarioLogado.setEmail(novoValor);
+				} else {
+					throw new  EntradaException("Ja existe um usuarix com esse email.");
+				}
 				break;
 			case NASCIMENTO:
 				this.usuarioLogado.setNascimento(novoValor);
@@ -183,10 +194,100 @@ public class Controller {
 		}
 	}
 
-	public void criaPost(String mensagem, String data) throws PostException {
-		this.usuarioLogado.criaPost(mensagem, data);;			
+	/*public void atualizaRanking() throws LogicaException {
+		this.ranking.atualizaRanking(this.usuariosCadastrados);
+	}*/
+	
+	public void atualizaFeed() {
+		this.usuarioLogado.atualizaFeed();	
 	}
 	
+	public void ordenaFeedPorData(){
+		//this.usuarioLogado.ordenaFeedPorData();
+	}
+	
+	public void ordenaFeedPorPopularidade(){
+		//this.usuarioLogado.ordenaFeedPorPopularidade();
+	}
+	
+	public void adicionaAmigo(String emailUserDestino) throws LogicaException {
+		Usuario userDestino = pesquisaUsuario(emailUserDestino);
+		if (userDestino == null) {
+			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ emailUserDestino +" nao esta cadastradx.");
+		} else {
+			this.usuarioLogado.adicionaAmigo(userDestino);
+		}
+
+	}
+	
+	public void aceitaAmizade(String emailUserAceito) throws LogicaException {
+		Usuario userAceito = pesquisaUsuario(emailUserAceito);
+		
+		if (userAceito == null) {
+			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ emailUserAceito +" nao esta cadastradx.");
+		} else if (this.usuarioLogado.getSolicitacaoAmizade().contains(emailUserAceito)) {
+			this.usuarioLogado.aceitaAmizade(userAceito);
+			userAceito.getAmigos().add(this.usuarioLogado);	
+			userAceito.recebeNotificacao(this.usuarioLogado.getNome() + " aceitou sua amizade.");
+			
+		} else {
+			throw new NaoSolicitouAmizadeException(userAceito.getNome() + " nao lhe enviou solicitacoes de amizade.");
+		}
+	}
+
+	
+	public void rejeitaAmizade(String emailUserRecusado) throws LogicaException  {
+		Usuario userRecusado = pesquisaUsuario(emailUserRecusado);
+		
+		if (userRecusado == null) {
+			throw new UsuarioNaoCadastradoException("Um usuarix com email " + emailUserRecusado + " nao esta cadastradx.");
+		} else if (this.usuarioLogado.getSolicitacaoAmizade().contains(userRecusado.getEmail())) {
+			this.usuarioLogado.rejeitaAmizade(userRecusado);
+		} else {
+			throw new NaoSolicitouAmizadeException(userRecusado.getNome() + " nao lhe enviou solicitacoes de amizade.");
+		}
+	}
+	
+	public void removeAmigo(String usuario) throws UsuarioNaoCadastradoException {
+		Usuario usuarioRemover = pesquisaUsuario(usuario);
+		
+		if (usuarioRemover == null) {
+			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ usuario +" nao esta cadastradx.");
+		} else {
+			this.usuarioLogado.removeAmigo(usuarioRemover);
+			usuarioRemover.recebeNotificacao(this.usuarioLogado.getNome() + " removeu a sua amizade.");
+		}
+		
+		usuarioRemover.removeAmigo(this.usuarioLogado);
+	}
+	
+	public List<Usuario> getUsuariosCadastrados(){
+		return this.usuariosCadastrados;	
+	}
+
+	public Usuario getUsuarioLogado(){
+		return this.usuarioLogado;
+	}
+			
+	public String getInfoUsuario(String atributo) throws SenhaProtegidaException , EntradaException{
+		String atributoRetornado = null;
+		switch (atributo) {
+		case NOME:
+			atributoRetornado = this.usuarioLogado.getNome();
+			break;
+		case NASCIMENTO:
+			atributoRetornado = this.usuarioLogado.getNascimento();
+			break;
+		case FOTO:
+			atributoRetornado = this.usuarioLogado.getImagem();
+			break;
+		case SENHA:
+			throw new SenhaProtegidaException();
+		default:
+			throw new EntradaException("Este atributo nao existe!");
+		}
+		return atributoRetornado;
+	}
 	
 	public String getInfoUsuario(String atributo, String email) throws LogicaException, EntradaException {
 		Usuario usuario = pesquisaUsuario(email);
@@ -213,83 +314,18 @@ public class Controller {
 		}
 	}
 	
-	public String getNextNotificacao() throws NaoHaNotificacoesException {
-		return this.usuarioLogado.getNextNotificacao();
-	}
-	
 	public int getNotificacoes() { 
 		return this.usuarioLogado.getNotificacoes();
 	}
-	
+
+	public String getNextNotificacao() throws NaoHaNotificacoesException {
+		return this.usuarioLogado.getNextNotificacao();
+	}
+		
 	public int getQtdAmigos() {
 		return this.usuarioLogado.getQtdAmigos();
 	}
-	
-	public void curtirPost(String amigo, int post) throws LogicaException {
-		Usuario usuario = pesquisaUsuario(amigo);
 		
-		if (usuario == null) {
-			throw new UsuarioNaoCadastradoException(amigo);
-		} else {
-			if (this.usuarioLogado.temAmigo(usuario)) {
-				this.usuarioLogado.curtir(usuario.getPost(post));
-				usuario.recebeNotificacao(this.usuarioLogado.getNome() + " curtiu seu post de " + usuario.getPost(post).getDataString() + ".");
-				usuario.atualizaPopularidade();
-			} else {
-				// Lancar excecao que usuario nao tem esse amigo
-				throw new LogicaException(amigo + " nao e seu amigo.");
-			}
-		}
-	}
-	
-	public void descurtirPost(String amigo, int post) throws LogicaException {
-		Usuario usuario = pesquisaUsuario(amigo);
-		
-		if (usuario == null) {
-			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ amigo +" nao esta cadastradx.");
-		} else {
-			if (this.usuarioLogado.temAmigo(usuario)) {
-				this.usuarioLogado.descurtir(usuario.getPost(post));
-				usuario.recebeNotificacao(usuario.getNome() + " descurtiu seu post de " + usuario.getPost(post).getDataString() + ".");
-				usuario.atualizaPopularidade();
-			} else {
-				throw new LogicaException("Este usuario nao esta na sua lista de amigos.");
-			}
-		}
-	}
-		
-	public void removeUsuario(String emailUsuario) {
-		
-		Usuario usuarioRemovido = pesquisaUsuario(emailUsuario);
-		for (Usuario usuario : usuariosCadastrados) {
-			
-			Iterator<Usuario> iterator = usuario.getAmigos().iterator();
-			while (iterator.hasNext()) {
-				Usuario amigo = iterator.next();
-				if (amigo.equals(usuarioRemovido)) {
-					usuario.removeAmigo(amigo);
-					break;
-				}
-			} // fecha while
-		} // fecha for
-		
-		this.usuariosCadastrados.remove(usuarioRemovido);
-		
-	} //fecha metodo
-	
-	public void removeAmigo(String usuario) throws UsuarioNaoCadastradoException {
-		Usuario usuarioRemover = pesquisaUsuario(usuario);
-		
-		if (usuarioRemover == null) {
-			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ usuario +" nao esta cadastradx.");
-		} else {
-			this.usuarioLogado.removeAmigo(usuarioRemover);
-			usuarioRemover.recebeNotificacao(this.usuarioLogado.getNome() + " removeu a sua amizade.");
-		}
-		
-		usuarioRemover.removeAmigo(this.usuarioLogado);
-	}
-	
 	public String getPost(int indice) {
 		return this.usuarioLogado.getPost(indice).getPost();
 		
@@ -301,26 +337,33 @@ public class Controller {
 	
 	public String getConteudoPost(int indice, int post) throws LogicaException, PostException {
 		return this.usuarioLogado.getConteudoPost(indice, post);
+	}	
+
+	private void addicionaTags(List<String> tags) {
+		this.trendingTopics.adicionaHashtag(tags);
+	}
+
+	private Usuario pesquisaUsuario(String EmailInserido) {
+		
+		for (Usuario usuario : usuariosCadastrados) {
+			if (usuario.getEmail().equals(EmailInserido)) {
+				return usuario;
+			}
+		}
+		return null;
 	}
 	
 	public String getsenha(){
 		return this.usuarioLogado.getSenha();
 	}
 	
-	public void atualizaFeed() {
-		this.usuarioLogado.atualizaFeed();	
-	}
-	
-	/////
 	public void atualizaRanking() throws LogicaException {
-		ranking = new Ranking();
+		//ranking = new Ranking();
 		
 		ranking.atualizaRanking(getUsuariosCadastrados());
-		
-		
+	
 	} // fecha ranking
 
 
-	
-	
+
 }

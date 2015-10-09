@@ -3,10 +3,8 @@ package logica;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import exceptions.PostException;
 
@@ -19,11 +17,13 @@ public class Util {
 	}
 
 
-    public static Util getInstancia() {  
-    	if (INSTANCIA == null) {  
-    		INSTANCIA = new Util();
+    public static Util getInstancia() {
+    	synchronized (Util.class) {
+	    	if (INSTANCIA == null) {  
+	    		INSTANCIA = new Util();
+	    	}
+	        return INSTANCIA;  
     	}
-        return INSTANCIA;  
      }
 
 	public List<String> getMidia(String mensagem) {
@@ -56,85 +56,6 @@ public class Util {
 		return arquivos;
 	}
 	
-	// buscando as hashtag do texto
-	// logica semelhante a usada na busca de arquivos
-	public List<String> encontraHashtag2(String mensagem) throws PostException {
-		List<String> hashtags = new ArrayList<>();
-		String novaHash = "";
-		char[] novaMsg = mensagem.toCharArray();
-		boolean espaco = false;
-		boolean iniciaVerificacao = false;
-		
-		for(char caracter: novaMsg) {
-			if (caracter == '#') {
-				iniciaVerificacao = true;
-				novaHash += caracter;
-			} 
-			
-			if (iniciaVerificacao) {
-				if (caracter == '#'){
-					espaco = false;
-				} else if (espaco) {
-					throw new PostException("Nao eh possivel criar o post. Hashtag invalida");
-				} else if (caracter != ' ') {
-					novaHash += caracter;
-					
-				} else if (caracter == ' ') {
-					hashtags.add(novaHash);
-					novaHash = "";
-					espaco = true;
-				}
-			}
-		}
-		if (!novaHash.equals("")){
-			hashtags.add(novaHash);
-		}
-		return hashtags;
-	}
-	
-	public boolean verificaFormatoData(String data) {
-		
-		String[] dataS = data.split("/");
-		
-		if (dataS.length != 3) {
-			return false;
-		}
-		if (!(dataS[0].matches("^[0-9]*$")) ||
-		    !(dataS[1].matches("^[0-9]*$")) ||
-			!(dataS[2].matches("^[0-9]*$")) ) {
-				return false;
-		}
-		if (dataS[0].length() > 2 ||
-			dataS[1].length() > 2 ||
-			dataS[2].length() > 4 ) {
-			return false;
-		}
-				
-		return true;
-	}
-	
-	public boolean verificaDataValida(String data) {
-		try {	
-			String[] dataS = data.split("/");
-			int dia = Integer.parseInt(dataS[0]);
-			int mes = Integer.parseInt(dataS[1]);
-			int ano = Integer.parseInt(dataS[2]);
-			LocalDate dat = LocalDate.of(ano, mes, dia);
-			return true;
-		} catch (DateTimeException erro) {
-			return false;
-		}
-	
-	}
-	
-	public LocalDate recebeData(String data) {
-		String[] dataS = data.split("/");
-		int dia = Integer.parseInt(dataS[0]);
-		int mes = Integer.parseInt(dataS[1]);
-		int ano = Integer.parseInt(dataS[2]);
-		return LocalDate.of(ano, mes, dia);
-	}
-
 	public String encontraTexto(String texto) {
 		char[] novoTexto = texto.toCharArray();
 		String conteudo = "";
@@ -166,8 +87,113 @@ public class Util {
 		return conteudo;
 	}
 	
-	public boolean verificaFormatoHora(String hora) {
+	public List<String> encontraHashtag(String texto) throws PostException {
+		String[] hashtags; 
+		String novaHash = "";
+		List<String> listaHashtags = new ArrayList<>();//String[] hashtags;
+		char[] campoHash = texto.toCharArray();
+		boolean inicia = false;
+		
+		for(char caracter: campoHash){
+			if (caracter == '#') {
+				inicia = true;
+			}
+			if (inicia == true) {
+				novaHash += caracter;
+			}
+		}
+		
+		hashtags = novaHash.split(" ");
+		for (int i = 0; i < hashtags.length; i++) {
+			listaHashtags.add(hashtags[i]);
+			if (!hashtags[0].toString().equals("") && hashtags[i].charAt(0) != '#') {
+				throw new PostException("Nao eh possivel criar o post. As hashtags devem comecar com '#'. Erro na hashtag: '" + hashtags[i] + "'.");
+				
+			}
+			
+		}
+		
+		return listaHashtags;
+	}
+		
+	public LocalDate recebeData(String data) {
+		String[] dataS = data.split("/");
+		int dia = Integer.parseInt(dataS[0]);
+		int mes = Integer.parseInt(dataS[1]);
+		int ano = Integer.parseInt(dataS[2]);
+		return LocalDate.of(ano, mes, dia);
+	}
+
+	public LocalDateTime converteParaData(String data) {
 	
+		String[] dataHora = data.split(" ");		
+		String[] dataS = dataHora[0].split("/");
+		int ano = Integer.parseInt(dataS[2]);
+		int mes = Integer.parseInt(dataS[1]);
+		int dia = Integer.parseInt(dataS[0]);
+		
+		String[] horaS = dataHora[1].split(":");
+		int hora = Integer.parseInt(horaS[0]);
+		int min = Integer.parseInt(horaS[1]);
+		int seg = Integer.parseInt(horaS[2]);
+		
+		return LocalDateTime.of(ano, mes, dia, hora, min, seg);
+	}
+
+	//VALIDACOES
+	public boolean verificaEmail(String email) {
+		String validacaoNome = "^[a-zA-Z]{1}.+@[a-z]{2,}\\.[a-z]{2,4}(\\.[a-z]{2,3})*"; 
+		return email.matches(validacaoNome);
+	}	
+	
+	public boolean verificaAtributo(String atributo) {
+		String validacaoNome = "^\\w+.+";
+		return atributo.matches(validacaoNome);
+	}
+	
+	public boolean verificaSenha(String senha) {
+		String validacaoNome = "^[.^\\S].+";
+		return senha.matches(validacaoNome);
+	}
+	
+	public boolean verificaFormatoData(String data) {
+		
+		String[] dataS = data.split("/");
+		
+		if (dataS.length != 3) {
+			return false;
+		}
+		if (!(dataS[0].matches("^[0-9]*$")) ||
+		    !(dataS[1].matches("^[0-9]*$")) ||
+			!(dataS[2].matches("^[0-9]*$")) ) {
+				return false;
+		}
+		if (dataS[0].length() != 2 ||
+			dataS[1].length() != 2 ||
+			dataS[2].length() != 4 ) {
+			return false;
+		}
+				
+		return true;
+	}
+	
+	public boolean verificaDataValida(String data) {
+		try {	
+			String[] dataS = data.split("/");
+			int dia = Integer.parseInt(dataS[0]);
+			int mes = Integer.parseInt(dataS[1]);
+			int ano = Integer.parseInt(dataS[2]);
+			LocalDate.of(ano, mes, dia);
+
+			return true;
+		} catch (DateTimeException erro) {
+			return false;
+		}
+	
+	}
+	
+	public boolean verificaFormatoHora(String hora) {
+		
 		String[] horaS = hora.split(":");
 		
 		if (horaS.length != 3) {
@@ -208,66 +234,4 @@ public class Util {
 		
 		return true;
 	}
-	
-	public LocalDateTime converteParaData(String data) {
-		
-		String[] dataHora = data.split(" ");
-		
-		String[] dataS = dataHora[0].split("/");
-		int ano = Integer.parseInt(dataS[2]);
-		int mes = Integer.parseInt(dataS[1]);
-		int dia = Integer.parseInt(dataS[0]);
-		
-		String[] horaS = dataHora[1].split(":");
-		int hora = Integer.parseInt(horaS[0]);
-		int min = Integer.parseInt(horaS[1]);
-		int seg = Integer.parseInt(horaS[2]);
-		
-		return LocalDateTime.of(ano, mes, dia, hora, min, seg);
-	}
-
-	public boolean verificaEmail(String email) {
-		String validacaoNome = "^[a-zA-Z]{1}.+@[a-z]{2,}\\.[a-z]{2,4}(\\.[a-z]{2,3})*"; 
-		return email.matches(validacaoNome);
-	}	
-	
-	public boolean verificaAtributo(String atributo) {
-		String validacaoNome = "^\\w+.+";
-		return atributo.matches(validacaoNome);
-	}
-	
-	public boolean verificaSenha(String senha) {
-		String validacaoNome = "^[.^\\S].+";
-		return senha.matches(validacaoNome);
-	}
-	
-	public List<String> encontraHashtag(String texto) throws PostException {
-		String[] hashtags; 
-		String novaHash = "";
-		List<String> listaHashtags = new ArrayList<>();//String[] hashtags;
-		char[] campoHash = texto.toCharArray();
-		boolean inicia = false;
-		
-		for(char caracter: campoHash){
-			if (caracter == '#') {
-				inicia = true;
-			}
-			if (inicia == true) {
-				novaHash += caracter;
-			}
-		}
-		
-		hashtags = novaHash.split(" ");
-		for (int i = 0; i < hashtags.length; i++) {
-			listaHashtags.add(hashtags[i]);
-			if (hashtags[i].charAt(0) != '#') {
-				throw new PostException("Nao eh possivel criar o post. As hashtags devem comecar com '#'. Erro na hashtag: '" + hashtags[i] + "'.");
-				
-			}
-			
-		}
-		
-		return listaHashtags;
-	}
-	
 }

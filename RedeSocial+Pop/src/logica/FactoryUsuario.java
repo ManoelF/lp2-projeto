@@ -1,8 +1,6 @@
 package logica;
 
-import java.text.ParseException;
-
-import exceptions.*;
+import exceptions.CadastroInvalidoException;
 
 public class FactoryUsuario {
 

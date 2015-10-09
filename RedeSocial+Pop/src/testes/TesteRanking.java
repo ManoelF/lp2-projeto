@@ -62,13 +62,11 @@ public class TesteRanking {
 					Assert.assertEquals(controller.getUsuariosCadastrados().get(0).getSenha(), "1234");
 					Assert.assertEquals(controller.getUsuariosCadastrados().get(0).getNascimento(), "1995-10-20");
 					Assert.assertEquals(controller.getUsuariosCadastrados().get(0).getImagem(), "resources/avatarDefaul.jpg");
-					// pq ta dando esse erro???
 		
 					Assert.assertEquals(controller.getUsuariosCadastrados().get(1).getNome(), "manoel");
 					Assert.assertEquals(controller.getUsuariosCadastrados().get(1).getEmail(), "manoel@gmail.com");
 					Assert.assertEquals(controller.getUsuariosCadastrados().get(1).getSenha(), "456");
-				
-					
+							
 					Assert.assertEquals(controller.getUsuariosCadastrados().get(2).getNome(), "chang");
 					Assert.assertEquals(controller.getUsuariosCadastrados().get(2).getEmail(), "chang@gmail.com");
 					Assert.assertEquals(controller.getUsuariosCadastrados().get(2).getSenha(), "1234");
@@ -91,23 +89,13 @@ public class TesteRanking {
 			controller.getUsuariosCadastrados().get(6).setPop(4);
 			controller.getUsuariosCadastrados().get(7).setPop(8);
 			controller.getUsuariosCadastrados().get(8).setPop(9);
-			
-			for (int i = 0; i < controller.getUsuariosCadastrados().size(); i++) {
-				System.out.println( controller.getUsuariosCadastrados().get(i).getNome() + " " + controller.getUsuariosCadastrados().get(i).getPop());
-			}
-			
+						
 			controller.atualizaRanking();
 
-			for (int i = 0; i < controller.getUsuariosCadastrados().size(); i++) {
+			/*for (int i = 0; i < controller.getUsuariosCadastrados().size(); i++) {
 				System.out.println( controller.getUsuariosCadastrados().get(i).getNome() + " " + controller.getUsuariosCadastrados().get(i).getPop());
-			}
-			
-
-		
-		
-	} // fecha o test
-
+			}*/
+					
 	
-
+	} // fecha o test
 }
-
