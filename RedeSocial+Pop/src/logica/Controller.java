@@ -202,6 +202,10 @@ public class Controller {
 		this.usuarioLogado.ordenaFeedPorData();
 	}
 	
+	public String atualizaTrendingTopics() {
+		return this.trendingTopics.atualizaTrendingTopic();
+	}
+	
 	public void ordenaFeedPorPopularidade(){
 		this.usuarioLogado.ordenaFeedPorPopularidade();
 	}
