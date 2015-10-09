@@ -340,12 +340,6 @@ public class Usuario implements Comparable<Usuario> {
 		return this.feed.getFeed();
 	}
 	
-
-	public void setPop(int pop) {
-		this.pop = pop;
-	}
-
-
 	@Override
 	public int compareTo(Usuario outroUsuario) {
 		if (this.pops > outroUsuario.getPops()) {
@@ -365,25 +359,6 @@ public class Usuario implements Comparable<Usuario> {
 		return result;
 	}
 
-	// PRECISA SER MELHORADO
-	/*@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		return true;
-	}*/
-	
-	
 	@Override
 	public boolean equals(Object objeto){
 		if(!(objeto instanceof Usuario)){

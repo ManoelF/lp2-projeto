@@ -68,8 +68,8 @@ public class TrendingTopics {
 		buscaTagsMaisPopulares();
 		String impressao = "Trending Topics " + QUEBRA_LINHA;
 		
-		for(String hashtag: this.trending) {
-			impressao += hashtag + QUEBRA_LINHA;
+		for(int i = 0; i < trending.size(); i++) {
+			impressao +="(" + (i+1) + ") " + trending.get(i) + QUEBRA_LINHA;
 		}
 		
 		return impressao;

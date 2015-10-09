@@ -365,6 +365,8 @@ public class Controller {
 		//ranking = new Ranking();
 		
 		ranking.atualizaRanking(getUsuariosCadastrados());
+		trendingTopics.atualizaTrendingTopic();
+		
 	} // fecha ranking
 	
 

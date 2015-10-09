@@ -80,15 +80,15 @@ public class TesteRanking {
 	@Test
 	public void testeOrdenacaoCrescente() throws EntradaException, LogicaException{
 		
-			controller.getUsuariosCadastrados().get(0).setPop(10);
-			controller.getUsuariosCadastrados().get(1).setPop(15);
-			controller.getUsuariosCadastrados().get(2).setPop(5);
-			controller.getUsuariosCadastrados().get(3).setPop(3);
-			controller.getUsuariosCadastrados().get(4).setPop(20);
-			controller.getUsuariosCadastrados().get(5).setPop(1);
-			controller.getUsuariosCadastrados().get(6).setPop(4);
-			controller.getUsuariosCadastrados().get(7).setPop(8);
-			controller.getUsuariosCadastrados().get(8).setPop(9);
+			controller.getUsuariosCadastrados().get(0).setPops(10);
+			controller.getUsuariosCadastrados().get(1).setPops(15);
+			controller.getUsuariosCadastrados().get(2).setPops(5);
+			controller.getUsuariosCadastrados().get(3).setPops(3);
+			controller.getUsuariosCadastrados().get(4).setPops(20);
+			controller.getUsuariosCadastrados().get(5).setPops(1);
+			controller.getUsuariosCadastrados().get(6).setPops(4);
+			controller.getUsuariosCadastrados().get(7).setPops(8);
+			controller.getUsuariosCadastrados().get(8).setPops(9);
 						
 			controller.atualizaRanking();
 
