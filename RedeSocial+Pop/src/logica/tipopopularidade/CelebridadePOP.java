@@ -40,4 +40,8 @@ public class CelebridadePOP implements TipoPopularidade {
 	public int qntPostFeed() {
 		return this.qntPostFeed;
 	}
+	
+	public String popularidade() {
+		return "Celebridade Pop";
+	}
 }

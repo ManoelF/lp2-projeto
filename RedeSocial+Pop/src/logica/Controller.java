@@ -46,7 +46,7 @@ public class Controller {
 								String nascimento, String imagem) 
 								throws EntradaException,  LogicaException {
 		Usuario novoUsuario;
-		boolean podeCadastrar = verificaEmailJaCadastrado(email);
+		boolean podeCadastrar = hasEmail(email);
 		if (podeCadastrar == true) {
 			novoUsuario = fabricaUsuario.criaUsuario(nome, email, senha, nascimento, imagem);
 			usuariosCadastrados.add(novoUsuario);
@@ -76,7 +76,7 @@ public class Controller {
 	} //fecha metodo
 	
 	
-	private boolean verificaEmailJaCadastrado(String email) {
+	private boolean hasEmail(String email) {
 		for (Usuario usuario : usuariosCadastrados) {
 			if (usuario.getEmail().equals(email)) {
 				return false;
@@ -113,7 +113,6 @@ public class Controller {
 		}
 	}
 	
-
 	public void criaPost(String mensagem, String data) throws PostException {
 		this.usuarioLogado.criaPost(mensagem, data);
 		
@@ -121,7 +120,6 @@ public class Controller {
 		addicionaTags(hashtags);
 		
 	}
-	
 	
 	public void curtirPost(String amigo, int post) throws LogicaException {
 		Usuario usuario = pesquisaUsuario(amigo);
@@ -132,10 +130,9 @@ public class Controller {
 			if (this.usuarioLogado.temAmigo(usuario)) {
 				this.usuarioLogado.curtir(usuario.getPost(post));
 				usuario.recebeNotificacao(this.usuarioLogado.getNome() + " curtiu seu post de " + usuario.getPost(post).getDataString() + ".");
-				usuario.atualizaPopularidade();
+				usuario.atualizaPops();
 			} else {
 				// Lancar excecao que usuario nao tem esse amigo
-				System.out.println(this.usuarioLogado.getAmigos().contains(usuario));
 				throw new LogicaException(amigo + " nao e seu amigo.");
 			}
 		}
@@ -150,7 +147,7 @@ public class Controller {
 			if (this.usuarioLogado.temAmigo(usuario)) {
 				this.usuarioLogado.descurtir(usuario.getPost(post));
 				usuario.recebeNotificacao(usuario.getNome() + " descurtiu seu post de " + usuario.getPost(post).getDataString() + ".");
-				usuario.atualizaPopularidade();
+				usuario.atualizaPops();
 			} else {
 				throw new LogicaException("Este usuario nao esta na sua lista de amigos.");
 			}
@@ -167,7 +164,7 @@ public class Controller {
 				this.usuarioLogado.setNome(novoValor);
 				break;
 			case EMAIL:
-				if (verificaEmailJaCadastrado(novoValor)) {
+				if (hasEmail(novoValor)) {
 					this.usuarioLogado.setEmail(novoValor);
 				} else {
 					throw new  EntradaException("Ja existe um usuarix com esse email.");
@@ -203,11 +200,11 @@ public class Controller {
 	}
 	
 	public void ordenaFeedPorData(){
-		//this.usuarioLogado.ordenaFeedPorData();
+		this.usuarioLogado.ordenaFeedPorData();
 	}
 	
 	public void ordenaFeedPorPopularidade(){
-		//this.usuarioLogado.ordenaFeedPorPopularidade();
+		this.usuarioLogado.ordenaFeedPorPopularidade();
 	}
 	
 	public void adicionaAmigo(String emailUserDestino) throws LogicaException {
@@ -229,7 +226,6 @@ public class Controller {
 			this.usuarioLogado.aceitaAmizade(userAceito);
 			userAceito.getAmigos().add(this.usuarioLogado);	
 			userAceito.recebeNotificacao(this.usuarioLogado.getNome() + " aceitou sua amizade.");
-			
 		} else {
 			throw new NaoSolicitouAmizadeException(userAceito.getNome() + " nao lhe enviou solicitacoes de amizade.");
 		}
@@ -331,6 +327,13 @@ public class Controller {
 		
 	}
 	
+ 	public String getPopularidade() {
+ 		return this.usuarioLogado.getPopularidade();
+ 	}
+	
+	public int getPops() {
+		return this.usuarioLogado.getPops();
+	}
 	public String getPost(String atributo, int post) { 
 		return this.usuarioLogado.getPost(atributo, post);
 	}
@@ -357,10 +360,16 @@ public class Controller {
 		return this.usuarioLogado.getSenha();
 	}
 	
+<<<<<<< HEAD
 	public void atualizaRanking() throws LogicaException {
 		//ranking = new Ranking();
 		
 		ranking.atualizaRanking(getUsuariosCadastrados());
+=======
+	public void setPops(int pop) {
+		this.usuarioLogado.setPops(pop);
+	}
+>>>>>>> ebec954a19aa6f1151a4165de3492aba67e97d11
 	
 	} // fecha ranking
 

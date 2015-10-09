@@ -73,12 +73,12 @@ public class Ranking {
 		String imprime = "Com mais Pop: \n";
 
 		for (int i = 0; i < comMaisPop.size(); i++) {
-			imprime += comMaisPop.get(i).getNome() + " " + comMaisPop.get(i).getPop() + "\n";
+			imprime += comMaisPop.get(i).getNome() + " " + comMaisPop.get(i).getPops() + "\n";
 		}
 		System.out.println();
 		imprime += "Com menos Pop: \n";
 		for (int i = 0; i < comMenosPop.size(); i++) {
-			imprime += comMenosPop.get(i).getNome() + " " + comMenosPop.get(i).getPop() + "\n";
+			imprime += comMenosPop.get(i).getNome() + " " + comMenosPop.get(i).getPops() + "\n";
 		}
 
 		return imprime;
