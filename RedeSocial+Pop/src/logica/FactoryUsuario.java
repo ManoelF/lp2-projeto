@@ -12,7 +12,7 @@ public class FactoryUsuario {
 
 	public Usuario criaUsuario(String nome, String email, String senha,
 			String nascimento, String imagem)
-			throws CadastroInvalidoException {
+			throws CadastroInvalidoException{
 
 		usuario = new Usuario(nome, email, senha, nascimento, imagem);
 		return usuario;

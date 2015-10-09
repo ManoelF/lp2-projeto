@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
 import exceptions.AtualizaPerfilException;
 import exceptions.CadastroEmailJaExistenteException;
 import exceptions.EntradaException;
@@ -16,7 +17,6 @@ import exceptions.PostException;
 import exceptions.SenhaIncorretaException;
 import exceptions.SenhaProtegidaException;
 import exceptions.UsuarioNaoCadastradoException;
-
 
 
 public class Controller {
@@ -38,6 +38,7 @@ public class Controller {
 		this.usuariosCadastrados = new ArrayList<Usuario>();
 		this.trendingTopics = new TrendingTopics();
 		this.ranking = new Ranking();
+
 
 	}
 	
@@ -190,9 +191,6 @@ public class Controller {
 		}
 	}
 
-	public void atualizaRanking() throws LogicaException {
-		this.ranking.atualizaRanking(this.usuariosCadastrados);
-	}
 	
 	public void atualizaFeed() {
 		this.usuarioLogado.atualizaFeed();	
@@ -363,9 +361,17 @@ public class Controller {
 		return this.usuarioLogado.getSenha();
 	}
 	
+	public void atualizaRanking() throws LogicaException {
+		//ranking = new Ranking();
+		
+		ranking.atualizaRanking(getUsuariosCadastrados());
+		trendingTopics.atualizaTrendingTopic();
+		
+	} // fecha ranking
+	
+
 	public void setPops(int pop) {
 		this.usuarioLogado.setPops(pop);
 	}
-	
 
 }

@@ -33,10 +33,9 @@ public class Usuario implements Comparable<Usuario> {
 	private List<Post> posts;
 	private Feed feed;
 	private Util util;
-	private Ranking rankingDoUsuario;
-	
 
 	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException {
+
  		this.util = Util.getInstancia();
 
 		if (nome == null || !util.verificaAtributo(nome)){
@@ -77,6 +76,8 @@ public class Usuario implements Comparable<Usuario> {
 		this.posts = new ArrayList<>();
 		this.feed = new Feed(this.amigos);
 		this.popularidade = new Normal();
+		
+	
 	}
  	
 
@@ -358,22 +359,17 @@ public class Usuario implements Comparable<Usuario> {
 		return result;
 	}
 
-	// PRECISA SER MELHORADO
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(Object objeto){
+		if(!(objeto instanceof Usuario)){
+			return false;
+		}
+		Usuario usuario = (Usuario) objeto;
+		if(usuario.getEmail().equals(this.getEmail())){
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		return true;
+		}
+		return false;
 	}
 	
+
 }

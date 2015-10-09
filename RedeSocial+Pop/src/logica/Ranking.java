@@ -18,6 +18,7 @@ public class Ranking {
 	private final int TAMANHO_MAXIMO = 3;
 
 	public Ranking() {
+
 		this.comparador = new OrdenaDecrescente();
 		comMaisPop = new ArrayList<Usuario>();
 		comMenosPop = new ArrayList<Usuario>();
