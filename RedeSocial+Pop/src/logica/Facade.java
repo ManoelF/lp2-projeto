@@ -46,6 +46,10 @@ public class Facade {
 		this.controller.atualizaPerfil(atributo, valor, velhaSenha);
 	}
 	
+	public String atualizaTrendingTopics() {
+		return this.controller.atualizaTrendingTopics();
+	}
+	
 	public void login(String email, String senha) throws LogicaException, EntradaException {
 		this.controller.login(email, senha);
 	}
