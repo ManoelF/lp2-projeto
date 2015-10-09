@@ -13,9 +13,9 @@ public class OrdenaDecrescente implements Comparator<Usuario> {
 	
 	@Override
 	public int compare(Usuario usuario, Usuario outroUsuario) {
-		if (usuario.getPop() > outroUsuario.getPop()) { 
+		if (usuario.getPops() > outroUsuario.getPops()) { 
 			return -1;
-		} else if (usuario.getPop() < outroUsuario.getPop()) { 
+		} else if (usuario.getPops() < outroUsuario.getPops()) { 
 			return 1;
 		} else {
 			return 0;

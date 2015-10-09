@@ -74,8 +74,8 @@ public class Facade {
 		this.controller.removeUsuario(usuario);
 	}
 	
-	public int getPop() { 
-		return this.controller.getPop();
+	public int getPops() { 
+		return this.controller.getPops();
 	}
 	
 	public String getPopularidade() {
@@ -138,8 +138,8 @@ public class Facade {
 		
 	}
 	
-	public void setPopularidade(int pop) {
-		this.controller.setPopularidade(pop);
+	public void setPops(int pop) {
+		this.controller.setPops(pop);
 	}
 	
 	public static void main(String[] args) {

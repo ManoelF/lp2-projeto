@@ -24,7 +24,7 @@ public class Usuario implements Comparable<Usuario> {
 	private LocalDate nascimento;
 	private String senha;
 	private String imagem;
-	private int pop;
+	private int pops;
 	private List<Usuario> amigos;
 	private List<String> solicitacaoAmizade;
 	private Deque<String> notificacoes;
@@ -69,7 +69,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
-		this.pop = 0;
+		this.pops = 0;
 		this.amigos = new ArrayList<>();
 		this.solicitacaoAmizade = new ArrayList<>();
 		this.notificacoes = new ArrayDeque<>();
@@ -127,19 +127,20 @@ public class Usuario implements Comparable<Usuario> {
 		this.popularidade.descurtir(post);
 	}
 	
-	private void atualizaPops() {
-		int pops = 0;
+	public void atualizaPops() {
+		int cont = 0;
 		for (Post post: posts) {
-			pops += post.getPopularidade();
+			cont += post.getPopularidade();
 		}
-		this.pop = pops;
+		this.pops += cont;
+
+		atualizaPopularidade();
 	}
 	
 	public void atualizaPopularidade() {
-		atualizaPops();
-		if( this.pop < 500) {
+		if( this.pops < 500) {
 			this.popularidade = new Normal();
-		} else if (this.pop > 500 && this.pop < 1000) {
+		} else if (this.pops >= 500 && this.pops < 1000) {
 			this.popularidade = new CelebridadePOP();
 		} else {
 			this.popularidade = new IconePOP();
@@ -196,8 +197,8 @@ public class Usuario implements Comparable<Usuario> {
 		return this.imagem;
 	}
 	
- 	public int getPop() {
- 		return this.pop;
+ 	public int getPops() {
+ 		return this.pops;
  	}
  	
  	public String getPopularidade() {
@@ -262,8 +263,8 @@ public class Usuario implements Comparable<Usuario> {
 		return this.solicitacaoAmizade;
 	}
 	
-	public void setPopularidade(int pop) {
-		this.pop += pop;
+	public void setPops(int pops) {
+		this.pops = pops;
 		atualizaPopularidade();
 	}
 	
@@ -327,9 +328,9 @@ public class Usuario implements Comparable<Usuario> {
 	
 	@Override
 	public int compareTo(Usuario outroUsuario) {
-		if (this.pop > outroUsuario.getPop()) {
+		if (this.pops > outroUsuario.getPops()) {
 			return 1;
-		} else if (this.pop == outroUsuario.getPop()) {
+		} else if (this.pops == outroUsuario.getPops()) {
 			return 0;
 		} else {
 			return -1;
