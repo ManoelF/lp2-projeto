@@ -37,6 +37,7 @@ public class Controller {
 		this.fabricaUsuario = new FactoryUsuario();
 		this.usuariosCadastrados = new ArrayList<Usuario>();
 		this.trendingTopics = new TrendingTopics();
+		this.ranking = new Ranking();
 
 	}
 	
@@ -192,11 +193,9 @@ public class Controller {
 		}
 	}
 
-	/////
-	public void atualizaRanking() {
-		this.ranking = new Ranking(usuariosCadastrados);
-//		this.usuarioLogado.atualizaRanking();
-	} // fecha ranking
+	public void atualizaRanking() throws LogicaException {
+		this.ranking.atualizaRanking(this.usuariosCadastrados);
+	}
 	
 	public void atualizaFeed() {
 		this.usuarioLogado.atualizaFeed();	
@@ -261,9 +260,9 @@ public class Controller {
 		usuarioRemover.removeAmigo(this.usuarioLogado);
 	}
 	
-/*	public List<Usuario> getUsuariosCadastrados(){
+	public List<Usuario> getUsuariosCadastrados(){
 		return this.usuariosCadastrados;	
-	}*/
+	}
 
 	public Usuario getUsuarioLogado(){
 		return this.usuarioLogado;

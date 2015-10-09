@@ -5,96 +5,83 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
 
+import exceptions.LogicaException;
 import logica.Usuario;
 import logica.ordenacao.OrdenaDecrescente;
 
-public class Ranking{
-	
+public class Ranking {
+
 	private List<Usuario> comMaisPop;
 	private List<Usuario> comMenosPop;
 	private Comparator<Usuario> comparador;
-	private List<Usuario> usuarios;
+	private List<Usuario> listaDeUsuarios;
 	private final int TAMANHO_MAXIMO = 3;
-	
-	public Ranking(List<Usuario> usuarios){
+
+	public Ranking() {
 		this.comparador = new OrdenaDecrescente();
-		this.usuarios = usuarios;
 		comMaisPop = new ArrayList<Usuario>();
-		comMenosPop = new ArrayList<Usuario>();	
-	} //fecha o cosntrutor
-	
+		comMenosPop = new ArrayList<Usuario>();
+	} // fecha o cosntrutor
 
 	public void ordenaCrescente(List<Usuario> usuarios) {
 		Collections.sort(usuarios);
 	}
-	
+
 	public void ordenaDecrescente(List<Usuario> usuarios) {
 		Collections.sort(usuarios, comparador);
 	}
-	
-	public void rankingUsuario(){
-		
-	}
 
+	public void atualizaRanking(List<Usuario> listaDeUsuarios) {
 
-	public void atualizaRanking() {
-ordenaCrescente(usuarios);
-		
+		ordenaDecrescente(listaDeUsuarios);
+
 		int cont = 0;
-		for (int i = 0; i < usuarios.size(); i++) {
-			if(usuarios.get(i) != null){
-				comMaisPop.add(usuarios.get(i));
+		for (int i = 0; i < listaDeUsuarios.size(); i++) {
+			if (listaDeUsuarios.get(i) != null) {
+				comMaisPop.add(listaDeUsuarios.get(i));
 				cont++;
 			}
-			if(cont == 3){
+			if (cont == 3) {
 				break;
-			}	
+			}
 		}
-		
-		if(usuarios.size() > TAMANHO_MAXIMO){
-			ordenaCrescente(usuarios);
-			ordenaDecrescente(usuarios);
-			
+
+		if (listaDeUsuarios.size() > TAMANHO_MAXIMO) {
+			ordenaCrescente(listaDeUsuarios);
+
 			int contador = 0;
-			for (int i = 0; i < usuarios.size() - TAMANHO_MAXIMO; i++) {
-				if(usuarios.get(i) != null){
-					comMenosPop.add(usuarios.get(i));
+			for (int i = 0; i < listaDeUsuarios.size() - TAMANHO_MAXIMO; i++) {
+				if (listaDeUsuarios.get(i) != null) {
+					comMenosPop.add(listaDeUsuarios.get(i));
 					contador++;
 				}
-				if(contador == 3){
+				if (contador == 3) {
 					break;
-				}else{
-					System.out.println("o tamanho da lista eh menor do que 3");
 				}
 			}
-			
-			/*for (int j = 0; j <  comMaisPop.size(); j++) {
-				System.out.println(comMaisPop.get(j).getNome() + " " + comMaisPop.get(j).getPop());
-			}
-			
-			for (int j = 0; j <  comMenosPop.size(); j++) {
-				System.out.println(comMenosPop.get(j).getNome() + " " + comMenosPop.get(j).getPop());
-			}*/
-			
+
+		} else{
+			System.out.println("o tamanho da lista eh menor do que 3");
 		}
-		
+
+		System.out.println(toString());
 	}
-	
-	
-	public String toString(){
-		String imprime = "";
-		
-		for(int i = 0; i < comMaisPop.size(); i++){
-			imprime += comMaisPop.get(i);
+
+	@Override
+	public String toString() {
+		String imprime = "Com mais Pop: \n";
+
+		for (int i = 0; i < comMaisPop.size(); i++) {
+			imprime += comMaisPop.get(i).getNome() + " " + comMaisPop.get(i).getPop() + "\n";
 		}
-	
-		for(int i = 0; i < comMenosPop.size(); i++){
-			imprime += comMenosPop.get(i);
-			}
-		
+		System.out.println();
+		imprime += "Com menos Pop: \n";
+		for (int i = 0; i < comMenosPop.size(); i++) {
+			imprime += comMenosPop.get(i).getNome() + " " + comMenosPop.get(i).getPop() + "\n";
+		}
+
 		return imprime;
-		
+
 	}
-		
-	
+
 } // fecha a classe ranking
