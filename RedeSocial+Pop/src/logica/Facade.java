@@ -114,8 +114,8 @@ public class Facade {
 		return this.controller.getQtdAmigos();
 	}
 	
-	public void atualizaRanking() {
-		
+	public void atualizaRanking() throws LogicaException {
+		this.controller.atualizaRanking();
 	}
 	
 	public void atualizaFeed() {
@@ -128,11 +128,6 @@ public class Facade {
 	
 	public void ordenaFeedPorPopularidade(){
 		
-	}
-	
-	/////	
-	public void atualizaRanked(){
-		controller.atualizaRanking();
 	}
 
 	public static void main(String[] args) {

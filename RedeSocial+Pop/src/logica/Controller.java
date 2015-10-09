@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import exceptions.CadastroEmailJaExistenteException;
-import exceptions.EntradaException;
-import exceptions.LogicaException;
-import exceptions.LoginException;
-import exceptions.SenhaIncorretaException;
 import exceptions.*;
 
 
@@ -28,7 +23,6 @@ public class Controller {
 	public Controller() {
 		this.fabricaUsuario = new FactoryUsuario();
 		this.usuariosCadastrados = new ArrayList<Usuario>();
-		this.ranking = new Ranking(usuariosCadastrados);
 	}
 	
 	public String cadastraUsuario(String nome, String email, String senha, 
@@ -318,9 +312,15 @@ public class Controller {
 	}
 	
 	/////
-	public void atualizaRanking() {
-		this.usuarioLogado.atualizaRanking();
+	public void atualizaRanking() throws LogicaException {
+		ranking = new Ranking();
+		
+		ranking.atualizaRanking(getUsuariosCadastrados());
 		
 		
 	} // fecha ranking
+
+
+	
+	
 }

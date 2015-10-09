@@ -35,7 +35,7 @@ public class Usuario implements Comparable<Usuario> {
 	private Ranking rankingDoUsuario;
 	
 	// Foi adicionado o throws ParseException, deve ser tratado
- 	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException {
+ 	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException{
  		this.util = Util.getInstancia();
 
 		if (nome == null || !util.verificaAtributo(nome)){
@@ -76,6 +76,8 @@ public class Usuario implements Comparable<Usuario> {
 		this.posts = new ArrayList<>();
 		this.feed = new Feed(this.amigos);
 		this.popularidade = new Normal();
+		
+	
 	}
  	
 	private void verificaEmail(String email) throws CadastroInvalidoException {
@@ -315,15 +317,11 @@ public class Usuario implements Comparable<Usuario> {
 	public List<Post> getFeed() {
 		return this.feed.getFeed();
 	}
-
-	/////////
-	public void atualizaRanking(){
-		this.rankingDoUsuario.atualizaRanking();
+	
+	public void setPop(int pop) {
+		this.pop = pop;
 	}
-	
-	
-	
-	@Override
+
 	public int compareTo(Usuario outroUsuario) {
 		if (this.pop > outroUsuario.getPop()) {
 			return 1;
