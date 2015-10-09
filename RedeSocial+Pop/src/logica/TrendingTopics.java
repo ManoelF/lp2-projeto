@@ -1,11 +1,12 @@
 package logica;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
 public class TrendingTopics {
-
+	private final String QUEBRA_LINHA = System.getProperty("line.separator");
 	
 	/*
 	 * Aqui será implementado a classe com a função de criar o trending topic, ou seja, o ranking das tres hashtags mais usadas
@@ -22,11 +23,11 @@ public class TrendingTopics {
 	 * 
 	 */
 	private HashMap<String, Integer> tagsUsadas;
-	private String trending; 
+	private List<String> trending;
 	
 	public TrendingTopics() {
 		this.tagsUsadas = new HashMap<>();
-		this.trending = "";
+		this.trending = new ArrayList<>();
 		
 	}
 	
@@ -56,13 +57,21 @@ public class TrendingTopics {
 					}
 				}
 			}
-			this.trending += maisUsada;
+			this.trending.add(maisUsada);
 			
 		}
 	}
 	
-	public String getTrendingTopicHashtag() {
+	
+	
+	public String atualizaTrendingTopic() {
 		buscaTagsMaisPopulares();
-		return this.trending;
+		String impressao = "Trending Topics " + QUEBRA_LINHA;
+		
+		for(String hashtag: this.trending) {
+			impressao += hashtag + QUEBRA_LINHA;
+		}
+		
+		return impressao;
 	}
 }
