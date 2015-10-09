@@ -26,6 +26,7 @@ public class Controller {
 	private Usuario usuarioLogado;
 	private TrendingTopics trendingTopics;
 	public Util util;
+	private Ranking ranking;
 	private static final String NOME = "Nome";
 	private static final String EMAIL = "E-mail";
 	private static final String NASCIMENTO = "Data de Nascimento";
@@ -36,6 +37,7 @@ public class Controller {
 		this.fabricaUsuario = new FactoryUsuario();
 		this.usuariosCadastrados = new ArrayList<Usuario>();
 		this.trendingTopics = new TrendingTopics();
+
 	}
 	
 	public String cadastraUsuario(String nome, String email, String senha, 
@@ -189,19 +191,12 @@ public class Controller {
 			this.usuarioLogado.setSenha(valor, velhaSenha);
 		}
 	}
-	
-	/*public String atualizaRanking() {
-	String atualiza = "";
-	for (int i = 0; i < ranked.comMaisX2p.length; i++) {
-		atualiza += ranked.comMaisX2p[i] + "\n";
-	}
-	for (int i = 0; i < ranked.comMenosX2p.length; i++) {
-		atualiza += ranked.comMenosX2p[i] + "\n";
-	}
-	
-	return atualiza;
-} // fecha ranking
-*/
+
+	/////
+	public void atualizaRanking() {
+		this.ranking = new Ranking(usuariosCadastrados);
+//		this.usuarioLogado.atualizaRanking();
+	} // fecha ranking
 	
 	public void atualizaFeed() {
 		this.usuarioLogado.atualizaFeed();	
@@ -357,4 +352,11 @@ public class Controller {
 		}
 		return null;
 	}
+	
+	public String getsenha(){
+		return this.usuarioLogado.getSenha();
+	}
+	
+	
+
 }
