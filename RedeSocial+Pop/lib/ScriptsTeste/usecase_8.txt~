@@ -1,0 +1,35 @@
+# ordem dos posts por data#
+# melody 1
+# meloddy 2
+# ines 1
+# ines 2
+# ines 3
+# ines 4
+# ines 5
+# ines 6
+
+
+
+iniciaSistema
+
+id1=cadastraUsuario nome="Melody" email="melodymusic@email.com.br" senha="umadiva" dataNasc="01/08/2007" imagem="resources/melody.jpg"
+id2=cadastraUsuario nome="Ines Brasil" email="inesbrasil@email.com" senha="deusehfiel" dataNasc="25/10/1969" imagem="resources/ines.jpg"
+id3=cadastraUsuario nome="MC Carol" email="carolgatinha@email.com" senha="ondaforte" dataNasc="05/07/1995" imagem="resources/mccarol.jpg"
+
+login email="melodymusic@email.com.br" senha="umadiva"
+criaPost mensagem="Falem bem ou falem mal, mas falem de mim. <audio>musicas/falemdemim.mp3</audio>" data="21/07/2015 12:20:00"
+criaPost mensagem="Vamos comer sanduiche da pao, minha gente?." data="22/07/2015 08:00:00"
+setPops "400"
+logout
+
+login email="inesbrasil@email.com" senha="deusehfiel"
+criaPost mensagem="alo alo alo voces sabem quem sou eu?? alo alo graças a deus. #mechama #euvou" data="22/07/2015 09:00:00"
+criaPost mensagem="uuui que delicia de musica <audio>musicas/makelove.mp3</audio> " data="22/07/2015 17:50:00"
+criaPost mensagem="poxa, de todo meu coracao, nao eh mole nao." data="23/07/2015 13:00:00"
+criaPost mensagem="a vida eh assim: vamo fazendo. porque deus disse 'faça por onde que eu te ajudarei'. entao vamobora fazendo... #dancando #pulando" data="01/08/2015 12:20:00"
+criaPost mensagem="cabeca pro lado corpinho pro outro. #vamodancando" data="03/08/2015 10:00:00"
+criaPost mensagem="ME CHAMA! Porque eu quero ir rapido assim oh. #sempreirmaos #sempreunidos #semprebrasil" data="25/08/2015 20:00:00"
+setPops "1100"
+logout
+
+fechaSistema
