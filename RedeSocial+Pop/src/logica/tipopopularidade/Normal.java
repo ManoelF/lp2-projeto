@@ -20,5 +20,9 @@ public class Normal implements TipoPopularidade  {
 	public int qntPostFeed() {
 		return this.qntPostFeed;
 	}
+	
+	public String popularidade() {
+		return "Normal Pop";
+	}
 
 }

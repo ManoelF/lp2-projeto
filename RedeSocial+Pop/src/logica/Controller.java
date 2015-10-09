@@ -331,6 +331,13 @@ public class Controller {
 		
 	}
 	
+ 	public String getPopularidade() {
+ 		return this.usuarioLogado.getPopularidade();
+ 	}
+	
+	public int getPop() {
+		return this.usuarioLogado.getPop();
+	}
 	public String getPost(String atributo, int post) { 
 		return this.usuarioLogado.getPost(atributo, post);
 	}
@@ -357,6 +364,9 @@ public class Controller {
 		return this.usuarioLogado.getSenha();
 	}
 	
+	public void setPopularidade(int pop) {
+		this.usuarioLogado.setPopularidade(pop);
+	}
 	
 
 }

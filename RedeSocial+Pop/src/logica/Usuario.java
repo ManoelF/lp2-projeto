@@ -199,6 +199,10 @@ public class Usuario implements Comparable<Usuario> {
  	public int getPop() {
  		return this.pop;
  	}
+ 	
+ 	public String getPopularidade() {
+ 		return this.popularidade.popularidade();
+ 	}
 
 	public Post getPost(int indice) {
  		return posts.get(indice);
@@ -256,6 +260,11 @@ public class Usuario implements Comparable<Usuario> {
 	
 	public List<String> getSolicitacaoAmizade(){
 		return this.solicitacaoAmizade;
+	}
+	
+	public void setPopularidade(int pop) {
+		this.pop += pop;
+		atualizaPopularidade();
 	}
 	
 	public void setNome(String novoNome) throws AtualizaPerfilException {

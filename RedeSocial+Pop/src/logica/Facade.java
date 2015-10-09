@@ -74,6 +74,14 @@ public class Facade {
 		this.controller.removeUsuario(usuario);
 	}
 	
+	public int getPop() { 
+		return this.controller.getPop();
+	}
+	
+	public String getPopularidade() {
+		return this.controller.getPopularidade();
+	}
+	
 	public void curtirPost(String amigo, int post) throws LogicaException {
 		this.controller.curtirPost(amigo, post);
 	}
@@ -131,8 +139,13 @@ public class Facade {
 		
 	}
 	
+	public void setPopularidade(int pop) {
+		this.controller.setPopularidade(pop);
+	}
+	
 	public static void main(String[] args) {
- 	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt", "lib/ScriptsTeste/usecase_4.txt"};
+ 	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt",
+ 	    						"lib/ScriptsTeste/usecase_4.txt", "lib/ScriptsTeste/usecase_5.txt"};
 	    EasyAccept.main(args);
 	}
 
