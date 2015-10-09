@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.Iterator;
 import java.util.List;
 
 import exceptions.AtualizaPerfilException;
@@ -232,6 +233,18 @@ public class Usuario implements Comparable<Usuario> {
 		} else {
 			return this.posts.get(post).getConteudoPost(indice);
 		}
+	}
+	
+	public List<Post> getPostsToFeed() {
+		List<Post> postsToFeed = new ArrayList();
+		Iterator<Post> iterator = this.posts.iterator();
+		
+		int contaPost = 0; 
+		while (iterator.hasNext() && contaPost < qntPostsFeed() ) {
+			postsToFeed.add( this.posts.get( getQtdPost() - contaPost ) );
+			contaPost++;
+		}
+		return postsToFeed;
 	}
 	
 	public int getNotificacoes() {

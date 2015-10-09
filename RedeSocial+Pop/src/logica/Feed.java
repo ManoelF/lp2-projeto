@@ -23,19 +23,13 @@ public class Feed  {
 
 	public List<Post> atualizaFeed() {
 		
-		int conta;
-		
 		for (Usuario amigo : this.amigos) {
 			
-			Collections.sort(amigo.getPosts());
-			Iterator<Post> iterator = amigo.getPosts().iterator();
-			int qnt = amigo.qntPostsFeed();
-			
-			conta = 0; 
-			while (iterator.hasNext() && conta < qnt) {
-				if (!this.feed.contains(amigo.getPosts().get(conta))) {
-					this.feed.add( amigo.getPosts().get(conta) );
-					conta++;
+			Collections.sort(amigo.getPostsToFeed());
+			for (Post post : amigo.getPostsToFeed()) {
+				
+				if (!this.feed.contains(post)) {
+					this.feed.add( post );
 				}
 			}		
 		} // encerra for
