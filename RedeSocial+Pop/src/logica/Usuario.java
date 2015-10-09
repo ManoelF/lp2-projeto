@@ -324,13 +324,6 @@ public class Usuario implements Comparable<Usuario> {
 	public List<Post> getFeed() {
 		return this.feed.getFeed();
 	}
-
-	/////////
-	public void atualizaRanking(){
-		this.rankingDoUsuario.atualizaRanking();
-	}
-	
-	
 	
 	@Override
 	public int compareTo(Usuario outroUsuario) {
