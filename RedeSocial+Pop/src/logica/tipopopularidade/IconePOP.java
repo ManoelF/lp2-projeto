@@ -22,4 +22,8 @@ public class IconePOP implements TipoPopularidade {
 	public int qntPostFeed() {
 		return this.qntPostFeed;
 	}
+	
+	public String popularidade() {
+		return "Icone Pop";
+	}
 }

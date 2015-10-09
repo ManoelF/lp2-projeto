@@ -10,4 +10,6 @@ public interface TipoPopularidade {
 	
 	public int qntPostFeed();
 	
+	public String popularidade();
+	
 }

@@ -129,10 +129,9 @@ public class Controller {
 			if (this.usuarioLogado.temAmigo(usuario)) {
 				this.usuarioLogado.curtir(usuario.getPost(post));
 				usuario.recebeNotificacao(this.usuarioLogado.getNome() + " curtiu seu post de " + usuario.getPost(post).getDataString() + ".");
-				usuario.atualizaPopularidade();
+				usuario.atualizaPops();
 			} else {
 				// Lancar excecao que usuario nao tem esse amigo
-				System.out.println(this.usuarioLogado.getAmigos().contains(usuario));
 				throw new LogicaException(amigo + " nao e seu amigo.");
 			}
 		}
@@ -147,7 +146,7 @@ public class Controller {
 			if (this.usuarioLogado.temAmigo(usuario)) {
 				this.usuarioLogado.descurtir(usuario.getPost(post));
 				usuario.recebeNotificacao(usuario.getNome() + " descurtiu seu post de " + usuario.getPost(post).getDataString() + ".");
-				usuario.atualizaPopularidade();
+				usuario.atualizaPops();
 			} else {
 				throw new LogicaException("Este usuario nao esta na sua lista de amigos.");
 			}
@@ -327,6 +326,13 @@ public class Controller {
 		
 	}
 	
+ 	public String getPopularidade() {
+ 		return this.usuarioLogado.getPopularidade();
+ 	}
+	
+	public int getPops() {
+		return this.usuarioLogado.getPops();
+	}
 	public String getPost(String atributo, int post) { 
 		return this.usuarioLogado.getPost(atributo, post);
 	}
@@ -353,6 +359,9 @@ public class Controller {
 		return this.usuarioLogado.getSenha();
 	}
 	
+	public void setPops(int pop) {
+		this.usuarioLogado.setPops(pop);
+	}
 	
 
 }
