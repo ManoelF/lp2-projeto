@@ -38,9 +38,9 @@ public class TesteTrendingTopics {
 	public void testaTrendingTopics(){
 		
 		try {
-			String hashtag = "Trending Topics: \n"
-					+ "(1) #ufcg \n"  
-					+ "(2) #acordarCedo \n" 
+			String hashtag = "Trending Topics:\n"
+					+ "(1) #ufcg\n"  
+					+ "(2) #acordarCedo\n" 
 					+ "(3) #preguiça";
 			
 			controller.login("jose@gmail.com", "1234");
@@ -58,6 +58,7 @@ public class TesteTrendingTopics {
 			controller.login("angela@gmail.com", "feliz123");
 			controller.criaPost("voltando para casa hoje eu fui assaltado #ufcg ", "01/08/2015 12:00:10");
 			controller.criaPost("hoje tenho que ir para a universidade #preguiça #ufcg #acordarCedo", "02/08/2015 12:00:10");
+
 			Assert.assertEquals(hashtag, controller.atualizaTrendingTopics());
 			
 		} catch (LogicaException | EntradaException e) {

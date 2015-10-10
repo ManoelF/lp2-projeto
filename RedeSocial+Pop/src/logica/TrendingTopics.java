@@ -24,19 +24,25 @@ public class TrendingTopics {
 	 */
 	private HashMap<String, Integer> tagsUsadas;
 	private List<String> trending;
+	private List<Usuario> usuarios;
 	
-	public TrendingTopics() {
+	public TrendingTopics(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 		this.tagsUsadas = new HashMap<>();
-		this.trending = new ArrayList<>();
+		
 		
 	}
 	
-	public void adicionaHashtag(List<String> hashtags) {
-		for (String tag: hashtags) {
-			if (this.tagsUsadas.containsKey(tag)) {
-				tagsUsadas.put(tag, tagsUsadas.get(tag) + 1 );
-			} else {
-				tagsUsadas.put(tag, 1);
+	public void adicionaHashtag() {
+		for (Usuario usuario: usuarios) {
+			for (Post post: usuario.getPosts()) {
+				for (String tag: post.getHashtags()) {
+					if (this.tagsUsadas.containsKey(tag)) {
+						tagsUsadas.put(tag, tagsUsadas.get(tag) + 1 );
+					} else {
+						tagsUsadas.put(tag, 1);
+					}
+				}
 			}
 		}
 	}
@@ -45,10 +51,9 @@ public class TrendingTopics {
 		Set<String> hashtags = this.tagsUsadas.keySet();
 		int cont = 0;
 		
-		int quantidade = 0;
-		String maisUsada = "";
-		
 		while (cont < 3) {
+			String maisUsada = "";
+			int quantidade = 0;
 			for (String tag: hashtags) {
 				if  (this.tagsUsadas.get(tag) >= quantidade) {
 					if (!trending.contains(tag)) {
@@ -57,19 +62,21 @@ public class TrendingTopics {
 					}
 				}
 			}
+			cont += 1;
 			this.trending.add(maisUsada);
-			
 		}
 	}
 	
 	
 	
 	public String atualizaTrendingTopic() {
+		this.trending = new ArrayList<>();
+		adicionaHashtag();
 		buscaTagsMaisPopulares();
-		String impressao = "Trending Topics " + QUEBRA_LINHA;
+		String impressao = "Trending Topics:";
 		
 		for(int i = 0; i < trending.size(); i++) {
-			impressao +="(" + (i+1) + ") " + trending.get(i) + QUEBRA_LINHA;
+			impressao +=  QUEBRA_LINHA + "(" + (i+1) + ") " + trending.get(i);
 		}
 		
 		return impressao;

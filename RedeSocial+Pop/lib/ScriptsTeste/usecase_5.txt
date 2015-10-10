@@ -1,6 +1,30 @@
 
 iniciaSistema
 
+id1=cadastraUsuario nome="Jesse" email="jesse@email.com.br" senha="cristal" dataNasc="17/09/1989" imagem="resources/jesse.jpg"
+id2=cadastraUsuario nome="Walt White" email="walt@email.com.br" senha="Heisenberg" dataNasc="17/09/1959" imagem="resources/walt.jpg"
+
+login email="jesse@email.com.br" senha="cristal"
+
+adicionaAmigo usuario="walt@email.com.br"
+
+criaPost  mensagem="Ou você foge das coisas ou as enfrenta. Toda a questão é aceitar, realmente, o que você é. #souQuemSou" data="10/08/2015 22:00:01"
+criaPost mensagem="Qual é a vantagem de ser um fora da lei quando se tem responsabilidades? #foraDaLei" data="11/08/2015 02:00:01"
+
+logout
+
+login email="walt@email.com.br" senha="Heisenberg"
+
+expect 1 getNotificacoes
+expect "Walt White quer sua amizade." getNextNotificacao
+
+aceitaAmizade usuario="jesse@email.com"
+
+
+
+
+
+
 login email="fafa_bernardes@email.com.br" senha="fafa_S2"
 
 expect 10 getPops
