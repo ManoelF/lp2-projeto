@@ -19,7 +19,9 @@ public class Post implements Comparable<Post> {
 	private List<String> hashtags;
 	private List<Midia> midias;
 	private Util util;
-	FactoryMidia fabricaMidia;
+	private FactoryMidia fabricaMidia;
+	private String autor;
+	
 
 	public Post(String texto, String data) throws PostException {
 		this.util = Util.getInstancia();
@@ -53,6 +55,7 @@ public class Post implements Comparable<Post> {
 		this.hashtags = util.encontraHashtag(texto);
 		this.midias = new ArrayList<>();
 		this.data = util.converteParaData(data);
+		this.autor = null;
 		
 		buscaMidia(texto);
 		verificaTam(texto);			
@@ -111,15 +114,15 @@ public class Post implements Comparable<Post> {
 			this.midias.add(this.fabricaMidia.obtemMidias(arquivo));
 		}
 	}
-	
-	public String getMidias() {
-		return this.midias.toString();
+		
+	public String getAutor(){
+		return this.autor;
 	}
 	
-	public String getMidias(int indice) {
-		return this.midias.get(indice).toString();
+	public void setAutor(String autorNome){
+		this.autor = autorNome;
 	}
-	
+
 	//Lançar excecao
 	public String getPost(String atributo) {
 		if (atributo.equals("Data")) {
@@ -164,6 +167,14 @@ public class Post implements Comparable<Post> {
 		
 	}		
 	
+	public List<Midia> getMidias() {
+		return this.midias;
+	}
+	
+	public String getMidias(int indice) {
+		return this.midias.get(indice).toString();
+	}
+
 	public String getDataString() {
 		if (this.data.getSecond() == 0) {
 			return this.data.toString().replace("T", " ") + ":00";
@@ -224,4 +235,5 @@ public class Post implements Comparable<Post> {
 	public int compareTo(Post outroPost) {
 		return this.data.compareTo(outroPost.getData());
 	}
+
 }

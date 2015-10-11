@@ -9,6 +9,7 @@ public class OrdenaDecrescente implements Comparator<Usuario> {
 
 	
 	public OrdenaDecrescente() {
+		
 	}
 	
 	@Override

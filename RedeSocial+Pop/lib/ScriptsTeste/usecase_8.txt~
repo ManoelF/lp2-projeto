@@ -1,35 +1,106 @@
-# ordem dos posts por data#
-# melody 1
-# meloddy 2
-# ines 1
-# ines 2
-# ines 3
-# ines 4
-# ines 5
-# ines 6
-
-
+###############
+#Caso de uso 8#
+###############
 
 iniciaSistema
 
 id1=cadastraUsuario nome="Melody" email="melodymusic@email.com.br" senha="umadiva" dataNasc="01/08/2007" imagem="resources/melody.jpg"
 id2=cadastraUsuario nome="Ines Brasil" email="inesbrasil@email.com" senha="deusehfiel" dataNasc="25/10/1969" imagem="resources/ines.jpg"
 id3=cadastraUsuario nome="MC Carol" email="carolgatinha@email.com" senha="ondaforte" dataNasc="05/07/1995" imagem="resources/mccarol.jpg"
+id4=cadastraUsuario nome="Debora" email="deboratdf@email.com" senha="falsetetop" dataNasc="02/04/1985" imagem="resources/debora.jpg"
+
 
 login email="melodymusic@email.com.br" senha="umadiva"
-criaPost mensagem="Falem bem ou falem mal, mas falem de mim. <audio>musicas/falemdemim.mp3</audio>" data="21/07/2015 12:20:00"
-criaPost mensagem="Vamos comer sanduiche da pao, minha gente?." data="22/07/2015 08:00:00"
+adicionaAmigo usuario="inesbrasil@email.com"
+adicionaAmigo usuario="deboratdf@email.com"
+adicionaAmigo usuario="carolgatinha@email.com"
+
+criaPost mensagem="Falem bem ou falem mal, mas falem de mim. <audio>musicas/falemdemim.mp3</audio>" data="21/08/2015 12:20:00"
+criaPost mensagem="Mais uma receitinha Melody... Sanduiche de pao pra vcs!" data="21/08/2015 19:00:00"
+criaPost mensagem="kkkkkk Debora, vamo mostrar cultura pra esse povo?" data="22/08/2015 08:00:00"
+
 setPops "400"
 logout
 
+
 login email="inesbrasil@email.com" senha="deusehfiel"
-criaPost mensagem="alo alo alo voces sabem quem sou eu?? alo alo graças a deus. #mechama #euvou" data="22/07/2015 09:00:00"
-criaPost mensagem="uuui que delicia de musica <audio>musicas/makelove.mp3</audio> " data="22/07/2015 17:50:00"
-criaPost mensagem="poxa, de todo meu coracao, nao eh mole nao." data="23/07/2015 13:00:00"
-criaPost mensagem="a vida eh assim: vamo fazendo. porque deus disse 'faça por onde que eu te ajudarei'. entao vamobora fazendo... #dancando #pulando" data="01/08/2015 12:20:00"
-criaPost mensagem="cabeca pro lado corpinho pro outro. #vamodancando" data="03/08/2015 10:00:00"
-criaPost mensagem="ME CHAMA! Porque eu quero ir rapido assim oh. #sempreirmaos #sempreunidos #semprebrasil" data="25/08/2015 20:00:00"
+adicionaAmigo usuario="carolgatinha@email.com"
+adicionaAmigo usuario="deboratdf@email.com"
+aceitaAmizade usuario="melodymusic@email.com.br"
+
+criaPost mensagem="alo alo alo voces sabem quem sou eu?? alo alo graças a deus. #mechama #euvou" data="22/08/2015 09:00:00"
+criaPost mensagem="uuui que delicia de musica <audio>musicas/makelove.mp3</audio>" data="22/08/2015 17:50:00"
+criaPost mensagem="a vida eh assim: vamo fazendo. porque deus disse 'faça por onde que eu te ajudarei'. entao vamobora fazendo... #dancando #pulando" data="25/08/2015 12:20:00"
+criaPost mensagem="cabeca pro lado, corpinho pro outro. #vamodancando" data="01/09/2015 10:00:00"
+criaPost mensagem="ME CHAMA! Porque eu quero ir rapido assim oh. #sempreirmaos #sempreunidos #semprebrasil" data="03/09/2015 20:00:00"
+
 setPops "1100"
 logout
 
+
+login email="carolgatinha@email.com" senha="ondaforte"
+adicionaAmigo usuario="deboratdf@email.com"
+aceitaAmizade usuario="melodymusic@email.com.br"
+aceitaAmizade usuario="inesbrasil@email.com"
+
+criaPost mensagem="Falar na cara ninguem quer, falar na cara ninguem gosta" data="23/08/2015 15:00:00"
+criaPost mensagem="So fala da minha vida quando a sua for exemplo" data="24/08/2015 13:46:00"
+criaPost mensagem="oh jorginho, me empresta a DOZE!" data="26/08/2015 09:00:00"
+criaPost mensagem="Enquanto uns ostentam cordoes, eu ostento refeicoes <imagem>imagem/mccarolgourmet.jpg</imagem> #gourmet" data="02/09/2015 21:00:00"
+
+setPops "600"
+logout
+
+
+
+login email="deboratdf@email.com" senha="falsetetop"
+aceitaAmizade usuario="carolgatinha@email.com"
+aceitaAmizade usuario="melodymusic@email.com.br"
+aceitaAmizade usuario="inesbrasil@email.com"
+
+
+##########################
+#Testa Ordenacao por Data#
+##########################
+
+
+atualizaFeed
+expect "Melody<p>Mais uma receitinha Melody... Sanduiche de pao pra vcs!<p>2015-08-21 19:00:00   Curtir(0) Rejeitar(0)" feedGetPost post="0"
+
+expect "Melody\nkkkkkk Debora, vamo mostrar cultura pra esse povo?\n2015-08-22 08:00:00   Curtir(0) Rejeitar(0)" feedGetPost post="1"
+
+expect "Ines Brasil\nalo alo alo voces sabem quem sou eu?? alo alo graças a deus.\n#mechama #euvou\n2015-08-22 09:00:00   Curtir(0) Rejeitar(0)" feedGetPost post="2"
+
+expect "Ines Brasil\nuuui que delicia de musica\n$arquivo_musica:musica/makelove.mp3\n2015-08-22 17:50:00   Curtir(0) Rejeitar(0)" feedGetPost post="3"
+
+expect "MC Carol\nFalar na cara ninguem quer, falar na cara ninguem gosta\n2015-08-23 15:00:00   Curtir(0) Rejeitar(0)" feedGetPost post="4"
+
+expect "MC Carol\nSo fala da minha vida quando a sua for exemplo\n2015-08-24 13:46:00   Curtir(0) Rejeitar(0)" feedGetPost post="5"
+
+expect "Ines Brasil\na vida eh assim: vamo fazendo. porque deus disse 'faça por onde que eu te ajudarei'. entao vamobora fazendo...\n#dancando #pulando\n2015-08-25 12:20:00   Curtir(0) Rejeitar(0)" feedGetPost post="6"
+
+expect "MC Carol\noh jorginho, me empresta a DOZE!\n2015-08-26 09:00:00   Curtir(0) Rejeitar(0)" feedGetPost post="7"
+
+expect "Ines Brasil\ncabeca pro lado, corpinho pro outro.\n#vamodancando\n2015-09-01 10:00:00   Curtir(0) Rejeitar(0)" feedGetPost post="8"
+
+expect "MC Carol\nEnquanto uns ostentam cordoes, eu ostento refeicoes\n$arquivo_imagem:imagem/mccarolgourmet.jpg\n#gourmet\n2015-09-02 21:00:00   Curtir(0) Rejeitar(0)" feedGetPost post="9"
+
+expect "Ines Brasil\nME CHAMA! Porque eu quero ir rapido assim oh.\n#sempreirmaos #sempreunidos #semprebrasil\n2015-09-03 20:00:00   Curtir(0) Rejeitar(0)" feedGetPost post="10"
+
+logout
+
 fechaSistema
+
+
+# ordem dos posts por data#
+# melody 2
+# meloddy 3
+# ines 1
+# ines 2
+# carol 1
+# carol 2
+# ines 3
+# carol 3
+# ines 4
+# carol 4
+# ines 5
