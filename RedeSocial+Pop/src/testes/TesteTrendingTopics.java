@@ -42,10 +42,13 @@ public class TesteTrendingTopics {
 					+ "(1) #ufcg\n"  
 					+ "(2) #acordarCedo\n" 
 					+ "(3) #preguiça";
+			Assert.assertEquals("Trending Topics:\n(1) \n(2) \n(3) ", controller.atualizaTrendingTopics());
 			
 			controller.login("jose@gmail.com", "1234");
 			controller.criaPost("volta as aulas #ufcg #acordarCedo" , "01/08/2015 12:00:10");
 			controller.logout();
+			
+			Assert.assertEquals("Trending Topics:\n(1) #acordarCedo\n(2) #ufcg\n(3) ", controller.atualizaTrendingTopics());
 			
 			controller.login("maria@gmail.com", "acordaMenina");
 			controller.criaPost("hoje eu nao vou estudar #preguiça #ufcg", "05/08/2015 12:00:10");
@@ -63,13 +66,7 @@ public class TesteTrendingTopics {
 			
 		} catch (LogicaException | EntradaException e) {
 			Assert.fail();
-			
-			
 		}
-		
-		
-		
-		
 	}
 	
 

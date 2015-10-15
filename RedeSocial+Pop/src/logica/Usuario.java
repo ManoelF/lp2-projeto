@@ -242,7 +242,7 @@ public class Usuario implements Comparable<Usuario> {
 	}
 	
 	public List<Post> getPostsToFeed() {
-		List<Post> postsToFeed = new ArrayList();
+		List<Post> postsToFeed = new ArrayList<>();
 		Iterator<Post> iterator = this.posts.iterator();
 		
 		int contaPost = 0; 
