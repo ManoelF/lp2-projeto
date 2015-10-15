@@ -152,7 +152,7 @@ public class Facade {
 	
 	public static void main(String[] args) {
  	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt",
- 	    						"lib/ScriptsTeste/usecase_4.txt", "lib/ScriptsTeste/usecase_5.txt", "lib/ScriptsTeste/usecase_8.txt"};
+ 	    						"lib/ScriptsTeste/usecase_4.txt", "lib/ScriptsTeste/usecase_6.txt", "lib/ScriptsTeste/usecase_8.txt"};
 	    EasyAccept.main(args);
 	}
 
