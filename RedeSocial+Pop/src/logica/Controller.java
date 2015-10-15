@@ -189,16 +189,15 @@ public class Controller {
 		}
 	}
 
-	public void atualizaFeed() {
+	public String atualizaFeed() {
 		this.usuarioLogado.atualizaFeed();
 		
 		StringBuffer feed = new StringBuffer();
-		//final String endOfLine = System.lineSeparator();
-		final String endOfLine = "\n";
+		final String endOfLine = " ";
 		
 		for (Post post : this.usuarioLogado.getFeed()) {
 			feed.append(endOfLine);
-			feed.append(post.getAutor());
+			feed.append(post.getAutor() +":");
 			feed.append(endOfLine);
 			
 			if (post.getMidias(0) != null || post.getMidias(0) != "") {
@@ -218,16 +217,15 @@ public class Controller {
 			feed.append(endOfLine);
 		}
 		feed.append(endOfLine);
-		feed.toString();
+		return feed.toString();
 	}
 	
-	public String feedGetPost(int i) {
+	public String getFeed(int i) {
 		Post post = this.usuarioLogado.getFeed().get(i);
 		StringBuffer postBuffer = new StringBuffer();
-		final String endOfLine = System.lineSeparator();
-		//final String endOfLine = "\n";
+		final String endOfLine = " ";
 		
-		postBuffer.append(post.getAutor());
+		postBuffer.append(post.getAutor() +":");
 		postBuffer.append(endOfLine);
 		
 		if (post.getMidias(0) != null || post.getMidias(0) != "") {
@@ -246,7 +244,7 @@ public class Controller {
 		postBuffer.append(post.getDataString() +"   "+ "Curtir("+ post.getLike() +") Rejeitar("+ post.getDeslike()+ ")");
 		return postBuffer.toString();
 	}
-	
+		
 	public void ordenaFeedPorData(){
 		this.usuarioLogado.ordenaFeedPorData();
 	}
@@ -373,11 +371,10 @@ public class Controller {
 		return this.usuarioLogado.getQtdAmigos();
 	}
 		
-	public String getPost(int indice) {
-		return this.usuarioLogado.getPost(indice).getPost();
-		
+	public Post getPost(int indice) {
+		return this.usuarioLogado.getPost(indice);//.getPost();
 	}
-	
+		
  	public String getPopularidade() {
  		return this.usuarioLogado.getPopularidade();
  	}
