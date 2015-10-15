@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
 import exceptions.AtualizaPerfilException;
 import exceptions.CadastroEmailJaExistenteException;
 import exceptions.EntradaException;
@@ -74,7 +73,6 @@ public class Controller {
 		this.usuariosCadastrados.remove(usuarioRemovido);
 		
 	} //fecha metodo
-	
 	
 	private boolean hasEmail(String email) {
 		for (Usuario usuario : usuariosCadastrados) {
@@ -191,9 +189,62 @@ public class Controller {
 		}
 	}
 
-	
 	public void atualizaFeed() {
-		this.usuarioLogado.atualizaFeed();	
+		this.usuarioLogado.atualizaFeed();
+		
+		StringBuffer feed = new StringBuffer();
+		//final String endOfLine = System.getProperty("line.separator");
+		final String endOfLine = "\n";
+		
+		for (Post post : this.usuarioLogado.getFeed()) {
+			feed.append(endOfLine);
+			feed.append(post.getAutor());
+			feed.append(endOfLine);
+			
+			if (post.getMidias(0) != null || post.getMidias(0) != "") {
+				feed.append(post.getMidias(0));
+				feed.append(endOfLine);								  }
+			if (post.getMidias().size() > 1) {
+				for (int j = 1; j < post.getMidias().size(); j++) {
+					feed.append(post.getMidias(j));
+					feed.append(endOfLine);	
+				}							 }
+			if (post.getPost("Hashtags").contains("#")) {
+				feed.append(post.getPost("Hashtags").replace(",", " "));
+				feed.append(endOfLine);
+			}
+			
+			feed.append(post.getDataString() +"   "+ "Curtir("+ post.getLike() +") Rejeitar("+ post.getDeslike()+ ")");
+			feed.append(endOfLine);
+		}
+		feed.append(endOfLine);
+		feed.toString();
+	}
+	
+	public String feedGetPost(int i) {
+		Post post = this.usuarioLogado.getFeed().get(i);
+		StringBuffer postBuffer = new StringBuffer();
+		//final String endOfLine = System.getProperty("line.separator");
+		final String endOfLine = "\n";
+		
+		postBuffer.append(post.getAutor());
+		postBuffer.append(endOfLine);
+		
+		if (post.getMidias(0) != null || post.getMidias(0) != "") {
+			postBuffer.append(post.getMidias(0));
+			postBuffer.append(endOfLine);						  }
+		if (post.getMidias().size() > 1) 						  {
+			for (int j = 1; j < post.getMidias().size(); j++) {
+				postBuffer.append(post.getMidias(j));
+				postBuffer.append(endOfLine);	
+			}													  }
+		if (post.getPost("Hashtags").contains("#")) {
+			postBuffer.append(post.getPost("Hashtags").replace(",", " "));
+			postBuffer.append(endOfLine);
+		}
+		
+		postBuffer.append(post.getDataString() +"   "+ "Curtir("+ post.getLike() +") Rejeitar("+ post.getDeslike()+ ")");
+		return postBuffer.toString();
 	}
 	
 	public void ordenaFeedPorData(){
@@ -232,7 +283,6 @@ public class Controller {
 		}
 	}
 
-	
 	public void rejeitaAmizade(String emailUserRecusado) throws LogicaException  {
 		Usuario userRecusado = pesquisaUsuario(emailUserRecusado);
 		
@@ -335,6 +385,7 @@ public class Controller {
 	public int getPops() {
 		return this.usuarioLogado.getPops();
 	}
+	
 	public String getPost(String atributo, int post) { 
 		return this.usuarioLogado.getPost(atributo, post);
 	}
@@ -369,7 +420,6 @@ public class Controller {
 		
 	} // fecha ranking
 	
-
 	public void setPops(int pop) {
 		this.usuarioLogado.setPops(pop);
 	}

@@ -21,7 +21,7 @@ public class Feed  {
  		this.amigos = amigos;
 	}
 
-	public List<Post> atualizaFeed() {
+	public void atualizaFeed() {
 		
 		for (Usuario amigo : this.amigos) {
 			
@@ -36,7 +36,6 @@ public class Feed  {
 		
 
 		Collections.sort(this.feed, this.tipoOrdenacao);
-		return feed;
 	}
 	
 	public void ordenaPorData() {

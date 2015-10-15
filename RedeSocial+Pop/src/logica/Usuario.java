@@ -80,7 +80,6 @@ public class Usuario implements Comparable<Usuario> {
 	
 	}
  	
-
 	private void verificaEmail(String email) throws CadastroInvalidoException {
 		if (email == null || email.equals("")) {
 			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
@@ -118,6 +117,7 @@ public class Usuario implements Comparable<Usuario> {
 
 	public void criaPost(String mensagem, String data) throws PostException {
 		Post novoPost = new Post(mensagem, data);
+		novoPost.setAutor(this.nome);
 		this.posts.add(novoPost);
 	}
 
@@ -246,8 +246,8 @@ public class Usuario implements Comparable<Usuario> {
 		Iterator<Post> iterator = this.posts.iterator();
 		
 		int contaPost = 0; 
-		while (iterator.hasNext() && contaPost < qntPostsFeed() ) {
-			postsToFeed.add( this.posts.get( getQtdPost() - contaPost ) );
+		while (iterator.hasNext() && contaPost < qntPostsFeed() && getQtdPost() != contaPost ) {
+			postsToFeed.add( this.posts.get( getQtdPost() - contaPost - 1 ) );
 			contaPost++;
 		}
 		return postsToFeed;
@@ -371,5 +371,4 @@ public class Usuario implements Comparable<Usuario> {
 		return false;
 	}
 	
-
 }
