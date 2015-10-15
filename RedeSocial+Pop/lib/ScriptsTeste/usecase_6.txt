@@ -78,6 +78,7 @@ login email="jesse@email.com.br" senha="cristal"
 expect "#pinkman,#epicwin" getPost atributo="Hashtags" post=2
 aceitaAmizade usuario="gus@email.com"
 expect 570 getPops
+expect "Eu sou o cara mau. <imagem>imagens/bad.jpg</imagem> #pinkman #epicwin (0015-06-23 01:30:02)" getPost post=2
 
 logout
 
@@ -87,3 +88,8 @@ expect "#preocupada,#epicfail" getPost atributo="Hashtags" post=1
 logout
 
 fechaSistema
+
+    At line 104: Expected <MC Carol: So fala da minha vida quando a sua for exemplo. #epicwin 2015-08-24 13:46:00   Curtir(3) Rejeitar(0)>,
+                  but was <MC Carol: So fala da minha vida quando a sua for exemplo.  #epicwin 2015-08-24 13:46:00   Curtir(3) Rejeitar(0)>
+   At line 105: Expected <MC Carol: oh jorginho, me empresta a DOZE! #epicwin 2015-08-26 09:00:00   Curtir(2) Rejeitar(0)>, but was <MC Carol: oh jorginho, me empresta a DOZE!  #epicwin 2015-08-26 09:00:00   Curtir(2) Rejeitar(0)>
+======================== 

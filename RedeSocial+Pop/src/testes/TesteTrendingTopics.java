@@ -1,19 +1,13 @@
 package testes;
 
-import static org.junit.Assert.*;
 import logica.Controller;
-import logica.Post;
-import logica.Usuario;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import exceptions.CadastroInvalidoException;
 import exceptions.EntradaException;
 import exceptions.LogicaException;
-import exceptions.PostException;
-import exceptions.RedeSocialMaisPopException;
 
 public class TesteTrendingTopics {
 
@@ -38,17 +32,14 @@ public class TesteTrendingTopics {
 	public void testaTrendingTopics(){
 		
 		try {
-			String hashtag = "Trending Topics:\n"
-					+ "(1) #ufcg\n"  
-					+ "(2) #acordarCedo\n" 
-					+ "(3) #preguiça";
-			Assert.assertEquals("Trending Topics:\n(1) \n(2) \n(3) ", controller.atualizaTrendingTopics());
+			String hashtag = "Trending Topics: (1) #ufcg (2) #acordarCedo (3) #preguiça";
+			Assert.assertEquals("Trending Topics: (1)  (2)  (3) ", controller.atualizaTrendingTopics());
 			
 			controller.login("jose@gmail.com", "1234");
 			controller.criaPost("volta as aulas #ufcg #acordarCedo" , "01/08/2015 12:00:10");
 			controller.logout();
 			
-			Assert.assertEquals("Trending Topics:\n(1) #acordarCedo\n(2) #ufcg\n(3) ", controller.atualizaTrendingTopics());
+			Assert.assertEquals("Trending Topics: (1) #acordarCedo (2) #ufcg (3) ", controller.atualizaTrendingTopics());
 			
 			controller.login("maria@gmail.com", "acordaMenina");
 			controller.criaPost("hoje eu nao vou estudar #preguiça #ufcg", "05/08/2015 12:00:10");

@@ -8,13 +8,13 @@ public class IconePOP implements TipoPopularidade {
 	
 	@Override
 	public void curtir(Post post) {
-		post.curtir(50);
+		post.curtir(POPS);
 		post.adicionaHashtag("#epicwin");
 	}
 
 	@Override
 	public void descurtir(Post post) {
-		post.descurtir(50);
+		post.descurtir(POPS);
 		post.adicionaHashtag("#epicfail");
 	}
 	

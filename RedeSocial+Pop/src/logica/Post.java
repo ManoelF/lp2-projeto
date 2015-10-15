@@ -98,7 +98,10 @@ public class Post implements Comparable<Post> {
 	}
 	
 	public void adicionaHashtag(String hashtag) {
-		this.hashtags.add(hashtag);
+		if (!hashtags.contains(hashtag)) {
+			this.hashtags.add(hashtag);
+			this.texto += " " + hashtag;
+		}
 	}
 	 			
 	private void buscaMidia(String mensagem) {
@@ -217,9 +220,12 @@ public class Post implements Comparable<Post> {
 			cont += 1;
 			hastags += hash;
 			if (cont < this.hashtags.size()) {
-				hastags += ",";
+				if (!hastags.equals("")) {
+					hastags += ",";
+				}
 			}
 		}
+		System.out.println(hastags);
 		return hastags;
 	}
 	

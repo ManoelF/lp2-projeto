@@ -76,7 +76,7 @@ public class TrendingTopics {
 		String impressao = "Trending Topics:";
 		
 		for(int i = 0; i < trending.size(); i++) {
-			impressao +=  QUEBRA_LINHA + "(" + (i+1) + ") " + trending.get(i);
+			impressao +=  " (" + (i+1) + ") " + trending.get(i);
 		}
 		
 		return impressao;
