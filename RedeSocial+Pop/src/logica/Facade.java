@@ -90,6 +90,10 @@ public class Facade {
 		this.controller.curtirPost(amigo, post);
 	}
 	
+	public void descurtirPost(String amigo, int post) throws LogicaException {
+		this.controller.descurtirPost(amigo, post);
+	}
+	
 	public void criaPost(String mensagem, String data) throws PostException {
 		this.controller.criaPost(mensagem, data);
 	}
@@ -147,12 +151,12 @@ public class Facade {
 	}
 	
 	public void setPops(int pop) {
-		this.controller.setPops(pop);
+		this.controller.setPops(pop);	
 	}
 	
 	public static void main(String[] args) {
  	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt",
- 	    						"lib/ScriptsTeste/usecase_4.txt", "lib/ScriptsTeste/usecase_6.txt", "lib/ScriptsTeste/usecase_8.txt"};
+ 	    						"lib/ScriptsTeste/usecase_4.txt", "lib/ScriptsTeste/usecase_6.txt"};//, "lib/ScriptsTeste/usecase_8.txt"};
 	    EasyAccept.main(args);
 	}
 
