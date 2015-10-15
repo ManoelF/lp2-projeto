@@ -1,8 +1,8 @@
 package testes;
 
-import junit.framework.Assert;
 import logica.Controller;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,7 +38,6 @@ public class TesteFeed {
 		controller.setPops(400);
 		controller.logout();
 
-
 		controller.login("inesbrasil@email.com", "deusehfiel");
 		controller.adicionaAmigo("carolgatinha@email.com");
 		controller.adicionaAmigo("deboratdf@email.com");
@@ -53,47 +52,58 @@ public class TesteFeed {
 		controller.setPops(1100);
 		controller.logout();
 
-
 		controller.login("carolgatinha@email.com", "ondaforte");
 		controller.adicionaAmigo("deboratdf@email.com");
 		controller.aceitaAmizade("melodymusic@email.com.br");
 		controller.aceitaAmizade("inesbrasil@email.com");
 
-		controller.criaPost("Falar na cara ninguem quer, falar na cara ninguem gosta", "23/08/2015 15:00:00");
-		controller.criaPost("Só fala da minha vida quando a sua for exemplo", "24/08/2015 13:46:00");
+		controller.criaPost("Falar na cara ninguem quer, falar na cara ninguem gosta.", "23/08/2015 15:00:00");
+		controller.criaPost("So fala da minha vida quando a sua for exemplo.", "24/08/2015 13:46:00");
 		controller.criaPost("oh jorginho, me empresta a DOZE!", "26/08/2015 09:00:00");
-		controller.criaPost("Enquanto uns ostentam cordoes, eu ostento refeicoes <imagem>imagem/mccarolgourmet.jpg</imagem> #gourmet","02/09/2015 21:00:00");
+		controller.criaPost("Enquanto uns ostentam cordoes, eu ostento refeicoes. <imagem>imagem/mccarolgourmet.jpg</imagem> #gourmet","02/09/2015 21:00:00");
 
 		controller.setPops(600);
 		controller.logout();
 
+		// TESTE ORDENACAO POR DATA
 		
 		controller.login("deboratdf@email.com", "falsetetop");
 		controller.aceitaAmizade("carolgatinha@email.com");
 		controller.aceitaAmizade("melodymusic@email.com.br");
 		controller.aceitaAmizade("inesbrasil@email.com");
 
+		controller.ordenaFeedPorData();
 		controller.atualizaFeed();
 				
 		Assert.assertEquals("Melody: Mais uma receitinha Melody... Sanduiche de pao pra vcs! 2015-08-21 19:00:00   Curtir(0) Rejeitar(0)", controller.getFeed(0));
 		Assert.assertEquals("Melody: kkkkkk Debora, vamo mostrar cultura pra esse povo? 2015-08-22 08:00:00   Curtir(0) Rejeitar(0)", controller.getFeed(1));
 		
+		
+		// TESTA ORDENACAO POR POPULARIDADE
+				
 		controller.curtirPost("carolgatinha@email.com", 0);
+		
 		controller.curtirPost("carolgatinha@email.com", 1);
+		controller.curtirPost("carolgatinha@email.com", 1);
+		controller.curtirPost("carolgatinha@email.com", 1);
+		controller.curtirPost("carolgatinha@email.com", 1);
+		
 		controller.curtirPost("carolgatinha@email.com", 2);
-		controller.curtirPost("melodymusic@email.com.br", 0);
-		controller.logout();
+		controller.curtirPost("carolgatinha@email.com", 2);
+		controller.curtirPost("carolgatinha@email.com", 2);
 		
-		controller.login("carolgatinha@email.com", "ondaforte");
-		System.out.println(controller.getPost(3).getLike());
-		controller.logout();
+		controller.curtirPost("carolgatinha@email.com", 3);
+		controller.curtirPost("carolgatinha@email.com", 3);
 		
-		controller.login("deboratdf@email.com", "falsetetop");
 		controller.ordenaFeedPorPopularidade();
-		System.out.println(controller.getFeed(0));
-		
-		
-		
+		controller.atualizaFeed();
+						
+		Assert.assertEquals("MC Carol: Falar na cara ninguem quer, falar na cara ninguem gosta. 2015-08-23 15:00:00   Curtir(1) Rejeitar(0)", controller.getFeed(3));
+		Assert.assertEquals("MC Carol: So fala da minha vida quando a sua for exemplo. 2015-08-24 13:46:00   Curtir(4) Rejeitar(0)", controller.getFeed(0));
+		Assert.assertEquals("MC Carol: oh jorginho, me empresta a DOZE! 2015-08-26 09:00:00   Curtir(3) Rejeitar(0)", controller.getFeed(1));
+		Assert.assertEquals("MC Carol: Enquanto uns ostentam cordoes, eu ostento refeicoes. $arquivo_imagem:imagem/mccarolgourmet.jpg #gourmet 2015-09-02 21:00:00   Curtir(2) Rejeitar(0)", controller.getFeed(2));
+		Assert.assertEquals("Melody: Mais uma receitinha Melody... Sanduiche de pao pra vcs! 2015-08-21 19:00:00   Curtir(0) Rejeitar(0)", controller.getFeed(4));
+		Assert.assertEquals("Melody: kkkkkk Debora, vamo mostrar cultura pra esse povo? 2015-08-22 08:00:00   Curtir(0) Rejeitar(0)", controller.getFeed(5));
 	}
 	
 }

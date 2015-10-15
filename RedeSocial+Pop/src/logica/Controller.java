@@ -371,8 +371,8 @@ public class Controller {
 		return this.usuarioLogado.getQtdAmigos();
 	}
 		
-	public Post getPost(int indice) {
-		return this.usuarioLogado.getPost(indice);//.getPost();
+	public String getPost(int indice) {
+		return this.usuarioLogado.getPost(indice).getPost();
 	}
 		
  	public String getPopularidade() {
