@@ -65,6 +65,7 @@ aceitaAmizade usuario="inesbrasil@email.com"
 
 
 atualizaFeed
+
 expect "Melody\nMais uma receitinha Melody... Sanduiche de pao pra vcs!\n2015-08-21 19:00:00   Curtir(0) Rejeitar(0)" feedGetPost post="0"
 
 expect "Melody\nkkkkkk Debora, vamo mostrar cultura pra esse povo?\n2015-08-22 08:00:00   Curtir(0) Rejeitar(0)" feedGetPost post="1"

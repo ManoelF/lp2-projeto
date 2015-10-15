@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 public class TrendingTopics {
-	private final String QUEBRA_LINHA = System.getProperty("line.separator");
+	private final String QUEBRA_LINHA = System.lineSeparator();
 	
 	/*
 	 * Aqui será implementado a classe com a função de criar o trending topic, ou seja, o ranking das tres hashtags mais usadas
