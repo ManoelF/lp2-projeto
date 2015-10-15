@@ -49,7 +49,7 @@ public class TesteFeed {
 		controller.criaPost("a vida eh assim: vamo fazendo. porque deus disse 'faça por onde que eu te ajudarei'. entao vamobora fazendo... #dancando #pulando", "25/08/2015 12:20:00");
 		controller.criaPost("cabeca pro lado, corpinho pro outro. #vamodancando", "01/09/2015 10:00:00");
 		controller.criaPost("ME CHAMA! Porque eu quero ir rapido assim oh. #sempreirmaos #sempreunidos #semprebrasil", "03/09/2015 20:00:00");
-
+		
 		controller.setPops(1100);
 		controller.logout();
 
@@ -75,8 +75,25 @@ public class TesteFeed {
 
 		controller.atualizaFeed();
 				
-		Assert.assertEquals("Melody\nMais uma receitinha Melody... Sanduiche de pao pra vcs!\n2015-08-21 19:00:00   Curtir(0) Rejeitar(0)", controller.feedGetPost(0));
-		Assert.assertEquals("Melody\nkkkkkk Debora, vamo mostrar cultura pra esse povo?\n2015-08-22 08:00:00   Curtir(0) Rejeitar(0)", controller.feedGetPost(1));
+		Assert.assertEquals("Melody: Mais uma receitinha Melody... Sanduiche de pao pra vcs! 2015-08-21 19:00:00   Curtir(0) Rejeitar(0)", controller.getFeed(0));
+		Assert.assertEquals("Melody: kkkkkk Debora, vamo mostrar cultura pra esse povo? 2015-08-22 08:00:00   Curtir(0) Rejeitar(0)", controller.getFeed(1));
+		
+		controller.curtirPost("carolgatinha@email.com", 0);
+		controller.curtirPost("carolgatinha@email.com", 1);
+		controller.curtirPost("carolgatinha@email.com", 2);
+		controller.curtirPost("melodymusic@email.com.br", 0);
+		controller.logout();
+		
+		controller.login("carolgatinha@email.com", "ondaforte");
+		System.out.println(controller.getPost(3).getLike());
+		controller.logout();
+		
+		controller.login("deboratdf@email.com", "falsetetop");
+		controller.ordenaFeedPorPopularidade();
+		System.out.println(controller.getFeed(0));
+		
+		
+		
 	}
 	
 }
