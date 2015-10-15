@@ -193,7 +193,7 @@ public class Controller {
 		this.usuarioLogado.atualizaFeed();
 		
 		StringBuffer feed = new StringBuffer();
-		//final String endOfLine = System.getProperty("line.separator");
+		//final String endOfLine = System.lineSeparator();
 		final String endOfLine = "\n";
 		
 		for (Post post : this.usuarioLogado.getFeed()) {
@@ -224,8 +224,8 @@ public class Controller {
 	public String feedGetPost(int i) {
 		Post post = this.usuarioLogado.getFeed().get(i);
 		StringBuffer postBuffer = new StringBuffer();
-		//final String endOfLine = System.getProperty("line.separator");
-		final String endOfLine = "\n";
+		final String endOfLine = System.lineSeparator();
+		//final String endOfLine = "\n";
 		
 		postBuffer.append(post.getAutor());
 		postBuffer.append(endOfLine);
