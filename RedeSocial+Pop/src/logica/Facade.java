@@ -98,7 +98,7 @@ public class Facade {
 		this.controller.criaPost(mensagem, data);
 	}
 	
-	public Post getPost(int post) {
+	public String getPost(int post) {
 		return this.controller.getPost(post);
 	}
 	
