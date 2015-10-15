@@ -25,8 +25,8 @@ public class Util {
 	        return INSTANCIA;  
     	}
      }
-
-	public List<String> getMidia(String mensagem) {
+   
+    public List<String> getMidia(String mensagem) {
 		List<String> arquivos = new ArrayList<>();
 		String tipoMidia = "$arquivo_";  			// variavel para concatenar o arquivo
 		char[] novaMsg = mensagem.toCharArray();	// transformando a mensagem em lista de char para poder iterar
@@ -55,7 +55,7 @@ public class Util {
 		}
 		return arquivos;
 	}
-	
+
 	public String encontraTexto(String texto) {
 		char[] novoTexto = texto.toCharArray();
 		String conteudo = "";
@@ -82,7 +82,6 @@ public class Util {
 			} else {
 				conteudo += caracter;
 			}
-			
 		}
 		return conteudo;
 	}
@@ -108,14 +107,12 @@ public class Util {
 			listaHashtags.add(hashtags[i]);
 			if (!hashtags[0].toString().equals("") && hashtags[i].charAt(0) != '#') {
 				throw new PostException("Nao eh possivel criar o post. As hashtags devem comecar com '#'. Erro na hashtag: '" + hashtags[i] + "'.");
-				
 			}
-			
 		}
 		
 		return listaHashtags;
 	}
-		
+	
 	public LocalDate recebeData(String data) {
 		String[] dataS = data.split("/");
 		int dia = Integer.parseInt(dataS[0]);
@@ -123,7 +120,7 @@ public class Util {
 		int ano = Integer.parseInt(dataS[2]);
 		return LocalDate.of(ano, mes, dia);
 	}
-
+	
 	public LocalDateTime converteParaData(String data) {
 	
 		String[] dataHora = data.split(" ");		
@@ -141,6 +138,7 @@ public class Util {
 	}
 
 	//VALIDACOES
+	
 	public boolean verificaEmail(String email) {
 		String validacaoNome = "^[a-zA-Z]{1}.+@[a-z]{2,}\\.[a-z]{2,4}(\\.[a-z]{2,3})*"; 
 		return email.matches(validacaoNome);
