@@ -462,6 +462,9 @@ public class TesteController {
 			controller.criaPost("Ou voce foge das coisas ou as enfrenta. Toda a questao eh aceitar, realmente, o que voce eh. #souQuemSou", "10/08/2015 22:00:01");
 			controller.criaPost("Qual e a vantagem de ser um fora da lei quando se tem responsabilidades? #foraDaLei", "11/08/2015 02:40:21");
 			Assert.assertTrue(0 == controller.getPops());
+			controller.setPops(481);
+			Assert.assertTrue(481 == controller.getPops());
+			System.out.println(controller.getPops());
 			controller.logout();
 		
 
@@ -473,8 +476,6 @@ public class TesteController {
 			Assert.assertEquals("Normal Pop", controller.getPopularidade());
 			controller.curtirPost("jesse@email.com.br", 0);
 			controller.curtirPost("jesse@email.com.br", 1);
-			//controller.curtirPost("jesse@email.com.br", 1);
-			//controller.curtirPost("jesse@email.com.br", 1);
 			controller.setPops(950);
 			Assert.assertTrue(950 == controller.getPops());
 			Assert.assertEquals("Celebridade Pop", controller.getPopularidade());
@@ -484,11 +485,9 @@ public class TesteController {
 
 
 			controller.login("jesse@email.com.br", "cristal");
-			controller.setPops(480);
-			Assert.assertTrue(480 == controller.getPops());
 			System.out.println(controller.getPops());
-			Assert.assertTrue(500 == controller.getPops());
-			Assert.assertEquals("Normal Pop", controller.getPopularidade());
+			Assert.assertTrue(501 == controller.getPops());
+			Assert.assertEquals("Celebridade Pop", controller.getPopularidade());
 			controller.criaPost("Eu sou o cara mau. <imagem>imagens/bad.jpg</imagem> #pinkman", "23/06/15 01:30:02");
 			controller.curtirPost("walt@email.com.br", 0);
 			controller.curtirPost("walt@email.com.br", 1);
