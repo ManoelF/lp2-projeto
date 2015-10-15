@@ -476,6 +476,7 @@ public class TesteController {
 			controller.curtirPost("jesse@email.com.br", 0);
 			controller.curtirPost("jesse@email.com.br", 1);
 			//controller.curtirPost("jesse@email.com.br", 1);
+			System.out.println(controller.getPops());
 			controller.setPops(950);
 			Assert.assertTrue(950 == controller.getPops());
 			Assert.assertEquals("Celebridade Pop", controller.getPopularidade());

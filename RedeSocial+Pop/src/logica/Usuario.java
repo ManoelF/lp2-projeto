@@ -136,7 +136,7 @@ public class Usuario implements Comparable<Usuario> {
 		for (Post post: posts) {
 			cont += post.getPopularidade();
 		}
-		//valorProvisorio = (- valorProvisorio + cont);
+		//valorProvisorio = (valorProvisorio - cont);
 		this.pops = cont + valorProvisorio;
 
 		atualizaPopularidade();
