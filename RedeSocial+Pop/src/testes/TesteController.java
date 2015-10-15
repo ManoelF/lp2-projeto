@@ -464,7 +464,6 @@ public class TesteController {
 			Assert.assertTrue(0 == controller.getPops());
 			controller.setPops(481);
 			Assert.assertTrue(481 == controller.getPops());
-			System.out.println(controller.getPops());
 			controller.logout();
 		
 
@@ -476,6 +475,7 @@ public class TesteController {
 			Assert.assertEquals("Normal Pop", controller.getPopularidade());
 			controller.curtirPost("jesse@email.com.br", 0);
 			controller.curtirPost("jesse@email.com.br", 1);
+			//controller.curtirPost("jesse@email.com.br", 1);
 			controller.setPops(950);
 			Assert.assertTrue(950 == controller.getPops());
 			Assert.assertEquals("Celebridade Pop", controller.getPopularidade());

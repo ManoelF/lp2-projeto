@@ -18,8 +18,8 @@ adicionaAmigo usuario="walt@email.com.br"
 criaPost  mensagem="Ou voce foge das coisas ou as enfrenta. Toda a questao eh aceitar, realmente, o que voce eh. #souQuemSou" data="10/08/2015 22:00:01"
 criaPost mensagem="Qual e a vantagem de ser um fora da lei quando se tem responsabilidades? #foraDaLei" data="11/08/2015 02:40:21"
 expect 0 getPops
-setPops pop=470
-expect 470 getPops
+setPops pop=481
+expect 481 getPops
 
 logout
 
@@ -41,7 +41,7 @@ logout
 
 login email="jesse@email.com.br" senha="cristal"
 expect "Celebridade Pop" getPopularidade
-expect 500 getPops
+expect 501 getPops
 criaPost  mensagem="Eu sou o cara mau. <imagem>imagens/bad.jpg</imagem> #pinkman" data="23/06/15 01:30:02"
 curtirPost amigo="walt@email.com.br" post=0
 curtirPost amigo="walt@email.com.br" post=1
