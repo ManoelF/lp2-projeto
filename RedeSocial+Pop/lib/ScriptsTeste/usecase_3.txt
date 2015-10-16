@@ -1,6 +1,6 @@
 iniciaSistema
 
-id1=cadastraUsuario nome="Nazare Tedesco" email="naza_foguete@hotmail.com" senha="belzinha" dataNasc="17/09/1962" imagem="resources/fatima.jpg"
+id1=cadastraUsuario nome="Nazare Te	desco" email="naza_foguete@hotmail.com" senha="belzinha" dataNasc="17/09/1962" imagem="resources/fatima.jpg"
 
 login email="naza_foguete@hotmail.com" senha="belzinha"
 criaPost mensagem="Eu nao sou preconceituosa, mais aqui esta cheio de anta nordestina. #anta #separa" data="01/08/2015 12:00:00"
