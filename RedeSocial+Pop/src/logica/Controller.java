@@ -130,7 +130,6 @@ public class Controller {
 				usuario.recebeNotificacao(this.usuarioLogado.getNome() + " curtiu seu post de " + usuario.getPost(post).getDataString() + ".");
 				usuario.atualizaPops();
 			} else {
-				// Lancar excecao que usuario nao tem esse amigo
 				throw new LogicaException(amigo + " nao e seu amigo.");
 			}
 		}

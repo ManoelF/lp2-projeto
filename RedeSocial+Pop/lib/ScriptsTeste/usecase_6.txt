@@ -18,8 +18,7 @@ adicionaAmigo usuario="walt@email.com.br"
 criaPost  mensagem="Ou voce foge das coisas ou as enfrenta. Toda a questao eh aceitar, realmente, o que voce eh. #souQuemSou" data="10/08/2015 22:00:01"
 criaPost mensagem="Qual e a vantagem de ser um fora da lei quando se tem responsabilidades? #foraDaLei" data="11/08/2015 02:40:21"
 expect 0 getPops
-setPops pop=481
-expect 481 getPops
+expect "Normal Pop" getPopularidade
 
 logout
 
@@ -40,8 +39,9 @@ criaPost  mensagem="Eu não estou em perigo, eu sou o perigo. #heisenberg" data=
 logout
 
 login email="jesse@email.com.br" senha="cristal"
+expect 20 getPops
+setPops pop=510
 expect "Celebridade Pop" getPopularidade
-expect 501 getPops
 criaPost  mensagem="Eu sou o cara mau. <imagem>imagens/bad.jpg</imagem> #pinkman" data="23/06/15 01:30:02"
 curtirPost amigo="walt@email.com.br" post=0
 curtirPost amigo="walt@email.com.br" post=1
@@ -59,6 +59,7 @@ logout
 
 login email="walt@email.com.br" senha="Heisenberg"
 aceitaAmizade usuario="skyler@email.com.br"
+setPops pop=1100
 expect "Icone Pop" getPopularidade
 criaPost  mensagem="Seu produto é um refrigerante sabor cola, generico e mal feito. O meu e Coca-Cola. Quer mesmo viver num mundo sem Coca-Cola?#cristal #Omelhor" data="30/09/2015 12:30:21"
 curtirPost amigo="jesse@email.com.br" post=2
@@ -75,9 +76,19 @@ expect "Normal Pop" getPopularidade
 logout
 
 login email="jesse@email.com.br" senha="cristal"
+aceitaAmizade usuario="gus@email.com"
+
+logout
+
+login email="gus@email.com" senha="polloshermanos"
+setPops pop=1001
+curtirPost amigo="jesse@email.com.br" post=2
+
+logout
+
+login email="jesse@email.com.br" senha="cristal"
 expect "#pinkman,#epicwin" getPost atributo="Hashtags" post=2
 aceitaAmizade usuario="gus@email.com"
-expect 570 getPops
 expect "Eu sou o cara mau. <imagem>imagens/bad.jpg</imagem> #pinkman #epicwin (0015-06-23 01:30:02)" getPost post=2
 
 logout
@@ -88,8 +99,3 @@ expect "#preocupada,#epicfail" getPost atributo="Hashtags" post=1
 logout
 
 fechaSistema
-
-    At line 104: Expected <MC Carol: So fala da minha vida quando a sua for exemplo. #epicwin 2015-08-24 13:46:00   Curtir(3) Rejeitar(0)>,
-                  but was <MC Carol: So fala da minha vida quando a sua for exemplo.  #epicwin 2015-08-24 13:46:00   Curtir(3) Rejeitar(0)>
-   At line 105: Expected <MC Carol: oh jorginho, me empresta a DOZE! #epicwin 2015-08-26 09:00:00   Curtir(2) Rejeitar(0)>, but was <MC Carol: oh jorginho, me empresta a DOZE!  #epicwin 2015-08-26 09:00:00   Curtir(2) Rejeitar(0)>
-======================== 

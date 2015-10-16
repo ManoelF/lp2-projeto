@@ -225,7 +225,6 @@ public class Post implements Comparable<Post> {
 				}
 			}
 		}
-		System.out.println(hastags);
 		return hastags;
 	}
 	
