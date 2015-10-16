@@ -409,11 +409,11 @@ public class Controller {
 		return this.usuarioLogado.getSenha();
 	}
 	
-	public void atualizaRanking() throws LogicaException {
+	public String atualizaRanking() throws LogicaException {
 		//ranking = new Ranking();
 		
-		ranking.atualizaRanking(getUsuariosCadastrados());
-		trendingTopics.atualizaTrendingTopic();
+		return ranking.atualizaRanking(getUsuariosCadastrados());
+	//	trendingTopics.atualizaTrendingTopic();
 		
 	} // fecha ranking
 	

@@ -32,7 +32,7 @@ public class Ranking {
 		Collections.sort(usuarios, comparador);
 	}
 
-	public void atualizaRanking(List<Usuario> listaDeUsuarios) {
+	public String atualizaRanking(List<Usuario> listaDeUsuarios) {
 
 		ordenaDecrescente(listaDeUsuarios);
 
@@ -65,20 +65,20 @@ public class Ranking {
 			System.out.println("o tamanho da lista eh menor do que 3");
 		}
 
-		System.out.println(toString());
+		return toString();
 	}
 
 	@Override
 	public String toString() {
-		String imprime = "Com mais Pop: \n";
+		String imprime = "Mais Populares: ";
 
 		for (int i = 0; i < comMaisPop.size(); i++) {
-			imprime += comMaisPop.get(i).getNome() + " " + comMaisPop.get(i).getPops() + "\n";
+			imprime += " (" + (i + 1) + ")" + comMaisPop.get(i).getNome() + " " + comMaisPop.get(i).getPops();
 		}
 		System.out.println();
-		imprime += "Com menos Pop: \n";
+		imprime += " | Menos Populares: ";
 		for (int i = 0; i < comMenosPop.size(); i++) {
-			imprime += comMenosPop.get(i).getNome() + " " + comMenosPop.get(i).getPops() + "\n";
+			imprime +=  " (" + (i + 1) + ")" + comMenosPop.get(i).getNome() + " " + comMenosPop.get(i).getPops() ;
 		}
 
 		return imprime;

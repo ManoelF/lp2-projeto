@@ -130,8 +130,8 @@ public class Facade {
 		return this.controller.getQtdAmigos();
 	}
 	
-	public void atualizaRanking() throws LogicaException {
-		this.controller.atualizaRanking();	
+	public String atualizaRanking() throws LogicaException {
+		return this.controller.atualizaRanking();	
 	}
 	
 	public void atualizaFeed() {
@@ -156,7 +156,7 @@ public class Facade {
 	
 	public static void main(String[] args) {
  	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt",
- 	    						"lib/ScriptsTeste/usecase_4.txt", "lib/ScriptsTeste/usecase_6.txt", "lib/ScriptsTeste/usecase_8.txt"};
+ 	    		             "lib/ScriptsTeste/usecase_4.txt","lib/ScriptsTeste/usecase_6.txt", "lib/ScriptsTeste/usecase_7.txt", "lib/ScriptsTeste/usecase_8.txt"};
 	    EasyAccept.main(args);
 	}
 
