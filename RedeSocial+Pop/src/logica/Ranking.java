@@ -75,7 +75,6 @@ public class Ranking {
 		for (int i = 0; i < comMaisPop.size(); i++) {
 			imprime += " (" + (i + 1) + ")" + comMaisPop.get(i).getNome() + " " + comMaisPop.get(i).getPops();
 		}
-		System.out.println();
 		imprime += " | Menos Populares: ";
 		for (int i = 0; i < comMenosPop.size(); i++) {
 			imprime +=  " (" + (i + 1) + ")" + comMenosPop.get(i).getNome() + " " + comMenosPop.get(i).getPops() ;
