@@ -1,0 +1,109 @@
+#################
+# Caso de Uso 7 #
+#################
+
+
+iniciaSistema
+
+
+id1=cadastraUsuario nome="Chico" email="chico@gmail.com.br" senha="chiquinho" dataNasc="11/01/1980" imagem="resources/chico.jpg"
+id2=cadastraUsuario nome="Marilene" email="marilene@gmail.com.br" senha="vinho123" dataNasc="05/02/1980" imagem="resources/marilene.jpg"
+id3=cadastraUsuario nome="Maiza" email="maiza@gmail.com.br" senha="adoromusica" dataNasc="15/06/2000" imagem="resources/maiza.jpg"
+id4=cadastraUsuario nome="Silvio" email="silvio@gmail.com.br" senha="televisao" dataNasc="12/12/1960" imagem="resources/silvio.jpg"
+id5=cadastraUsuario nome="Cassia" email="cassia@gmail.com.br" senha="musica456" dataNasc="24/04/1984" imagem="resources/cassia.jpg"
+
+
+login email="chico@gmail.com.br" senha="chiquinho"
+criaPost mensagem="mais um dia de aula! #UFCG #acorarCedo" data="04/08/2015 15:24:00"
+criaPost mensagem="so em pensar em ficar esperando 1hr na fila do ru, ja me da fome! #UFCG #EstouComFome" data="08/08/2015 12:30:00"
+
+
+adicionaAmigo usuario="marilene@gmail.com.br"
+adicionaAmigo usuario="maiza@gmail.com.br"
+adicionaAmigo usuario="silvio@gmail.com.br"
+adicionaAmigo usuario="cassia@gmail.com.br"
+expect 0 getPops
+setPops pop=1500
+expect 1500 getPops
+
+expect "Mais Populares:  (1)Chico 1500 (2)Walter White 1151 (3)Gustavo Finger 1003 | Menos Populares:  (1)Skyler White -50 (2)Nazare Tedesco 0 (3)Marilene 0" atualizaRanking
+
+logout
+
+
+
+login email="marilene@gmail.com.br" senha="vinho123"
+criaPost mensagem="adeus ferias!!! Ate nunca mais :( #cordarCedo #UFCG #minhaVida" data="03/08/2015 16:00:00"
+criaPost mensagem="de volta a rotina! #acordarCedo" data="06/08/2015 22:00:00"
+
+aceitaAmizade usuario="chico@gmail.com.br"
+adicionaAmigo usuario="maiza@gmail.com.br"
+adicionaAmigo usuario="silvio@gmail.com.br"
+adicionaAmigo usuario="cassia@gmail.com.br"
+
+expect 0 getPops
+setPops pop=1499
+expect 1499 getPops
+
+
+expect "Mais Populares:  (1)Chico 1500 (2)Marilene 1499 (3)Walter White 1151 | Menos Populares:  (1)Skyler White -50 (2)Nazare Tedesco 0 (3)Maiza 0" atualizaRanking
+
+logout
+
+
+login email="maiza@gmail.com.br" senha="adoromusica"
+criaPost mensagem="queria ter dinheiro pra comprar uma coxinha na cantinha, mas nao tenho!!! #minhaVida #EstouComFome" data="09/08/2015 23:16:00"
+criaPost mensagem="vou deixar de solidao! #minhaVida" data="01/08/2015 14:18:00"
+
+aceitaAmizade usuario="chico@gmail.com.br"
+aceitaAmizade usuario="marilene@gmail.com.br"
+adicionaAmigo usuario="silvio@gmail.com.br"
+adicionaAmigo usuario="cassia@gmail.com.br"
+
+expect 0 getPops
+setPops pop=200
+expect 200 getPops
+
+
+expect "Mais Populares:  (1)Chico 1500 (2)Marilene 1499 (3)Walter White 1151 | Menos Populares:  (1)Skyler White -50 (2)Nazare Tedesco 0 (3)Silvio 0" atualizaRanking
+
+
+logout
+
+
+login email="silvio@gmail.com.br" senha="televisao"
+criaPost mensagem="nao aguento mais esses vizinhos escutando Calypso, eu quero dormir!!! #sono #minhaVida" data="02/08/2015 08:09:00"
+
+aceitaAmizade usuario="chico@gmail.com.br"
+aceitaAmizade usuario="marilene@gmail.com.br"
+aceitaAmizade usuario="maiza@gmail.com.br"
+adicionaAmigo usuario="cassia@gmail.com.br"
+
+expect 0 getPops
+setPops pop=2000
+expect 2000 getPops
+
+
+expect "Mais Populares:  (1)Silvio 2000 (2)Chico 1500 (3)Marilene 1499 | Menos Populares:  (1)Skyler White -50 (2)Nazare Tedesco 0 (3)Cassia 0" atualizaRanking
+
+logout
+
+
+login email="cassia@gmail.com.br" senha="musica456"
+criaPost mensagem="Estou muito animada para as voltas as aulas #Sqn #UFCG #acordarCedo" data="04/08/2015 10:01:00"
+
+aceitaAmizade usuario="chico@gmail.com.br"
+aceitaAmizade usuario="marilene@gmail.com.br"
+aceitaAmizade usuario="maiza@gmail.com.br"
+aceitaAmizade usuario="silvio@gmail.com.br"
+
+expect 0 getPops
+setPops pop=2
+expect 2 getPops
+
+
+expect "Mais Populares:  (1)Silvio 2000 (2)Chico 1500 (3)Marilene 1499 | Menos Populares:  (1)Skyler White -50 (2)Nazare Tedesco 0 (3)Madonna 1" atualizaRanking
+
+logout
+
+fechaSistema
