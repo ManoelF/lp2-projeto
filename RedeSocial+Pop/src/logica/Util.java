@@ -55,7 +55,7 @@ public class Util {
 		}
 		return arquivos;
 	}
-
+//Verificar!!!
 	public String encontraTexto(String texto) {
 		char[] novoTexto = texto.toCharArray();
 		String conteudo = "";
@@ -76,7 +76,7 @@ public class Util {
 				
 			} else if (inicia) {
 				chave += caracter;
-			} else if (caracter == '#') {
+			} else if (caracter == '#' && conteudo.length() > 2) {
 				pos = cont;
 				return conteudo.substring(0, pos - 2);
 			} else {
@@ -104,7 +104,7 @@ public class Util {
 		
 		hashtags = novaHash.split(" ");
 		for (int i = 0; i < hashtags.length; i++) {
-			if(hashtags[i] != " ") {
+			if(hashtags[i] != " " && hashtags[i] != "") {
 				listaHashtags.add(hashtags[i]);
 			}
 			if (!hashtags[0].toString().equals("") && hashtags[i].charAt(0) != '#') {

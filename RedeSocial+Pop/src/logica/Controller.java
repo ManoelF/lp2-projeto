@@ -35,7 +35,7 @@ public class Controller {
 	public Controller() {
 		this.fabricaUsuario = new FactoryUsuario();
 		this.usuariosCadastrados = new ArrayList<Usuario>();
-		this.trendingTopics = new TrendingTopics(this.usuariosCadastrados);
+		this.trendingTopics = new TrendingTopics();
 		this.ranking = new Ranking();
 
 
@@ -114,8 +114,8 @@ public class Controller {
 	public void criaPost(String mensagem, String data) throws PostException {
 		this.usuarioLogado.criaPost(mensagem, data);
 		
-		//List<String> hashtags = this.usuarioLogado.getUltimoPost().getHashtags();
-		//addicionaTags(hashtags);
+		List<String> hashtags = this.usuarioLogado.getUltimoPost().getHashtags();
+		addicionaTags(hashtags);
 		
 	}
 	
@@ -390,9 +390,9 @@ public class Controller {
 		return this.usuarioLogado.getConteudoPost(indice, post);
 	}	
 
-	/*private void addicionaTags(List<String> tags) {
+	private void addicionaTags(List<String> tags) {
 		this.trendingTopics.adicionaHashtag(tags);
-	}*/
+	}
 
 	private Usuario pesquisaUsuario(String EmailInserido) {
 		

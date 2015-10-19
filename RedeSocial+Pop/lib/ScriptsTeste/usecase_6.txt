@@ -2,9 +2,23 @@
 #Caso de uso 6#
 ###############
 
+# Os POPs de um usuario dependem exclusivamente da popularidade de seus postes,
 # O metodo setPops esta sendo usado para verificar a mudança dinamica do tipo de usuario
 
 iniciaSistema
+
+login email="madonna@email.com" senha="iamawesome"
+criaPost  mensagem="Assistindo! :D #encontro" data="10/11/2015 08:30:12"
+expect 0 getPops
+setPops pop=10
+logout
+
+login email="naza_foguete@hotmail.com" senha="belzinha"
+criaPost  mensagem="Cade a animacao dessa rede? sou mais eu! #naza" data="11/08/2015 02:40:21"
+criaPost  mensagem="#soulinda #festa #naza" data="11/08/2015 02:40:21"
+expect 0 getPops
+setPops pop=15
+logout
 
 id1=cadastraUsuario nome="Jesse Pinkman" email="jesse@email.com.br" senha="cristal" dataNasc="17/09/1989" imagem="resources/jesse.jpg"
 id2=cadastraUsuario nome="Walter White" email="walt@email.com.br" senha="Heisenberg" dataNasc="10/01/1959" imagem="resources/walt.jpg"
@@ -16,7 +30,7 @@ id1=cadastraUsuario nome="Gustavo Finger" email="gus@email.com" senha="pollosher
 login email="jesse@email.com.br" senha="cristal"
 adicionaAmigo usuario="walt@email.com.br"
 criaPost  mensagem="Ou voce foge das coisas ou as enfrenta. Toda a questao eh aceitar, realmente, o que voce eh. #souQuemSou" data="10/08/2015 22:00:01"
-criaPost mensagem="Qual e a vantagem de ser um fora da lei quando se tem responsabilidades? #foraDaLei" data="11/08/2015 02:40:21"
+criaPost mensagem="Qual e a vantagem de ser um fora da lei quando se tem responsabilidades? #foraDaLei #souQuemSou" data="11/08/2015 02:40:21"
 expect 0 getPops
 expect "Normal Pop" getPopularidade
 
@@ -52,6 +66,7 @@ logout
 login email="skyler@email.com.br" senha="waltjr"
 rejeitaAmizade usuario="jesse@email.com.br"
 adicionaAmigo usuario="walt@email.com.br"
+adicionaAmigo usuario="gus@email.com"
 criaPost mensagem="A unica coisa que posso fazer e esperar. So isso. Essa eh a única opcao boa. Esperar, aguardar a minha hora… e esperar. #esperar" data="01/09/2015 16:45:21"
 criaPost mensagem="Alguem tem que proteger essa familia do homem que protege essa familia. #preocupada" data="01/09/2015 22:05:20"
 
@@ -68,6 +83,7 @@ descurtirPost amigo="skyler@email.com.br" post=1
 logout
 
 login email="gus@email.com" senha="polloshermanos"
+aceitaAmizade usuario="skyler@email.com.br"
 criaPost mensagem="Nunca cometa duas vezes o mesmo erro" data="01/09/2015 20:34:43"
 adicionaAmigo usuario="walt@email.com.br"
 adicionaAmigo usuario="jesse@email.com.br"
@@ -82,7 +98,8 @@ logout
 
 login email="gus@email.com" senha="polloshermanos"
 setPops pop=1001
-curtirPost amigo="jesse@email.com.br" post=2
+curtirPost amigo="jesse@email.com.br" post=1
+descurtirPost amigo="skyler@email.com.br" post=1
 
 logout
 
@@ -90,6 +107,8 @@ login email="jesse@email.com.br" senha="cristal"
 expect "#pinkman,#epicwin" getPost atributo="Hashtags" post=2
 aceitaAmizade usuario="gus@email.com"
 expect "Eu sou o cara mau. <imagem>imagens/bad.jpg</imagem> #pinkman #epicwin (0015-06-23 01:30:02)" getPost post=2
+expect "#pinkman,#epicwin" getPost atributo="Hashtags" post=2
+setPops pop=510
 
 logout
 

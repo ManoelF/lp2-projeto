@@ -1,13 +1,10 @@
 package logica;
 
-
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
 
-import exceptions.LogicaException;
 import logica.Usuario;
 import logica.ordenacao.OrdenaDecrescente;
 
@@ -16,7 +13,6 @@ public class Ranking {
 	private List<Usuario> comMaisPop;
 	private List<Usuario> comMenosPop;
 	private Comparator<Usuario> comparador;
-	private List<Usuario> listaDeUsuarios;
 	private final int TAMANHO_MAXIMO = 3;
 
 	public Ranking() {
@@ -34,7 +30,7 @@ public class Ranking {
 	}
 
 	public String atualizaRanking(List<Usuario> listaDeUsuarios) {
-
+		
 		comMaisPop = new ArrayList<Usuario>();
 		comMenosPop = new ArrayList<Usuario>();
 		
@@ -64,19 +60,12 @@ public class Ranking {
 					break;
 				}
 			}
-
-		
 		} 
-		System.out.println(toString());
-		/*else{
-			System.out.println("o tamanho da lista eh menor do que 3");
-		}*/
+		
 		String chamaMetodo;
 		chamaMetodo = toString();
 		
 		return chamaMetodo;
-
-	
 	}
 
 	@Override
@@ -86,8 +75,6 @@ public class Ranking {
 		for (int i = 0; i < comMaisPop.size(); i++) {
 			imprime += " (" + (i + 1) + ")" + comMaisPop.get(i).getNome() + " " + comMaisPop.get(i).getPops();
 		}
-		//System.out.println();
-		
 		
 		if(comMenosPop.size() != 0){
 			imprime += " | Menos Populares: ";
@@ -96,9 +83,7 @@ public class Ranking {
 			}
 		}
 		
-
 		return imprime;
-
 	}
 
 } // fecha a classe ranking

@@ -96,6 +96,9 @@ public class TestePost {
 			Assert.assertEquals("$arquivo_audio:musicas/poderosas.mp3", recalque.getMidias(1));
 			Assert.assertEquals("2015-08-01 21:35:00", frio.getPost("Data"));
 			
+			frio = new Post("#amor", data);
+			System.out.println(frio.getHashtags());
+			
 		} catch(EntradaException erro) {
 			Assert.fail();
 		}
