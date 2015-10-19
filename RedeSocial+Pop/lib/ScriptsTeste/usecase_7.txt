@@ -5,6 +5,7 @@
 
 iniciaSistema
 
+expect "Trending Topics: (1) #naza (2) #cafe (3) #alucicrazy" atualizaTrendingTopics
 
 id1=cadastraUsuario nome="Chico" email="chico@gmail.com.br" senha="chiquinho" dataNasc="11/01/1980" imagem="resources/chico.jpg"
 id2=cadastraUsuario nome="Marilene" email="marilene@gmail.com.br" senha="vinho123" dataNasc="05/02/1980" imagem="resources/marilene.jpg"
@@ -88,6 +89,8 @@ expect "Mais Populares:  (1)Silvio 2000 (2)Chico 1500 (3)Marilene 1499 | Menos P
 
 logout
 
+expect "Trending Topics: (1) #minhaVida (2) #separa (3) #SouMaisEu" atualizaTrendingTopics
+expect "Trending Topics: (1) #minhaVida (2) #separa (3) #SouMaisEu" atualizaTrendingTopics
 
 login email="cassia@gmail.com.br" senha="musica456"
 criaPost mensagem="Estou muito animada para as voltas as aulas #Sqn #UFCG #acordarCedo" data="04/08/2015 10:01:00"

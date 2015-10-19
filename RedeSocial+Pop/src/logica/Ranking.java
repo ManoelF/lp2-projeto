@@ -1,5 +1,7 @@
 package logica;
 
+
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -20,8 +22,7 @@ public class Ranking {
 	public Ranking() {
 
 		this.comparador = new OrdenaDecrescente();
-		comMaisPop = new ArrayList<Usuario>();
-		comMenosPop = new ArrayList<Usuario>();
+		
 	} // fecha o cosntrutor
 
 	public void ordenaCrescente(List<Usuario> usuarios) {
@@ -34,6 +35,9 @@ public class Ranking {
 
 	public String atualizaRanking(List<Usuario> listaDeUsuarios) {
 
+		comMaisPop = new ArrayList<Usuario>();
+		comMenosPop = new ArrayList<Usuario>();
+		
 		ordenaDecrescente(listaDeUsuarios);
 
 		int cont = 0;
@@ -61,11 +65,18 @@ public class Ranking {
 				}
 			}
 
-		} else{
+		
+		} 
+		System.out.println(toString());
+		/*else{
 			System.out.println("o tamanho da lista eh menor do que 3");
-		}
+		}*/
+		String chamaMetodo;
+		chamaMetodo = toString();
+		
+		return chamaMetodo;
 
-		return toString();
+	
 	}
 
 	@Override
@@ -75,10 +86,16 @@ public class Ranking {
 		for (int i = 0; i < comMaisPop.size(); i++) {
 			imprime += " (" + (i + 1) + ")" + comMaisPop.get(i).getNome() + " " + comMaisPop.get(i).getPops();
 		}
-		imprime += " | Menos Populares: ";
-		for (int i = 0; i < comMenosPop.size(); i++) {
-			imprime +=  " (" + (i + 1) + ")" + comMenosPop.get(i).getNome() + " " + comMenosPop.get(i).getPops() ;
+		//System.out.println();
+		
+		
+		if(comMenosPop.size() != 0){
+			imprime += " | Menos Populares: ";
+			for (int i = 0; i < comMenosPop.size(); i++) {
+				imprime +=  " (" + (i + 1) + ")" + comMenosPop.get(i).getNome() + " " + comMenosPop.get(i).getPops() ;
+			}
 		}
+		
 
 		return imprime;
 
