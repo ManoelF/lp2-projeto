@@ -494,7 +494,6 @@ public class TesteController {
 		
 		
 		} catch(RedeSocialMaisPopException erro) {
-			System.out.println(erro.getMessage());
 			Assert.fail();
 		}
 	}

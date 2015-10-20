@@ -30,6 +30,7 @@ public class Usuario implements Comparable<Usuario> {
 	private List<String> solicitacaoAmizade;
 	private Deque<String> notificacoes;
 	private TipoPopularidade popularidade;
+	private FactoryPost fabricaPost;
 	private List<Post> posts;
 	private Feed feed;
 	private Util util;
@@ -64,7 +65,6 @@ public class Usuario implements Comparable<Usuario> {
 			this.imagem = imagem;
 		}
 		
-		verificaEmail(email);
 		this.nascimento = util.recebeData(nascimento);
 		this.nome = nome;
 		this.email = email;
@@ -76,18 +76,8 @@ public class Usuario implements Comparable<Usuario> {
 		this.posts = new ArrayList<>();
 		this.feed = new Feed(this.amigos);
 		this.popularidade = new Normal();
-		
+		this.fabricaPost = new FactoryPost();
 	
-	}
- 	
-	private void verificaEmail(String email) throws CadastroInvalidoException {
-		if (email == null || email.equals("")) {
-			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
-		} else if (email.contains("@") && email.contains(".com")) {
-			this.email = email;
-		} else {
-			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
-		}
 	}
  	
 	public boolean temAmigo(Usuario usuario) {
@@ -116,7 +106,7 @@ public class Usuario implements Comparable<Usuario> {
 	}
 
 	public void criaPost(String mensagem, String data) throws PostException {
-		Post novoPost = new Post(mensagem, data);
+		Post novoPost = fabricaPost.criaPost(mensagem, data);
 		novoPost.setAutor(this.nome);
 		this.posts.add(novoPost);
 	}

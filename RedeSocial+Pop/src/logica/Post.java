@@ -1,12 +1,10 @@
 package logica;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.LogicaException;
 import exceptions.PostException;
-import logica.midia.Mensagem;
 import logica.midia.Midia;
 
 public class Post implements Comparable<Post> {
@@ -18,47 +16,20 @@ public class Post implements Comparable<Post> {
 	private int popularidade;
 	private List<String> hashtags;
 	private List<Midia> midias;
-	private Util util;
-	private FactoryMidia fabricaMidia;
 	private String autor;
 	
 
-	public Post(String texto, String data) throws PostException {
-		this.util = Util.getInstancia();
-		this.fabricaMidia = new FactoryMidia();
-
-		if (texto == null || texto.trim().length() == 0) {
-			// lancar Exception
-		}
-		
-		String[] dataHorario = data.split(" ");
-		String dataS = dataHorario[0];
-		String horaS = dataHorario[1];
-		
-		if (util.verificaFormatoData(dataS) == false) {
-			// lanca execao data formato invalido
-		}
-		if (util.verificaFormatoHora(horaS) == false) {
-			// lanca execao data formato invalido
-		}
-		if (util.verificaDataValida(dataS) == false) {
-			// lanca excecao data invalida
-		}
-		if (util.verificaHoraValida(horaS) == false) {
-			// lanca excecao data invalida
-		}
+	public Post(String texto, LocalDateTime data, List<String> hashtags, List<Midia> midias) throws PostException {
 
 		this.texto = texto;
 		this.popularidade = 0;
 		this.like = 0;
 		this.deslike = 0;
-		this.hashtags = util.encontraHashtag(texto);
-		this.midias = new ArrayList<>();
-		this.data = util.converteParaData(data);
+		this.hashtags = hashtags;
+		this.midias = midias;
+		this.data = data;
 		this.autor = null;
 		
-		buscaMidia(texto);
-		verificaTam(texto);			
 	}
 
 	public void curtir(int pontos) {
@@ -71,15 +42,7 @@ public class Post implements Comparable<Post> {
 		this.popularidade -= pontos;
 	}
 	
-	private void verificaTam(String texto) throws PostException {
-		String novoTexto = Util.getInstancia().encontraTexto(texto);
-		if (novoTexto.length() >= 200) {
-			throw new PostException("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.");
-		} else {
-			this.texto = texto;
-		}
-	}
-	
+		
 	public LocalDateTime getData() {
 		return this.data;
 	}
@@ -104,20 +67,6 @@ public class Post implements Comparable<Post> {
 		}
 	}
 	 			
-	private void buscaMidia(String mensagem) {
-		this.fabricaMidia = new FactoryMidia();
-		List<String> listMidias = util.getMidia(mensagem);
-		
-		Midia mensagem2 = new Mensagem(util.encontraTexto(mensagem));
-		if (!mensagem2.toString().equals("")) {
-			this.midias.add(mensagem2);
-		}
-		
-		for (String arquivo: listMidias) {
-			this.midias.add(this.fabricaMidia.obtemMidias(arquivo));
-		}
-	}
-		
 	public String getAutor(){
 		return this.autor;
 	}
