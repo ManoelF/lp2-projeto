@@ -12,7 +12,6 @@ import exceptions.LogicaException;
 public class TesteTrendingTopics {
 
 	private Controller controller = new Controller();
-	//Usuario user1, user2, user3, user4;
 	
 	
 	@Before
@@ -59,7 +58,5 @@ public class TesteTrendingTopics {
 			Assert.fail();
 		}
 	}
-	
-
 
 } // fecha a classe testeTrendingTopics

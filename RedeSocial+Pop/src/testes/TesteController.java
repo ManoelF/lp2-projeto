@@ -1,8 +1,6 @@
 package testes;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 import logica.*;
 import exceptions.*;
@@ -446,7 +444,7 @@ public class TesteController {
 			controller.logout();
 			
 		} catch (EntradaException | LogicaException e) {
-			e.printStackTrace();
+			Assert.fail();
 		}
 		
 	}

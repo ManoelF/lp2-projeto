@@ -134,32 +134,18 @@ public class Post implements Comparable<Post> {
 		return this.data.toString().replace("T", " ");
 	}
 		
-	private String getTexto() {
-		return texto;
-	}
+
 	
 	public void setTexto(String texto) {
 		this.texto = texto;
 	}
 
 	public int getLike() {
-		return like;
-	}
-
-	private void setLike(int like) {
-		this.like = like;
-	}
-
-	public int getDeslike() {
-		return deslike;
-	}
-
-	private void setDeslike(int deslike) {
-		this.deslike = deslike;
+		return this.like;
 	}
 	
-	private void setHashtags(List<String> hashtags) {
-		this.hashtags = hashtags;
+	public int getDeslike() {
+		return this.deslike;
 	}
 		
 	private String getHashtagsStr() {
@@ -181,10 +167,6 @@ public class Post implements Comparable<Post> {
 		return popularidade;
 	}
 
-	private void setPopularidade(int popularidade) {
-		this.popularidade = popularidade;
-	}
-	
 	@Override
 	public int compareTo(Post outroPost) {
 		return this.data.compareTo(outroPost.getData());

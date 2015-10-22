@@ -16,9 +16,6 @@ public class TesteRanking {
 	private Usuario use1, use2, use3, use4, use5, use6, use7, use8, use9;
 	
 	
-		//controller.cadastraUsuario("italo", "italo@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
-		//List<Usuario> listaDeUsuarios = controller.getUsuariosCadastrados();
-	
 	@Before
 	public void before() throws  EntradaException, LogicaException{
 
@@ -27,7 +24,7 @@ public class TesteRanking {
 			use2 = new Usuario("manoel", "manoel@gmail.com", "456", "20/10/1995", "resources/avatarDefaul.jpg");
 			use3 = new Usuario("chang", "chang@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
 			use4 = new Usuario("maria", "maria@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
-			use5= new Usuario("jose", "jose@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
+			use5 = new Usuario("jose", "jose@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
 			use6 = new Usuario("claudia", "claudia@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
 			use7 = new Usuario("felipe", "felipe@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
 			use8 = new Usuario("ana", "ana@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
@@ -73,7 +70,6 @@ public class TesteRanking {
 					
 					Assert.assertEquals(controller.getUsuariosCadastrados().size(), 9);
 				}
-			
 		
 	}// fecha test
 	
@@ -92,10 +88,5 @@ public class TesteRanking {
 						
 			controller.atualizaRanking();
 
-			/*for (int i = 0; i < controller.getUsuariosCadastrados().size(); i++) {
-				System.out.println( controller.getUsuariosCadastrados().get(i).getNome() + " " + controller.getUsuariosCadastrados().get(i).getPop());
-			}*/
-					
-	
 	} // fecha o test
 }
