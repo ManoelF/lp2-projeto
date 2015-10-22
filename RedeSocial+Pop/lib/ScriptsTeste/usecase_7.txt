@@ -13,7 +13,7 @@ id4=cadastraUsuario nome="Silvio" email="silvio@gmail.com.br" senha="televisao" 
 id5=cadastraUsuario nome="Cassia" email="cassia@gmail.com.br" senha="musica456" dataNasc="24/04/1984" imagem="resources/cassia.jpg"
 
 
-expect "Mais Populares:  (1)Walter White 1100 (2)Gustavo Finger 1001 (3)Jesse Pinkman 510 | Menos Populares:  (1)Skyler White -100 (2)Marilene 0 (3)Maiza 0" atualizaRanking
+expect "Mais Populares:  (1)Walter White 1100 (2)Gustavo Finger 1001 (3)Jesse Pinkman 510 | Menos Populares:  (1)Skyler White -100 (2)Maiza 0 (3)Marilene 0" atualizaRanking
 
 
 login email="marilene@gmail.com.br" senha="vinho123"

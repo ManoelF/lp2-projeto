@@ -130,7 +130,7 @@ public class Controller {
 				usuario.recebeNotificacao(this.usuarioLogado.getNome() + " curtiu seu post de " + usuario.getPost(post).getDataString() + ".");
 				usuario.atualizaPops();
 			} else {
-				throw new LogicaException(amigo + " nao e seu amigo.");
+				throw new LogicaException("Este usuario nao esta na sua lista de amigos.");
 			}
 		}
 	}
@@ -143,7 +143,7 @@ public class Controller {
 		} else {
 			if (this.usuarioLogado.temAmigo(usuario)) {
 				this.usuarioLogado.descurtir(usuario.getPost(post));
-				usuario.recebeNotificacao(usuario.getNome() + " descurtiu seu post de " + usuario.getPost(post).getDataString() + ".");
+				usuario.recebeNotificacao(this.usuarioLogado.getNome() + " descurtiu seu post de " + usuario.getPost(post).getDataString() + ".");
 				usuario.atualizaPops();
 			} else {
 				throw new LogicaException("Este usuario nao esta na sua lista de amigos.");

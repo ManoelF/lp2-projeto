@@ -439,11 +439,12 @@ public class TesteController {
 			controller.logout();
 			
 			controller.login("catpower@email.com", "sapatomica");
-//			Assert.assertTrue(controller.getNotificacoes() == 2);
-//			Assert.assertEquals("Cat Power descurtiu seu post de 2015-05-21 12:00:11.", controller.getNextNotificacao());
-//			Assert.assertEquals("Cat Power curtiu seu post de 2015-05-21 12:00:11.", controller.getNextNotificacao());
-		
-
+			Assert.assertTrue(controller.getNotificacoes() == 3);
+			Assert.assertEquals("Lana Del Rey aceitou sua amizade.", controller.getNextNotificacao());
+			Assert.assertEquals("Lana Del Rey curtiu seu post de 2015-05-21 12:00:11.", controller.getNextNotificacao());
+			Assert.assertEquals("Lana Del Rey descurtiu seu post de 2015-05-21 12:00:11.", controller.getNextNotificacao());
+			controller.logout();
+			
 		} catch (EntradaException | LogicaException e) {
 			e.printStackTrace();
 		}
