@@ -19,7 +19,7 @@ public class Ranking {
 
 		this.comparador = new OrdenaDecrescente();
 		
-	} // fecha o cosntrutor
+	} // fecha o construtor
 
 	public void ordenaCrescente(List<Usuario> usuarios) {
 		Collections.sort(usuarios);

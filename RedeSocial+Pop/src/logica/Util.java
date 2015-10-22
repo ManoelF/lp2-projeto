@@ -55,6 +55,7 @@ public class Util {
 		}
 		return arquivos;
 	}
+    
 //Verificar!!!
 	public String encontraTexto(String texto) {
 		char[] novoTexto = texto.toCharArray();
@@ -234,4 +235,6 @@ public class Util {
 		
 		return true;
 	}
+
+
 }
