@@ -1,5 +1,10 @@
 package testes;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import logica.Controller;
 import logica.Usuario;
 
@@ -14,6 +19,7 @@ public class TesteRanking {
 
 	private Controller controller = new Controller();
 	private Usuario use1, use2, use3, use4, use5, use6, use7, use8, use9;
+	private Comparator duasOrdens;
 	
 	
 	@Before
@@ -40,13 +46,13 @@ public class TesteRanking {
 			controller.cadastraUsuario(use8.getNome(), use8.getEmail(), use8.getSenha(), "20/10/1995", use8.getImagem());
 			controller.cadastraUsuario(use9.getNome(), use9.getEmail(), use9.getSenha(), "20/10/1995", use9.getImagem());
 			
+			this.duasOrdens = new DuasOrdenacoes();
 			
 		} catch(LogicaException erro){
 			Assert.fail();
 		}
 		
 	}
-	
 	
 	@Test
 	public void testRanking(){
@@ -89,4 +95,27 @@ public class TesteRanking {
 			controller.atualizaRanking();
 
 	} // fecha o test
+	
+	@Test
+	public void testeOrdemAlfabetica() {
+
+		List<Usuario> ranking = controller.getUsuariosCadastrados();
+		for (int i = 0; i < ranking.size() - 2 ; i++) {
+			ranking.get(i).setPops(i * 50);
+		} // fecha for
+		
+		Collections.sort(ranking);
+		for (Usuario usuario : ranking) {
+			System.out.println(usuario.getNome() + "-" + usuario.getPops()+ "\n");
+		}
+		
+		System.out.println("------\n");
+		
+		Collections.sort(ranking, this.duasOrdens);
+		for (Usuario usuario : ranking) {
+			System.out.println(usuario.getNome() + "-" + usuario.getPops()+ "\n");
+		}
+	}
+	
+
 }

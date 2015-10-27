@@ -1,69 +1,34 @@
 package logica;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeMap;
 
 public class TrendingTopics {
 	
+	/*
+	 * Aqui será implementado a classe com a função de criar o trending topic, ou seja, o ranking das tres hashtags mais usadas
+	 * 
+	 * Inicialmente pensei em um contrutor que receberia a lista de usuários cadastrados e apartir dela fazer toda a buscas das
+	 * hashtags usadas nos posts dos usuarios.
+	 * 
+	 * Estrutura para armazenar os dados, HashMap onde irá mapear hashtag-quantidade, que vai pegar todos os posts
+	 * do usuario e adicionar a hashtag no mapa, e a medida que for iterando fará a verificação se essa hashtag está no
+	 * dicionari se sim incrementa mais um na quantidade, se não acrescenta a hashtage e um na quantidade.
+	 * 
+	 * Por fim, fara uma busca procurando as hashtags que tem a maior quantidade. Tendo essa informação, usaremos o string Buffer
+	 * para fazer a concatenação no formato desejado.
+	 * 
+	 */
 	private HashMap<String, Integer> tagsUsadas;
 	private List<String> trending;
-	private TreeMap<Integer, List<String>> hashes;
 	
 	public TrendingTopics() {
 		this.tagsUsadas = new HashMap<>();
 		this.trending = new ArrayList<>();
-		this.hashes = new TreeMap<>();
 	}
 	
-/*	private void buscaTagsMaisPopulares() {
-		
-		for (int i = qntVezesMax(); i > 0; i--) {
-			
-			List<String> tagsMesmaQuant = new ArrayList<>();
-			
-			for (String tag : tagsUsadas.keySet()) {
-				if (this.tagsUsadas.get(tag) == i) {
-					tagsMesmaQuant.add(tag);
-				}
-			Collections.sort(tagsMesmaQuant);
-			hashes.put(i, tagsMesmaQuant);
-			} // fecha for interno
-			
-		} // fecha for externo
-
-		
-	}
-	
-	private int qntVezesMax() {
-		int valorMax = 0;
-		Set<String> hashtags = this.tagsUsadas.keySet();
-		
-		for (String tag: hashtags) {
-			
-			int quant = tagsUsadas.get(tag);
-			if (quant > valorMax) {
-				valorMax = quant;
-			}
-		}
-		return valorMax;
-	}
-
-	private void pegaTresTags() {
-		this.trending = new ArrayList<>();
-						
-		for (Integer value : this.hashes.keySet()) {
-			if(this.trending.size() >= 3) {
-				break;
-			} else {
-				this.trending.addAll(this.hashes.get(value));
-			}
-		}
-		
-	}*/
 	
 	private void buscaTagsMaisPopulares() {
 		Set<String> hashtags = this.tagsUsadas.keySet();
@@ -85,11 +50,17 @@ public class TrendingTopics {
 		}
 	}
 	
-	public String atualizaTrendingTopic() {
-		buscaTagsMaisPopulares();
-		//pegaTresTags();
 	
-		return toString();
+	
+	public String atualizaTrendingTopic() {
+		this.trending = new ArrayList<>();
+		buscaTagsMaisPopulares();
+		String impressao = "Trending Topics:";
+		
+		for(int i = 0; i < trending.size(); i++) {
+			impressao +=  " (" + (i+1) + ") " + trending.get(i);
+		}
+		return impressao;
 	}
 	
 	public void adicionaHashtag(List<String> hashtags) {
@@ -100,14 +71,5 @@ public class TrendingTopics {
 				tagsUsadas.put(tag, 1);
 			}
 		}
-	}
-	
-	public String toString() {
-		String impressao = "Trending Topics:";
-		
-		for(int i = 0; i < trending.size() || i < 3; i++) {
-			impressao +=  " (" + (i+1) + ") " + trending.get(i);
-		}
-		return impressao;
 	}
 }
