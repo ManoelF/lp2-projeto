@@ -55,6 +55,7 @@ public class Util {
 		}
 		return arquivos;
 	}
+    
 //Verificar!!!
 	public String encontraTexto(String texto) {
 		char[] novoTexto = texto.toCharArray();
@@ -139,6 +140,18 @@ public class Util {
 		return LocalDateTime.of(ano, mes, dia, hora, min, seg);
 	}
 
+	public List<Tag> converteParaTag(List<String> hashtags) {
+		
+		List<Tag> tags = new ArrayList<>();
+		Tag tag;
+		for (String hashtag : hashtags) {
+			tag = new Tag(hashtag);
+			tags.add(tag);
+		}
+		
+		return tags;
+	}
+	
 	//VALIDACOES
 	
 	public boolean verificaEmail(String email) {
@@ -234,4 +247,6 @@ public class Util {
 		
 		return true;
 	}
+
+
 }

@@ -19,7 +19,7 @@ public class Ranking {
 
 		this.comparador = new OrdenaDecrescente();
 		
-	} // fecha o cosntrutor
+	} // fecha o construtor
 
 	public void ordenaCrescente(List<Usuario> usuarios) {
 		Collections.sort(usuarios);
@@ -38,10 +38,8 @@ public class Ranking {
 
 		int cont = 0;
 		for (int i = 0; i < listaDeUsuarios.size(); i++) {
-			if (listaDeUsuarios.get(i) != null) {
-				comMaisPop.add(listaDeUsuarios.get(i));
-				cont++;
-			}
+			comMaisPop.add(listaDeUsuarios.get(i));
+			cont++;
 			if (cont == 3) {
 				break;
 			}
@@ -52,10 +50,8 @@ public class Ranking {
 
 			int contador = 0;
 			for (int i = 0; i < listaDeUsuarios.size() - TAMANHO_MAXIMO; i++) {
-				if (listaDeUsuarios.get(i) != null) {
-					comMenosPop.add(listaDeUsuarios.get(i));
-					contador++;
-				}
+				comMenosPop.add(listaDeUsuarios.get(i));
+				contador++;
 				if (contador == 3) {
 					break;
 				}
