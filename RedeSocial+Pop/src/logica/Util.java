@@ -140,6 +140,18 @@ public class Util {
 		return LocalDateTime.of(ano, mes, dia, hora, min, seg);
 	}
 
+	public List<Tag> converteParaTag(List<String> hashtags) {
+		
+		List<Tag> tags = new ArrayList<>();
+		Tag tag;
+		for (String hashtag : hashtags) {
+			tag = new Tag(hashtag);
+			tags.add(tag);
+		}
+		
+		return tags;
+	}
+	
 	//VALIDACOES
 	
 	public boolean verificaEmail(String email) {
