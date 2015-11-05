@@ -115,12 +115,8 @@ public class Controller {
 		this.usuarioLogado.criaPost(mensagem, data);
 		
 		List<String> hashtags = this.usuarioLogado.getUltimoPost().getHashtags();
-		popularizaTrending(hashtags);
-	}
-	
-	private void popularizaTrending(List<String> hashtags){
-		List<Tag> tags = util.converteParaTag(hashtags);
-		this.trendingTopics.adicionaTag(tags);
+		addicionaTags(hashtags);
+		
 	}
 	
 	public void curtirPost(String amigo, int post) throws LogicaException {
@@ -393,6 +389,10 @@ public class Controller {
 	public String getConteudoPost(int indice, int post) throws LogicaException, PostException {
 		return this.usuarioLogado.getConteudoPost(indice, post);
 	}	
+
+	private void addicionaTags(List<String> tags) {
+		this.trendingTopics.adicionaHashtag(tags);
+	}
 
 	private Usuario pesquisaUsuario(String EmailInserido) {
 		

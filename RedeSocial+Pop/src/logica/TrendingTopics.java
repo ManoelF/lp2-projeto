@@ -1,7 +1,6 @@
 package logica;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -22,20 +21,32 @@ public class TrendingTopics {
 	 * para fazer a concatenação no formato desejado.
 	 * 
 	 */
-	
-	private List<Tag> trending;
-	private List<Tag> tagsNaRede;
+	private HashMap<String, Integer> tagsUsadas;
+	private List<String> trending;
 	
 	public TrendingTopics() {
+		this.tagsUsadas = new HashMap<>();
 		this.trending = new ArrayList<>();
-		this.tagsNaRede = new ArrayList<>();
 	}
 	
 	
-	private void buscaTagsMaisPopulares() {		
-		Collections.sort(this.tagsNaRede);
-		for (int i = 0; i < 3; i++) {
-			this.trending.add(this.tagsNaRede.get(i));
+	private void buscaTagsMaisPopulares() {
+		Set<String> hashtags = this.tagsUsadas.keySet();
+		int cont = 0;
+		
+		while (cont < 3) {
+			String maisUsada = "";
+			int quantidade = 0;
+			for (String tag: hashtags) {
+				if  (this.tagsUsadas.get(tag) >= quantidade) {
+					if (!trending.contains(tag)) {
+						quantidade = this.tagsUsadas.get(tag);
+						maisUsada = tag;
+					}
+				}
+			}
+			cont += 1;
+			this.trending.add(maisUsada);
 		}
 	}
 	
@@ -51,19 +62,14 @@ public class TrendingTopics {
 		}
 		return impressao;
 	}
-		
-	public void adicionaTag(List<Tag> tags) {
-		
-		for (Tag tag : tags) {
-			if (this.tagsNaRede.contains(tag)) {
-				int indice = this.tagsNaRede.indexOf(tag);
-				this.tagsNaRede.get(indice).addFrequencia();
+	
+	public void adicionaHashtag(List<String> hashtags) {
+		for (String tag: hashtags) {
+			if (this.tagsUsadas.containsKey(tag)) {
+				tagsUsadas.put(tag, tagsUsadas.get(tag) + 1 );
 			} else {
-				this.tagsNaRede.add(tag);
+				tagsUsadas.put(tag, 1);
 			}
 		}
 	}
-	
-	
-	
 }

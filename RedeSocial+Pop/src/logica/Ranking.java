@@ -38,8 +38,10 @@ public class Ranking {
 
 		int cont = 0;
 		for (int i = 0; i < listaDeUsuarios.size(); i++) {
-			comMaisPop.add(listaDeUsuarios.get(i));
-			cont++;
+			if (listaDeUsuarios.get(i) != null) {
+				comMaisPop.add(listaDeUsuarios.get(i));
+				cont++;
+			}
 			if (cont == 3) {
 				break;
 			}
@@ -50,8 +52,10 @@ public class Ranking {
 
 			int contador = 0;
 			for (int i = 0; i < listaDeUsuarios.size() - TAMANHO_MAXIMO; i++) {
-				comMenosPop.add(listaDeUsuarios.get(i));
-				contador++;
+				if (listaDeUsuarios.get(i) != null) {
+					comMenosPop.add(listaDeUsuarios.get(i));
+					contador++;
+				}
 				if (contador == 3) {
 					break;
 				}
