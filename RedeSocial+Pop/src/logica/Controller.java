@@ -387,8 +387,12 @@ public class Controller {
 		return this.usuarioLogado.getPops();
 	}
 	
-	public int getPopsUsuario(String email){
-		return pesquisaUsuario(email).getPops();
+	public int getPopsUsuario(String email) throws LogoutException {
+		if (this.usuarioLogado != null) {
+			throw new LogoutException("Erro na consulta de Pops. Um usuarix ainda esta logadx.");
+		} else {
+			return pesquisaUsuario(email).getPops();
+		}
 	}
 	
 	public String getPost(String atributo, int post) { 

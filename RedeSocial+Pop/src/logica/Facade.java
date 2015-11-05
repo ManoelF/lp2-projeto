@@ -5,6 +5,7 @@ import exceptions.AtualizaPerfilException;
 import exceptions.EntradaException;
 import exceptions.FechaSistemaException;
 import exceptions.LogicaException;
+import exceptions.LogoutException;
 import exceptions.NaoHaNotificacoesException;
 import exceptions.PostException;
 import exceptions.SenhaProtegidaException;
@@ -82,7 +83,7 @@ public class Facade {
 		return this.controller.getPops();
 	}
 	
-	public int getPopsUsuario(String email){
+	public int getPopsUsuario(String email) throws LogoutException{
 		return controller.getPopsUsuario(email);
 	}
 	
