@@ -2,8 +2,8 @@ package logica;
 
 public class Tag implements Comparable<Tag> {
 	
-	int frequencia;
-	String hashtag; 
+	private int frequencia;
+	private String hashtag; 
 	
 	public Tag(String hashtag) {
 		this.hashtag = hashtag;
