@@ -34,6 +34,10 @@ public class TrendingTopics {
 	
 	private void buscaTagsMaisPopulares() {		
 		Collections.sort(this.tagsNaRede);
+		for (int i = 0; i < this.tagsNaRede.size(); i++) {
+			System.out.println(this.tagsNaRede.get(i).toString() + "--" + this.tagsNaRede.get(i).getFrequencia());
+		}
+		System.out.println();
 		for (int i = 0; i < 3; i++) {
 			this.trending.add(this.tagsNaRede.get(i));
 		}
@@ -47,7 +51,7 @@ public class TrendingTopics {
 		String impressao = "Trending Topics:";
 		
 		for(int i = 0; i < trending.size(); i++) {
-			impressao +=  " (" + (i+1) + ") " + trending.get(i);
+			impressao +=  " (" + (i+1) + ") " + trending.get(i).toString();
 		}
 		return impressao;
 	}

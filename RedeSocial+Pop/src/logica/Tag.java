@@ -50,12 +50,15 @@ public class Tag implements Comparable<Tag> {
 	public int compareTo(Tag outraTag) {
 		
 		if (this.frequencia > outraTag.getFrequencia()) {
-			return 1;
-		} else if (this.frequencia == outraTag.getFrequencia()) {
-			return this.hashtag.compareTo(outraTag.getHashtag());
-		} else { //this.frequencia < outraTag.getFrequencia()
 			return -1;
+		} else if (this.frequencia == outraTag.getFrequencia()) {
+			return this.hashtag.compareTo(outraTag.getHashtag()) * -1;
+		} else { //this.frequencia < outraTag.getFrequencia()
+			return 1;
 		}		
 	}
 	
+	public String toString() {
+		return this.hashtag;
+	}
 }
