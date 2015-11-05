@@ -163,7 +163,7 @@ public class Facade {
 		controller.ordenaFeedPorData();
 	}
 	
-	public void ordenaFeedPorPopularidade(){
+	public void ordenaFeedPorPopularidade() {
 		controller.ordenaFeedPorPopularidade();
 	}
 	
