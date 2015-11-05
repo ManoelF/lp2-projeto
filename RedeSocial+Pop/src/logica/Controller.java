@@ -37,6 +37,7 @@ public class Controller {
 		this.usuariosCadastrados = new ArrayList<Usuario>();
 		this.trendingTopics = new TrendingTopics();
 		this.ranking = new Ranking();
+		this.util = Util.getInstancia();
 
 
 	}
