@@ -164,7 +164,7 @@ public class Post implements Comparable<Post> {
 	}
 	
 	public int getPopularidade() {
-		return popularidade;
+		return this.popularidade;
 	}
 
 	@Override

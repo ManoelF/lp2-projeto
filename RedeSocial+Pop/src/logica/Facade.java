@@ -82,6 +82,10 @@ public class Facade {
 		return this.controller.getPops();
 	}
 	
+	public int getPopsUsuario(String email){
+		return controller.getPopsUsuario(email);
+	}
+	
 	public String getPopularidade() {
 		return this.controller.getPopularidade();
 	}
@@ -90,7 +94,7 @@ public class Facade {
 		this.controller.curtirPost(amigo, post);
 	}
 	
-	public void descurtirPost(String amigo, int post) throws LogicaException {
+	public void rejeitarPost(String amigo, int post) throws LogicaException {
 		this.controller.descurtirPost(amigo, post);
 	}
 	
@@ -108,6 +112,18 @@ public class Facade {
 	
 	public String getConteudoPost(int indice, int post) throws LogicaException, PostException {
 		return this.controller.getConteudoPost(indice, post);
+	}
+	
+	public int getPopsPost(int indice){
+		return controller.getPopsPost(indice);
+	}
+	
+	public int qtdCurtidasDePost(int indice) throws PostException, LogicaException {
+		return this.controller.qtdCurtidasDePost(indice);
+	}
+	
+	public int qtdRejeicoesDePost(int indice) {
+		return this.controller.qtdRejeicoesDePost(indice);
 	}
 	
 	public String getInfoUsuario(String atributo, String usuario) throws LogicaException, EntradaException {
@@ -150,13 +166,17 @@ public class Facade {
 		controller.ordenaFeedPorPopularidade();
 	}
 	
+	public void adicionaPops(int pops) {
+		controller.adicionaPops(pops);
+	}
+	
 	public void setPops(int pop) {
 		this.controller.setPops(pop);	
 	}
 	
 	public static void main(String[] args) {
  	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt",
- 	    		             "lib/ScriptsTeste/usecase_4.txt","lib/NossosTestes/usecase_6.txt", "lib/NossosTestes/usecase_7.txt", "lib/ScriptsTeste/usecase_8.txt"};
+ 	    		             "lib/ScriptsTeste/usecase_4.txt", "lib/ScriptsTeste/usecase_5.txt","lib/ScriptsTeste/usecase_6.txt", "lib/ScriptsTeste/usecase_7.txt", "lib/NossosTestes/usecase_8.txt"};
 	    EasyAccept.main(args);
 	}
 

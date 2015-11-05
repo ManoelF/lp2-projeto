@@ -54,7 +54,7 @@ public class Tag implements Comparable<Tag> {
 		if (this.frequencia > outraTag.getFrequencia()) {
 			return -1;
 		} else if (this.frequencia == outraTag.getFrequencia()) {
-			return this.hashtag.compareToIgnoreCase(outraTag.getHashtag());
+			return this.hashtag.compareToIgnoreCase(outraTag.getHashtag()) * -1;
 		} else { //this.frequencia < outraTag.getFrequencia()
 			return 1;
 		}		
