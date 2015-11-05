@@ -1,0 +1,120 @@
+###############
+#Caso de uso 6#
+###############
+
+# Os POPs de um usuario dependem exclusivamente da popularidade de seus postes,
+# O metodo setPops esta sendo usado para verificar a mudança dinamica do tipo de usuario
+
+iniciaSistema
+
+login email="madonna@email.com" senha="iamawesome"
+criaPost  mensagem="Assistindo! :D #encontro" data="10/11/2015 08:30:12"
+expect 0 getPops
+setPops pop=10
+logout
+
+login email="naza_foguete@hotmail.com" senha="belzinha"
+criaPost  mensagem="Cade a animacao dessa rede? sou mais eu! #naza" data="11/08/2015 02:40:21"
+criaPost  mensagem="#soulinda #festa #naza" data="11/08/2015 02:40:21"
+expect 0 getPops
+setPops pop=15
+logout
+
+id1=cadastraUsuario nome="Jesse Pinkman" email="jesse@email.com.br" senha="cristal" dataNasc="17/09/1989" imagem="resources/jesse.jpg"
+id2=cadastraUsuario nome="Walter White" email="walt@email.com.br" senha="Heisenberg" dataNasc="10/01/1959" imagem="resources/walt.jpg"
+id1=cadastraUsuario nome="Skyler White" email="skyler@email.com.br" senha="waltjr" dataNasc="22/05/1968" imagem="resources/skyler.jpg"
+id1=cadastraUsuario nome="Gustavo Finger" email="gus@email.com" senha="polloshermanos" dataNasc="01/12/1955" imagem="recources/gus.jpg"
+
+
+
+login email="jesse@email.com.br" senha="cristal"
+adicionaAmigo usuario="walt@email.com.br"
+criaPost  mensagem="Ou voce foge das coisas ou as enfrenta. Toda a questao eh aceitar, realmente, o que voce eh. #souQuemSou" data="10/08/2015 22:00:01"
+criaPost mensagem="Qual e a vantagem de ser um fora da lei quando se tem responsabilidades? #foraDaLei #souQuemSou" data="11/08/2015 02:40:21"
+expect 0 getPops
+expect "Normal Pop" getPopularidade
+
+logout
+
+login email="walt@email.com.br" senha="Heisenberg"
+expect 1 getNotificacoes 
+expect "Jesse Pinkman quer sua amizade." getNextNotificacao
+aceitaAmizade usuario="jesse@email.com.br"
+expect 0 getPops
+expect "Normal Pop" getPopularidade
+curtirPost amigo="jesse@email.com.br" post=0
+curtirPost amigo="jesse@email.com.br" post=1
+setPops pop=950
+expect 950 getPops
+expect "Celebridade Pop" getPopularidade
+criaPost  mensagem="Voce precisa parar de pensar na escuridão que o precede. O que passou, passou. #passado" data="05/06/2015 21:50:55"
+criaPost  mensagem="Eu não estou em perigo, eu sou o perigo. #heisenberg" data="06/06/15 01:30:02"
+
+logout
+
+login email="jesse@email.com.br" senha="cristal"
+expect 20 getPops
+setPops pop=510
+expect "Celebridade Pop" getPopularidade
+criaPost  mensagem="Eu sou o cara mau. <imagem>imagens/bad.jpg</imagem> #pinkman" data="23/06/15 01:30:02"
+curtirPost amigo="walt@email.com.br" post=0
+curtirPost amigo="walt@email.com.br" post=1
+adicionaAmigo usuario="skyler@email.com.br"
+
+logout
+
+login email="skyler@email.com.br" senha="waltjr"
+rejeitaAmizade usuario="jesse@email.com.br"
+adicionaAmigo usuario="walt@email.com.br"
+adicionaAmigo usuario="gus@email.com"
+criaPost mensagem="A unica coisa que posso fazer e esperar. So isso. Essa eh a única opcao boa. Esperar, aguardar a minha hora… e esperar. #esperar" data="01/09/2015 16:45:21"
+criaPost mensagem="Alguem tem que proteger essa familia do homem que protege essa familia. #preocupada" data="01/09/2015 22:05:20"
+
+logout
+
+login email="walt@email.com.br" senha="Heisenberg"
+aceitaAmizade usuario="skyler@email.com.br"
+setPops pop=1100
+expect "Icone Pop" getPopularidade
+criaPost  mensagem="Seu produto é um refrigerante sabor cola, generico e mal feito. O meu e Coca-Cola. Quer mesmo viver num mundo sem Coca-Cola?#cristal #Omelhor" data="30/09/2015 12:30:21"
+curtirPost amigo="jesse@email.com.br" post=2
+descurtirPost amigo="skyler@email.com.br" post=1
+
+logout
+
+login email="gus@email.com" senha="polloshermanos"
+aceitaAmizade usuario="skyler@email.com.br"
+criaPost mensagem="Nunca cometa duas vezes o mesmo erro" data="01/09/2015 20:34:43"
+adicionaAmigo usuario="walt@email.com.br"
+adicionaAmigo usuario="jesse@email.com.br"
+expect "Normal Pop" getPopularidade
+
+logout
+
+login email="jesse@email.com.br" senha="cristal"
+aceitaAmizade usuario="gus@email.com"
+
+logout
+
+login email="gus@email.com" senha="polloshermanos"
+setPops pop=1001
+curtirPost amigo="jesse@email.com.br" post=1
+descurtirPost amigo="skyler@email.com.br" post=1
+
+logout
+
+login email="jesse@email.com.br" senha="cristal"
+expect "#pinkman,#epicwin" getPost atributo="Hashtags" post=2
+aceitaAmizade usuario="gus@email.com"
+expect "Eu sou o cara mau. <imagem>imagens/bad.jpg</imagem> #pinkman #epicwin (0015-06-23 01:30:02)" getPost post=2
+expect "#pinkman,#epicwin" getPost atributo="Hashtags" post=2
+setPops pop=510
+
+logout
+
+login email="skyler@email.com.br" senha="waltjr"
+expect "#preocupada,#epicfail" getPost atributo="Hashtags" post=1
+
+logout
+
+fechaSistema
