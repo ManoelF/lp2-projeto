@@ -19,7 +19,9 @@ public class Tag implements Comparable<Tag> {
 	}
 
 	public void addFrequencia() {
+		//System.out.print("\n"+ this.hashtag+ " ::: Add freq :"+ this.frequencia+ "|| nova freq ");
 		this.frequencia += 1;
+		//System.out.println(this.frequencia);
 	}
 	
 	
@@ -53,6 +55,7 @@ public class Tag implements Comparable<Tag> {
 			return -1;
 		} else if (this.frequencia == outraTag.getFrequencia()) {
 			return this.hashtag.compareToIgnoreCase(outraTag.getHashtag());
+
 		} else { //this.frequencia < outraTag.getFrequencia()
 			return 1;
 		}		

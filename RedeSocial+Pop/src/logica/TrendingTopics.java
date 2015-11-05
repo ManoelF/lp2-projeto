@@ -63,6 +63,7 @@ public class TrendingTopics {
 				int indice = this.tagsNaRede.indexOf(tag);
 				this.tagsNaRede.get(indice).addFrequencia();
 			} else {
+				//System.out.println("nova hash"+ tag.getHashtag()+ "::::"+ tag.getFrequencia());
 				this.tagsNaRede.add(tag);
 			}
 		}
