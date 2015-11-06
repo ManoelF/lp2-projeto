@@ -37,6 +37,7 @@ public class Controller {
 		this.usuariosCadastrados = new ArrayList<Usuario>();
 		this.trendingTopics = new TrendingTopics();
 		this.ranking = new Ranking();
+		this.util = Util.getInstancia();
 
 
 	}
@@ -386,6 +387,14 @@ public class Controller {
 		return this.usuarioLogado.getPops();
 	}
 	
+	public int getPopsUsuario(String email) throws LogoutException {
+		if (this.usuarioLogado != null) {
+			throw new LogoutException("Erro na consulta de Pops. Um usuarix ainda esta logadx.");
+		} else {
+			return pesquisaUsuario(email).getPops();
+		}
+	}
+	
 	public String getPost(String atributo, int post) { 
 		return this.usuarioLogado.getPost(atributo, post);
 	}
@@ -393,6 +402,18 @@ public class Controller {
 	public String getConteudoPost(int indice, int post) throws LogicaException, PostException {
 		return this.usuarioLogado.getConteudoPost(indice, post);
 	}	
+	
+	public int getPopsPost(int indice){
+		return this.usuarioLogado.getPopsPost(indice);
+	}
+	
+	public int qtdCurtidasDePost(int indice) throws PostException, LogicaException {
+		return this.usuarioLogado.qtdCurtidasDePost(indice);
+	}
+	
+	public int qtdRejeicoesDePost(int indice) {
+		return this.usuarioLogado.qtdRejeicoesDePost(indice);
+	}
 
 	private Usuario pesquisaUsuario(String EmailInserido) {
 		
@@ -410,11 +431,14 @@ public class Controller {
 	
 	public String atualizaRanking() throws LogicaException {
 		//ranking = new Ranking();
-		
 		return ranking.atualizaRanking(getUsuariosCadastrados());
-	//	trendingTopics.atualizaTrendingTopic();
+		//trendingTopics.atualizaTrendingTopic();
 		
-	} // fecha ranking
+	}
+	
+	public void adicionaPops(int pops) {
+		this.usuarioLogado.adicionaPops(pops);
+	}
 	
 	public void setPops(int pop) {
 		this.usuarioLogado.setPops(pop);

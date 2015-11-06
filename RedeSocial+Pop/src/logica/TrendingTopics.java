@@ -2,7 +2,10 @@ package logica;
 
 import java.util.ArrayList;
 import java.util.Collections;
+<<<<<<< HEAD
 import java.util.HashMap;
+=======
+>>>>>>> bf7d6fcddfa370895979cc5758d918ed1e882d92
 import java.util.List;
 import java.util.Set;
 
@@ -34,6 +37,13 @@ public class TrendingTopics {
 	
 	private void buscaTagsMaisPopulares() {		
 		Collections.sort(this.tagsNaRede);
+<<<<<<< HEAD
+=======
+		for (int i = 0; i < this.tagsNaRede.size(); i++) {
+			System.out.println(this.tagsNaRede.get(i).toString() + "--" + this.tagsNaRede.get(i).getFrequencia());
+		}
+		System.out.println();
+>>>>>>> bf7d6fcddfa370895979cc5758d918ed1e882d92
 		for (int i = 0; i < 3; i++) {
 			this.trending.add(this.tagsNaRede.get(i));
 		}
@@ -44,10 +54,10 @@ public class TrendingTopics {
 	public String atualizaTrendingTopic() {
 		this.trending = new ArrayList<>();
 		buscaTagsMaisPopulares();
-		String impressao = "Trending Topics:";
+		String impressao = "Trending Topics: ";
 		
 		for(int i = 0; i < trending.size(); i++) {
-			impressao +=  " (" + (i+1) + ") " + trending.get(i);
+			impressao +=  " (" + (i+1) + ") " + trending.get(i).toString();
 		}
 		return impressao;
 	}
@@ -59,6 +69,10 @@ public class TrendingTopics {
 				int indice = this.tagsNaRede.indexOf(tag);
 				this.tagsNaRede.get(indice).addFrequencia();
 			} else {
+<<<<<<< HEAD
+=======
+				//System.out.println("nova hash"+ tag.getHashtag()+ "::::"+ tag.getFrequencia());
+>>>>>>> bf7d6fcddfa370895979cc5758d918ed1e882d92
 				this.tagsNaRede.add(tag);
 			}
 		}

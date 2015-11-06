@@ -46,7 +46,7 @@ public class TesteRanking {
 			controller.cadastraUsuario(use8.getNome(), use8.getEmail(), use8.getSenha(), "20/10/1995", use8.getImagem());
 			controller.cadastraUsuario(use9.getNome(), use9.getEmail(), use9.getSenha(), "20/10/1995", use9.getImagem());
 			
-			this.duasOrdens = new DuasOrdenacoes();
+			//this.duasOrdens = new DuasOrdenacoes();
 			
 		} catch(LogicaException erro){
 			Assert.fail();
