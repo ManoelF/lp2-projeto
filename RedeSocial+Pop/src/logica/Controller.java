@@ -131,10 +131,22 @@ public class Controller {
 			throw new UsuarioNaoCadastradoException(amigo);
 		} else {
 			if (this.usuarioLogado.temAmigo(usuario)) {
+				
+				boolean epicWin = usuario.getPost(post).getHashtags().contains("#epicwin"); 
+				boolean epicFail = usuario.getPost(post).getHashtags().contains("#epicfail");
+				
 				this.usuarioLogado.curtir(usuario.getPost(post));
 				usuario.recebeNotificacao(this.usuarioLogado.getNome() + " curtiu seu post de " + usuario.getPost(post).getDataString() + ".");
 				usuario.atualizaPops();
-			} else {
+				
+				// add #epicwin ou #epicfail no trending, se for o caso
+				if (usuario.getPost(post).getHashtags().contains("#epicwin") && epicWin == false) {
+					this.trendingTopics.adicionaTag("#epicwin");
+				} else if (usuario.getPost(post).getHashtags().contains("#epicfail") && epicFail == false) {
+					this.trendingTopics.adicionaTag("#epicfail");
+				}
+				
+			} else { // quando os usuarios nao sao amigos
 				throw new LogicaException("Este usuario nao esta na sua lista de amigos.");
 			}
 		}
