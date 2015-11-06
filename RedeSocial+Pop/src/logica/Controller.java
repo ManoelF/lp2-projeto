@@ -442,10 +442,7 @@ public class Controller {
 	}
 	
 	public String atualizaRanking() throws LogicaException {
-		//ranking = new Ranking();
 		return ranking.atualizaRanking(getUsuariosCadastrados());
-		//trendingTopics.atualizaTrendingTopic();
-		
 	}
 	
 	public void adicionaPops(int pops) {

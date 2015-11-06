@@ -32,7 +32,8 @@ public class Util {
 		char[] novaMsg = mensagem.toCharArray();	// transformando a mensagem em lista de char para poder iterar
 		boolean inicia = false; 					// variavel para controlar o momento de pegar os caraceres que interecam
 		int cont = 0;								// contador para saber o momento de pegar o proximo arquivo
-			
+		
+				
 		for(char caracter: novaMsg) {				// onde inicia o arquivo
 			if (caracter == '<') {
 				inicia = true;
@@ -56,7 +57,20 @@ public class Util {
 		return arquivos;
 	}
     
-//Verificar!!!
+/*	public String encontraTexto(String texto) {
+		
+		String mensagem = "";
+		
+		if(texto.contains("<") && texto.substring(texto.indexOf("<"), texto.indexOf("<")+2) != "<3"){
+			int endIndex = texto.indexOf("<");
+			mensagem =  texto.substring(0, endIndex);
+		} else if (texto.contains("#") && texto.substring(texto.indexOf("#")+1, texto.indexOf("#")+2) != " ") {
+			int endIndex = texto.indexOf("#");
+			mensagem = texto.substring(0, endIndex);
+		}
+		return mensagem.trim();
+	}*/
+    
 	public String encontraTexto(String texto) {
 		char[] novoTexto = texto.toCharArray();
 		String conteudo = "";
