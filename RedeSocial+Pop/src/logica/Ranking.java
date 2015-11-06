@@ -66,16 +66,16 @@ public class Ranking {
 
 	@Override
 	public String toString() {
-		String imprime = "Mais Populares: ";
+		String imprime = "Mais Populares:";
 
 		for (int i = 0; i < comMaisPop.size(); i++) {
-			imprime += " (" + (i + 1) + ")" + comMaisPop.get(i).getNome() + " " + comMaisPop.get(i).getPops();
+			imprime += " (" + (i + 1) + ") " + comMaisPop.get(i).getNome() + " " + comMaisPop.get(i).getPops() + ";";
 		}
 		
 		if(comMenosPop.size() != 0){
-			imprime += " | Menos Populares: ";
+			imprime += " | Menos Populares:";
 			for (int i = 0; i < comMenosPop.size(); i++) {
-				imprime +=  " (" + (i + 1) + ")" + comMenosPop.get(i).getNome() + " " + comMenosPop.get(i).getPops() ;
+				imprime +=  " (" + (i + 1) + ") " + comMenosPop.get(i).getNome() + " " + comMenosPop.get(i).getPops() + ";" ;
 			}
 		}
 		

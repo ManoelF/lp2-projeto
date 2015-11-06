@@ -363,7 +363,7 @@ public class Usuario implements Comparable<Usuario> {
 		if (this.pops > outroUsuario.getPops()) {
 			return 1;
 		} else if (this.pops == outroUsuario.getPops()) {
-			return 0;
+			return this.getNome().compareToIgnoreCase(outroUsuario.getNome());
 		} else {
 			return -1;
 		}

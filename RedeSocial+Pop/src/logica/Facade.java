@@ -79,7 +79,7 @@ public class Facade {
 		this.controller.removeUsuario(usuario);
 	}
 	
-	public int getPops() { 
+	public int getPopsUsuario() { 
 		return this.controller.getPops();
 	}
 	

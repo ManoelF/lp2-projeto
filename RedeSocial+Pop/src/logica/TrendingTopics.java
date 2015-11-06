@@ -2,7 +2,6 @@ package logica;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -48,7 +47,7 @@ public class TrendingTopics {
 	public String atualizaTrendingTopic() {
 		this.trending = new ArrayList<>();
 		buscaTagsMaisPopulares();
-		String impressao = "Trending Topics:";
+		String impressao = "Trending Topics: ";
 		
 		for(int i = 0; i < trending.size(); i++) {
 			impressao +=  " (" + (i+1) + ") " + trending.get(i).toString();
