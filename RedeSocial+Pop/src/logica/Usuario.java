@@ -26,6 +26,7 @@ public class Usuario implements Comparable<Usuario> {
 	private String senha;
 	private String imagem;
 	private int pops;
+	private int popsExtra;
 	private List<Usuario> amigos;
 	private List<String> solicitacaoAmizade;
 	private Deque<String> notificacoes;
@@ -70,6 +71,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.email = email;
 		this.senha = senha;
 		this.pops = 0;
+		this.popsExtra = 0;
 		this.amigos = new ArrayList<>();
 		this.solicitacaoAmizade = new ArrayList<>();
 		this.notificacoes = new ArrayDeque<>();
@@ -118,15 +120,16 @@ public class Usuario implements Comparable<Usuario> {
 	public void descurtir(Post post) {
 		this.popularidade.descurtir(post);
 	}
-	
+		
 	public void atualizaPops() {
+		
 		this.pops = 0;
 		int cont = 0;
 		for (Post post: posts) {
 			cont += post.getPopularidade();
 		}
 		this.pops = cont ;
-
+		this.pops += this.popsExtra;
 		atualizaPopularidade();
 	}
 	
@@ -232,6 +235,25 @@ public class Usuario implements Comparable<Usuario> {
 		}
 	}
 	
+	public int getPopsPost(int indice){
+		return this.posts.get(indice).getPopularidade();
+	}
+	
+	public int qtdCurtidasDePost(int indice) throws LogicaException, PostException {
+		if (indice> this.posts.size()) {
+			throw new LogicaException("Post #" + indice + " nao existe. Usuarix possui apenas "+ this.posts.size() +" post(s).");
+		} else if (indice < 0) {
+			throw new PostException("Requisicao invalida. O indice deve ser maior ou igual a zero.");
+		} else {
+			return this.posts.get(indice).getLike();
+		}
+		
+	}
+	
+	public int qtdRejeicoesDePost(int indice) {
+		return this.posts.get(indice).getDeslike();
+	}
+	
 	public List<Post> getPostsToFeed() {
 		List<Post> postsToFeed = new ArrayList<>();
 		Iterator<Post> iterator = this.posts.iterator();
@@ -266,6 +288,11 @@ public class Usuario implements Comparable<Usuario> {
 	
 	public List<String> getSolicitacaoAmizade(){
 		return this.solicitacaoAmizade;
+	}
+	
+	public void adicionaPops(int pops) {
+		this.popsExtra += pops;
+		atualizaPops();
 	}
 	
 	public void setPops(int pops) {
@@ -336,7 +363,7 @@ public class Usuario implements Comparable<Usuario> {
 		if (this.pops > outroUsuario.getPops()) {
 			return 1;
 		} else if (this.pops == outroUsuario.getPops()) {
-			return 0;
+			return this.getEmail().compareToIgnoreCase(outroUsuario.getEmail());
 		} else {
 			return -1;
 		}

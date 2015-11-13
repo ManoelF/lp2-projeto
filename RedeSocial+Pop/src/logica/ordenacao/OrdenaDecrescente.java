@@ -19,7 +19,7 @@ public class OrdenaDecrescente implements Comparator<Usuario> {
 		} else if (usuario.getPops() < outroUsuario.getPops()) { 
 			return 1;
 		} else {
-			return 0;
+			return usuario.getEmail().compareToIgnoreCase(outroUsuario.getEmail()) * -1;
 		}
 	}
 

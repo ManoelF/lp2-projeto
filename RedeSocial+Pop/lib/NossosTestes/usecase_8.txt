@@ -115,9 +115,6 @@ expect "Ines Brasil: ME CHAMA! Porque eu quero ir rapido assim oh. #sempreirmaos
 
 logout
 
-expect "Mais Populares:  (1)Silvio 2000 (2)Marilene 1499 (3)Walter White 1100 | Menos Populares:  (1)Skyler White -100 (2)Debora 0 (3)Cassia 2" atualizaRanking
-expect "Trending Topics: (1) #minhaVida (2) #naza (3) #souQuemSou" atualizaTrendingTopics
-
 fechaSistema
 
 # ordem dos posts por data #
