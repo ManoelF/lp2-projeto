@@ -474,6 +474,7 @@ public class TesteController {
 			controller.curtirPost("jesse@email.com.br", 1);
 			controller.curtirPost("jesse@email.com.br", 1);
 			controller.setPops(950);
+			
 			Assert.assertTrue(950 == controller.getPops());
 			Assert.assertEquals("Celebridade Pop", controller.getPopularidade());
 			controller.criaPost("Voce precisa parar de pensar na escuridão que o precede. O que passou, passou. #passado", "05/06/2015 21:50:55");
@@ -517,14 +518,14 @@ public class TesteController {
 			controller.login("walt@email.com.br", "Heisenberg");
 			
 			controller.aceitaAmizade("jesse@email.com.br");
+
 			controller.curtirPost("jesse@email.com.br", 0);
-			
-			
 			controller.curtirPost("jesse@email.com.br", 1);
 			controller.curtirPost("jesse@email.com.br", 1);
 			controller.descurtirPost("jesse@email.com.br", 2);
+			
 			controller.setPops(950);
-
+			
 			controller.criaPost("Voce precisa parar de pensar na escuridão que o precede. O que passou, passou. #passado", "05/06/2015 21:50:55");
 			controller.criaPost("Eu não estou em perigo, eu sou o perigo. #heisenberg", "06/06/15 01:30:02");
 			controller.logout();
@@ -534,7 +535,9 @@ public class TesteController {
 			Assert.assertTrue(controller.getPopsPost(0) == 10);
 			Assert.assertTrue(controller.getPopsPost(1) == 20);
 			Assert.assertTrue(controller.getPopsPost(2) == -10);
+			
 			controller.setPops(510);
+
 			controller.criaPost("Eu sou o cara mau. <imagem>imagens/bad.jpg</imagem> #pinkman", "23/06/15 01:30:02");
 			controller.curtirPost("walt@email.com.br", 0);
 			controller.curtirPost("walt@email.com.br", 1);
@@ -543,21 +546,44 @@ public class TesteController {
 		
 		
 			controller.login("walt@email.com.br", "Heisenberg");
+
 			controller.curtirPost("jesse@email.com.br", 0);
 			controller.curtirPost("jesse@email.com.br", 1);
 			controller.descurtirPost("jesse@email.com.br", 2);
+			
+			Assert.assertTrue(controller.getPopsPost(0) == 25);
+			Assert.assertTrue(controller.getPopsPost(1) == 25);
 			controller.logout();
 			
 			
 			controller.login("jesse@email.com.br", "cristal");
-			System.out.println(controller.getPopsPost(0) );
-			Assert.assertTrue(controller.getPopsPost(0) == 30);
-			Assert.assertTrue(controller.getPopsPost(1) == 40);
-			Assert.assertTrue(controller.getPopsPost(2) == -30);
+			//System.out.println(controller.getPopsPost(0) );
+			Assert.assertTrue(controller.getPopsPost(0) == 20);
+			Assert.assertTrue(controller.getPopsPost(1) == 30);
+			Assert.assertTrue(controller.getPopsPost(2) == -20);
 			
-		
-		
-		
+			controller.adicionaPops(1000);
+			controller.curtirPost("walt@email.com.br", 0);
+			controller.curtirPost("walt@email.com.br", 1);
+			
+			controller.logout();
+			
+			
+			controller.login("walt@email.com.br", "Heisenberg");
+			Assert.assertTrue(controller.getPopsPost(0) == 75);
+			Assert.assertTrue(controller.getPopsPost(1) ==75);
+			
+
+			/*jesse
+			 * post1 = 10 + 10
+			 * post2 = 20 + 10
+			 * post3 = -10 - 10
+			 * 
+			 * walt
+			 * post1 = 25 + 50
+			 * post2 = 25 + 50
+			 * 
+			 */		
 		
 		
 		
