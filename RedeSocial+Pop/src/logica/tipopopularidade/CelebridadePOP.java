@@ -9,8 +9,6 @@ public class CelebridadePOP implements TipoPopularidade {
 	private final int POPS = 25;
 	private final int qntPostFeed = 4;
 	
-	// E preciso ver se a forma de ver se o post eh recente nao esta sebosa
-	// Temos a opcao de ter um metodo dentro do post que faca essa verificacao
 	@Override
 	public void curtir(Post post) {
 		int pontos = POPS;

@@ -414,7 +414,7 @@ public class TesteController {
 			controller.atualizaPerfil("Nome", "Ftm Bern");
 			
 		} catch(RedeSocialMaisPopException erro) {
-			Assert.assertEquals("Nao eh possivel atualizar um perfil. Nenhum usuarix esta logadx no +pop.", erro.getMessage());
+			Assert.assertEquals("Erro na atualizacao de perfil. Nenhum usuarix esta logadx no +pop.", erro.getMessage());
 		}
 	}
 
@@ -496,5 +496,89 @@ public class TesteController {
 			Assert.fail();
 		}
 	}
+	
+	@Test
+	public void testeFuncionalidadePost() {
+		try {
+			controller.cadastraUsuario("Jesse Pinkman", "jesse@email.com.br", "cristal","17/09/1989", "resources/jesse.jpg");
+			controller.cadastraUsuario("Walter White", "walt@email.com.br", "Heisenberg", "10/01/1959", "resources/walt.jpg");
+			
+			controller.login("jesse@email.com.br", "cristal");
+			controller.adicionaAmigo("walt@email.com.br");
+			controller.criaPost("Ou voce foge das coisas ou as enfrenta. Toda a questao eh aceitar, realmente, o que voce eh. #souQuemSou", "10/08/2015 22:00:01");
+			controller.criaPost("Qual e a vantagem de ser um fora da lei quando se tem responsabilidades? #foraDaLei", "11/08/2015 02:40:21");
+			controller.criaPost("Azul como o ceu e o mais puro. #omelhor", "11/08/2015 02:40:21");
+			Assert.assertTrue(controller.getPopsPost(0) == 0);
+			Assert.assertTrue(controller.getPopsPost(1) == 0);
+			Assert.assertTrue(controller.getPopsPost(2) == 0);
+			controller.logout();
+			
 
+			controller.login("walt@email.com.br", "Heisenberg");
+			
+			controller.aceitaAmizade("jesse@email.com.br");
+			controller.curtirPost("jesse@email.com.br", 0);
+			
+			
+			controller.curtirPost("jesse@email.com.br", 1);
+			controller.curtirPost("jesse@email.com.br", 1);
+			controller.descurtirPost("jesse@email.com.br", 2);
+			controller.setPops(950);
+
+			controller.criaPost("Voce precisa parar de pensar na escuridão que o precede. O que passou, passou. #passado", "05/06/2015 21:50:55");
+			controller.criaPost("Eu não estou em perigo, eu sou o perigo. #heisenberg", "06/06/15 01:30:02");
+			controller.logout();
+
+
+			controller.login("jesse@email.com.br", "cristal");
+			Assert.assertTrue(controller.getPopsPost(0) == 10);
+			Assert.assertTrue(controller.getPopsPost(1) == 20);
+			Assert.assertTrue(controller.getPopsPost(2) == -10);
+			controller.setPops(510);
+			controller.criaPost("Eu sou o cara mau. <imagem>imagens/bad.jpg</imagem> #pinkman", "23/06/15 01:30:02");
+			controller.curtirPost("walt@email.com.br", 0);
+			controller.curtirPost("walt@email.com.br", 1);
+			
+			controller.logout();
+		
+		
+			controller.login("walt@email.com.br", "Heisenberg");
+			controller.curtirPost("jesse@email.com.br", 0);
+			controller.curtirPost("jesse@email.com.br", 1);
+			controller.descurtirPost("jesse@email.com.br", 2);
+			controller.logout();
+			
+			
+			controller.login("jesse@email.com.br", "cristal");
+			System.out.println(controller.getPopsPost(0) );
+			Assert.assertTrue(controller.getPopsPost(0) == 30);
+			Assert.assertTrue(controller.getPopsPost(1) == 40);
+			Assert.assertTrue(controller.getPopsPost(2) == -30);
+			
+		
+		
+		
+		
+		
+		
+		
+		} catch (RedeSocialMaisPopException erro) {
+			Assert.fail();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
 }
