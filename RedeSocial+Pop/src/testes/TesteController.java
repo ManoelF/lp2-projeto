@@ -566,6 +566,10 @@ public class TesteController {
 			controller.curtirPost("walt@email.com.br", 0);
 			controller.curtirPost("walt@email.com.br", 1);
 			
+			Assert.assertTrue(controller.qtdCurtidasDePost(0) == 2);
+			Assert.assertTrue(controller.qtdCurtidasDePost(1) == 3);
+			Assert.assertTrue(controller.qtdCurtidasDePost(2) == 0);
+			Assert.assertTrue(controller.qtdRejeicoesDePost(2) == 2);
 			controller.logout();
 			
 			
@@ -573,21 +577,9 @@ public class TesteController {
 			Assert.assertTrue(controller.getPopsPost(0) == 75);
 			Assert.assertTrue(controller.getPopsPost(1) ==75);
 			
+			Assert.assertTrue(controller.qtdCurtidasDePost(0) == 2);
+			Assert.assertTrue(controller.qtdCurtidasDePost(1) == 2);
 
-			/*jesse
-			 * post1 = 10 + 10
-			 * post2 = 20 + 10
-			 * post3 = -10 - 10
-			 * 
-			 * walt
-			 * post1 = 25 + 50
-			 * post2 = 25 + 50
-			 * 
-			 */		
-		
-		
-		
-		
 		} catch (RedeSocialMaisPopException erro) {
 			Assert.fail();
 		}

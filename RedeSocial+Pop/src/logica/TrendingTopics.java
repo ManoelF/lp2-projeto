@@ -3,9 +3,9 @@ package logica;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 public class TrendingTopics {
+	private final int TRENDING = 3;
 		
 	private List<Tag> trending;
 	private List<Tag> tagsNaRede;
@@ -19,7 +19,7 @@ public class TrendingTopics {
 	private void buscaTagsMaisPopulares() {		
 		Collections.sort(this.tagsNaRede);
 		
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < tagsNaRede.size() && i < TRENDING ; i++) {
 			this.trending.add(this.tagsNaRede.get(i));
 		}
 	}
