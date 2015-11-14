@@ -18,8 +18,7 @@ public class Post implements Comparable<Post> {
 	private List<Midia> midias;
 	private String autor;
 	
-
-	public Post(String texto, LocalDateTime data, List<String> hashtags, List<Midia> midias) throws PostException {
+	public Post(String texto, LocalDateTime data, List<String> hashtags, List<Midia> midias) {
 
 		this.texto = texto;
 		this.popularidade = 0;
@@ -31,7 +30,7 @@ public class Post implements Comparable<Post> {
 		this.autor = null;
 		
 	}
-
+	
 	public void curtir(int pontos) {
 		this.like += 1;
 		this.popularidade += pontos;
@@ -42,18 +41,8 @@ public class Post implements Comparable<Post> {
 		this.popularidade -= pontos;
 	}
 	
-		
 	public LocalDateTime getData() {
 		return this.data;
-	}
-		
-	public boolean comparaData(LocalDateTime outroData) {
-		if (this.data.getMonth() != outroData.getMonth() &&
-			this.data.getYear() != outroData.getYear() &&
-			this.data.getDayOfMonth() != outroData.getDayOfMonth() ) {
-				return false;
-			}
-		return true;		
 	}
 	
 	public List<String> getHashtags() {
@@ -66,7 +55,7 @@ public class Post implements Comparable<Post> {
 			this.texto += " " + hashtag;
 		}
 	}
-	 			
+ 
 	public String getAutor(){
 		return this.autor;
 	}
@@ -76,7 +65,7 @@ public class Post implements Comparable<Post> {
 	}
 
 	//Lançar excecao
-	public String getPost(String atributo) {
+	public String getPost(String atributo) throws LogicaException {
 		if (atributo.equals("Data")) {
 			return getDataString();
 		} else if (atributo.equals("Conteudo")) {
@@ -86,7 +75,7 @@ public class Post implements Comparable<Post> {
 		} else if (atributo.equals("Mensagem")) {
 			return getConteudo();
 		} else {
-			return "Aqui tem que lancar exception getPost(Atributo)";
+			throw new LogicaException("Informacao indisponivel");
 		}
 	}
 	
@@ -107,7 +96,7 @@ public class Post implements Comparable<Post> {
 		}
 		return novoConteudo;
 	} 
-	
+
 	public String getConteudoPost(int indice) throws LogicaException, PostException {
 		if (indice > this.midias.size() - 1) {
 			throw new LogicaException("Item #" + indice + " nao existe nesse post, ele possui apenas " + this.midias.size() + " itens distintos.");
@@ -126,7 +115,7 @@ public class Post implements Comparable<Post> {
 	public String getMidias(int indice) {
 		return this.midias.get(indice).toString();
 	}
-
+	
 	public String getDataString() {
 		if (this.data.getSecond() == 0) {
 			return this.data.toString().replace("T", " ") + ":00";
@@ -135,19 +124,14 @@ public class Post implements Comparable<Post> {
 	}
 		
 
-	
-	public void setTexto(String texto) {
-		this.texto = texto;
-	}
-
 	public int getLike() {
 		return this.like;
 	}
-	
+ 
 	public int getDeslike() {
 		return this.deslike;
 	}
-		
+	
 	private String getHashtagsStr() {
 		String hastags = "";
 		int  cont = 0;
@@ -162,7 +146,7 @@ public class Post implements Comparable<Post> {
 		}
 		return hastags;
 	}
-	
+ 
 	public int getPopularidade() {
 		return this.popularidade;
 	}

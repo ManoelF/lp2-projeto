@@ -1,3 +1,7 @@
+/**
+ * Classe <code>FactoryPost</code> tem a responsabilidade de criar um <code>Post</code> com todoas 
+ * as informaçoes integras, tratando todas as excecoes.
+ */
 package logica;
 
 import java.time.LocalDateTime;
@@ -6,6 +10,7 @@ import java.util.List;
 
 import logica.midia.Mensagem;
 import logica.midia.Midia;
+import exceptions.LogicaException;
 import exceptions.PostException;
 
 public class FactoryPost {
@@ -18,8 +23,25 @@ public class FactoryPost {
 		this.util = Util.getInstancia();
 		this.fabricaMidia = new FactoryMidia();
 	}
-	
-	public Post criaPost(String texto, String data) throws PostException {
+	/**
+	 * Criao do Post.
+	 * 
+	 * @param texto
+	 * 			Texto referente a entrada do Usuario para criacao 
+	 * 			de seu Post.
+	 * 
+	 * @param data
+	 * 			Data em que o Post foi criado.
+	 * 
+	 * @return Post
+	 * 		
+	 * @throws PostException
+	 * 			{@link PostException}
+	 * 
+	 * @throws LogicaException
+	 * 			{@link LogicaException}
+	 */
+	public Post criaPost(String texto, String data) throws PostException, LogicaException {
 		if (texto == null || texto.trim().length() == 0) {
 			// lancar Exception
 		}
@@ -51,7 +73,15 @@ public class FactoryPost {
 	}
 	
 
-	
+	/**
+	 * Busca das midias contidas na mensagem do Post.
+	 * 
+	 * @param mensagem
+	 * 			Mensagem do Post.
+	 * 
+	 * @return List<Midia>
+	 * 			Lista com as midias do Post.
+	 */
 	private List<Midia> buscaMidia(String mensagem) {
 		this.fabricaMidia = new FactoryMidia();
 		List<String> listMidias = util.getMidia(mensagem);
@@ -68,7 +98,21 @@ public class FactoryPost {
 		return midias;
 	}
 	
-	
+	/**
+	 * Validacao da criacao do Post com a virificacao da 
+	 * quantidade de caracteres maximo permitido.
+	 * 
+	 * @param texto
+	 * 		Texto de criacao do Post.
+	 * 
+	 * @return Boolean
+	 * 			Retorno sera <b>True</b> caso a quantidade de caracteres do texto
+	 * 			seja menor ou igual a 200.
+	 * 
+	 * @throws PostException
+	 * 			Lanca {@link PostException} caso o texto tenha acima de
+	 * 			200 caracteres.
+	 */
 	private boolean verificaTam(String texto) throws PostException {
 		String novoTexto = Util.getInstancia().encontraTexto(texto);
 		if (novoTexto.length() >= 200) {

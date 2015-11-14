@@ -99,7 +99,7 @@ public class Facade {
 		this.controller.descurtirPost(amigo, post);
 	}
 	
-	public void criaPost(String mensagem, String data) throws PostException {
+	public void criaPost(String mensagem, String data) throws PostException, LogicaException {
 		this.controller.criaPost(mensagem, data);
 	}
 	
@@ -107,7 +107,7 @@ public class Facade {
 		return this.controller.getPost(post);
 	}
 	
-	public String getPost(String atributo, int post) {
+	public String getPost(String atributo, int post) throws LogicaException {
 		return this.controller.getPost(atributo, post);
 	}	
 	
@@ -123,7 +123,7 @@ public class Facade {
 		return this.controller.qtdCurtidasDePost(indice);
 	}
 	
-	public int qtdRejeicoesDePost(int indice) {
+	public int qtdRejeicoesDePost(int indice) throws PostException, LogicaException {
 		return this.controller.qtdRejeicoesDePost(indice);
 	}
 	
@@ -151,11 +151,11 @@ public class Facade {
 		return this.controller.atualizaRanking();	
 	}
 	
-	public void atualizaFeed() {
+	public void atualizaFeed() throws LogicaException {
 		controller.atualizaFeed();		
 	}
 	
-	public String getFeed(int post) {
+	public String getFeed(int post) throws LogicaException {
 		return controller.getFeed(post);
 	}
 	

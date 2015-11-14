@@ -58,6 +58,8 @@ public class TestePost {
 			
 		} catch (PostException erro){
 			Assert.assertEquals("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.", erro.getMessage());
+		} catch (LogicaException e) {
+			Assert.fail();
 		}
 	}
 
@@ -79,6 +81,8 @@ public class TestePost {
 			Assert.assertTrue(perdao.getPopularidade() == 95);
 			
 		} catch (EntradaException erro) {
+			Assert.fail();
+		} catch (LogicaException e) {
 			Assert.fail();
 		}
 	}
@@ -105,6 +109,8 @@ public class TestePost {
 			frio = fabricaPost.criaPost("#amor", data);
 			
 		} catch(EntradaException erro) {
+			Assert.fail();
+		} catch (LogicaException e) {
 			Assert.fail();
 		}
 

@@ -1,3 +1,7 @@
+/**
+ * Classe <code>TendingTopics</code> responsavel por gerencias todas as hashtags do sistema
+ * oferecendo assim, um ranking da treis mais frequentes.
+ */
 package logica;
 
 import java.util.ArrayList;
@@ -10,12 +14,17 @@ public class TrendingTopics {
 	private List<Tag> trending;
 	private List<Tag> tagsNaRede;
 	
+	/**
+	 * Contrutor Trending.
+	 */
 	public TrendingTopics() {
 		this.trending = new ArrayList<>();
 		this.tagsNaRede = new ArrayList<>();
 	}
 	
-	
+	/**
+	 * Busca na lista de Tags do sistema as 3 mais frequentes.
+	 */
 	private void buscaTagsMaisPopulares() {		
 		Collections.sort(this.tagsNaRede);
 		
@@ -25,7 +34,13 @@ public class TrendingTopics {
 	}
 	
 	
-	
+	/**
+	 * Atualiza as tres Tags mais populares e imprime 
+	 * as mesmas.
+	 * 
+	 * @return String
+	 * 		Tres Tags mais populares na rede.
+	 */
 	public String atualizaTrendingTopic() {
 		this.trending = new ArrayList<>();
 		buscaTagsMaisPopulares();
@@ -36,7 +51,12 @@ public class TrendingTopics {
 		}
 		return impressao;
 	}
-		
+	/**
+	 * Adiciona uma Tag na lista de Tags do Sistema.
+	 * 
+	 * @param tags
+	 * 			Tag a ser adicionada.
+	 */
 	public void adicionaTag(List<Tag> tags) {
 		
 		for (Tag tag : tags) {
@@ -49,6 +69,12 @@ public class TrendingTopics {
 		}
 	}
 	
+	/**
+	 * Adiciona as Tags epicWin e epicFail ao sistema
+	 * 
+	 * @param hashtag
+	 * 			Tag a ser adicionada.
+	 */
 	public void adicionaTag(String hashtag) {
 		Tag tag = new Tag(hashtag);
 		

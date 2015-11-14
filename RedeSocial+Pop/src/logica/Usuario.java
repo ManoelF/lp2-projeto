@@ -107,7 +107,7 @@ public class Usuario implements Comparable<Usuario> {
 		this.amigos.remove(usuario);
 	}
 
-	public void criaPost(String mensagem, String data) throws PostException {
+	public void criaPost(String mensagem, String data) throws PostException, LogicaException {
 		Post novoPost = fabricaPost.criaPost(mensagem, data);
 		novoPost.setAutor(this.nome);
 		this.posts.add(novoPost);
@@ -172,7 +172,7 @@ public class Usuario implements Comparable<Usuario> {
  			return notificacaoAtual;
  		}
 	}
-
+//FALTA DOCUMENTAR OS GETTS E SETTS
 	public String getNome() {
 		return this.nome;
 	}
@@ -209,7 +209,7 @@ public class Usuario implements Comparable<Usuario> {
 		return this.posts.get(posts.size() - 1);
 	}
 
-	public String getPost(String atributo, int post) {
+	public String getPost(String atributo, int post) throws LogicaException {
 		return this.getPost(post).getPost(atributo);
 	}
 	
@@ -220,8 +220,8 @@ public class Usuario implements Comparable<Usuario> {
 	public List<Post> getPosts() {
 		return this.posts;
 	}
-	
-	public String getConteudo(String atributo, int indicePost) {
+
+	public String getConteudo(String atributo, int indicePost) throws LogicaException {
 		return this.posts.get(indicePost).getPost(atributo);
 	}
 	
@@ -250,8 +250,15 @@ public class Usuario implements Comparable<Usuario> {
 		
 	}
 	
-	public int qtdRejeicoesDePost(int indice) {
-		return this.posts.get(indice).getDeslike();
+	public int qtdRejeicoesDePost(int indice) throws LogicaException, PostException {
+		if (indice> this.posts.size()) {
+			throw new LogicaException("Post #" + indice + " nao existe. Usuarix possui apenas "+ this.posts.size() +" post(s).");
+		} else if (indice < 0) {
+			throw new PostException("Requisicao invalida. O indice deve ser maior ou igual a zero.");
+		} else {
+			return this.posts.get(indice).getDeslike();
+		}
+		
 	}
 	
 	public List<Post> getPostsToFeed() {
@@ -277,7 +284,7 @@ public class Usuario implements Comparable<Usuario> {
 	public String getArquivo(int indiceArquivo, int indicePost) {
 		return this.posts.get(indicePost).getMidias(indiceArquivo);	
 	}
-		
+	
 	public List<Usuario> getAmigos() {
 		return amigos;
 	}
@@ -294,12 +301,12 @@ public class Usuario implements Comparable<Usuario> {
 		this.popsExtra += pops;
 		atualizaPops();
 	}
-	
+
 	public void setPops(int pops) {
 		this.pops = pops;
 		atualizaPopularidade();
 	}
-	
+
 	public void setNome(String novoNome) throws AtualizaPerfilException {
 		if (novoNome == null || !util.verificaAtributo(novoNome)){
 			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Nome dx usuarix nao pode ser vazio.");
@@ -313,6 +320,7 @@ public class Usuario implements Comparable<Usuario> {
 		}
 		this.email = novoEmail;
 	}
+	
 	
 	public boolean setSenha(String valor, String velhaSenha) throws AtualizaPerfilException {
 		if (this.senha.equals(velhaSenha)) {
@@ -329,7 +337,6 @@ public class Usuario implements Comparable<Usuario> {
 		} 
 	}	
 
-	// controlar as excecoes de formato e data invalidas
 	public void setNascimento(String novoNascimento) throws AtualizaPerfilException {
 		if (novoNascimento == null || novoNascimento.trim().length() == 0) {
 			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Formato de data esta invalida.");

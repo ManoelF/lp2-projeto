@@ -112,7 +112,7 @@ public class Controller {
 		}
 	}
 	
-	public void criaPost(String mensagem, String data) throws PostException {
+	public void criaPost(String mensagem, String data) throws PostException, LogicaException {
 		this.usuarioLogado.criaPost(mensagem, data);
 		
 		List<String> hashtags = this.usuarioLogado.getUltimoPost().getHashtags();
@@ -205,7 +205,7 @@ public class Controller {
 		}
 	}
 
-	public String atualizaFeed() {
+	public String atualizaFeed() throws LogicaException {
 		this.usuarioLogado.atualizaFeed();
 		
 		StringBuffer feed = new StringBuffer();
@@ -236,7 +236,7 @@ public class Controller {
 		return feed.toString();
 	}
 	
-	public String getFeed(int i) {
+	public String getFeed(int i) throws LogicaException {
 		Post post = this.usuarioLogado.getFeed().get(i);
 		StringBuffer postBuffer = new StringBuffer();
 		final String endOfLine = " ";
@@ -407,7 +407,7 @@ public class Controller {
 		}
 	}
 	
-	public String getPost(String atributo, int post) { 
+	public String getPost(String atributo, int post) throws LogicaException { 
 		return this.usuarioLogado.getPost(atributo, post);
 	}
 	
@@ -423,7 +423,7 @@ public class Controller {
 		return this.usuarioLogado.qtdCurtidasDePost(indice);
 	}
 	
-	public int qtdRejeicoesDePost(int indice) {
+	public int qtdRejeicoesDePost(int indice) throws PostException, LogicaException {
 		return this.usuarioLogado.qtdRejeicoesDePost(indice);
 	}
 

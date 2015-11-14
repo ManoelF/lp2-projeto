@@ -1,3 +1,6 @@
+/**
+ * Classe <code>Tag</code> representa a hashtag que esta contida no Post, podendo ter uma ou mais(diferentes). 
+ */
 package logica;
 
 public class Tag implements Comparable<Tag> {
@@ -5,23 +8,43 @@ public class Tag implements Comparable<Tag> {
 	private int frequencia;
 	private String hashtag; 
 	
+	/**
+	 * Construtor <b>Tag</b>.
+	 * 
+	 * @param hashtag
+	 * 		String que identifica a Tag.
+	 */
 	public Tag(String hashtag) {
 		this.hashtag = hashtag;
 		this.frequencia = 1;
 	}
 	
+	/**
+	 * Hashtag
+	 *  
+	 * @return String
+	 * 			Nome da hashtag		
+	 */
 	public String getHashtag() {
 		return this.hashtag;
 	}
 	
+	/**
+	 * Frequencia com que a <b>Tag</b> aparece no sistema.
+	 * 
+	 * @return Int
+	 * 			Ferequencia.
+	 */
 	public int getFrequencia() {
 		return this.frequencia;
 	}
-
+	
+	/**
+	 * Incrementa na variavel frequencia cada vez que uma 
+	 * Tag eh postada.
+	 */
 	public void addFrequencia() {
-		//System.out.print("\n"+ this.hashtag+ " ::: Add freq :"+ this.frequencia+ "|| nova freq ");
 		this.frequencia += 1;
-		//System.out.println(this.frequencia);
 	}
 	
 	
