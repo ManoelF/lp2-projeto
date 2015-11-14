@@ -37,6 +37,7 @@ public class Controller {
 		this.usuariosCadastrados = new ArrayList<Usuario>();
 		this.trendingTopics = new TrendingTopics();
 		this.ranking = new Ranking();
+		this.util = Util.getInstancia();
 
 
 	}
@@ -115,8 +116,12 @@ public class Controller {
 		this.usuarioLogado.criaPost(mensagem, data);
 		
 		List<String> hashtags = this.usuarioLogado.getUltimoPost().getHashtags();
-		addicionaTags(hashtags);
-		
+		popularizaTrending(hashtags);
+	}
+	
+	private void popularizaTrending(List<String> hashtags){
+		List<Tag> tags = util.converteParaTag(hashtags);
+		this.trendingTopics.adicionaTag(tags);
 	}
 	
 	public void curtirPost(String amigo, int post) throws LogicaException {
@@ -126,10 +131,22 @@ public class Controller {
 			throw new UsuarioNaoCadastradoException(amigo);
 		} else {
 			if (this.usuarioLogado.temAmigo(usuario)) {
+				
+				boolean epicWin = usuario.getPost(post).getHashtags().contains("#epicwin"); 
+				boolean epicFail = usuario.getPost(post).getHashtags().contains("#epicfail");
+				
 				this.usuarioLogado.curtir(usuario.getPost(post));
 				usuario.recebeNotificacao(this.usuarioLogado.getNome() + " curtiu seu post de " + usuario.getPost(post).getDataString() + ".");
 				usuario.atualizaPops();
-			} else {
+				
+				// add #epicwin ou #epicfail no trending, se for o caso
+				if (usuario.getPost(post).getHashtags().contains("#epicwin") && epicWin == false) {
+					this.trendingTopics.adicionaTag("#epicwin");
+				} else if (usuario.getPost(post).getHashtags().contains("#epicfail") && epicFail == false) {
+					this.trendingTopics.adicionaTag("#epicfail");
+				}
+				
+			} else { // quando os usuarios nao sao amigos
 				throw new LogicaException("Este usuario nao esta na sua lista de amigos.");
 			}
 		}
@@ -382,6 +399,14 @@ public class Controller {
 		return this.usuarioLogado.getPops();
 	}
 	
+	public int getPopsUsuario(String email) throws LogoutException {
+		if (this.usuarioLogado != null) {
+			throw new LogoutException("Erro na consulta de Pops. Um usuarix ainda esta logadx.");
+		} else {
+			return pesquisaUsuario(email).getPops();
+		}
+	}
+	
 	public String getPost(String atributo, int post) { 
 		return this.usuarioLogado.getPost(atributo, post);
 	}
@@ -389,9 +414,17 @@ public class Controller {
 	public String getConteudoPost(int indice, int post) throws LogicaException, PostException {
 		return this.usuarioLogado.getConteudoPost(indice, post);
 	}	
-
-	private void addicionaTags(List<String> tags) {
-		this.trendingTopics.adicionaHashtag(tags);
+	
+	public int getPopsPost(int indice){
+		return this.usuarioLogado.getPopsPost(indice);
+	}
+	
+	public int qtdCurtidasDePost(int indice) throws PostException, LogicaException {
+		return this.usuarioLogado.qtdCurtidasDePost(indice);
+	}
+	
+	public int qtdRejeicoesDePost(int indice) {
+		return this.usuarioLogado.qtdRejeicoesDePost(indice);
 	}
 
 	private Usuario pesquisaUsuario(String EmailInserido) {
@@ -409,12 +442,12 @@ public class Controller {
 	}
 	
 	public String atualizaRanking() throws LogicaException {
-		//ranking = new Ranking();
-		
 		return ranking.atualizaRanking(getUsuariosCadastrados());
-	//	trendingTopics.atualizaTrendingTopic();
-		
-	} // fecha ranking
+	}
+	
+	public void adicionaPops(int pops) {
+		this.usuarioLogado.adicionaPops(pops);
+	}
 	
 	public void setPops(int pop) {
 		this.usuarioLogado.setPops(pop);

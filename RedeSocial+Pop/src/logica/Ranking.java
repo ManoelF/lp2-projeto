@@ -38,10 +38,8 @@ public class Ranking {
 
 		int cont = 0;
 		for (int i = 0; i < listaDeUsuarios.size(); i++) {
-			if (listaDeUsuarios.get(i) != null) {
-				comMaisPop.add(listaDeUsuarios.get(i));
-				cont++;
-			}
+			comMaisPop.add(listaDeUsuarios.get(i));
+			cont++;
 			if (cont == 3) {
 				break;
 			}
@@ -52,10 +50,8 @@ public class Ranking {
 
 			int contador = 0;
 			for (int i = 0; i < listaDeUsuarios.size() - TAMANHO_MAXIMO; i++) {
-				if (listaDeUsuarios.get(i) != null) {
-					comMenosPop.add(listaDeUsuarios.get(i));
-					contador++;
-				}
+				comMenosPop.add(listaDeUsuarios.get(i));
+				contador++;
 				if (contador == 3) {
 					break;
 				}
@@ -70,16 +66,16 @@ public class Ranking {
 
 	@Override
 	public String toString() {
-		String imprime = "Mais Populares: ";
+		String imprime = "Mais Populares:";
 
 		for (int i = 0; i < comMaisPop.size(); i++) {
-			imprime += " (" + (i + 1) + ")" + comMaisPop.get(i).getNome() + " " + comMaisPop.get(i).getPops();
+			imprime += " (" + (i + 1) + ") " + comMaisPop.get(i).getNome() + " " + comMaisPop.get(i).getPops() + ";";
 		}
 		
 		if(comMenosPop.size() != 0){
-			imprime += " | Menos Populares: ";
+			imprime += " | Menos Populares:";
 			for (int i = 0; i < comMenosPop.size(); i++) {
-				imprime +=  " (" + (i + 1) + ")" + comMenosPop.get(i).getNome() + " " + comMenosPop.get(i).getPops() ;
+				imprime +=  " (" + (i + 1) + ") " + comMenosPop.get(i).getNome() + " " + comMenosPop.get(i).getPops() + ";" ;
 			}
 		}
 		
