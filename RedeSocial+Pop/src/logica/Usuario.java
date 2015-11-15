@@ -39,37 +39,12 @@ public class Usuario implements Comparable<Usuario> {
 	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException {
 
  		this.util = Util.getInstancia();
-
-		if (nome == null || !util.verificaAtributo(nome)){
-			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Nome dx usuarix nao pode ser vazio.");
-		}
-
-		if (email == null || !util.verificaEmail(email)) {
-			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.");
-		}
-		if (senha == null || !util.verificaSenha(senha)) {
-			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Senha dx usuarix nao pode ser vazio.");
-		}
-		if (nascimento == null || nascimento.trim().length() == 0) {
-			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de data esta invalida.");
-		}
-		if (util.verificaFormatoData(nascimento) == false) {
-			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Formato de data esta invalida.");
-		}
-		if (util.verificaDataValida(nascimento) == false) {
-			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Data nao existe.");
-		}
-		
-		if (imagem == null || imagem.trim().length() == 0) {
-			throw new CadastroInvalidoException("Erro no cadastro de Usuarios. Imagem inserida esta invalida.");
-		} else {
-			this.imagem = imagem;
-		}
 		
 		this.nascimento = util.recebeData(nascimento);
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
+		this.imagem = imagem;
 		this.pops = 0;
 		this.popsExtra = 0;
 		this.amigos = new ArrayList<>();
