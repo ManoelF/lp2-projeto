@@ -12,7 +12,7 @@ import logica.midia.Video;
 
 public class FactoryMidia {
 	
-	Midia midia;
+	private Midia midia;
 	/**
 	 * Construtor FactoryMidia.
 	 */
