@@ -103,6 +103,10 @@ public class Facade {
 		this.controller.criaPost(mensagem, data);
 	}
 	
+	public void salvaPosts() throws LogoutException {
+		this.controller.salvaPosts();
+	}
+	
 	public String getPost(int post) {
 		return this.controller.getPost(post);
 	}

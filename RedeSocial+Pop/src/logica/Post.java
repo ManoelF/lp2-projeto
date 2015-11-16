@@ -3,6 +3,8 @@ package logica;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.sound.sampled.Line;
+
 import exceptions.LogicaException;
 import exceptions.PostException;
 import logica.midia.Midia;
@@ -154,6 +156,26 @@ public class Post implements Comparable<Post> {
 	@Override
 	public int compareTo(Post outroPost) {
 		return this.data.compareTo(outroPost.getData());
+	}
+	
+	
+	public String toString(int indice) {
+		StringBuffer postFormatado = new StringBuffer();
+		String novaLinha = System.lineSeparator();
+		postFormatado.append("Post #" + indice +  " " + getDataString() + novaLinha);
+		postFormatado.append("Conteudo:" + novaLinha);
+		
+		for (int i = 0; i < this.midias.size(); i++) {
+			postFormatado.append(midias.get(i).toString() + novaLinha);
+		}
+		
+		postFormatado.append(getHashtagsStr() + novaLinha);
+		postFormatado.append("+Pop: " + this.popularidade);
+		postFormatado.append(novaLinha);
+		postFormatado.append(novaLinha);
+		
+		return postFormatado.toString();
+		
 	}
 
 }

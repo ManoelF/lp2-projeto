@@ -1,5 +1,11 @@
 package logica;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -371,4 +377,40 @@ public class Usuario implements Comparable<Usuario> {
 		return false;
 	}
 	
+	public void salvaPosts() {
+		String diretorio = "postsUsuarios/" + getNomeFile() + ".txt";
+		File arquivo = null;
+		FileWriter fluxoSaida = null;
+		
+		try {
+			arquivo = new File(diretorio);
+			
+			
+			if (arquivo.exists()) {
+				fluxoSaida = new FileWriter(arquivo);
+				
+			} else {
+				fluxoSaida = new FileWriter(arquivo);
+			}
+			
+			BufferedWriter stream = new BufferedWriter(fluxoSaida);
+			for(int i = 0; i < this.posts.size(); i++) {
+				stream.append(this.posts.get(i).toString(i + 1));
+			}
+			stream.close();
+			
+		} catch (FileNotFoundException erro) {
+			System.out.println(erro.getMessage() + "FlNF");
+		} catch (IOException erro) {
+			System.out.println(erro.getMessage() + "IOE");
+		}
+		
+		
+	}
+	
+	private String getNomeFile() {
+		int indice = this.email.indexOf("@");
+		String nome = this.email.substring(0, indice);
+		return nome;
+	}
 }

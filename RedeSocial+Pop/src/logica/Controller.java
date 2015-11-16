@@ -118,7 +118,14 @@ public class Controller {
 		List<String> hashtags = this.usuarioLogado.getUltimoPost().getHashtags();
 		popularizaTrending(hashtags);
 	}
-	
+	public void salvaPosts() throws LogoutException {
+
+		if (this.usuarioLogado == null) {
+			throw new LogoutException("Nao eh possivel salvar historico. Nenhum usuarix esta logadx no +pop.");
+		} else {
+			this.usuarioLogado.salvaPosts();
+		}
+	}
 	private void popularizaTrending(List<String> hashtags){
 		List<Tag> tags = util.converteParaTag(hashtags);
 		this.trendingTopics.adicionaTag(tags);
