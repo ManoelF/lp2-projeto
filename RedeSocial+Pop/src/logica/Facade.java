@@ -6,7 +6,6 @@ import easyaccept.EasyAccept;
 import exceptions.AtualizaPerfilException;
 import exceptions.EntradaException;
 import exceptions.FechaSistemaException;
-import exceptions.IniciaSistemaException;
 import exceptions.LogicaException;
 import exceptions.LogoutException;
 import exceptions.NaoHaNotificacoesException;

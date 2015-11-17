@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import exceptions.IniciaSistemaException;
 import exceptions.PostException;
 import exceptions.RedeSocialMaisPopException;
 
@@ -303,12 +302,15 @@ public class Util implements Serializable {
 		
 		File file = new File("sistema.dat");
 		Controller controller = null; 
-		
+		if (!file.exists()) {
+			return null;
+		}
 		try {
 			
 			FileInputStream inFile = new FileInputStream(file);
 			BufferedInputStream inStream = new BufferedInputStream(inFile);
-				ObjectInputStream stream = new ObjectInputStream(inStream);
+			ObjectInputStream stream = new ObjectInputStream(inStream);
+			
 			controller = (Controller) stream.readObject();
 			stream.close();			
 			
