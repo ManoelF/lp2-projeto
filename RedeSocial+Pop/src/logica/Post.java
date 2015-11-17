@@ -1,5 +1,6 @@
 package logica;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -9,8 +10,12 @@ import exceptions.LogicaException;
 import exceptions.PostException;
 import logica.midia.Midia;
 
-public class Post implements Comparable<Post> {
+public class Post implements Comparable<Post>, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5112986287987768989L;
 	private String texto;
 	private LocalDateTime data;
 	private int like;

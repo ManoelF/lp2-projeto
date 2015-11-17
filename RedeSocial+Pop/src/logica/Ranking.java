@@ -3,13 +3,18 @@ package logica;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import logica.Usuario;
 import logica.ordenacao.OrdenaDecrescente;
 
-public class Ranking {
+public class Ranking implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2224815380849481101L;
 	private List<Usuario> comMaisPop;
 	private List<Usuario> comMenosPop;
 	private Comparator<Usuario> comparador;

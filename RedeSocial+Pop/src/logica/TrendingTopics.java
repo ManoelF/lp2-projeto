@@ -4,11 +4,17 @@
  */
 package logica;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TrendingTopics {
+public class TrendingTopics implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2284722535015707028L;
+
 	private final int TRENDING = 3;
 		
 	private List<Tag> trending;

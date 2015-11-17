@@ -3,9 +3,11 @@
  */
 package logica.tipopopularidade;
 
+import java.io.Serializable;
+
 import logica.Post;
 
-public interface TipoPopularidade {
+public interface TipoPopularidade extends Serializable {
 	
 	/**
 	 * Curtir Post de um Usuario.

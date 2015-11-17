@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -24,8 +25,12 @@ import logica.tipopopularidade.IconePOP;
 import logica.tipopopularidade.Normal;
 import logica.tipopopularidade.TipoPopularidade;
 
-public class Usuario implements Comparable<Usuario> {
+public class Usuario implements Comparable<Usuario>, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -178302649978495087L;
 	private String nome;
 	private String email;
 	private LocalDate nascimento;

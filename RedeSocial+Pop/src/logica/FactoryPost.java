@@ -4,6 +4,7 @@
  */
 package logica;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,12 @@ import logica.midia.Midia;
 import exceptions.LogicaException;
 import exceptions.PostException;
 
-public class FactoryPost {
+public class FactoryPost implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1484066119644680597L;
 	private Post post;
 	private Util util;
 	private FactoryMidia fabricaMidia;

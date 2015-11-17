@@ -7,6 +7,10 @@ package logica.tipopopularidade;
 import logica.Post;
 
 public class IconePOP implements TipoPopularidade {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7952544835516036447L;
 	private final int POPS = 50;
 	private final int qntPostFeed = 6;
 	

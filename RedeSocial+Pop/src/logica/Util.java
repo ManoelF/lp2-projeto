@@ -1,21 +1,36 @@
 package logica;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import exceptions.IniciaSistemaException;
 import exceptions.PostException;
+import exceptions.RedeSocialMaisPopException;
 
-public class Util {
+public class Util implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2466398236453125276L;
 	private static Util INSTANCIA;
 	
 	private Util() {
 		
 	}
-
 
     public static Util getInstancia() {
     	synchronized (Util.class) {
@@ -262,5 +277,51 @@ public class Util {
 		return true;
 	}
 
+	public void salvaSistema(Controller controller) throws RedeSocialMaisPopException {
+		
+		File file = new File("sistema.dat");
+		FileOutputStream outFile;
+		try {
+			
+			outFile = new FileOutputStream(file);
+			BufferedOutputStream outStream = new BufferedOutputStream(outFile);
+			ObjectOutputStream stream = new ObjectOutputStream(outStream);
+			stream.writeObject(controller);
+			stream.close();
+					
+		} catch (FileNotFoundException e) {
+			System.out.println("NOT FOUND" );
+			throw new RedeSocialMaisPopException();
+		} catch (IOException e) {
+			System.out.println("IOEXCEPTION " + e.getMessage());
+			throw new RedeSocialMaisPopException();
+		}   // Erro ao fechar sistema
+		
+	}
+	
+	public Controller restauraSistema() {
+		
+		File file = new File("sistema.dat");
+		Controller controller = null; 
+		
+		try {
+			
+			FileInputStream inFile = new FileInputStream(file);
+			BufferedInputStream inStream = new BufferedInputStream(inFile);
+				ObjectInputStream stream = new ObjectInputStream(inStream);
+			controller = (Controller) stream.readObject();
+			stream.close();			
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("FILENOT FOUND "+ e.getMessage());
+		} catch (IOException e) {
+			System.out.println("IOEX "+ e.getMessage());
+		} catch (ClassNotFoundException e) {
+			System.out.println("CLASS NOT FOUND "+ e.getMessage());
+		}
+		
+		return controller;
+		
+	}
 
 }

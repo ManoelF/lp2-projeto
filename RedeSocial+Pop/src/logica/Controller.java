@@ -1,5 +1,6 @@
 package logica;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,8 +19,12 @@ import exceptions.SenhaProtegidaException;
 import exceptions.UsuarioNaoCadastradoException;
 
 
-public class Controller {
+public class Controller implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private FactoryUsuario fabricaUsuario;
 	private List<Usuario> usuariosCadastrados;
 	private Usuario usuarioLogado;

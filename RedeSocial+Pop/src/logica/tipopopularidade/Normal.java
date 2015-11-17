@@ -9,6 +9,10 @@ import logica.Post;
 
 
 public class Normal implements TipoPopularidade  {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8541491395269157369L;
 	private final int POPS = 10;
 	private final int qntPostFeed = 2;
 	

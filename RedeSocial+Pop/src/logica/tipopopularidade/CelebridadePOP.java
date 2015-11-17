@@ -11,6 +11,10 @@ import java.time.LocalDateTime;
 import logica.Post;
 
 public class CelebridadePOP implements TipoPopularidade {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1083280831921543369L;
 	private final int POPS = 25;
 	private final int qntPostFeed = 4;
 	

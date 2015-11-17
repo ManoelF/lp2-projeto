@@ -1,33 +1,46 @@
 package logica;
 
+import java.io.Serializable;
+
 import easyaccept.EasyAccept;
 import exceptions.AtualizaPerfilException;
 import exceptions.EntradaException;
 import exceptions.FechaSistemaException;
+import exceptions.IniciaSistemaException;
 import exceptions.LogicaException;
 import exceptions.LogoutException;
 import exceptions.NaoHaNotificacoesException;
 import exceptions.PostException;
+import exceptions.RedeSocialMaisPopException;
 import exceptions.SenhaProtegidaException;
 import exceptions.UsuarioNaoCadastradoException;
 
-public class Facade {
+public class Facade implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8366038152046401019L;
 	private Controller controller;
+	private Util util;
 		
 	public Facade() {
-		this.controller = new Controller();
+		this.util = Util.getInstancia();
 	}
 	
-	public void iniciaSistema() {
-		
+	public void iniciaSistema()  {
+			this.controller = util.restauraSistema();
+			if (this.controller == null) {
+				this.controller = new Controller();
+			}
+
 	}
 	
-	public void fechaSistema() throws FechaSistemaException {
+	public void fechaSistema() throws RedeSocialMaisPopException {
 		if (controller.getUsuarioLogado() != null) {
 			throw new FechaSistemaException();
 		} else {
-			// FechaSistema
+			util.salvaSistema(controller);
 		}
 	}
 	

@@ -1,9 +1,15 @@
 package logica;
 
+import java.io.Serializable;
+
 import exceptions.CadastroInvalidoException;
 
-public class FactoryUsuario {
+public class FactoryUsuario implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5216069431632496757L;
 	private Usuario usuario;
 	private Util util;
 

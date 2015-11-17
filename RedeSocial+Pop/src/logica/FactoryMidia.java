@@ -4,14 +4,22 @@
  */
 package logica;
 
+import java.io.Serializable;
+
+import javax.security.sasl.SaslClient;
+
 import logica.midia.Audio;
 import logica.midia.Imagem;
 import logica.midia.Mensagem;
 import logica.midia.Midia;
 import logica.midia.Video;
 
-public class FactoryMidia {
+public class FactoryMidia implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4851003500482018414L;
 	private Midia midia;
 	/**
 	 * Construtor FactoryMidia.

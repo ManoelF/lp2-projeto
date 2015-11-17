@@ -3,7 +3,9 @@
  */
 package logica;
 
-public class Tag implements Comparable<Tag> {
+import java.io.Serializable;
+
+public class Tag implements Comparable<Tag>, Serializable {
 	
 	private int frequencia;
 	private String hashtag; 
