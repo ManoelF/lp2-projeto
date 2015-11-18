@@ -46,11 +46,33 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	private List<Post> posts;
 	private Feed feed;
 	private Util util;
-
+	
+	/**
+	 * Construtor de Usario, nele sera inserido todas as informacoes
+	 * necessaria para criacao de um novo Usuario.
+	 * 
+	 * @param nome
+	 * 		Nome do Usuario.
+	 * 
+	 * @param email
+	 * 		Email do Usuario.
+	 * 
+	 * @param senha
+	 * 		Senha de acesso do Usuario.
+	 * 
+	 * @param nascimento
+	 * 		Data de nascimento so Usuario.
+	 * 
+	 * @param imagem
+	 * 		Imagem do Usuario.
+	 * 
+	 * @throws CadastroInvalidoException
+	 * 		Se algum dos parametro requerido para criacao do Usuario nao estiver
+	 * 		de acordo com as especificacoes eh lancado essa excecao.		
+	 */
 	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException {
 
  		this.util = Util.getInstancia();
-		
 		this.nascimento = util.recebeData(nascimento);
 		this.nome = nome;
 		this.email = email;
@@ -67,46 +89,110 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		this.fabricaPost = new FactoryPost();
 	
 	}
- 	
+	
+	/**
+ 	 * Verificacao se o Usuario dado como parametro ja esta na lista de amigos.
+ 	 * 
+ 	 * @param usuario
+ 	 * 		Usuario a ser pesquisado na lista de amigos.
+ 	 * 
+ 	 * @return	Boolean
+ 	 * 		Se o Usuario ja estiver na lista retorna true, caso contrario o retorno e falso.
+ 	 */
 	public boolean temAmigo(Usuario usuario) {
 		return this.amigos.contains(usuario);	
 	}
-
+	
+	/**
+	 * Enviando uma solicitacao de amizade, juntamente com uma notificacao.
+	 * 
+	 * @param userDestino
+	 * 		Usuario que recebera o convite de amizade.
+	 */
 	public void adicionaAmigo(Usuario userDestino) {
 		userDestino.getSolicitacaoAmizade().add( this.email );
 		userDestino.recebeNotificacao(this.nome +" quer sua amizade.");
 	}
-
+	
+	/**
+	 * Rejeita uma solicitacao de amizade recebida, juntamente inserindo a notificacao
+	 * da rejeicao.
+	 * 
+	 * @param userRecusado
+	 * 		Usuario que tera o pedido de amizade recusado.
+	 */
 	public void rejeitaAmizade(Usuario userRecusado) {
 		userRecusado.recebeNotificacao(this.nome +" rejeitou sua amizade.");
 		this.solicitacaoAmizade.remove(userRecusado);
 		this.notificacoes.remove( this.notificacoes.size() - 1 );
 	}
-
+	
+	/**
+	 * Aceita uma solicitacao de amizade, adiciona o Usuario na lista de amigos,
+	 * remove da lista de pendentes e tambem a notificacao.
+	 * 
+	 * @param usuarioAceito
+	 * 		Usaurio aceito como amigo.
+	 */
 	public void aceitaAmizade(Usuario usuarioAceito) {
 		this.solicitacaoAmizade.remove(usuarioAceito);
 		this.notificacoes.remove( this.notificacoes.size() - 1 );
 		this.amigos.add(usuarioAceito);
 	}
-
+	
+	/**
+	 * Remover um Usuario da lista de amigos.
+	 * 
+	 * @param usuario
+	 * 		Usuaro a ser removido.
+	 */
 	public void removeAmigo(Usuario usuario) {
 		this.amigos.remove(usuario);
 	}
-
+	/**
+	 * Criacao de um Post.
+	 * 
+	 * @param mensagem
+	 * 		Conteudo do poster.
+	 * 
+	 * @param data
+	 * 		Data de criacao do poster.
+	 * 
+	 * @throws PostException
+	 * 		Excecao lancada caso os parametros nao satisfacam as epecificacoes de criacao 
+	 * 		de um post
+	 */
 	public void criaPost(String mensagem, String data) throws PostException, LogicaException {
 		Post novoPost = fabricaPost.criaPost(mensagem, data);
 		novoPost.setAutor(this.nome);
 		this.posts.add(novoPost);
 	}
-
+	
+	/**
+	 * Curtir um Post.
+	 * 
+	 * @param post
+	 * 		Post a ser curtido.
+	 */
 	public void curtir(Post post) {
 		this.popularidade.curtir(post);
 	}
 	
+	/**
+	 * Desurtir um Post.
+	 * 
+	 * @param post
+	 * 		Post a ser descurtido.
+	 */
 	public void descurtir(Post post) {
 		this.popularidade.descurtir(post);
 	}
-		
+	
+	/**
+	 * Itera sob todos os postes que o Usuario tem, 
+	 * faz uma soma da quantidade de pops e atualiza.
+	 * Metodo chamado apenas em {@code atualizaPopularidade()}.							
+	 */
 	public void atualizaPops() {
 		
 		this.pops = 0;
@@ -118,7 +204,11 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		this.pops += this.popsExtra;
 		atualizaPopularidade();
 	}
-	
+
+	/**
+	 * Verifica a quantidade de pops do Usuario e faz a mudanca
+	 * de tipo caso o Usuario esteja apto.
+	 */
 	public void atualizaPopularidade() {
 		if( this.pops < 500) {
 			this.popularidade = new Normal();
@@ -129,27 +219,57 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		}
 		
 	}
-
+	
+	/**
+	 * Atualizacao do Feed de noticias do Usuario
+	 */
 	public void atualizaFeed() {
 		this.feed.atualizaFeed();
 	}
-
+	
+	/**
+	 * Conta a quantidade de Posts do Feed
+	 * 
+	 * @return int
+	 * 		Quantidade de posts.
+	 */
 	public int qntPostsFeed() {
 		return this.popularidade.qntPostFeed();
 	}
 	
+	/**
+	 * Ordenacao da lista de <code>Post</code> no <code>Feed</code> por data de criacao.
+	 */
 	public void ordenaFeedPorData(){
 		this.feed.ordenaPorData();
 	}
-
+	
+	/**
+	 * Ordenacao da lista de <code>Post</code> no <code>Feed</code> por sua popularidade.
+	 */
 	public void ordenaFeedPorPopularidade(){
 		this.feed.ordenaPorPopularidade();
 	}
 	
+	/**
+	 * Usuario tem a notificaçao inserida em sua lista de notificaoes.
+	 * 
+	 * @param notificacao
+	 * 		Notificacao do Usuario.
+	 */
 	public void recebeNotificacao(String notificacao) {
 		this.notificacoes.addFirst(notificacao);
 	}
 	
+	/**
+	 * Mostrarar as notificacoes recebidas.
+	 * 
+	 * @return String
+	 * 		Notificacao recebida na sequencia.
+	 * 
+	 * @throws NaoHaNotificacoesException
+	 * 		Excecao caso  a notificacao seja {@code null}
+	 */
 	public String getNextNotificacao() throws NaoHaNotificacoesException {
  		String notificacaoAtual = this.notificacoes.pollLast(); 
  		if (notificacaoAtual == null) {
@@ -158,55 +278,158 @@ public class Usuario implements Comparable<Usuario>, Serializable {
  			return notificacaoAtual;
  		}
 	}
-//FALTA DOCUMENTAR OS GETTS E SETTS
+	
+	/**
+	 * Responsavel por retornar o nome do <code>Usuario</code>.
+	 * 
+	 * @return String 
+	 * 			Atual nome do usuario.
+	 */
 	public String getNome() {
 		return this.nome;
 	}
 	
+	/**
+	 * Responsavel por retornar o email do <code>Usuario</code>.
+	 * 
+	 * @return String 
+	 * 			Atual email do usuario.
+	 */
 	public String getEmail() {
 		return this.email;
 	}
-
+	
+	/**
+	 * Responsavel por retornar a senha do <code>Usuario</code>.
+	 * 
+	 * @return String 
+	 * 			Atual a senha do usuario.
+	 */
 	public String getSenha() {
 		return this.senha;
 	}
-
+	
+	/**
+	 * Responsavel por retornar a data de nascimento do <code>Usuario</code>.
+	 * 
+	 * @return String 
+	 * 			Atuala data de nascimento do usuario.
+	 */
 	public String getNascimento() {
 		return this.nascimento.toString();
 	}
 	
+	/**
+	 * Responsavel por retornar a imagem do <code>Usuario</code>.
+	 * 
+	 * @return String 
+	 * 			Atual a imagem do usuario.
+	 */
 	public String getImagem() {
 		return this.imagem;
 	}
 	
+	/**
+	 * Responsavel por retornar os POPs do <code>Usuario</code>.
+	 * 
+	 * @return String 
+	 * 			Atual os POPs do usuario.
+	 */
  	public int getPops() {
  		return this.pops;
  	}
  	
+ 	/**
+	 * Responsavel por retornar a popularidade do <code>Usuario</code>.
+	 * 
+	 * @return String 
+	 * 			Atual a popularidade do usuario.
+	 */
  	public String getPopularidade() {
  		return this.popularidade.popularidade();
  	}
-
+ 	
+ 	/**
+ 	 * Retorna um <code>Post</code> de acordo com o indice epecificado.
+ 	 * 
+ 	 * @param indice
+ 	 * 			Indice atual do <code>Post</code>.
+ 	 * @return
+ 	 */
 	public Post getPost(int indice) {
  		return posts.get(indice);
  	}
 	
+	/**
+	 * Retrorna o ultimo post que o Usuario criou.
+	 * 
+	 * @return Post
+	 * 			Ultimo <code>Post</code> do usuario.
+	 */
 	public Post getUltimoPost() {
 		return this.posts.get(posts.size() - 1);
 	}
-
+	
+	/**
+	 * Busca de um conteudo especifado
+	 * 
+	 * @param atributo
+	 * 		Palavra chave, que apartir dela retorna um 
+	 * 		conteudo especifico.(Hashtag, Data, Mensagem e Conteudo)
+	 * 
+	 * @param post
+	 * 		Posicao do Post que onde esta a informacao do atributo
+	 * 
+	 * @return String
+	 * 		Retorna Hashtag, Data, Mensagem ou Conteudo do Post especificado.
+	 * 
+	 * @exception 
+	 * 		Excecao lancada devido a nao existir o atributo especificado 
+	 * 		e/ou nao existir o indce na lista de Posts
+	 */
 	public String getPost(String atributo, int post) throws LogicaException {
 		return this.getPost(post).getPost(atributo);
 	}
 	
+	/**
+	 * Quantidade de Posts do Usuario
+	 * 
+	 * @return Int
+	 * 		Quantidade de Posts
+	 */
 	public int getQtdPost() {
 		return this.posts.size();
 	}
-		
+	
+	/**
+	 * {@code getPostsToFeed} tem por responsablididade retornar a quantidade
+	 * de Posts, segundo sua Popularidade, para popular o Feed de seus amigos. 
+
+	 * @return List<Post> 
+	 * 			Lista dos postes disponiveis para o Feed de seus amigos.
+	 */
 	public List<Post> getPosts() {
 		return this.posts;
 	}
 
+	/**
+	 * Busca a midia especificada como parametro.
+	 * 
+	 * @param indice
+	 * 		Indice indica o posicao da midia requerida.
+	 * 
+	 * @param post
+	 * 		Indice do Post.
+	 * 
+	 * @return String
+	 * 		Uma Midia e retornada (Audio, Imagem, Mensagem).
+	 * 
+	 * @throws LogicaException
+	 * 		Na lista de Post na ha o indice informado.
+	 * 
+	 * @throws PostException
+	 * 		O indice informado menor que zero.
+	 */
 	public String getConteudo(String atributo, int indicePost) throws LogicaException {
 		return this.posts.get(indicePost).getPost(atributo);
 	}
