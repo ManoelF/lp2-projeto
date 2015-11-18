@@ -1,3 +1,7 @@
+/**
+ * Classe <code>Ranking</code>, uma abstracao de um ranking de <code>Usuario</code>, sendo os mais populares e menos 
+ * populares em toda a Rede.
+ */
 package logica;
 
 import java.util.Collections;
@@ -11,29 +15,51 @@ import logica.ordenacao.OrdenaDecrescente;
 
 public class Ranking implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2224815380849481101L;
 	private List<Usuario> comMaisPop;
 	private List<Usuario> comMenosPop;
 	private Comparator<Usuario> comparador;
 	private final int TAMANHO_MAXIMO = 3;
 
+	/**
+	 * Contrutor de Ranking.
+	 */
 	public Ranking() {
 
 		this.comparador = new OrdenaDecrescente();
 		
 	} // fecha o construtor
 
+	/**
+	 * Ordenacao Crescente da lista de <b>Usuario</b>.	
+	 * 
+	 * @param usuarios
+	 * 			Lista de <b>Usuarios</b> a ser ordenada. 
+	 */
 	public void ordenaCrescente(List<Usuario> usuarios) {
 		Collections.sort(usuarios);
 	}
 
+	/**
+	 * Ordenacao Decrescente da lista de <b>Usuario</b>.	
+	 * 
+	 * @param usuarios
+	 * 			Lista de <b>Usuarios</b> a ser ordenada. 
+	 */
 	public void ordenaDecrescente(List<Usuario> usuarios) {
 		Collections.sort(usuarios, comparador);
 	}
 
+	/**
+	 * Atualizacao do ranking de usuarios, definindo os tres mais e menos populares.
+	 * 
+	 * @param listaDeUsuarios
+	 * 			Lista de <b>Usuarios</b> para atualizacao do <b>Ranking</b>.
+	 * 
+	 * @return String
+	 * 			Informacoes em formatacao especifica dos usuarios mais e menos 
+	 * 			populares da rede. 
+	 */
 	public String atualizaRanking(List<Usuario> listaDeUsuarios) {
 		
 		comMaisPop = new ArrayList<Usuario>();
@@ -68,7 +94,10 @@ public class Ranking implements Serializable {
 		
 		return chamaMetodo;
 	}
-
+	
+	/**
+	 * Formatacao dos Usuarios mais e menos populares na rede.
+	 */
 	@Override
 	public String toString() {
 		String imprime = "Mais Populares:";

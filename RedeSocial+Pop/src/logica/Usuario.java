@@ -1,9 +1,14 @@
+/**
+ * Classe <code>Usuario</code>, encapsulamento para os usuarios da <b>Rede Social +POP</b>. Neste objeto ha todoas as 
+ * informacoes necessarias para sua criacao.
+ * 
+ */
+
 package logica;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
@@ -27,9 +32,7 @@ import logica.tipopopularidade.TipoPopularidade;
 
 public class Usuario implements Comparable<Usuario>, Serializable {
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -178302649978495087L;
 	private String nome;
 	private String email;
@@ -434,6 +437,24 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		return this.posts.get(indicePost).getPost(atributo);
 	}
 	
+	/**
+	 * Busca a midia especificada como parametro.
+	 * 
+	 * @param indice
+	 * 		Indice indica o posicao da midia requerida.
+	 * 
+	 * @param post
+	 * 		Indice do Post.
+	 * 
+	 * @return String
+	 * 		Uma Midia e retornada (Audio, Imagem, Mensagem).
+	 * 
+	 * @throws LogicaException
+	 * 		Na lista de <code>Post</code> na ha o indice informado.
+	 * 
+	 * @throws PostException
+	 * 		O indice informado menor que zero.
+	 */
 	public String getConteudoPost(int indice, int post) throws LogicaException, PostException {
 		if (post > this.posts.size()) {
 			throw new LogicaException("Post #" + post + " nao existe na lista posts.");
@@ -444,10 +465,35 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		}
 	}
 	
+	/**
+	 * Requer a popularidade do Post.
+	 * 
+	 * @param indice
+	 * 			Indice do Post que se quer saber sua popularidade.
+	 * 
+	 * @return Int
+	 * 			Quantidade de pops do <code>Post</code>, que foram obtidos com
+	 * 			curtidadas ou descurtidas.
+	 */
 	public int getPopsPost(int indice){
 		return this.posts.get(indice).getPopularidade();
 	}
 	
+	/**
+	 * Requer a quantidade de curtidas do Post.
+	 * 
+	 * @param indice
+	 * 			Indice do Post que se quer saber o numero de curtidas.
+	 * 
+	 * @return Int
+	 * 			Quantidade de curtidadas do Post.
+	 * 
+	 * @exception LogicaException
+	 * 			Se requirido o indice de um Post que nao existe.
+	 * 
+	 * @exception PostException
+	 * 			Se requirido um indice negativo.
+	 */
 	public int qtdCurtidasDePost(int indice) throws LogicaException, PostException {
 		if (indice> this.posts.size()) {
 			throw new LogicaException("Post #" + indice + " nao existe. Usuarix possui apenas "+ this.posts.size() +" post(s).");
@@ -459,6 +505,21 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		
 	}
 	
+	/**
+	 * Requer a quantidade de Rejeicoes do <code>Post</code>.
+	 * 
+	 * @param indice
+	 * 			Indice do <code>Post</code> que se quer saber o numero de rejeicoes.
+	 * 
+	 * @return Int
+	 * 			Quantidade de rejeicoes do <code>Post</code>.
+	 * 
+	 * @exception LogicaException
+	 * 			Se requirido o indice de um <code>Post</code> que nao existe.
+	 * 
+	 * @exception PostException
+	 * 			Se requirido um indice negativo.
+	 */
 	public int qtdRejeicoesDePost(int indice) throws LogicaException, PostException {
 		if (indice> this.posts.size()) {
 			throw new LogicaException("Post #" + indice + " nao existe. Usuarix possui apenas "+ this.posts.size() +" post(s).");
@@ -470,6 +531,13 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		
 	}
 	
+	/**
+	 * {@code getPostsToFeed} tem por responsablididade retornar a quantidade
+	 * de Posts, segundo sua Popularidade, para popular o Feed de seus amigos. 
+
+	 * @return List<Post> 
+	 * 			Lista dos postes disponiveis para o Feed de seus amigos.
+	 */
 	public List<Post> getPostsToFeed() {
 		List<Post> postsToFeed = new ArrayList<>();
 		Iterator<Post> iterator = this.posts.iterator();
@@ -482,40 +550,93 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		return postsToFeed;
 	}
 	
+	/**
+	 * Quantidade de notificacoes que o Usuario possui.
+	 *
+	 * @return Int
+	 * 		Quantidade de notificacoes.
+	 */
 	public int getNotificacoes() {
 		return this.notificacoes.size();
 	}
 	
+	/**
+	 * Quantidade de amigos que o <code>Usuario</code> possui.
+	 * 
+	 * @return Int
+	 * 		Quantidade de amigos.
+	 */
 	public int getQtdAmigos() {
 		return this.amigos.size();
 	}
 	
+	/**
+	 * Busca um arquivo especificado pelo indice.
+	 *  
+	 * @param indiceArquivo
+	 * 		Indice da lista onde se encontra o arquivo.
+	 * 
+	 * @param indicePost
+	 * 		Indcie do Post em que se quer as informacoes.
+	 * 
+	 * @return String
+	 * 		Um Arquivo e retornada (Audio, Imagem, Mensagem).
+	 */
 	public String getArquivo(int indiceArquivo, int indicePost) {
 		return this.posts.get(indicePost).getMidias(indiceArquivo);	
 	}
 	
+	/**
+	 * Informacao referente a todos os amigos do Usuario.
+	 * 
+	 * @return List<Usuario>
+	 * 			Todos os amigos.
+	 */
 	public List<Usuario> getAmigos() {
 		return amigos;
 	}
 
-	public void setAmigos(List<Usuario> amigos) {
-		this.amigos = amigos;
-	}
-	
+	/**
+	 * Lista com as solicitacoes de amizade recebidas.
+	 * 
+	 * @return List<Usuario>
+	 * 		Lista de solicitacoes de amizade.
+	 */
 	public List<String> getSolicitacaoAmizade(){
 		return this.solicitacaoAmizade;
 	}
 	
+	/**
+	 * Incrementa a pops ao Usuario.
+	 * 
+	 * @param pops
+	 * 			Quantidade de pops a serem icrementadas ao Usuario.
+	 */
 	public void adicionaPops(int pops) {
 		this.popsExtra += pops;
 		atualizaPops();
 	}
-
+	
+	/**
+	 * Redefine a quantidade de pops do Usuairo para um novo valor dado.
+	 * 
+	 * @param pops
+	 * 			Nova quantidade de pops do Usuario.
+	 */
 	public void setPops(int pops) {
 		this.pops = pops;
 		atualizaPopularidade();
 	}
 
+	/**
+	 * Alteracao do nome do Usaurio.
+	 * 
+	 * @param novoNome
+	 * 			Novo nome do Usuario.
+	 * 
+	 * @throws AtualizaPerfilException
+	 * 			Excecao caso o nome nao satisfaca as condicoes necessarias.
+	 */
 	public void setNome(String novoNome) throws AtualizaPerfilException {
 		if (novoNome == null || !util.verificaAtributo(novoNome)){
 			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Nome dx usuarix nao pode ser vazio.");
@@ -523,6 +644,15 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		this.nome = novoNome;
 	}
 	
+	/**
+	 * Atualizacao do email do Usuario.
+	 * 
+	 * @param novoEmail
+	 * 			Novo email do Usuario.
+	 * 
+	 * @throws EntradaException
+	 * 			Excecao de email invalido ou ja existente no sistema.
+	 */
 	public void setEmail(String novoEmail) throws EntradaException {
 		if (novoEmail == null ||!util.verificaEmail(novoEmail)) {
 			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Formato de e-mail esta invalido.");
@@ -531,6 +661,24 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	}
 	
 	
+	/**
+	 * Atualizacao da senha de <code>Usuario</code>.
+	 * 
+	 * @param valor
+	 * 			Nova senha do <code>Usuario</code>.
+	 * 
+	 * @param velhaSenha
+	 * 			Senha do Atual do <code>Usuario</code>, para permissao de 
+	 * 			atualizacao.
+	 * 
+	 * @return Boolean
+	 * 			Confirmacao se a senha do <code>Usuario</code> foi alterada(True) ou
+	 * 			caso haja problemas de autenticacao(False).
+	 * 
+	 * @throws AtualizaPerfilException
+	 * 			Caso o usuario insira uma senha invalida ou a senha de 
+	 * 			autenticacao para a mudanca esteja incorreta.
+	 */
 	public boolean setSenha(String valor, String velhaSenha) throws AtualizaPerfilException {
 		if (this.senha.equals(velhaSenha)) {
 			
@@ -546,6 +694,15 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		} 
 	}	
 
+	/**
+	 * Atualizacao da data de nascimento do <code>Usuario</code>.
+	 * 
+	 * @param novoNascimento
+	 * 			Nova data de nascimento do <code>Usuario</code>.
+	 * 
+	 * @throws AtualizaPerfilException
+	 * 			Data de nascimento inserida esta invalidada pelo sistema.
+	 */
 	public void setNascimento(String novoNascimento) throws AtualizaPerfilException {
 		if (novoNascimento == null || novoNascimento.trim().length() == 0) {
 			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Formato de data esta invalida.");
@@ -559,6 +716,15 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		this.nascimento = util.recebeData(novoNascimento);;
 	}
 	
+	/**
+	 * Atualizacao da foto do perfil do <code>Usuario</code>.
+	 * 
+	 * @param novaImagem
+	 * 			Nova imagem do perfil do <code>Usuario</code>.
+	 * 
+	 * @throws AtualizaPerfilException
+	 * 			Excecao de imagem invalida.
+	 */
 	public void setImagem(String novaImagem) throws AtualizaPerfilException {
 		if (novaImagem == null) {
 			throw new AtualizaPerfilException("Erro na atualizacao de prefil. Imagem inserida esta invalida.");
@@ -570,6 +736,12 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		}
 	}
 			
+	/**
+	 * <code>Feed</code> do <code>Usuario</code> com os postes de todos os amigos do <code>Usuario</code>.
+	 * 
+	 * @return List<Post>
+	 * 		Feed do Usuario.
+	 */
 	public List<Post> getFeed() {
 		return this.feed.getFeed();
 	}
@@ -605,6 +777,15 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		return false;
 	}
 	
+	/**
+	 * Metodo usado para salvar todos os <code>Post</code> do <code>Usuario</code>.
+	 * 
+	 * @exception FileNotFoundException
+	 * 			Excecao ao tentar usar um arquivo inexistente.
+	 * 
+	 * @exception IOException
+	 * 			Excecoe ao manipular os arquivos de forma errada.
+	 */
 	public void salvaPosts() {
 		String diretorio = "postsUsuarios/" + getNomeFile() + ".txt";
 		File arquivo = null;
@@ -632,10 +813,15 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 		} catch (IOException erro) {
 			System.out.println(erro.getMessage() + "IOE");
 		}
-		
-		
 	}
-	
+
+	/**
+	 * Metodo pega parte do email do usuario  para usar como titulo 
+	 * do arquivo, no qual sera salvo todos os <b>Post</b>.
+	 * 
+	 * @return String
+	 * 			Nome do arquivo para salvar as informacoes do <b>Usuario</b>.
+	 */
 	private String getNomeFile() {
 		int indice = this.email.indexOf("@");
 		String nome = this.email.substring(0, indice);

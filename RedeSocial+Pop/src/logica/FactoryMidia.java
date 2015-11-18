@@ -6,8 +6,6 @@ package logica;
 
 import java.io.Serializable;
 
-import javax.security.sasl.SaslClient;
-
 import logica.midia.Audio;
 import logica.midia.Imagem;
 import logica.midia.Mensagem;

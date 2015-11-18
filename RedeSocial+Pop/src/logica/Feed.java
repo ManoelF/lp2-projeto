@@ -1,3 +1,6 @@
+/**
+ * Classe <code>Feed</code>, representado todas as postagens disponiveis dos amigos do Usuario.
+ */
 package logica;
 
 import java.io.Serializable;
@@ -19,12 +22,22 @@ public class Feed implements Serializable {
 	private Comparator<Post> tipoOrdenacao; 
 	private List<Usuario> amigos;
 	
+	/**
+	 * Contrutor de <b>Feed</b>.
+	 * 
+	 * @param amigos
+	 * 			Lista de Usarios, sendo os amigos do Usuario, para dar acesso as <b>Post</b>
+	 * 			para construcao do Feed de noticias.
+	 */
 	public Feed(List<Usuario> amigos) {
 		this.feed = new ArrayList<>();
 		this.tipoOrdenacao = new OrdenaFeedData();
  		this.amigos = amigos;
 	}
 
+	/**
+	 * Atualizacao do <b>Feed</b>, populando com os <b>Post</b> dos amigos.
+	 */
 	public void atualizaFeed() {
 		
 		for (Usuario amigo : this.amigos) {
@@ -42,14 +55,26 @@ public class Feed implements Serializable {
 		Collections.sort(this.feed, this.tipoOrdenacao);
 	}
 	
+	/**
+	 * Ordenacao dos <b>Post</b> do Feed de acordo com 
+	 * suas datas de criacao.
+	 */
 	public void ordenaPorData() {
 		this.tipoOrdenacao = new OrdenaFeedData();
 	}
 	
+	/**
+	 * Ordenacao dos <b>Post</b> do Feed de acordo com 
+	 * suas respectivas popularidades.
+	 */
 	public void ordenaPorPopularidade() {
 		this.tipoOrdenacao = new OrdenaFeedPopularidade();
 	}
 	
+	/**
+	 * Retorno da lista de posts que caracteriza o feed.
+	 * @return
+	 */
 	public List<Post> getFeed() {
 		return this.feed;
 	}

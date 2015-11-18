@@ -1,3 +1,6 @@
+/**
+ * <code>FactoryUsuario</code>, tem a responsablidade de gerencias as instancias de <code>Usuarios</code> da Rede.
+ */
 package logica;
 
 import java.io.Serializable;
@@ -12,10 +15,33 @@ public class FactoryUsuario implements Serializable {
 	private static final long serialVersionUID = -5216069431632496757L;
 	private Usuario usuario;
 	private Util util;
-
+	
+	/**
+	 * Construtor de <code><FactoryUsuario</code>.
+	 */
 	public FactoryUsuario() {
 	}
-
+	
+	/**
+	  * @param nome
+	 * 		Nome do Usuario.
+	 * 
+	 * @param email
+	 * 		Email do Usuario.
+	 * 
+	 * @param senha
+	 * 		Senha de acesso do Usuario.
+	 * 
+	 * @param nascimento
+	 * 		Data de nascimento so Usuario.
+	 * 
+	 * @param imagem
+	 * 		Imagem do Usuario.
+	 * 
+	 * @throws CadastroInvalidoException
+	 * 		Se algum dos parametro requerido para criacao do Usuario nao estiver
+	 * 		de acordo com as especificacoes eh lancado a excecao <code>CadastroInvalidoException</code>.		
+	 */
 	public Usuario criaUsuario(String nome, String email, String senha,
 			String nascimento, String imagem)
 			throws CadastroInvalidoException{

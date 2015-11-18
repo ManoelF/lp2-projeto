@@ -7,6 +7,10 @@ import java.io.Serializable;
 
 public class Tag implements Comparable<Tag>, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2483278780011113971L;
 	private int frequencia;
 	private String hashtag; 
 	

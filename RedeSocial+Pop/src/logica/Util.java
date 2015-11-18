@@ -3,7 +3,6 @@
  * o estado do sistema.
  * 
  */
-
 package logica;
 
 import java.io.BufferedInputStream;
@@ -27,9 +26,6 @@ import exceptions.RedeSocialMaisPopException;
 
 public class Util implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2466398236453125276L;
 	private static Util INSTANCIA;
 	
