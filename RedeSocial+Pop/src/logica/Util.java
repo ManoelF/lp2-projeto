@@ -1,3 +1,9 @@
+/**
+ * Classe <code>Util</code> responsavel por validações de atributos, tratamento de dados e salvar/recuperar 
+ * o estado do sistema.
+ * 
+ */
+
 package logica;
 
 import java.io.BufferedInputStream;
@@ -27,10 +33,20 @@ public class Util implements Serializable {
 	private static final long serialVersionUID = 2466398236453125276L;
 	private static Util INSTANCIA;
 	
+	/**
+	 * Construtor <b>Private</b> para seguir o padrao
+	 * <b>Singleton</b> e garantir apenas uma instranciacao.
+	 */
 	private Util() {
 		
 	}
-
+	
+	/**
+	 * Metodo responsavel por proporcionar a unica
+	 * instanciacao do objeto, como tambem garante seguranca 
+	 * das informacoes por usar <b>Synchronized</b>.
+	 * @return
+	 */
     public static Util getInstancia() {
     	synchronized (Util.class) {
 	    	if (INSTANCIA == null) {  
@@ -40,6 +56,15 @@ public class Util implements Serializable {
     	}
      }
    
+    /**
+     * Busca das midias no texto do Post.
+     * 
+     * @param mensagem
+     * 		Texto recebido como parametro na contrucao do Post.
+     * 
+     * @return List<String>
+     * 		Lista com todas as midias encontradas no Post.
+     */
     public List<String> getMidia(String mensagem) {
 		List<String> arquivos = new ArrayList<>();
 		String tipoMidia = "$arquivo_";  			// variavel para concatenar o arquivo
@@ -85,6 +110,15 @@ public class Util implements Serializable {
 		return mensagem.trim();
 	}*/
     
+    /**
+	 * Busca do texto contido no <b>Post</b>.
+	 * 
+	 * @param texto
+	 * 			Texto recebido como parametro na contrucao do Post.
+	 * 	
+	 * @return String
+	 * 			Texto encontrado no Post.
+	 */
 	public String encontraTexto(String texto) {
 		char[] novoTexto = texto.toCharArray();
 		String conteudo = "";
@@ -115,6 +149,19 @@ public class Util implements Serializable {
 		return conteudo;
 	}
 	
+	/**
+	 * Busca todas as hashtags contidas no Post.
+	 * 
+	 * @param texto
+	 * 		Texto recebido como parametro na contrucao do Post.
+	 * 
+	 * @return List<String>
+	 * 		Hastags que foram adicionadas ao Post.
+	 *  
+	 * @throws PostException
+	 * 		Se as hashtags nao forem adicionadas no local apropriado
+	 * 		ou de forma inadequada.
+	 */
 	public List<String> encontraHashtag(String texto) throws PostException {
 		String[] hashtags; 
 		String novaHash = "";
@@ -144,6 +191,16 @@ public class Util implements Serializable {
 		return listaHashtags;
 	}
 	
+
+	/**
+	 * Conversao da informacao data(<b>String</b>) para data(<b>localDate</b>,
+	 * assumindo que a formatacao das informacoes esta integra.
+	 * 	
+	 * @param data
+	 * 		Data recebida para conversão.
+	 *
+	 * @return LocalDate
+	 */
 	public LocalDate recebeData(String data) {
 		String[] dataS = data.split("/");
 		int dia = Integer.parseInt(dataS[0]);
@@ -151,7 +208,15 @@ public class Util implements Serializable {
 		int ano = Integer.parseInt(dataS[2]);
 		return LocalDate.of(ano, mes, dia);
 	}
-	
+
+	/**
+	 * Conversao da informacao data(<b>String</b>) para data(<b>localDate</b>.
+	 * 	
+	 * @param data
+	 * 		Data recebida para conversão.
+	 *
+	 * @return LocalDate
+	 */
 	public LocalDateTime converteParaData(String data) {
 	
 		String[] dataHora = data.split(" ");		
@@ -168,6 +233,15 @@ public class Util implements Serializable {
 		return LocalDateTime.of(ano, mes, dia, hora, min, seg);
 	}
 
+	/**
+	 * Converte as hashtags(String) para objeto {@codeTag}.
+	 * 
+	 * @param hashtags
+	 * 			Lista de hashtags(String).
+	 * 
+	 * @return List<Tag>
+	 * 			Lista de Tag. 
+	 */
 	public List<Tag> converteParaTag(List<String> hashtags) {
 		
 		List<Tag> tags = new ArrayList<>();
@@ -182,21 +256,61 @@ public class Util implements Serializable {
 	
 	//VALIDACOES
 	
+	/**
+	 * Validacao de email, verificando se atende as exigencias de um email padrao.
+	 * 
+	 * @param email
+	 * 		Email do usuario.
+	 * 
+	 * @return Boolean
+	 * 		Caso o email recebido satisfaca as exigencias sera retornado true,
+	 *      caso contraio o retorno sera false.
+	 */
 	public boolean verificaEmail(String email) {
 		String validacaoNome = "^[a-zA-Z]{1}.+@[a-z]{2,}\\.[a-z]{2,4}(\\.[a-z]{2,3})*"; 
 		return email.matches(validacaoNome);
 	}	
 	
+	/**
+	 * Verificao de alguns atributo do tipo string, 
+	 * nao sendo permitido strings vazias ou que inicie com caracteres especiais.
+	 * 
+	 * @param atributo 
+	 * 		String a ser validada.
+	 * 
+	 * @return Boolean
+	 *		Caso o atibuto recebido satisfaca as exigencias sera retornado true,
+	 *      caso contraio o retorno sera false.
+	 */
 	public boolean verificaAtributo(String atributo) {
 		String validacaoNome = "^\\w+.+";
 		return atributo.matches(validacaoNome);
 	}
 	
+	/**
+	 * Verificacao padra da senha de usuario.
+	 * 
+	 * @param senha
+	 * 		Senha do usuario.
+	 * 	
+	 * @return Boolean
+	 * 		Caso a senha recebido satisfaca as exigencias sera retornado true,
+	 *      caso contraio o retorno sera false.
+	 */
 	public boolean verificaSenha(String senha) {
 		String validacaoNome = "^[.^\\S].+";
 		return senha.matches(validacaoNome);
 	}
 	
+	/**
+	 * Validacao da data recebida para cadastro de usuario e criacao de postes.
+	 * 
+	 * @param data
+	 * 		String a ser validada.
+	 * @return Boolean
+	 * 		Caso a data recebida satisfaca as o padrao dd/mm/aaaa sera retornado true,
+	 *      caso contraio o retorno sera false.
+	 */
 	public boolean verificaFormatoData(String data) {
 		
 		String[] dataS = data.split("/");
@@ -218,6 +332,16 @@ public class Util implements Serializable {
 		return true;
 	}
 	
+	/**
+	 * Verificao de data valida.
+	 * 
+	 * @param data 
+	 * 		Data a ser avalida.
+	 * 
+	 * @return Boolean
+	 * 		Caso a data recebida seja existente sera retornado true, 
+	 * 		porem, se a data nao existir o retorno sera false.
+	 */
 	public boolean verificaDataValida(String data) {
 		try {	
 			String[] dataS = data.split("/");
@@ -233,6 +357,16 @@ public class Util implements Serializable {
 	
 	}
 	
+	/**
+	 * Verificao do fomato da hora.
+	 * 
+	 * @param hora
+	 * 		Hora usada para criacao dos postes.
+	 * 
+	 * @return Boolean
+	 * 		Caso a hora recebida seja em um formato diferente
+	 * 		de hh:mm:ss o retorno sera false, caso contrario retorno vedadeiro.
+	 */
 	public boolean verificaFormatoHora(String hora) {
 		
 		String[] horaS = hora.split(":");
@@ -255,6 +389,17 @@ public class Util implements Serializable {
 		return true;
 	}
 	
+	/**
+	 * Verificao se a hora recebida e existente.
+	 * 
+	 * @param horario
+	 * 		Hora a ser analizada.
+	 * 
+	 * @return Boolean
+	 * 		Retorno True se a hora compreender o intervalo de 0 a 23 horas;
+	 * 		0 a 59 minutos; 0 a 59 segundo. Se esse limite for violado
+	 * 		o retorno sera False;
+	 */
 	public boolean verificaHoraValida(String horario) {
 
 		String[] horaS = horario.split(":");
@@ -275,7 +420,18 @@ public class Util implements Serializable {
 		
 		return true;
 	}
-
+	
+	/**
+	 * Salvando o estado do <b>Sistema</b>
+	 * 
+	 * @param controller
+	 * 			Estado a ser salvo, usado o controle pois nele
+	 * 			esta contido todas as informacoes necessarias para
+	 * 			restaruar o sistema. Informacoes salvas por meio de
+	 * 			arquivo.
+	 * 
+	 * @throws RedeSocialMaisPopException
+	 */
 	public void salvaSistema(Controller controller) throws RedeSocialMaisPopException {
 		
 		File file = new File("sistema.dat");
@@ -298,6 +454,12 @@ public class Util implements Serializable {
 		
 	}
 	
+	/**
+	 * Metodo tem responsabilidade de recuperar todas as informacoes
+	 * do <b>Sistema</b>, restaurando assim todo seu estado. As informacoes
+	 * recuperadas estao em um arquivo.
+	 * 
+	 */
 	public Controller restauraSistema() {
 		
 		File file = new File("sistema.dat");

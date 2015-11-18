@@ -13,37 +13,27 @@ import org.junit.Test;
 
 import exceptions.EntradaException;
 import exceptions.LogicaException;
+import exceptions.RedeSocialMaisPopException;
 
 public class TesteRanking {
 
 	private Controller controller = new Controller();
-	private Usuario use1, use2, use3, use4, use5, use6, use7, use8, use9;
-	private Comparator duasOrdens;
 	
 	
 	@Before
 	public void before() throws  EntradaException, LogicaException{
 
 		try {
-			use1 = new Usuario("italo", "italo@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
-			use2 = new Usuario("manoel", "manoel@gmail.com", "456", "20/10/1995", "resources/avatarDefaul.jpg");
-			use3 = new Usuario("chang", "chang@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
-			use4 = new Usuario("maria", "maria@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
-			use5 = new Usuario("jose", "jose@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
-			use6 = new Usuario("claudia", "claudia@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
-			use7 = new Usuario("felipe", "felipe@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
-			use8 = new Usuario("ana", "ana@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
-			use9 = new Usuario("francisco", "francisco@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
 			
-			controller.cadastraUsuario(use1.getNome(), use1.getEmail(), use1.getSenha(), "20/10/1995", use1.getImagem());
-			controller.cadastraUsuario(use2.getNome(), use2.getEmail(), use2.getSenha(), "20/10/1995", use2.getImagem());
-			controller.cadastraUsuario(use3.getNome(), use3.getEmail(), use3.getSenha(), "20/10/1995", use3.getImagem());
-			controller.cadastraUsuario(use4.getNome(), use4.getEmail(), use4.getSenha(), "20/10/1995", use4.getImagem());
-			controller.cadastraUsuario(use5.getNome(), use5.getEmail(), use5.getSenha(), "20/10/1995", use5.getImagem());
-			controller.cadastraUsuario(use6.getNome(), use6.getEmail(), use6.getSenha(), "20/10/1995", use6.getImagem());
-			controller.cadastraUsuario(use7.getNome(), use7.getEmail(), use7.getSenha(), "20/10/1995", use7.getImagem());
-			controller.cadastraUsuario(use8.getNome(), use8.getEmail(), use8.getSenha(), "20/10/1995", use8.getImagem());
-			controller.cadastraUsuario(use9.getNome(), use9.getEmail(), use9.getSenha(), "20/10/1995", use9.getImagem());
+			controller.cadastraUsuario("italo", "italo@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
+			controller.cadastraUsuario("manoel", "manoel@gmail.com", "456", "20/10/1995", "resources/avatarDefaul.jpg");
+			controller.cadastraUsuario("chang", "chang@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
+			controller.cadastraUsuario("maria", "maria@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
+			controller.cadastraUsuario("jose", "jose@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
+			controller.cadastraUsuario("claudia", "claudia@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
+			controller.cadastraUsuario("felipe", "felipe@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
+			controller.cadastraUsuario("ana", "ana@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
+			controller.cadastraUsuario("francisco", "francisco@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
 			
 			//this.duasOrdens = new DuasOrdenacoes();
 			
@@ -55,65 +45,84 @@ public class TesteRanking {
 	
 	@Test
 	public void testRanking(){
-				
-
-				if(controller.getUsuariosCadastrados().size() != 0){
-					
-					Assert.assertEquals(controller.getUsuariosCadastrados().get(0).getNome(), "italo");
-					Assert.assertEquals(controller.getUsuariosCadastrados().get(0).getEmail(), "italo@gmail.com");
-					Assert.assertEquals(controller.getUsuariosCadastrados().get(0).getSenha(), "1234");
-					Assert.assertEquals(controller.getUsuariosCadastrados().get(0).getNascimento(), "1995-10-20");
-					Assert.assertEquals(controller.getUsuariosCadastrados().get(0).getImagem(), "resources/avatarDefaul.jpg");
 		
-					Assert.assertEquals(controller.getUsuariosCadastrados().get(1).getNome(), "manoel");
-					Assert.assertEquals(controller.getUsuariosCadastrados().get(1).getEmail(), "manoel@gmail.com");
-					Assert.assertEquals(controller.getUsuariosCadastrados().get(1).getSenha(), "456");
-							
-					Assert.assertEquals(controller.getUsuariosCadastrados().get(2).getNome(), "chang");
-					Assert.assertEquals(controller.getUsuariosCadastrados().get(2).getEmail(), "chang@gmail.com");
-					Assert.assertEquals(controller.getUsuariosCadastrados().get(2).getSenha(), "1234");
+		try {
+			controller.login("italo@gmail.com", "1234");
+			Assert.assertEquals("italo" , controller.getInfoUsuario("Nome"));
+			
+		
+			controller.setPops(10);
+			controller.logout();
+		
+		
+			Assert.assertEquals(controller.getUsuariosCadastrados().get(0).getEmail(), "italo@gmail.com");
+			Assert.assertEquals(controller.getUsuariosCadastrados().get(0).getSenha(), "1234");
+			Assert.assertEquals(controller.getUsuariosCadastrados().get(0).getNascimento(), "1995-10-20");
+			Assert.assertEquals(controller.getUsuariosCadastrados().get(0).getImagem(), "resources/avatarDefaul.jpg");
+
+			Assert.assertEquals(controller.getUsuariosCadastrados().get(1).getNome(), "manoel");
+			Assert.assertEquals(controller.getUsuariosCadastrados().get(1).getEmail(), "manoel@gmail.com");
+			Assert.assertEquals(controller.getUsuariosCadastrados().get(1).getSenha(), "456");
 					
-					Assert.assertEquals(controller.getUsuariosCadastrados().size(), 9);
-				}
+			Assert.assertEquals(controller.getUsuariosCadastrados().get(2).getNome(), "chang");
+			Assert.assertEquals(controller.getUsuariosCadastrados().get(2).getEmail(), "chang@gmail.com");
+			Assert.assertEquals(controller.getUsuariosCadastrados().get(2).getSenha(), "1234");
+			
+			Assert.assertEquals(controller.getUsuariosCadastrados().size(), 9);
+		} catch (RedeSocialMaisPopException erro) {
+			Assert.fail();
+		} 
 		
 	}// fecha test
 	
 	@Test
 	public void testeOrdenacaoCrescente() throws EntradaException, LogicaException{
 		
-			controller.getUsuariosCadastrados().get(0).setPops(10);
-			controller.getUsuariosCadastrados().get(1).setPops(15);
-			controller.getUsuariosCadastrados().get(2).setPops(5);
-			controller.getUsuariosCadastrados().get(3).setPops(3);
-			controller.getUsuariosCadastrados().get(4).setPops(20);
-			controller.getUsuariosCadastrados().get(5).setPops(1);
-			controller.getUsuariosCadastrados().get(6).setPops(4);
-			controller.getUsuariosCadastrados().get(7).setPops(8);
-			controller.getUsuariosCadastrados().get(8).setPops(9);
+			controller.login("italo@gmail.com", "1234");
+			controller.setPops(10);
+			controller.logout();
+			
+			controller.login("manoel@gmail.com", "456");
+			controller.setPops(15);
+			controller.logout();
+
+			controller.login("chang@gmail.com", "1234");
+			controller.setPops(5);
+			controller.logout();
+			
+			controller.login("maria@gmail.com", "1234");
+			controller.setPops(3);
+			controller.logout();
+			
+			controller.login("jose@gmail.com", "1234");
+			controller.setPops(20);
+			controller.logout();
+			
+			controller.login("claudia@gmail.com", "1234");
+			controller.setPops(1);
+			controller.logout();
+			
+			controller.login("felipe@gmail.com", "1234");
+			controller.setPops(4);
+			controller.logout();
+			
+			controller.login("ana@gmail.com", "1234");
+			controller.setPops(8);
+			controller.logout();
+			
+			controller.login("francisco@gmail.com", "1234");
+			controller.setPops(9);
+			controller.logout();
 						
-			controller.atualizaRanking();
+			Assert.assertEquals(controller.atualizaRanking() ,"Mais Populares: (1) jose 20; (2) manoel 15; (3) italo 10; "
+															+ "| Menos Populares: (1) claudia 1; (2) maria 3; (3) felipe 4;");
 
 	} // fecha o test
 	
 	@Test
 	public void testeOrdemAlfabetica() {
 
-		List<Usuario> ranking = controller.getUsuariosCadastrados();
-		for (int i = 0; i < ranking.size() - 2 ; i++) {
-			ranking.get(i).setPops(i * 50);
-		} // fecha for
 		
-		Collections.sort(ranking);
-		for (Usuario usuario : ranking) {
-			System.out.println(usuario.getNome() + "-" + usuario.getPops()+ "\n");
-		}
-		
-		System.out.println("------\n");
-		
-		Collections.sort(ranking, this.duasOrdens);
-		for (Usuario usuario : ranking) {
-			System.out.println(usuario.getNome() + "-" + usuario.getPops()+ "\n");
-		}
 	}
 	
 

@@ -1,3 +1,9 @@
+/**
+ * <code>OrdenaFeedPopularidade</code> define um objeto comparavel, ou seja, implementa a interface
+ * <code>Comparator</code>, proporcionando uma comparacao dos <b>Feed</b> por a popularidade  
+ * dos Posts. 
+ */
+
 package logica.ordenacao;
 
 import java.io.Serializable;
@@ -11,7 +17,11 @@ public class OrdenaFeedPopularidade implements Comparator<Post>, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 3219440233991658239L;
-
+	/**
+	 * Sobrescrita do metodo para proporcionar
+	 * uma comparacao de acordo com a popularidade
+	 * de cada <b>Post</b>.
+	 */
 	@Override
 	public int compare(Post postI, Post postII) {
 		if (postI.getPopularidade() > postII.getPopularidade()) {
