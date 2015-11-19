@@ -175,6 +175,15 @@ public class Facade implements Serializable {
 		return controller.getFeed(post);
 	}
 	
+	public String getPostFeedNoticiasRecentes(int post) throws LogicaException {
+		ordenaFeedPorData();
+		return getFeed(post);
+	}
+	
+	public String getPostFeedNoticiasMaisPopulares(int post) throws LogicaException {
+		ordenaFeedPorPopularidade();
+		return getFeed(post);
+	}
 	public void ordenaFeedPorData(){
 		controller.ordenaFeedPorData();
 	}
@@ -193,7 +202,7 @@ public class Facade implements Serializable {
 	
 	public static void main(String[] args) {
  	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt",
- 	    		             "lib/ScriptsTeste/usecase_4.txt", "lib/ScriptsTeste/usecase_5.txt","lib/ScriptsTeste/usecase_6.txt", "lib/ScriptsTeste/usecase_7.txt", "lib/NossosTestes/usecase_8.txt"};
+ 	    		             "lib/ScriptsTeste/usecase_4.txt", "lib/ScriptsTeste/usecase_5.txt","lib/ScriptsTeste/usecase_6.txt", "lib/ScriptsTeste/usecase_7.txt","lib/ScriptsTeste/usecase_8.txt"}; //"lib/NossosTestes/usecase_8.txt"};
 	    EasyAccept.main(args);
 	}
 
