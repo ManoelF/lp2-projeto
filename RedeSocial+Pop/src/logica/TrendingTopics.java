@@ -18,10 +18,7 @@
  * ============================================================================== #
  */
 
-/**
- * Classe <code>TendingTopics</code> responsavel por gerencias todas as hashtags do sistema
- * oferecendo assim, um ranking da treis mais frequentes.
- */
+
 package logica;
 
 import java.io.Serializable;
@@ -29,6 +26,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Classe <code>TendingTopics</code> responsavel por gerencias todas as hashtags do sistema
+ * oferecendo assim, um ranking da treis mais frequentes.
+ */
 public class TrendingTopics implements Serializable {
 	/**
 	 * 

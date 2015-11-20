@@ -17,15 +17,16 @@
  *                                                                                *
  * ============================================================================== #
  */
-/**
- * <code>Interface</code> que define os diferentes tipos de <code>Usuario</code>.
- */
+
 package logica.tipopopularidade;
 
 import java.io.Serializable;
 
 import logica.Post;
 
+/**
+ * <code>Interface</code> que define os diferentes tipos de <code>Usuario</code>.
+ */
 public interface TipoPopularidade extends Serializable {
 	
 	/**

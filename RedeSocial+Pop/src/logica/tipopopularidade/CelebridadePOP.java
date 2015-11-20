@@ -18,11 +18,6 @@
  * ============================================================================== #
  */
 
-/**
- * Classe <code>CelebridadePOP</code> define um tipo de popularidade para um <code>Usuairo</code>.
- * Sendo assim, esta classe impementa a interface {@link TipoPopularidade}.
- */
-
 package logica.tipopopularidade;
 
 import java.time.LocalDate;
@@ -30,6 +25,10 @@ import java.time.LocalDateTime;
 
 import logica.Post;
 
+/**
+ * Classe <code>CelebridadePOP</code> define um tipo de popularidade para um <code>Usuairo</code>.
+ * Sendo assim, esta classe impementa a interface {@link TipoPopularidade}.
+ */
 public class CelebridadePOP implements TipoPopularidade {
 	/**
 	 * 

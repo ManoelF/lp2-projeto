@@ -18,11 +18,6 @@
  * ============================================================================== #
  */
 
-/**
- * Classe <code>Post</code> responsavel por conter todas as informacoes necessarias
- * para compor um Post.
- */
-
 package logica;
 
 import java.io.Serializable;
@@ -33,6 +28,11 @@ import exceptions.LogicaException;
 import exceptions.PostException;
 import logica.midia.Midia;
 
+
+/**
+ * Classe <code>Post</code> responsavel por conter todas as informacoes necessarias
+ * para compor um Post.
+ */
 public class Post implements Comparable<Post>, Serializable {
 
 	/**

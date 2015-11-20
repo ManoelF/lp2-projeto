@@ -18,13 +18,14 @@
  * ============================================================================== #
  */
 
+
+
+package exceptions;
+
 /**
  * <b>RedeSocialMaisPopException</b> encapsulamento de erro referente as excecoes lancadas em todo o sistema.
  * 
  */
-
-package exceptions;
-
 public class RedeSocialMaisPopException extends Exception {
 
 	private static final long serialVersionUID = -1222897662918426177L;

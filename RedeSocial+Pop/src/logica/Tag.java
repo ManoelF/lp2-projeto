@@ -18,13 +18,13 @@
  * ============================================================================== #
  */
 
-/**
- * Classe <code>Tag</code> representa a hashtag que esta contida no Post, podendo ter uma ou mais(diferentes). 
- */
 package logica;
 
 import java.io.Serializable;
 
+/**
+ * Classe <code>Tag</code> representa a hashtag que esta contida no Post, podendo ter uma ou mais(diferentes). 
+ */
 public class Tag implements Comparable<Tag>, Serializable {
 	
 	/**

@@ -18,12 +18,12 @@
  * ============================================================================== #
  */
 
+package exceptions;
+
 /**
  * <b>CadastroEmailJaExistenteException</b> encapsulamento de erro referente ao cadastro de um usuario no sistema
  * como email ja existente.
  */
-package exceptions;
-
 public class CadastroEmailJaExistenteException extends LogicaException{
 
 	private static final long serialVersionUID = 4542496582471908745L;

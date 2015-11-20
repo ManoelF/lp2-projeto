@@ -18,14 +18,14 @@
  * ============================================================================== #
  */
 
-/**
- * <code>Mensagem</code> um tipo de <b>Midia</b>, usada para encapsular as mensagem dos posts. 
- * 
- */
 package logica.midia;
 
 import java.io.Serializable;
 
+/**
+ * <code>Mensagem</code> um tipo de <b>Midia</b>, usada para encapsular as mensagem dos posts. 
+ * 
+ */
 public class Mensagem extends Midia implements Serializable {
 	
 	

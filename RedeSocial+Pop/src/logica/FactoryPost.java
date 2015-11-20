@@ -18,10 +18,6 @@
  * ============================================================================== #
  */
 
-/**
- * Classe <code>FactoryPost</code> tem a responsabilidade de criar um <code>Post</code> com todoas 
- * as informaçoes integras, tratando todas as excecoes.
- */
 package logica;
 
 import java.io.Serializable;
@@ -34,6 +30,10 @@ import logica.midia.Midia;
 import exceptions.LogicaException;
 import exceptions.PostException;
 
+/**
+ * Classe <code>FactoryPost</code> tem a responsabilidade de criar um <code>Post</code> com todoas 
+ * as informaçoes integras, tratando todas as excecoes.
+ */
 public class FactoryPost implements Serializable {
 	
 	/**

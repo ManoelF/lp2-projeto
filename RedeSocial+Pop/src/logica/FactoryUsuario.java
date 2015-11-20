@@ -18,15 +18,16 @@
  * ============================================================================== #
  */
 
-/**
- * <code>FactoryUsuario</code>, tem a responsablidade de gerencias as instancias de <code>Usuarios</code> da Rede.
- */
+
 package logica;
 
 import java.io.Serializable;
 
 import exceptions.CadastroInvalidoException;
 
+/**
+ * <code>FactoryUsuario</code>, tem a responsablidade de cirar as instancias dos <code>Usuarios</code> da Rede.
+ */
 public class FactoryUsuario implements Serializable {
 
 	/**

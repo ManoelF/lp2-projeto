@@ -18,11 +18,12 @@
  * ============================================================================== #
  */
 
+
+package exceptions;
+
 /**
  * <b>PostException</b> encapsulamento de erro referente ao Post.
  */
-package exceptions;
-
 public class PostException extends EntradaException {
 
 	private static final long serialVersionUID = 1L;

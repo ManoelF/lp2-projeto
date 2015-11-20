@@ -18,11 +18,7 @@
  * ============================================================================== #
  */
 
-/**
- * <code>Controller</code> gerencia todas as informacoes da rede, delegando funcionalidades para as outras classes 
- * do projeto.
- * 
- */
+
 
 
 
@@ -46,7 +42,11 @@ import exceptions.SenhaIncorretaException;
 import exceptions.SenhaProtegidaException;
 import exceptions.UsuarioNaoCadastradoException;
 
-
+/**
+ * <code>Controller</code> gerencia todas as informacoes da rede, delegando funcionalidades para as outras classes 
+ * do projeto.
+ * 
+ */
 public class Controller implements Serializable {
 
 	/**

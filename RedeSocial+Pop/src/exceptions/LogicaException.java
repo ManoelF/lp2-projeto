@@ -18,11 +18,11 @@
  * ============================================================================== #
  */
 
+package exceptions;
+
 /**
  * <b>LogicaException</b> encapsulamento de erro referente toda a logica do sistema.
  */
-package exceptions;
-
 public class LogicaException extends RedeSocialMaisPopException {
 
 

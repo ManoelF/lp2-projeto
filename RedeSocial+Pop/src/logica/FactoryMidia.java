@@ -18,10 +18,6 @@
  * ============================================================================== #
  */
 
-/**
- * Classe <code>FactoryMida</code> tem a funcao de transformar as Strings midias em objetos
- * do tipo <code>Midia</code>.
- */
 package logica;
 
 import java.io.Serializable;
@@ -32,6 +28,10 @@ import logica.midia.Mensagem;
 import logica.midia.Midia;
 import logica.midia.Video;
 
+/**
+ * Classe <code>FactoryMida</code> tem a funcao de transformar as Strings midias em objetos
+ * do tipo <code>Midia</code>.
+ */
 public class FactoryMidia implements Serializable {
 	
 	/**

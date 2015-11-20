@@ -18,15 +18,15 @@
  * ============================================================================== #
  */
 
+package logica.midia;
+
+import java.io.Serializable;
+
 /**
  * Classe <code>Midia</code> usada para representar/encapsular um tipo especifico de mida, seja <b>Audio</b>, 
  * <b>Mensagem</b>, <b>Imagem</b> ou <b>Video</b>. Essa classe tem como objetivo facilitar a insercao de 
  * novas midias na <i>Rede Social +POP</i>.
  */
-package logica.midia;
-
-import java.io.Serializable;
-
 public abstract class Midia implements Serializable {
 	
 

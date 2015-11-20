@@ -18,12 +18,6 @@
  * ============================================================================== #
  */
 
-/**
- * <code>OrdenaFeedPopularidade</code> define um objeto comparavel, ou seja, implementa a interface
- * <code>Comparator</code>, proporcionando uma comparacao dos <b>Feed</b> por a popularidade  
- * dos Posts. 
- */
-
 package logica.ordenacao;
 
 import java.io.Serializable;
@@ -31,6 +25,11 @@ import java.util.Comparator;
 
 import logica.Post;
 
+/**
+ * <code>OrdenaFeedPopularidade</code> define um objeto comparavel, ou seja, implementa a interface
+ * <code>Comparator</code>, proporcionando uma comparacao dos <b>Feed</b> por a popularidade  
+ * dos Posts. 
+ */
 public class OrdenaFeedPopularidade implements Comparator<Post>, Serializable {
 
 	/**

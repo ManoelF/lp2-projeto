@@ -30,7 +30,6 @@ public class TesteRanking {
 			controller.cadastraUsuario("ana", "ana@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
 			controller.cadastraUsuario("francisco", "francisco@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
 			
-			//this.duasOrdens = new DuasOrdenacoes();
 			
 		} catch(LogicaException erro){
 			Assert.fail();
@@ -113,12 +112,6 @@ public class TesteRanking {
 															+ "| Menos Populares: (1) claudia 1; (2) maria 3; (3) felipe 4;");
 
 	} // fecha o test
-	
-	@Test
-	public void testeOrdemAlfabetica() {
-
-		
-	}
 	
 
 }

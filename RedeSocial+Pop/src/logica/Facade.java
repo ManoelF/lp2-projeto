@@ -34,6 +34,10 @@ import exceptions.RedeSocialMaisPopException;
 import exceptions.SenhaProtegidaException;
 import exceptions.UsuarioNaoCadastradoException;
 
+/**
+ * <code>Facade</code> a porta de entrada do Projeto. 
+ *
+ */
 public class Facade implements Serializable {
 	
 	/**

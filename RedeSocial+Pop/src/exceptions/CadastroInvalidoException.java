@@ -18,11 +18,11 @@
  * ============================================================================== #
  */
 
+package exceptions;
+
 /**
  * <b>CadastroInvalidoException</b> encapsulamento de erro referente a logica de cadastro de usuarios.
  */
-package exceptions;
-
 public class CadastroInvalidoException extends EntradaException  {
 
 	private static final long serialVersionUID = -7311065454334396500L;

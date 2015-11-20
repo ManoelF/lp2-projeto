@@ -18,9 +18,6 @@
  * ============================================================================== #
  */
 
-/**
- * Classe <code>Feed</code>, representado todas as postagens disponiveis dos amigos do Usuario.
- */
 package logica;
 
 import java.io.Serializable;
@@ -32,6 +29,10 @@ import java.util.List;
 import logica.ordenacao.OrdenaFeedData;
 import logica.ordenacao.OrdenaFeedPopularidade;
 
+
+/**
+ * Classe <code>Feed</code>, representado todas as postagens disponiveis dos amigos do Usuario.
+ */
 public class Feed implements Serializable {
 
 	/**

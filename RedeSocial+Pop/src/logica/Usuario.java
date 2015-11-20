@@ -18,12 +18,6 @@
  * ============================================================================== #
  */
 
-/**
- * Classe <code>Usuario</code>, encapsulamento para os usuarios da <b>Rede Social +POP</b>. Neste objeto ha todoas as 
- * informacoes necessarias para sua criacao.
- * 
- */
-
 package logica;
 
 import java.io.BufferedWriter;
@@ -50,6 +44,11 @@ import logica.tipopopularidade.IconePOP;
 import logica.tipopopularidade.Normal;
 import logica.tipopopularidade.TipoPopularidade;
 
+/**
+ * Classe <code>Usuario</code>, encapsulamento para os usuarios da <b>Rede Social +POP</b>. Neste objeto ha todoas as 
+ * informacoes necessarias para sua criacao.
+ * 
+ */
 public class Usuario implements Comparable<Usuario>, Serializable {
 	
 	

@@ -18,14 +18,15 @@
  * ============================================================================== #
  */
 
-/**
- * Classe <code>IconePOP</code> define um tipo de popularidade para um <code>Usuairo</code>.
- * Sendo assim, esta classe impementa a interface {@link TipoPopularidade}.
- */
+
 package logica.tipopopularidade;
 
 import logica.Post;
 
+/**
+ * Classe <code>IconePOP</code> define um tipo de popularidade para um <code>Usuairo</code>.
+ * Sendo assim, esta classe impementa a interface {@link TipoPopularidade}.
+ */
 public class IconePOP implements TipoPopularidade {
 	/**
 	 * 

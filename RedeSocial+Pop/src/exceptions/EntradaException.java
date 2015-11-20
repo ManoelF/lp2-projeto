@@ -18,11 +18,11 @@
  * ============================================================================== #
  */
 
+package exceptions;
+
 /**
  * <b>EntradaException</b> encapsulamento de erro referente a entrada de dados, pelo usuario, dos metodos de todo o sistema.
  */
-package exceptions;
-
 public class EntradaException extends RedeSocialMaisPopException {
 
 	private static final long serialVersionUID = 1L;

@@ -18,11 +18,12 @@
  * ============================================================================== #
  */
 
+
+package exceptions;
+
 /**
  * <b>SenhaIncorretaException</b> encapsulamento de erro referente a manipulacao de senha do usuario.
  */
-package exceptions;
-
 public class SenhaIncorretaException extends LoginException {
 
 	private static final long serialVersionUID = 2974901947266082919L;

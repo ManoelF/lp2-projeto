@@ -18,11 +18,6 @@
  * ============================================================================== #
  */
 
-/**
- * Classe <code>Util</code> responsavel por validações de atributos, tratamento de dados e salvar/recuperar 
- * o estado do sistema.
- * 
- */
 package logica;
 
 import java.io.BufferedInputStream;
@@ -44,6 +39,12 @@ import java.util.List;
 import exceptions.PostException;
 import exceptions.RedeSocialMaisPopException;
 
+
+/**
+ * Classe <code>Util</code> responsavel por validações de atributos, tratamento de dados e salvar/recuperar 
+ * o estado do sistema.
+ * 
+ */
 public class Util implements Serializable {
 	
 	private static final long serialVersionUID = 2466398236453125276L;

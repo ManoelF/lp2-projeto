@@ -18,13 +18,13 @@
  * ============================================================================== #
  */
 
+package exceptions;
+
 /**
  * <b>LoginException</b> encapsulamento de erro referente a logica do sistema, em metodos que 
  * envolvam a atividade de logar um usuario.
  * 
  */
-package exceptions;
-
 public class LoginException extends LogicaException {
 
 

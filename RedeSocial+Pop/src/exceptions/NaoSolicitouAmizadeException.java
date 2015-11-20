@@ -18,11 +18,12 @@
  * ============================================================================== #
  */
 
+
+package exceptions;
+
 /**
  * <b>NaoSolicitouAmizadeException</b> encapsulamento de erro referente a logica de acoes dos usuarios.
  */
-package exceptions;
-
 public class NaoSolicitouAmizadeException extends LogicaException {
 
 	private static final long serialVersionUID = -7545120070145900796L;

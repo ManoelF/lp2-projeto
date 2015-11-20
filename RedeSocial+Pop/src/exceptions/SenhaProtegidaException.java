@@ -18,11 +18,12 @@
  * ============================================================================== #
  */
 
+
+package exceptions;
+
 /**
  * <b>SenhaProtegidaException</b> encapsulamento de erro referente a manter mais seguranca para as senhas do usuario.
  */
-package exceptions;
-
 public class SenhaProtegidaException extends LogicaException {
 
 	private static final long serialVersionUID = 1L;

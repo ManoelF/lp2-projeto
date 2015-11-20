@@ -17,10 +17,7 @@
  *                                                                                *
  * ============================================================================== #
  */
-/**
- * Classe <code>Ranking</code>, uma abstracao de um ranking de <code>Usuario</code>, sendo os mais populares e menos 
- * populares em toda a Rede.
- */
+
 package logica;
 
 import java.util.Collections;
@@ -32,6 +29,10 @@ import java.util.ArrayList;
 import logica.Usuario;
 import logica.ordenacao.OrdenaDecrescente;
 
+/**
+ * Classe <code>Ranking</code>, uma abstracao de um ranking de <code>Usuario</code>, sendo os mais populares e menos 
+ * populares em toda a Rede.
+ */
 public class Ranking implements Serializable {
 
 	private static final long serialVersionUID = 2224815380849481101L;

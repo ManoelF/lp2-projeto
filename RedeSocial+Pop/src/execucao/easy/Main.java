@@ -25,6 +25,11 @@ package execucao.easy;
 
 import easyaccept.EasyAccept;
 
+/**
+ * Classe <code>Main</code> destinada ao execucao do testes de aceitacao atraves da ferramenta EasyAccept.
+ * @author josemsf
+ *
+ */
 public class Main {
 	
 	public static void main(String[] args) {

@@ -18,11 +18,12 @@
  * ============================================================================== #
  */
 
+
+package exceptions;
+
 /**
  * <b>UsuarioNaoCadastradoException</b> encapsulamento de erro referente a logica de cadastro de usuarios.
  */
-package exceptions;
-
 public class UsuarioNaoCadastradoException extends LogicaException {
 
 	private static final long serialVersionUID = 1L;

@@ -18,16 +18,14 @@
  * ============================================================================== #
  */
 
-/**
- * Classe <code>Normal</code> define um tipo de popularidade para um <code>Usuairo</code>.
- * Sendo assim, esta classe impementa a interface {@link TipoPopularidade}.
- */
-
 package logica.tipopopularidade;
 
 import logica.Post;
 
-
+/**
+ * Classe <code>Normal</code> define um tipo de popularidade para um <code>Usuairo</code>.
+ * Sendo assim, esta classe impementa a interface {@link TipoPopularidade}.
+ */
 public class Normal implements TipoPopularidade  {
 	/**
 	 * 

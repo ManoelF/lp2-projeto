@@ -18,12 +18,11 @@
  * ============================================================================== #
  */
 
+package exceptions;
+
 /**
  * <b>IniciaSistemaException</b> encapsulamento de erro referente a restauracao do estado do sistema.
  */
-
-package exceptions;
-
 public class IniciaSistemaException extends LogicaException {
 
 	private static final long serialVersionUID = 1L;

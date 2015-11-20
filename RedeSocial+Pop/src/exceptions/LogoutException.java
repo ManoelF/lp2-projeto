@@ -18,12 +18,12 @@
  * ============================================================================== #
  */
 
+package exceptions;
+
 /**
  * <b>LogoutException</b> encapsulamento de erro referente a logica do sistema, mais especificamente,
  * quando ha relacao com o logout de usarios do sistema.
  */
-package exceptions;
-
 public class LogoutException extends LogicaException {
 
 

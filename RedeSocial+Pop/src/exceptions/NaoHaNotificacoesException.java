@@ -18,13 +18,13 @@
  * ============================================================================== #
  */
 
+package exceptions;
+
 /**
  * <b>NaoHaNotificacoesException</b> encapsulamento de erro referente a logica de cadastro de usuarios,
  * mais especificamente, suas excecoes.
  * .
  */
-package exceptions;
-
 public class NaoHaNotificacoesException extends LogicaException{
 	
 

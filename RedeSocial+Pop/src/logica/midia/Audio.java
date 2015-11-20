@@ -18,14 +18,14 @@
  * ============================================================================== #
  */
 
-/**
- * <code>Audio</code> um tipo de <b>Midia</b>, usada para encapsular os audios contidos
- * nos posts.
- */
 package logica.midia;
 
 import java.io.Serializable;
 
+/**
+ * <code>Audio</code> um tipo de <b>Midia</b>, usada para encapsular os audios contidos
+ * nos posts.
+ */
 public class Audio extends Midia implements Serializable{
 	
 	/**

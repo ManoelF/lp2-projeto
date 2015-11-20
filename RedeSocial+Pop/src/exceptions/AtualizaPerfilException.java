@@ -18,12 +18,11 @@
  * ============================================================================== #
  */
 
+package exceptions;
+
 /**
  * <b>AtualizaPerfilException</b> encapsulamento de erro referente a atualizacao do perfil de usuarios.
  */
-
-package exceptions;
-
 public class AtualizaPerfilException extends EntradaException {
 
 	private static final long serialVersionUID = 1L;

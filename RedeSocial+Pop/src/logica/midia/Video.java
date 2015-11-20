@@ -18,13 +18,13 @@
  * ============================================================================== #
  */
 
-/**
- * <code>Video</code> abstracao da midia postada por usuarios.
- */
 package logica.midia;
 
 import java.io.Serializable;
 
+/**
+ * <code>Video</code> abstracao da midia postada por usuarios.
+ */
 public class Video extends Midia implements Serializable {
 	
 	/**

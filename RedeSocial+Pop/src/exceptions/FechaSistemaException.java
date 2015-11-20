@@ -18,12 +18,11 @@
  * ============================================================================== #
  */
 
+package exceptions;
+
 /**
  * <b>FechaSistemaException</b> encapsulamento de erro referente ao  salvar o atual estado do sistema.
  */
-
-package exceptions;
-
 public class FechaSistemaException extends LogicaException {
 
 	private static final long serialVersionUID = 1L;
