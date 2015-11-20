@@ -1,3 +1,23 @@
+/* =========================== Rede Social +Pop ================================= #
+ * 																				  *
+ * Projeto obrigatorio para cumprimento de nota da disciplina Programação II      * 	  
+ * e Laboratorio de Programacao II.                                               *
+ *                                                                                *
+ * Departamento de Informatica e Engenharia Eletrica							  *
+ * Curso Ciência da Computação (UFCG - 2015.1). 								  *
+ * Laboratorio de Programação II                                                  *
+ * 																				  *
+ * Discentes envolvidos: 														  *
+ *   		Italo Batista														  *
+ *   		Jose Manoel Ferreira												  *
+ *   		Kerilin Chang. 														  *
+ *																				  *
+ * Orientador: 																	  *
+ * 			Francisco Neto.		                                                  *
+ * 												                                  *
+ * ============================================================================== #
+ */
+
 /**
  * <code>FactoryUsuario</code>, tem a responsablidade de gerencias as instancias de <code>Usuarios</code> da Rede.
  */
@@ -17,7 +37,7 @@ public class FactoryUsuario implements Serializable {
 	private Util util;
 	
 	/**
-	 * Construtor de <code><FactoryUsuario</code>.
+	 * Construtor de <b>FactoryUsuario</b>.
 	 */
 	public FactoryUsuario() {
 	}
@@ -37,6 +57,9 @@ public class FactoryUsuario implements Serializable {
 	 * 
 	 * @param imagem
 	 * 		Imagem do Usuario.
+	 * 
+	 * @return Usaurio
+	 * 			Usuario criado.
 	 * 
 	 * @throws CadastroInvalidoException
 	 * 		Se algum dos parametro requerido para criacao do Usuario nao estiver

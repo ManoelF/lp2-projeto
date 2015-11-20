@@ -1,3 +1,23 @@
+/* =========================== Rede Social +Pop ================================= #
+ * 																				  *
+ * Projeto obrigatorio para cumprimento de nota da disciplina Programação II      * 	  
+ * e Laboratorio de Programacao II.                                               *
+ *                                                                                *
+ * Departamento de Informatica e Engenharia Eletrica							  *
+ * Curso Ciência da Computação (UFCG - 2015.1). 								  *
+ * Laboratorio de Programação II                                                  *
+ * 																				  *
+ * Discentes envolvidos: 														  *
+ *   		Italo Batista														  *
+ *   		Jose Manoel Ferreira												  *
+ *   		Kerilin Chang. 														  *
+ *																				  *
+ * Orientador: 																	  *
+ * 			Francisco Neto.		                                                  *
+ * 												                                  *
+ * ============================================================================== #
+ */
+
 /**
  * Classe <code>Usuario</code>, encapsulamento para os usuarios da <b>Rede Social +POP</b>. Neste objeto ha todoas as 
  * informacoes necessarias para sua criacao.
@@ -163,7 +183,10 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * 
 	 * @throws PostException
 	 * 		Excecao lancada caso os parametros nao satisfacam as epecificacoes de criacao 
-	 * 		de um post
+	 * 		de um post.
+	 * 
+	 * @throws LogicaException
+	 * 			Erro na entrada de dados.
 	 */
 	public void criaPost(String mensagem, String data) throws PostException, LogicaException {
 		Post novoPost = fabricaPost.criaPost(mensagem, data);
@@ -357,7 +380,8 @@ public class Usuario implements Comparable<Usuario>, Serializable {
  	 * 
  	 * @param indice
  	 * 			Indice atual do <code>Post</code>.
- 	 * @return
+ 	 * @return Post
+ 	 * 			Post requerido.
  	 */
 	public Post getPost(int indice) {
  		return posts.get(indice);
@@ -386,7 +410,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * @return String
 	 * 		Retorna Hashtag, Data, Mensagem ou Conteudo do Post especificado.
 	 * 
-	 * @exception 
+	 * @throws LogicaException 
 	 * 		Excecao lancada devido a nao existir o atributo especificado 
 	 * 		e/ou nao existir o indce na lista de Posts
 	 */
@@ -408,7 +432,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * {@code getPostsToFeed} tem por responsablididade retornar a quantidade
 	 * de Posts, segundo sua Popularidade, para popular o Feed de seus amigos. 
 
-	 * @return List<Post> 
+	 * @return List
 	 * 			Lista dos postes disponiveis para o Feed de seus amigos.
 	 */
 	public List<Post> getPosts() {
@@ -418,11 +442,11 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	/**
 	 * Busca a midia especificada como parametro.
 	 * 
-	 * @param indice
+	 * @param indicePost
 	 * 		Indice indica o posicao da midia requerida.
 	 * 
-	 * @param post
-	 * 		Indice do Post.
+	 * @param atributo
+	 * 		Atributo requerido.
 	 * 
 	 * @return String
 	 * 		Uma Midia e retornada (Audio, Imagem, Mensagem).
@@ -430,8 +454,6 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * @throws LogicaException
 	 * 		Na lista de Post na ha o indice informado.
 	 * 
-	 * @throws PostException
-	 * 		O indice informado menor que zero.
 	 */
 	public String getConteudo(String atributo, int indicePost) throws LogicaException {
 		return this.posts.get(indicePost).getPost(atributo);
@@ -535,7 +557,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * {@code getPostsToFeed} tem por responsablididade retornar a quantidade
 	 * de Posts, segundo sua Popularidade, para popular o Feed de seus amigos. 
 
-	 * @return List<Post> 
+	 * @return List 
 	 * 			Lista dos postes disponiveis para o Feed de seus amigos.
 	 */
 	public List<Post> getPostsToFeed() {
@@ -589,7 +611,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	/**
 	 * Informacao referente a todos os amigos do Usuario.
 	 * 
-	 * @return List<Usuario>
+	 * @return List
 	 * 			Todos os amigos.
 	 */
 	public List<Usuario> getAmigos() {
@@ -599,7 +621,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	/**
 	 * Lista com as solicitacoes de amizade recebidas.
 	 * 
-	 * @return List<Usuario>
+	 * @return List
 	 * 		Lista de solicitacoes de amizade.
 	 */
 	public List<String> getSolicitacaoAmizade(){
@@ -739,7 +761,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	/**
 	 * <code>Feed</code> do <code>Usuario</code> com os postes de todos os amigos do <code>Usuario</code>.
 	 * 
-	 * @return List<Post>
+	 * @return List
 	 * 		Feed do Usuario.
 	 */
 	public List<Post> getFeed() {
@@ -780,11 +802,6 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	/**
 	 * Metodo usado para salvar todos os <code>Post</code> do <code>Usuario</code>.
 	 * 
-	 * @exception FileNotFoundException
-	 * 			Excecao ao tentar usar um arquivo inexistente.
-	 * 
-	 * @exception IOException
-	 * 			Excecoe ao manipular os arquivos de forma errada.
 	 */
 	public void salvaPosts() {
 		String diretorio = "postsUsuarios/" + getNomeFile() + ".txt";

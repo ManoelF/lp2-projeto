@@ -1,8 +1,26 @@
+/* =========================== Rede Social +Pop ================================= #
+ * 																				  *
+ * Projeto obrigatorio para cumprimento de nota da disciplina Programação II      * 	  
+ * e Laboratorio de Programacao II.                                               *
+ *                                                                                *
+ * Departamento de Informatica e Engenharia Eletrica							  *
+ * Curso Ciência da Computação (UFCG - 2015.1). 								  *
+ * Laboratorio de Programação II                                                  *
+ * 																				  *
+ * Discentes envolvidos: 														  *
+ *   		Italo Batista														  *
+ *   		Jose Manoel Ferreira												  *
+ *   		Kerilin Chang. 														  *
+ *																				  *
+ * Orientador: 																	  *
+ * 			Francisco Neto.		                                                  *
+ * 												                                  *
+ * ============================================================================== #
+ */
 package logica;
 
 import java.io.Serializable;
 
-import easyaccept.EasyAccept;
 import exceptions.AtualizaPerfilException;
 import exceptions.EntradaException;
 import exceptions.FechaSistemaException;
@@ -95,7 +113,7 @@ public class Facade implements Serializable {
 		return this.controller.getPops();
 	}
 	
-	public int getPopsUsuario(String email) throws LogoutException{
+	public int getPopsUsuario(String email) throws LogoutException, UsuarioNaoCadastradoException{
 		return controller.getPopsUsuario(email);
 	}
 	
@@ -200,10 +218,4 @@ public class Facade implements Serializable {
 		this.controller.setPops(pop);	
 	}
 	
-	public static void main(String[] args) {
- 	    args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt",
- 	    		             "lib/ScriptsTeste/usecase_4.txt", "lib/ScriptsTeste/usecase_5.txt","lib/ScriptsTeste/usecase_6.txt", "lib/ScriptsTeste/usecase_7.txt","lib/ScriptsTeste/usecase_8.txt"}; //"lib/NossosTestes/usecase_8.txt"};
-	    EasyAccept.main(args);
-	}
-
 }

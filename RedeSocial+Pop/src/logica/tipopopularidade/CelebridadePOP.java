@@ -1,3 +1,23 @@
+/* =========================== Rede Social +Pop ================================= #
+ * 																				  *
+ * Projeto obrigatorio para cumprimento de nota da disciplina Programação II      * 	  
+ * e Laboratorio de Programacao II.                                               *
+ *                                                                                *
+ * Departamento de Informatica e Engenharia Eletrica							  *
+ * Curso Ciência da Computação (UFCG - 2015.1). 								  *
+ * Laboratorio de Programação II                                                  *
+ * 																				  *
+ * Discentes envolvidos: 														  *
+ *   		Italo Batista														  *
+ *   		Jose Manoel Ferreira												  *
+ *   		Kerilin Chang. 														  *
+ *																				  *
+ * Orientador: 																	  *
+ * 			Francisco Neto.		                                                  *
+ * 												                                  *
+ * ============================================================================== #
+ */
+
 /**
  * Classe <code>CelebridadePOP</code> define um tipo de popularidade para um <code>Usuairo</code>.
  * Sendo assim, esta classe impementa a interface {@link TipoPopularidade}.
@@ -24,7 +44,7 @@ public class CelebridadePOP implements TipoPopularidade {
 	 * ofertado por um Usuario do tipo <code>CelebridadePOP</code>
 	 * curtir o Post.
 	 * 
-	 * @param Post
+	 * @param post
 	 * 			Post a ser curtido.
 	 */
 	@Override
@@ -42,7 +62,7 @@ public class CelebridadePOP implements TipoPopularidade {
 	 * ofertado por um Usuario do tipo <code>CelebridadePOP</code>
 	 * descurtir o Post.
 	 * 
-	 * @param Post
+	 * @param post
 	 * 			Post a ser descurtido.
 	 */
 	@Override

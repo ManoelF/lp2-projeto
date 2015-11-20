@@ -1,3 +1,23 @@
+/* =========================== Rede Social +Pop ================================= #
+ * 																				  *
+ * Projeto obrigatorio para cumprimento de nota da disciplina Programação II      * 	  
+ * e Laboratorio de Programacao II.                                               *
+ *                                                                                *
+ * Departamento de Informatica e Engenharia Eletrica							  *
+ * Curso Ciência da Computação (UFCG - 2015.1). 								  *
+ * Laboratorio de Programação II                                                  *
+ * 																				  *
+ * Discentes envolvidos: 														  *
+ *   		Italo Batista														  *
+ *   		Jose Manoel Ferreira												  *
+ *   		Kerilin Chang. 														  *
+ *																				  *
+ * Orientador: 																	  *
+ * 			Francisco Neto.		                                                  *
+ * 												                                  *
+ * ============================================================================== #
+ */
+
 /**
  * Classe <code>Util</code> responsavel por validações de atributos, tratamento de dados e salvar/recuperar 
  * o estado do sistema.
@@ -41,7 +61,9 @@ public class Util implements Serializable {
 	 * Metodo responsavel por proporcionar a unica
 	 * instanciacao do objeto, como tambem garante seguranca 
 	 * das informacoes por usar <b>Synchronized</b>.
-	 * @return
+	 * 
+	 * @return Util
+	 * 			Instancia de <b>Util</b>.
 	 */
     public static Util getInstancia() {
     	synchronized (Util.class) {
@@ -58,7 +80,7 @@ public class Util implements Serializable {
      * @param mensagem
      * 		Texto recebido como parametro na contrucao do Post.
      * 
-     * @return List<String>
+     * @return List
      * 		Lista com todas as midias encontradas no Post.
      */
     public List<String> getMidia(String mensagem) {
@@ -151,7 +173,7 @@ public class Util implements Serializable {
 	 * @param texto
 	 * 		Texto recebido como parametro na contrucao do Post.
 	 * 
-	 * @return List<String>
+	 * @return List
 	 * 		Hastags que foram adicionadas ao Post.
 	 *  
 	 * @throws PostException
@@ -230,12 +252,12 @@ public class Util implements Serializable {
 	}
 
 	/**
-	 * Converte as hashtags(String) para objeto {@codeTag}.
+	 * Converte as hashtags(String) para objeto <b>Tag</b>.
 	 * 
 	 * @param hashtags
 	 * 			Lista de hashtags(String).
 	 * 
-	 * @return List<Tag>
+	 * @return List
 	 * 			Lista de Tag. 
 	 */
 	public List<Tag> converteParaTag(List<String> hashtags) {
@@ -427,6 +449,7 @@ public class Util implements Serializable {
 	 * 			arquivo.
 	 * 
 	 * @throws RedeSocialMaisPopException
+	 * 			Excecoes no trabalho com arquivos
 	 */
 	public void salvaSistema(Controller controller) throws RedeSocialMaisPopException {
 		
@@ -441,10 +464,8 @@ public class Util implements Serializable {
 			stream.close();
 					
 		} catch (FileNotFoundException e) {
-			System.out.println("NOT FOUND" );
 			throw new RedeSocialMaisPopException();
 		} catch (IOException e) {
-			System.out.println("IOEXCEPTION " + e.getMessage());
 			throw new RedeSocialMaisPopException();
 		}   // Erro ao fechar sistema
 		
@@ -455,6 +476,8 @@ public class Util implements Serializable {
 	 * do <b>Sistema</b>, restaurando assim todo seu estado. As informacoes
 	 * recuperadas estao em um arquivo.
 	 * 
+	 * @return Controller
+	 * 			Instancia de controlle com o estado do sistema que anteriormente foi salvo.
 	 */
 	public Controller restauraSistema() {
 		

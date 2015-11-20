@@ -1,3 +1,23 @@
+/* =========================== Rede Social +Pop ================================= #
+ * 																				  *
+ * Projeto obrigatorio para cumprimento de nota da disciplina Programação II      * 	  
+ * e Laboratorio de Programacao II.                                               *
+ *                                                                                *
+ * Departamento de Informatica e Engenharia Eletrica							  *
+ * Curso Ciência da Computação (UFCG - 2015.1). 								  *
+ * Laboratorio de Programação II                                                  *
+ * 																				  *
+ * Discentes envolvidos: 														  *
+ *   		Italo Batista														  *
+ *   		Jose Manoel Ferreira												  *
+ *   		Kerilin Chang. 														  *
+ *																				  *
+ * Orientador: 																	  *
+ * 			Francisco Neto.		                                                  *
+ * 												                                  *
+ * ============================================================================== #
+ */
+
 /**
  * Classe <code>Feed</code>, representado todas as postagens disponiveis dos amigos do Usuario.
  */
@@ -73,7 +93,9 @@ public class Feed implements Serializable {
 	
 	/**
 	 * Retorno da lista de posts que caracteriza o feed.
-	 * @return
+	 * 
+	 * @return List
+	 * 		Lista de post para o feed.
 	 */
 	public List<Post> getFeed() {
 		return this.feed;

@@ -1,11 +1,6 @@
 package testes;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import logica.Controller;
-import logica.Usuario;
 
 import org.junit.Assert;
 import org.junit.Before;

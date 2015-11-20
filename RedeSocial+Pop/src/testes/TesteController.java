@@ -22,8 +22,7 @@ public class TesteController {
 	public void testCadastraUsuario() {
 		try {
 			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
-			Assert.assertEquals("day.trindade@email.com", controller.getUsuariosCadastrados().get(0).getEmail());
-			Assert.assertEquals("Day", controller.getInfoUsuario("Nome", controller.getUsuariosCadastrados().get(0).getEmail()));
+			Assert.assertTrue(controller.pesquisaUsuarioNaRede("day.trindade@email.com"));
 		} catch (RedeSocialMaisPopException erro) {
 			Assert.fail();
 		} 
@@ -290,11 +289,12 @@ public class TesteController {
 			controller.logout();
 			
 			controller.cadastraUsuario("Cat Power", "catpower@email.com", "sapatomica", "21/02/1972", "imagem/cat_perfil");
+			controller.login("catpower@email.com", "sapatomica");
 			
-			Assert.assertEquals("Cat Power", controller.getInfoUsuario("Nome", controller.getUsuariosCadastrados().get(1).getEmail()));
-			Assert.assertEquals("imagem/cat_perfil", controller.getInfoUsuario("Foto", controller.getUsuariosCadastrados().get(1).getEmail()));
+			Assert.assertEquals("Cat Power", controller.getInfoUsuario("Nome", "catpower@email.com"));
+			Assert.assertEquals("imagem/cat_perfil", controller.getInfoUsuario("Foto"));
 			
-			controller.getInfoUsuario("Senha", controller.getUsuariosCadastrados().get(1).getEmail());
+			controller.getInfoUsuario("Senha");
 			
 		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("A senha dx usuarix eh protegida.", erro.getMessage());
@@ -379,18 +379,20 @@ public class TesteController {
 			
 			controller.login("ceumusic@email.com", "Fffrree");
 			controller.aceitaAmizade("catpower@email.com");
+			
+			Assert.assertEquals(1, controller.getQtdAmigos());
+			
+			controller.removeUsuario("catpower@email.com");
+			
+			Assert.assertEquals(0, controller.getQtdAmigos());
 			controller.logout();
 			
-			Assert.assertEquals(3, controller.getUsuariosCadastrados().size());
-			
-			controller.removeUsuario( controller.getUsuariosCadastrados().get(2).getEmail() );
-			Assert.assertEquals(2, controller.getUsuariosCadastrados().size());
 			
 			controller.login("catpower@email.com", "sapatomica");
-			Assert.assertEquals(1, controller.getQtdAmigos());
 
 		} catch (RedeSocialMaisPopException erro) {
-			Assert.fail();
+			Assert.assertEquals("Nao foi possivel realizar login. Um usuarix com email catpower@email.com nao"
+					+ " esta cadastradx.", erro.getMessage());
 		}
 	}
 	
@@ -402,8 +404,6 @@ public class TesteController {
 			controller.atualizaPerfil("Senha", "fafa_S2", "will_S2");
 			controller.atualizaPerfil("Senha", "fafa123", "fafa_S2");
 			
-			Assert.assertEquals("fatima@email.com.br", controller.getUsuariosCadastrados().get(0).getEmail());
-			Assert.assertEquals("fafa123",  controller.getsenha());
 			
 			controller.atualizaPerfil("Nome", "Fati Ma");
 			controller.atualizaPerfil("E-mail", "fatxi@globo.com");

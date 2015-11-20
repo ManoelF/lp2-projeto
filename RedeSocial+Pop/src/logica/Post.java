@@ -1,3 +1,23 @@
+/* =========================== Rede Social +Pop ================================= #
+ * 																				  *
+ * Projeto obrigatorio para cumprimento de nota da disciplina Programação II      * 	  
+ * e Laboratorio de Programacao II.                                               *
+ *                                                                                *
+ * Departamento de Informatica e Engenharia Eletrica							  *
+ * Curso Ciência da Computação (UFCG - 2015.1). 								  *
+ * Laboratorio de Programação II                                                  *
+ * 																				  *
+ * Discentes envolvidos: 														  *
+ *   		Italo Batista														  *
+ *   		Jose Manoel Ferreira												  *
+ *   		Kerilin Chang. 														  *
+ *																				  *
+ * Orientador: 																	  *
+ * 			Francisco Neto.		                                                  *
+ * 												                                  *
+ * ============================================================================== #
+ */
+
 /**
  * Classe <code>Post</code> responsavel por conter todas as informacoes necessarias
  * para compor um Post.
@@ -30,7 +50,7 @@ public class Post implements Comparable<Post>, Serializable {
 	
 
 	/**
-	 * Construtor de {@codePost}.
+	 * Construtor de <b>Post</b>.
 	 * Todas as informacoes estao garantidamente seguras para sua criacao.
 	 * 
 	 * @param texto
@@ -43,7 +63,7 @@ public class Post implements Comparable<Post>, Serializable {
 	 * 			Lista de hashtags do Post.
 	 * 
 	 * @param midias
-	 * 			Lista de {@codeMida} do Post.
+	 * 			Lista de <b>Midia</b> do Post.
 	 * 
 	 */
 	public Post(String texto, LocalDateTime data, List<String> hashtags, List<Midia> midias) {
@@ -83,6 +103,9 @@ public class Post implements Comparable<Post>, Serializable {
 	
 	/**
 	 * Data de criacao do Post.
+	 * 
+	 * @return LocalDatetime
+	 * 			Data de criacao do Post.
 	 */
 	public LocalDateTime getData() {
 		return this.data;
@@ -91,7 +114,7 @@ public class Post implements Comparable<Post>, Serializable {
 	/**
 	 * Hashtags do Post.
 	 * 
-	 * @return List<String>
+	 * @return List
 	 * 			Listara todas as hastags do post.
 	 */
 	public List<String> getHashtags() {
@@ -216,7 +239,7 @@ public class Post implements Comparable<Post>, Serializable {
 	/**
 	 * Lista de midias do Post.
 	 * 
-	 * @return Lista<Midia>
+	 * @return Lista
 	 * 			Midias do Post.
 	 */
 	public List<Midia> getMidias() {
@@ -315,7 +338,8 @@ public class Post implements Comparable<Post>, Serializable {
 	 * @param indice
 	 * 			Indice usado para informar ordem em
 	 * 			que o post foi criado.
-	 * @return
+	 * @return String
+	 * 			Informacoes do post em um formato especifico.
 	 */
 	public String toString(int indice) {
 		StringBuffer postFormatado = new StringBuffer();

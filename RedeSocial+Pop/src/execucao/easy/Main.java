@@ -19,20 +19,18 @@
  */
 
 /**
- * <b>FechaSistemaException</b> encapsulamento de erro referente ao  salvar o atual estado do sistema.
+ * Classe destinada a execucao dos teste de aceitacao.
  */
+package execucao.easy;
 
-package exceptions;
+import easyaccept.EasyAccept;
 
-public class FechaSistemaException extends LogicaException {
-
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Construtor <b>FechaSistemaException</b>.
-	 */
-	public FechaSistemaException() {
-		super("Nao foi possivel fechar o sistema. Um usuarix ainda esta logadx.");
-	}
+public class Main {
 	
+	public static void main(String[] args) {
+		args = new String[] {"logica.Facade", "lib/ScriptsTeste/usecase_1.txt", "lib/ScriptsTeste/usecase_2.txt", "lib/ScriptsTeste/usecase_3.txt",
+	             "lib/ScriptsTeste/usecase_4.txt", "lib/ScriptsTeste/usecase_5.txt","lib/ScriptsTeste/usecase_6.txt", "lib/ScriptsTeste/usecase_7.txt", "lib/NossosTestes/usecase_8.txt"};
+		EasyAccept.main(args);
+	}
+
 }
