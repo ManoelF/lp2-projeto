@@ -167,7 +167,7 @@ public class Post implements Comparable<Post>, Serializable {
 	 * @throws LogicaException
 	 * 			Excecao de informacao inexistente.
 	 */
-	public String getPost(String atributo) throws LogicaException {
+	public String getPost(String atributo) throws PostException {
 		if (atributo.equals("Data")) {
 			return getDataString();
 		} else if (atributo.equals("Conteudo")) {
@@ -177,7 +177,7 @@ public class Post implements Comparable<Post>, Serializable {
 		} else if (atributo.equals("Mensagem")) {
 			return getConteudo();
 		} else {
-			throw new LogicaException("Informacao indisponivel");
+			throw new PostException();
 		}
 	}
 	

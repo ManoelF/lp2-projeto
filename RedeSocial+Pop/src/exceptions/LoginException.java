@@ -44,7 +44,7 @@ public class LoginException extends LogicaException {
 	 * 			Mensagem de excecao.
 	 */
 	public LoginException(String msg) {
-		super(msg);
+		super("Nao foi possivel realizar login." +" "+ msg);
 	}
 	
 	/*UsuarioLogadoException(String nomeUsuario): " Um usuarix ja esta logadx: " + nomeUsuario + "."

@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import exceptions.EntradaException;
 import exceptions.LogicaException;
+import exceptions.RedeSocialMaisPopException;
 
 public class TesteFeed {
 
@@ -19,7 +20,7 @@ public class TesteFeed {
 	}
 	
 	@Test
-	public void testaFeed() throws LogicaException, EntradaException {
+	public void testaFeed() throws RedeSocialMaisPopException {
 		controller.cadastraUsuario("Melody","melodymusic@email.com.br","umadiva", "01/08/2007", "resources/melody.jpg");
 		controller.cadastraUsuario("Ines Brasil", "inesbrasil@email.com", "deusehfiel", "25/10/1969", "resources/ines.jpg");
 		controller.cadastraUsuario("MC Carol", "carolgatinha@email.com", "ondaforte", "05/07/1995", "resources/mccarol.jpg");

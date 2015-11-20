@@ -187,8 +187,9 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * @throws LogicaException
 	 * 			Erro na entrada de dados.
 	 */
-	public void criaPost(String mensagem, String data) throws PostException, LogicaException {
-		Post novoPost = fabricaPost.criaPost(mensagem, data);
+	public void criaPost(String mensagem, String data) throws PostException {
+		Post novoPost;
+		novoPost = fabricaPost.criaPost(mensagem, data);
 		novoPost.setAutor(this.nome);
 		this.posts.add(novoPost);
 	}
@@ -413,7 +414,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * 		Excecao lancada devido a nao existir o atributo especificado 
 	 * 		e/ou nao existir o indce na lista de Posts
 	 */
-	public String getPost(String atributo, int post) throws LogicaException {
+	public String getPost(String atributo, int post) throws PostException {
 		return this.getPost(post).getPost(atributo);
 	}
 	
@@ -449,12 +450,13 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * 
 	 * @return String
 	 * 		Uma Midia e retornada (Audio, Imagem, Mensagem).
+	 * @throws PostException 
 	 * 
 	 * @throws LogicaException
 	 * 		Na lista de Post na ha o indice informado.
 	 * 
 	 */
-	public String getConteudo(String atributo, int indicePost) throws LogicaException {
+	public String getConteudo(String atributo, int indicePost) throws PostException  {
 		return this.posts.get(indicePost).getPost(atributo);
 	}
 	
@@ -660,7 +662,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 */
 	public void setNome(String novoNome) throws AtualizaPerfilException {
 		if (novoNome == null || !util.verificaAtributo(novoNome)){
-			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Nome dx usuarix nao pode ser vazio.");
+			throw new AtualizaPerfilException();
 		}
 		this.nome = novoNome;
 	}
@@ -676,7 +678,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 */
 	public void setEmail(String novoEmail) throws EntradaException {
 		if (novoEmail == null ||!util.verificaEmail(novoEmail)) {
-			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Formato de e-mail esta invalido.");
+			throw new AtualizaPerfilException();
 		}
 		this.email = novoEmail;
 	}
@@ -723,16 +725,17 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * 
 	 * @throws AtualizaPerfilException
 	 * 			Data de nascimento inserida esta invalidada pelo sistema.
+	 * @throws LogicaException 
 	 */
-	public void setNascimento(String novoNascimento) throws AtualizaPerfilException {
+	public void setNascimento(String novoNascimento) throws AtualizaPerfilException, LogicaException {
 		if (novoNascimento == null || novoNascimento.trim().length() == 0) {
-			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Formato de data esta invalida.");
+			throw new AtualizaPerfilException();
 		}
 		if (util.verificaFormatoData(novoNascimento) == false) {
-			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Formato de data esta invalida.");
+			throw new AtualizaPerfilException();
 		}
 		if (util.verificaDataValida(novoNascimento) == false) {
-			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Data nao existe.");
+			throw new LogicaException("Erro na atualizacao de perfil.");
 		}
 		this.nascimento = util.recebeData(novoNascimento);;
 	}
@@ -747,8 +750,9 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * 			Excecao de imagem invalida.
 	 */
 	public void setImagem(String novaImagem) throws AtualizaPerfilException {
+		
 		if (novaImagem == null) {
-			throw new AtualizaPerfilException("Erro na atualizacao de prefil. Imagem inserida esta invalida.");
+			throw new AtualizaPerfilException();
 		}
 		if (novaImagem.trim().length() == 0) {
 			this.imagem = "resources/avatarDefaul.jpg";

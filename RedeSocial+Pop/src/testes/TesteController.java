@@ -132,7 +132,7 @@ public class TesteController {
 	}
 	
 	@Test
-	public void testAddAmigiException() throws EntradaException, ParseException, LogicaException {
+	public void testAddAmigiException() throws ParseException {
 		// testa adicionar usuario nao cadastrado 
 		try {
 			controller.cadastraUsuario("Day", "day.trindade@email.com", "poxaquecoxa", "10/10/1998", "imagens/day_perfil");
@@ -158,7 +158,7 @@ public class TesteController {
 			Assert.assertEquals("Day quer sua amizade.", controller.getNextNotificacao());
 			controller.getNextNotificacao();
 			
-		} catch (NaoHaNotificacoesException erro) {
+		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Nao ha mais notificacoes.", erro.getMessage());
 		}
 		
@@ -443,7 +443,7 @@ public class TesteController {
 			Assert.assertEquals("Lana Del Rey descurtiu seu post de 2015-05-21 12:00:11.", controller.getNextNotificacao());
 			controller.logout();
 			
-		} catch (EntradaException | LogicaException e) {
+		} catch (RedeSocialMaisPopException e) {
 			Assert.fail();
 		}
 		
@@ -583,20 +583,6 @@ public class TesteController {
 		} catch (RedeSocialMaisPopException erro) {
 			Assert.fail();
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 	}
 }

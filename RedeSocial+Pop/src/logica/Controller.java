@@ -38,6 +38,7 @@ import exceptions.LogoutException;
 import exceptions.NaoHaNotificacoesException;
 import exceptions.NaoSolicitouAmizadeException;
 import exceptions.PostException;
+import exceptions.RedeSocialMaisPopException;
 import exceptions.SenhaIncorretaException;
 import exceptions.SenhaProtegidaException;
 import exceptions.UsuarioNaoCadastradoException;
@@ -108,7 +109,7 @@ public class Controller implements Serializable {
 	 */
 	public String cadastraUsuario(String nome, String email, String senha, 
 								String nascimento, String imagem) 
-								throws EntradaException,  LogicaException {
+								throws RedeSocialMaisPopException {
 		Usuario novoUsuario;
 		boolean podeCadastrar = hasEmail(email);
 		if (podeCadastrar == true) {
@@ -177,17 +178,17 @@ public class Controller implements Serializable {
 	 * @throws EntradaException
 	 * 		Lanca excecao quando nao existe usuario cadastrado com o e-mail informado.
 	 */
-	public void login(String EmailInserido, String senhaInserida) throws LogicaException, EntradaException {
+	public void login(String EmailInserido, String senhaInserida) throws RedeSocialMaisPopException {
 		
 		Usuario usuarioLogando;
 		
 		if (usuarioLogado != null) {
-			throw new LoginException("Nao foi possivel realizar login. Um usuarix ja esta logadx: " + usuarioLogado.getNome() + ".");
+			throw new LoginException("Um usuarix ja esta logadx: " + usuarioLogado.getNome() + ".");
 		} else { 
 			usuarioLogando = pesquisaUsuario(EmailInserido);
 			
 			if (usuarioLogando == null) {
-				throw new LoginException("Nao foi possivel realizar login. Um usuarix com email " + EmailInserido + " nao esta cadastradx.");
+				throw new LoginException("Um usuarix com email " + EmailInserido + " nao esta cadastradx.");
 			} else if (usuarioLogando.getSenha().equals(senhaInserida)){
 				usuarioLogado = usuarioLogando;
 			} else {
@@ -201,7 +202,7 @@ public class Controller implements Serializable {
 	 * @throws LogicaException
 	 * 		Lanca excecao quando nao ha nenhum usuario a ser deslogado.
 	 */	
-	public void logout() throws LogicaException {
+	public void logout() throws RedeSocialMaisPopException {
 
 		if (this.usuarioLogado == null) {
 			throw new LogoutException("Nao eh possivel realizar logout. Nenhum usuarix esta logadx no +pop.");
@@ -225,11 +226,16 @@ public class Controller implements Serializable {
 	 * @throws LogicaException
 	 * 			Excecoes relacionada a validacao das informacoes.
 	 */
-	public void criaPost(String mensagem, String data) throws PostException, LogicaException {
-		this.usuarioLogado.criaPost(mensagem, data);
+	public void criaPost(String mensagem, String data) throws RedeSocialMaisPopException  {
+		try {
+			this.usuarioLogado.criaPost(mensagem, data);
+			List<String> hashtags = this.usuarioLogado.getUltimoPost().getHashtags();
+			popularizaTrending(hashtags);
+		} catch (PostException e) {
+			String msg = e.getMessage();
+			throw new PostException("Nao eh possivel criar o post." +" "+ msg);
+		}
 		
-		List<String> hashtags = this.usuarioLogado.getUltimoPost().getHashtags();
-		popularizaTrending(hashtags);
 	}
 	/**
 	 * Metodo usado para salvar todos os <code>Post</code> do <code>Usuario</code>.
@@ -237,7 +243,7 @@ public class Controller implements Serializable {
 	 * @exception LogoutException
 	 * 			Invalidacao ao tentar salvar os post sem haver algum usuario logado.
 	 */
-	public void salvaPosts() throws LogoutException {
+	public void salvaPosts() throws RedeSocialMaisPopException {
 
 		if (this.usuarioLogado == null) {
 			throw new LogoutException("Nao eh possivel salvar historico. Nenhum usuarix esta logadx no +pop.");
@@ -270,7 +276,7 @@ public class Controller implements Serializable {
 	 * @throws LogicaException
 	 * 		Lanca excecao se nao houver usuario cadastrado com o e-mail informado ou se essse usuario nao eh amigo do usuario.
 	 */
-	public void curtirPost(String amigo, int post) throws LogicaException {
+	public void curtirPost(String amigo, int post) throws RedeSocialMaisPopException {
 		Usuario usuario = pesquisaUsuario(amigo);
 		
 		if (usuario == null) {
@@ -310,7 +316,7 @@ public class Controller implements Serializable {
 	 * @throws LogicaException
 	 * 		Lanca excecao se nao houver usuario cadastrado com o e-mail informado ou se essse usuario nao eh amigo do usuario.
 	 */
-	public void descurtirPost(String amigo, int post) throws LogicaException {
+	public void descurtirPost(String amigo, int post) throws RedeSocialMaisPopException {
 		Usuario usuario = pesquisaUsuario(amigo);
 		
 		if (usuario == null) {
@@ -341,32 +347,62 @@ public class Controller implements Serializable {
 	 * @throws EntradaException
 	 * 		Lanca excecao se o novo valor para e-mail ja estiver cadastrado ou se o tipo de informacao a ser atualizada nao existir.
 	 */
-	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, EntradaException {
+	public void atualizaPerfil(String atributo, String novoValor) throws RedeSocialMaisPopException {
 		
 		if(this.usuarioLogado == null) {
-			throw new AtualizaPerfilException();
+			throw new AtualizaPerfilException("Erro na atualizacao de perfil. Nenhum usuarix esta logadx no +pop.");
 		} else {	
 			switch (atributo) {
+			
 			case NOME:
-				this.usuarioLogado.setNome(novoValor);
+				try {					
+					this.usuarioLogado.setNome(novoValor);
+				} catch (RedeSocialMaisPopException e) {
+					String msg = e.getMessage();
+					throw new AtualizaPerfilException(msg+ " Nome dx usuarix nao pode ser vazio.");
+				}
 				break;
+			
 			case EMAIL:
 				if (hasEmail(novoValor)) {
-					this.usuarioLogado.setEmail(novoValor);
+					
+					try{						
+						this.usuarioLogado.setEmail(novoValor);
+					} catch (RedeSocialMaisPopException e) {
+						String msg = e.getMessage();
+						throw new AtualizaPerfilException(msg +" Formato de e-mail esta invalido.");
+					}
+					
 				} else {
 					throw new  EntradaException("Ja existe um usuarix com esse email.");
 				}
 				break;
+
 			case NASCIMENTO:
-				this.usuarioLogado.setNascimento(novoValor);
+				try{					
+					this.usuarioLogado.setNascimento(novoValor);
+				} catch (AtualizaPerfilException e) {
+					String msg = e.getMessage();
+					throw new AtualizaPerfilException(msg +" Formato de data esta invalida.");
+				} catch (LogicaException e) {
+					String msg = e.getMessage();
+					throw new AtualizaPerfilException(msg +" Data nao existe.");
+				}
 				break;
+				
 			case FOTO:
-				this.usuarioLogado.setImagem(novoValor);
+				try{					
+					this.usuarioLogado.setImagem(novoValor);
+				} catch (RedeSocialMaisPopException e) {
+					String msg = e.getCause().getMessage();
+					throw new AtualizaPerfilException(msg +" Imagem inserida esta invalida.");
+				}
 				break;
-			default:
-				throw new EntradaException("Este atributo nao existe!");
+			default:		
+					throw new AtualizaPerfilException("Erro na atualizacao de perfil. Este atributo nao existe!");
 				
 			}
+				
 		}
 	}
 
@@ -388,7 +424,7 @@ public class Controller implements Serializable {
 	 * @throws AtualizaPerfilException
 	 * 		Lanca excecao se nao existir o atributo a ser atualizado.
 	 */
-	public void atualizaPerfil(String atributo, String valor, String velhaSenha) throws LogicaException, AtualizaPerfilException {	
+	public void atualizaPerfil(String atributo, String valor, String velhaSenha) throws RedeSocialMaisPopException {	
 		if(this.usuarioLogado == null) {
 			throw new AtualizaPerfilException();
 		} else if (atributo.equals(SENHA)) {
@@ -406,7 +442,8 @@ public class Controller implements Serializable {
 	 * 			Excecao na busca das informacoes para o retorno.
 	 * 			
 	 */
-	public String atualizaFeed() throws LogicaException {
+	public String atualizaFeed() throws RedeSocialMaisPopException {
+
 		this.usuarioLogado.atualizaFeed();
 		
 		StringBuffer feed = new StringBuffer();
@@ -417,24 +454,31 @@ public class Controller implements Serializable {
 			feed.append(post.getAutor() +":");
 			feed.append(endOfLine);
 			
-			if (post.getMidias(0) != null || post.getMidias(0) != "") {
-				feed.append(post.getMidias(0));
-				feed.append(endOfLine);								  }
-			if (post.getMidias().size() > 1) {
-				for (int j = 1; j < post.getMidias().size(); j++) {
-					feed.append(post.getMidias(j));
-					feed.append(endOfLine);	
-				}							 }
-			if (post.getPost("Hashtags").contains("#")) {
-				feed.append(post.getPost("Hashtags").replace(",", " "));
-				feed.append(endOfLine);
+			try{				
+				if (post.getMidias(0) != null || post.getMidias(0) != "") {
+					feed.append(post.getMidias(0));
+					feed.append(endOfLine);								  }
+				if (post.getMidias().size() > 1) {
+					for (int j = 1; j < post.getMidias().size(); j++) {
+						feed.append(post.getMidias(j));
+						feed.append(endOfLine);	
+					}							 }
+				if (post.getPost("Hashtags").contains("#")) {
+					feed.append(post.getPost("Hashtags").replace(",", " "));
+					feed.append(endOfLine);
+				}
+			} catch (RedeSocialMaisPopException e) {
+				throw new LogicaException();
 			}
+			
 			
 			feed.append(post.getDataString() +"   "+ "Curtir("+ post.getLike() +") Rejeitar("+ post.getDeslike()+ ")");
 			feed.append(endOfLine);
 		}
 		feed.append(endOfLine);
 		return feed.toString();
+	
+	
 	}
 	
 	/**
@@ -449,29 +493,35 @@ public class Controller implements Serializable {
 	 * @throws LogicaException
 	 * 			Possiveis excecoes na busca de informacoes para construcao do feed.
 	 */
-	public String getFeed(int indice) throws LogicaException {
-		Post post = this.usuarioLogado.getFeed().get(indice);
+	public String getFeed(int i) throws RedeSocialMaisPopException {
+
+		Post post = this.usuarioLogado.getFeed().get(i);
 		StringBuffer postBuffer = new StringBuffer();
 		final String endOfLine = " ";
 		
 		postBuffer.append(post.getAutor() +":");
 		postBuffer.append(endOfLine);
 		
-		if (post.getMidias(0) != null || post.getMidias(0) != "") {
-			postBuffer.append(post.getMidias(0));
-			postBuffer.append(endOfLine);						  }
-		if (post.getMidias().size() > 1) 						  {
-			for (int j = 1; j < post.getMidias().size(); j++) {
-				postBuffer.append(post.getMidias(j));
-				postBuffer.append(endOfLine);	
-			}													  }
-		if (post.getPost("Hashtags").contains("#")) {
-			postBuffer.append(post.getPost("Hashtags").replace(",", " "));
-			postBuffer.append(endOfLine);
+		try {			
+			if (post.getMidias(0) != null || post.getMidias(0) != "") {
+				postBuffer.append(post.getMidias(0));
+				postBuffer.append(endOfLine);						  }
+			if (post.getMidias().size() > 1) 						  {
+				for (int j = 1; j < post.getMidias().size(); j++) {
+					postBuffer.append(post.getMidias(j));
+					postBuffer.append(endOfLine);	
+				}													  }
+			if (post.getPost("Hashtags").contains("#")) {
+				postBuffer.append(post.getPost("Hashtags").replace(",", " "));
+				postBuffer.append(endOfLine);
+			}
+		} catch (RedeSocialMaisPopException e) {
+			throw new RedeSocialMaisPopException();
 		}
 		
 		postBuffer.append(post.getDataString() +"   "+ "Curtir("+ post.getLike() +") Rejeitar("+ post.getDeslike()+ ")");
 		return postBuffer.toString();
+		
 	}
 		
 	/**
@@ -508,7 +558,7 @@ public class Controller implements Serializable {
 	 * @throws LogicaException
 	 * 		Lanca excecao caso nao haja nenhum usuario cadastrado com o e-mail. 
 	 */
-	public void adicionaAmigo(String emailUserDestino) throws LogicaException {
+	public void adicionaAmigo(String emailUserDestino) throws RedeSocialMaisPopException {
 		Usuario userDestino = pesquisaUsuario(emailUserDestino);
 		if (userDestino == null) {
 			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ emailUserDestino +" nao esta cadastradx.");
@@ -529,7 +579,7 @@ public class Controller implements Serializable {
 	 * 			Caso nao exista usuario com o email informado nao sera possivel 
 	 * 			dar continuidade ao processo e sera lancado uma excecao.
 	 */
-	public void aceitaAmizade(String emailUserAceito) throws LogicaException {
+	public void aceitaAmizade(String emailUserAceito) throws RedeSocialMaisPopException {
 		Usuario userAceito = pesquisaUsuario(emailUserAceito);
 		
 		if (userAceito == null) {
@@ -553,7 +603,7 @@ public class Controller implements Serializable {
 	 * 			Caso nao exista usuario com o email informado nao sera possivel 
 	 * 			dar continuidade ao processo e sera lancado uma excecao.
 	 */
-	public void rejeitaAmizade(String emailUserRecusado) throws LogicaException  {
+	public void rejeitaAmizade(String emailUserRecusado) throws RedeSocialMaisPopException  {
 		Usuario userRecusado = pesquisaUsuario(emailUserRecusado);
 		
 		if (userRecusado == null) {
@@ -574,7 +624,7 @@ public class Controller implements Serializable {
 	 * @throws UsuarioNaoCadastradoException
 	 * 			Excecao caso o usuario queira remover uma amigo que nao esteja cadastrado na Rede.
 	 */
-	public void removeAmigo(String emailUsuario) throws UsuarioNaoCadastradoException {
+	public void removeAmigo(String emailUsuario) throws RedeSocialMaisPopException {
 		Usuario usuarioRemover = pesquisaUsuario(emailUsuario);
 		
 		if (usuarioRemover == null) {
@@ -623,7 +673,7 @@ public class Controller implements Serializable {
 	 * @throws EntradaException
 	 * 			Se for solicitado uma informacao que nao esteja disponivel ou nao existe uma excecao eh gerada.
 	 */
-	public String getInfoUsuario(String atributo) throws SenhaProtegidaException , EntradaException{
+	public String getInfoUsuario(String atributo) throws RedeSocialMaisPopException {
 		String atributoRetornado = null;
 		switch (atributo) {
 		case NOME:
@@ -642,6 +692,7 @@ public class Controller implements Serializable {
 		}
 		return atributoRetornado;
 	}
+	
 	/**
 	 * Busca de uma informacao do usuario especificado pelo email, seja (nome, data de nascimento, imagem ou senha).
 	 * 
@@ -660,7 +711,7 @@ public class Controller implements Serializable {
 	 * @throws EntradaException
 	 * 			Se for solicitado uma informacao que nao esteja disponivel ou nao existe uma excecao eh gerada.
 	 */
-	public String getInfoUsuario(String atributo, String email) throws LogicaException, EntradaException {
+	public String getInfoUsuario(String atributo, String email) throws RedeSocialMaisPopException {
 		Usuario usuario = pesquisaUsuario(email);
 		if (usuario == null) {
 			throw new UsuarioNaoCadastradoException("Um usuarix com email "+ email +" nao esta cadastradx.");
@@ -706,8 +757,13 @@ public class Controller implements Serializable {
 	 * 			Se o usuario solicitar uma proxima notificacao e nao haver mais notificacoes
 	 * 			uma excecao eh gerada.
 	 */
-	public String getNextNotificacao() throws NaoHaNotificacoesException {
-		return this.usuarioLogado.getNextNotificacao();
+	public String getNextNotificacao() throws RedeSocialMaisPopException {
+		try {			
+			return this.usuarioLogado.getNextNotificacao();
+		} catch (RedeSocialMaisPopException e) {
+			String msg = e.getMessage();
+			throw new NaoHaNotificacoesException(msg);
+		}
 	}
 	
 	/**
@@ -719,6 +775,7 @@ public class Controller implements Serializable {
 	public int getQtdAmigos() {
 		return this.usuarioLogado.getQtdAmigos();
 	}
+
 	/**
 	 * Informacoes referente ao <b>Post</b> solicitado.
 	 * 
@@ -768,7 +825,7 @@ public class Controller implements Serializable {
 	 * @throws UsuarioNaoCadastradoException 
 	 * 			Impossivel ter informacoes de um usuario que nao esta cadastrado no sistema.
 	 */
-	public int getPopsUsuario(String email) throws LogoutException, UsuarioNaoCadastradoException {
+	public int getPopsUsuario(String email) throws RedeSocialMaisPopException {
 		Usuario usuario = pesquisaUsuario(email);
 		if (this.usuarioLogado != null) {
 			throw new LogoutException("Erro na consulta de Pops. Um usuarix ainda esta logadx.");
@@ -790,12 +847,17 @@ public class Controller implements Serializable {
 	 * 
 	 * @return String
 	 * 			Informacao do Post.
+	 * @throws RedeSocialMaisPopException 
 	 * 
 	 * @throws LogicaException
 	 * 			Se for requerido uma informacao inacessivel sera lancado uma excecao.
 	 */
-	public String getPost(String atributo, int post) throws LogicaException { 
-		return this.usuarioLogado.getPost(atributo, post);
+	public String getPost(String atributo, int post) throws RedeSocialMaisPopException  { 
+		try {			
+			return this.usuarioLogado.getPost(atributo, post);
+		} catch (RedeSocialMaisPopException e) {
+			throw new PostException("Informacao indisponivel");
+		}
 	}
 	
 	/**
@@ -816,8 +878,14 @@ public class Controller implements Serializable {
 	 * @throws PostException
 	 * 		O indice informado menor que zero.
 	 */
-	public String getConteudoPost(int indice, int post) throws LogicaException, PostException {
-		return this.usuarioLogado.getConteudoPost(indice, post);
+	public String getConteudoPost(int indice, int post) throws RedeSocialMaisPopException {
+		try {			
+			return this.usuarioLogado.getConteudoPost(indice, post);
+		} catch (RedeSocialMaisPopException e) {
+			String msg = e.getMessage();
+			throw new RedeSocialMaisPopException(msg);
+		}
+		
 	}	
 	
 	/**
@@ -848,8 +916,15 @@ public class Controller implements Serializable {
 	 * @exception PostException
 	 * 			Se requirido um indice negativo.
 	 */
-	public int qtdCurtidasDePost(int indice) throws PostException, LogicaException {
-		return this.usuarioLogado.qtdCurtidasDePost(indice);
+	public int qtdCurtidasDePost(int indice) throws RedeSocialMaisPopException {
+
+		try {
+			return this.usuarioLogado.qtdCurtidasDePost(indice);
+		} catch (RedeSocialMaisPopException e) {
+			String msg = e.getMessage();
+			throw new RedeSocialMaisPopException(msg);
+		}
+		
 	}
 	
 	/**
@@ -867,8 +942,14 @@ public class Controller implements Serializable {
 	 * @exception PostException
 	 * 			Se requirido um indice negativo.
 	 */
-	public int qtdRejeicoesDePost(int indice) throws PostException, LogicaException {
-		return this.usuarioLogado.qtdRejeicoesDePost(indice);
+	public int qtdRejeicoesDePost(int indice) throws RedeSocialMaisPopException {
+		try {
+			return this.usuarioLogado.qtdRejeicoesDePost(indice);
+		} catch (RedeSocialMaisPopException e) {
+			String msg = e.getMessage();
+			throw new RedeSocialMaisPopException(msg);
+		}
+		
 	}
 	
 	/**

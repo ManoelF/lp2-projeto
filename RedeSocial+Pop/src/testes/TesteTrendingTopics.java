@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import exceptions.EntradaException;
 import exceptions.LogicaException;
+import exceptions.RedeSocialMaisPopException;
 
 public class TesteTrendingTopics {
 
@@ -21,7 +22,7 @@ public class TesteTrendingTopics {
 			controller.cadastraUsuario("maria", "maria@gmail.com", "acordaMenina", "15/06/1980", "resources/avatarDefaul.jpg");
 			controller.cadastraUsuario("carlos", "carlos@gmail.com", "1345", "08/08/1980", "resources/avatarDefaul.jpg");
 			controller.cadastraUsuario("angela", "angela@gmail.com", "feliz123", "08/08/1980", "resources/avatarDefaul.jpg");
-		} catch (EntradaException | LogicaException e) {
+		} catch (RedeSocialMaisPopException e) {
 				Assert.fail();
 		}
 	}
@@ -54,7 +55,7 @@ public class TesteTrendingTopics {
 
 			Assert.assertEquals(hashtag, controller.atualizaTrendingTopics());
 			
-		} catch (LogicaException | EntradaException e) {
+		} catch (RedeSocialMaisPopException e) {
 			Assert.fail();
 		}
 	}

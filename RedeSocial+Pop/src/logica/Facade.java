@@ -23,16 +23,9 @@ package logica;
 
 import java.io.Serializable;
 
-import exceptions.AtualizaPerfilException;
-import exceptions.EntradaException;
 import exceptions.FechaSistemaException;
 import exceptions.LogicaException;
-import exceptions.LogoutException;
-import exceptions.NaoHaNotificacoesException;
-import exceptions.PostException;
 import exceptions.RedeSocialMaisPopException;
-import exceptions.SenhaProtegidaException;
-import exceptions.UsuarioNaoCadastradoException;
 
 /**
  * <code>Facade</code> a porta de entrada do Projeto. 
@@ -67,19 +60,19 @@ public class Facade implements Serializable {
 		}
 	}
 	
-	public String cadastraUsuario(String nome, String email, String senha, String nascimento, String imagem) throws EntradaException,  LogicaException {
+	public String cadastraUsuario(String nome, String email, String senha, String nascimento, String imagem) throws RedeSocialMaisPopException {
 		return this.controller.cadastraUsuario(nome, email, senha, nascimento, imagem);
 	}
 
-	public String cadastraUsuario(String nome, String email, String senha, String nascimento) throws EntradaException, LogicaException {
+	public String cadastraUsuario(String nome, String email, String senha, String nascimento) throws RedeSocialMaisPopException {
 		return cadastraUsuario(nome, email, senha, nascimento, "resources/default.jpg");
 	}
 	
-	public void atualizaPerfil(String atributo, String novoValor) throws LogicaException, EntradaException {
+	public void atualizaPerfil(String atributo, String novoValor) throws RedeSocialMaisPopException {
 		this.controller.atualizaPerfil(atributo, novoValor);
 	}
 	
-	public void atualizaPerfil(String atributo, String valor, String velhaSenha) throws AtualizaPerfilException, LogicaException {
+	public void atualizaPerfil(String atributo, String valor, String velhaSenha) throws RedeSocialMaisPopException {
 		this.controller.atualizaPerfil(atributo, valor, velhaSenha);
 	}
 	
@@ -87,27 +80,27 @@ public class Facade implements Serializable {
 		return this.controller.atualizaTrendingTopics();
 	}
 	
-	public void login(String email, String senha) throws LogicaException, EntradaException {
+	public void login(String email, String senha) throws RedeSocialMaisPopException {
 		this.controller.login(email, senha);
 	}
 	
-	public void logout() throws LogicaException {
+	public void logout() throws RedeSocialMaisPopException {
 		this.controller.logout();	
 	}
 	
-	public void adicionaAmigo(String usuario) throws LogicaException  {
+	public void adicionaAmigo(String usuario) throws RedeSocialMaisPopException  {
 		this.controller.adicionaAmigo(usuario);
 	}
 	
-	public void rejeitaAmizade(String email) throws LogicaException {
+	public void rejeitaAmizade(String email) throws RedeSocialMaisPopException {
 		this.controller.rejeitaAmizade(email);
 	}
 		
-	public void aceitaAmizade(String usuario) throws LogicaException {
+	public void aceitaAmizade(String usuario) throws RedeSocialMaisPopException {
 		this.controller.aceitaAmizade(usuario);
 	}
 	
-	public void removeAmigo(String usuario) throws UsuarioNaoCadastradoException  {
+	public void removeAmigo(String usuario) throws RedeSocialMaisPopException  {
 		this.controller.removeAmigo(usuario);
 	}
 	
@@ -119,7 +112,7 @@ public class Facade implements Serializable {
 		return this.controller.getPops();
 	}
 	
-	public int getPopsUsuario(String email) throws LogoutException, UsuarioNaoCadastradoException{
+	public int getPopsUsuario(String email) throws RedeSocialMaisPopException {
 		return controller.getPopsUsuario(email);
 	}
 	
@@ -127,19 +120,19 @@ public class Facade implements Serializable {
 		return this.controller.getPopularidade();
 	}
 	
-	public void curtirPost(String amigo, int post) throws LogicaException {
+	public void curtirPost(String amigo, int post) throws RedeSocialMaisPopException {
 		this.controller.curtirPost(amigo, post);
 	}
 	
-	public void rejeitarPost(String amigo, int post) throws LogicaException {
+	public void rejeitarPost(String amigo, int post) throws RedeSocialMaisPopException {
 		this.controller.descurtirPost(amigo, post);
 	}
 	
-	public void criaPost(String mensagem, String data) throws PostException, LogicaException {
+	public void criaPost(String mensagem, String data) throws RedeSocialMaisPopException {
 		this.controller.criaPost(mensagem, data);
 	}
 	
-	public void salvaPosts() throws LogoutException {
+	public void salvaPosts() throws RedeSocialMaisPopException {
 		this.controller.salvaPosts();
 	}
 	
@@ -147,11 +140,11 @@ public class Facade implements Serializable {
 		return this.controller.getPost(post);
 	}
 	
-	public String getPost(String atributo, int post) throws LogicaException {
+	public String getPost(String atributo, int post) throws RedeSocialMaisPopException {
 		return this.controller.getPost(atributo, post);
 	}	
 	
-	public String getConteudoPost(int indice, int post) throws LogicaException, PostException {
+	public String getConteudoPost(int indice, int post) throws RedeSocialMaisPopException {
 		return this.controller.getConteudoPost(indice, post);
 	}
 	
@@ -159,23 +152,23 @@ public class Facade implements Serializable {
 		return controller.getPopsPost(indice);
 	}
 	
-	public int qtdCurtidasDePost(int indice) throws PostException, LogicaException {
+	public int qtdCurtidasDePost(int indice) throws RedeSocialMaisPopException {
 		return this.controller.qtdCurtidasDePost(indice);
 	}
 	
-	public int qtdRejeicoesDePost(int indice) throws PostException, LogicaException {
+	public int qtdRejeicoesDePost(int indice) throws RedeSocialMaisPopException {
 		return this.controller.qtdRejeicoesDePost(indice);
 	}
 	
-	public String getInfoUsuario(String atributo, String usuario) throws LogicaException, EntradaException {
+	public String getInfoUsuario(String atributo, String usuario) throws RedeSocialMaisPopException {
 		return this.controller.getInfoUsuario(atributo, usuario);
 	}
 	
-	public String getInfoUsuario(String atributo) throws SenhaProtegidaException, EntradaException {
+	public String getInfoUsuario(String atributo) throws RedeSocialMaisPopException {
 		return this.controller.getInfoUsuario(atributo);
 	}
 	
-	public String getNextNotificacao() throws NaoHaNotificacoesException {
+	public String getNextNotificacao() throws RedeSocialMaisPopException {
 		return this.controller.getNextNotificacao();
 	}
 	 
@@ -191,23 +184,24 @@ public class Facade implements Serializable {
 		return this.controller.atualizaRanking();	
 	}
 	
-	public void atualizaFeed() throws LogicaException {
+	public void atualizaFeed() throws RedeSocialMaisPopException {
 		controller.atualizaFeed();		
 	}
 	
-	public String getFeed(int post) throws LogicaException {
+	public String getFeed(int post) throws RedeSocialMaisPopException {
 		return controller.getFeed(post);
 	}
 	
-	public String getPostFeedNoticiasRecentes(int post) throws LogicaException {
+	public String getPostFeedNoticiasRecentes(int post) throws RedeSocialMaisPopException {
 		ordenaFeedPorData();
 		return getFeed(post);
 	}
 	
-	public String getPostFeedNoticiasMaisPopulares(int post) throws LogicaException {
+	public String getPostFeedNoticiasMaisPopulares(int post) throws RedeSocialMaisPopException {
 		ordenaFeedPorPopularidade();
 		return getFeed(post);
 	}
+	
 	public void ordenaFeedPorData(){
 		controller.ordenaFeedPorData();
 	}

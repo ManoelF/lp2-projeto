@@ -203,7 +203,7 @@ public class Util implements Serializable {
 				listaHashtags.add(hashtags[i]);
 			}
 			if (!hashtags[0].toString().equals("") && hashtags[i].charAt(0) != '#') {
-				throw new PostException("Nao eh possivel criar o post. As hashtags devem comecar com '#'. Erro na hashtag: '" + hashtags[i] + "'.");
+				throw new PostException("As hashtags devem comecar com '#'. Erro na hashtag: '" + hashtags[i] + "'.");
 			}
 		}
 		

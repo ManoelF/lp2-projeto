@@ -16,7 +16,7 @@ public class TesteRanking {
 	
 	
 	@Before
-	public void before() throws  EntradaException, LogicaException{
+	public void before()  {
 
 		try {
 			
@@ -31,7 +31,7 @@ public class TesteRanking {
 			controller.cadastraUsuario("francisco", "francisco@gmail.com", "1234", "20/10/1995", "resources/avatarDefaul.jpg");
 			
 			
-		} catch(LogicaException erro){
+		} catch(RedeSocialMaisPopException erro){
 			Assert.fail();
 		}
 		
@@ -70,7 +70,7 @@ public class TesteRanking {
 	}// fecha test
 	
 	@Test
-	public void testeOrdenacaoCrescente() throws EntradaException, LogicaException{
+	public void testeOrdenacaoCrescente() throws RedeSocialMaisPopException {
 		
 			controller.login("italo@gmail.com", "1234");
 			controller.setPops(10);

@@ -31,7 +31,7 @@ public class AtualizaPerfilException extends EntradaException {
 	 * Construtor <b>AtualizaPerfilException</b>.
 	 */
 	public AtualizaPerfilException() {
-		super("Erro na atualizacao de perfil. Nenhum usuarix esta logadx no +pop.");
+		super("Erro na atualizacao de perfil.");
 	}
 
 	/**

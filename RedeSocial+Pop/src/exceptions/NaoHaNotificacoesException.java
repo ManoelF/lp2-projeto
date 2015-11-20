@@ -36,4 +36,14 @@ public class NaoHaNotificacoesException extends LogicaException{
 	public NaoHaNotificacoesException(){
 		super("Nao ha mais notificacoes.");
 	}
+	
+	/**
+	 * Construtor <b>NaoHaNotificacoesException</b>
+	 * 
+	 * @param msg, 
+	 * 		Mensagem para concatenar com 'Nao ha mais notificacoes'.
+	 */
+	public NaoHaNotificacoesException(String msg){
+		super(msg);
+	}
 }

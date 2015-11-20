@@ -32,6 +32,6 @@ public class SenhaIncorretaException extends LoginException {
 	 * Construtor <b>SenhaIncorretaException</b>.
 	 */
 	public SenhaIncorretaException() {
-		super("Nao foi possivel realizar login. Senha invalida.");
+		super("Senha invalida.");
 	}
 }

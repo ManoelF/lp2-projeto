@@ -66,7 +66,7 @@ public class FactoryPost implements Serializable {
 	 * @throws LogicaException
 	 * 			{@link LogicaException}
 	 */
-	public Post criaPost(String texto, String data) throws PostException, LogicaException {
+	public Post criaPost(String texto, String data) throws PostException {
 		if (texto == null || texto.trim().length() == 0) {
 			// lancar Exception
 		}
@@ -141,7 +141,7 @@ public class FactoryPost implements Serializable {
 	private boolean verificaTam(String texto) throws PostException {
 		String novoTexto = Util.getInstancia().encontraTexto(texto);
 		if (novoTexto.length() >= 200) {
-			throw new PostException("Nao eh possivel criar o post. O limite maximo da mensagem sao 200 caracteres.");
+			throw new PostException("O limite maximo da mensagem sao 200 caracteres.");
 		} else {
 			//this.texto = texto;
 			return true;
