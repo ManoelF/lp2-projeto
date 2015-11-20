@@ -1,23 +1,22 @@
 /* =========================== Rede Social +Pop ================================= #
- * 																				  *
+ *                                                                                *
  * Projeto obrigatorio para cumprimento de nota da disciplina Programação II      * 	  
  * e Laboratorio de Programacao II.                                               *
  *                                                                                *
- * Departamento de Informatica e Engenharia Eletrica							  *
- * Curso Ciência da Computação (UFCG - 2015.1). 								  *
+ * Departamento de Informatica e Engenharia Eletrica                              *
+ * Curso Ciência da Computação (UFCG - 2015.1)                                    *
  * Laboratorio de Programação II                                                  *
- * 																				  *
- * Discentes envolvidos: 														  *
- *   		Italo Batista														  *
- *   		Jose Manoel Ferreira												  *
- *   		Kerilin Chang. 														  *
- *																				  *
- * Orientador: 																	  *
- * 			Francisco Neto.		                                                  *
- * 												                                  *
+ *                                                                                *
+ * Discentes envolvidos:                                                          *
+ *          Italo Batista                                                         *
+ *          Jose Manoel Ferreira                                                  *
+ *          Kerilin Chang.                                                        *
+ *                                                                                *
+ * Orientador:                                                                    *
+ *          Francisco Neto.                                                       *
+ *                                                                                *
  * ============================================================================== #
  */
-
 /**
  * Classe <code>Ranking</code>, uma abstracao de um ranking de <code>Usuario</code>, sendo os mais populares e menos 
  * populares em toda a Rede.
