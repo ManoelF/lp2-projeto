@@ -164,7 +164,7 @@ public class Post implements Comparable<Post>, Serializable {
 	 * @return String
 	 * 			Informacao do Post.
 	 * 
-	 * @throws LogicaException
+	 * @throws PostException
 	 * 			Excecao de informacao inexistente.
 	 */
 	public String getPost(String atributo) throws PostException {

@@ -184,8 +184,6 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * 		Excecao lancada caso os parametros nao satisfacam as epecificacoes de criacao 
 	 * 		de um post.
 	 * 
-	 * @throws LogicaException
-	 * 			Erro na entrada de dados.
 	 */
 	public void criaPost(String mensagem, String data) throws PostException {
 		Post novoPost;
@@ -410,7 +408,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * @return String
 	 * 		Retorna Hashtag, Data, Mensagem ou Conteudo do Post especificado.
 	 * 
-	 * @throws LogicaException 
+	 * @throws PostException 
 	 * 		Excecao lancada devido a nao existir o atributo especificado 
 	 * 		e/ou nao existir o indce na lista de Posts
 	 */
@@ -450,9 +448,8 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * 
 	 * @return String
 	 * 		Uma Midia e retornada (Audio, Imagem, Mensagem).
+	 *
 	 * @throws PostException 
-	 * 
-	 * @throws LogicaException
 	 * 		Na lista de Post na ha o indice informado.
 	 * 
 	 */
@@ -725,7 +722,9 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * 
 	 * @throws AtualizaPerfilException
 	 * 			Data de nascimento inserida esta invalidada pelo sistema.
+	 * 
 	 * @throws LogicaException 
+	 * 			Erros causados formatacoes inadequadas.
 	 */
 	public void setNascimento(String novoNascimento) throws AtualizaPerfilException, LogicaException {
 		if (novoNascimento == null || novoNascimento.trim().length() == 0) {

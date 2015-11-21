@@ -454,7 +454,7 @@ public class Util implements Serializable {
 	 */
 	public void salvaSistema(Controller controller) throws RedeSocialMaisPopException {
 		
-		File file = new File("sistema.dat");
+		File file = new File("sistema/sistema.dat");
 		FileOutputStream outFile;
 		try {
 			
@@ -482,7 +482,7 @@ public class Util implements Serializable {
 	 */
 	public Controller restauraSistema() {
 		
-		File file = new File("sistema.dat");
+		File file = new File("sistema/sistema.dat");
 		Controller controller = null; 
 		if (!file.exists()) {
 			return null;
