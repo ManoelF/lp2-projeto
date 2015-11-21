@@ -92,7 +92,7 @@ public class Usuario implements Comparable<Usuario>, Serializable {
 	 * 		Se algum dos parametro requerido para criacao do Usuario nao estiver
 	 * 		de acordo com as especificacoes eh lancado essa excecao.		
 	 */
-	public Usuario(String nome, String email, String senha, String nascimento, String imagem) throws CadastroInvalidoException {
+	public Usuario(String nome, String email, String senha, String nascimento, String imagem) {
 
  		this.util = Util.getInstancia();
 		this.nascimento = util.recebeData(nascimento);

@@ -1,5 +1,6 @@
 package testes;
 
+import logica.FactoryUsuario;
 import logica.Post;
 import logica.Usuario;
 
@@ -17,9 +18,11 @@ public class TesteUsuario {
 	Usuario bruna;
 	Usuario jailsa;
 	Post poster;
+	FactoryUsuario fabrica;
 
 	@Before
 	public void setUp() {
+		this.fabrica = new FactoryUsuario();
 	}
 
 	@Test
@@ -27,7 +30,7 @@ public class TesteUsuario {
 		
 		// EXCECAO NOME
 		try {
-			joao = new Usuario("", "joao@email.com", "123", "10/10/1990",
+			joao = fabrica.criaUsuario("", "joao@email.com", "123", "10/10/1990",
 					 "imagem/joao.jpg");
 		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro no cadastro de Usuarios. Nome dx usuarix nao pode ser vazio.",
@@ -36,7 +39,7 @@ public class TesteUsuario {
 
 		// EXCECAO EMAIL
 		try {
-			joao = new Usuario("Joao", "", "123", "10/10/1990",
+			joao = fabrica.criaUsuario("Joao", "", "123", "10/10/1990",
 					"imagem/joao.jpg");
 		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro no cadastro de Usuarios. Formato de e-mail esta invalido.",
@@ -45,7 +48,7 @@ public class TesteUsuario {
 
 		// EXCECAO SENHA
 		try {
-			joao = new Usuario("Joao", "joao@email.com", "", "10/10/1990",
+			joao = fabrica.criaUsuario("Joao", "joao@email.com", "", "10/10/1990",
 					 "imagem/joao.jpg");
 		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro no cadastro de Usuarios. Senha dx usuarix nao pode ser vazio.",
@@ -54,7 +57,7 @@ public class TesteUsuario {
 
 		// EXCECAO DATA NASCIMENTO
 		try {
-			joao = new Usuario("Joao", "joao@email.com", "123", "",
+			joao = fabrica.criaUsuario("Joao", "joao@email.com", "123", "",
 					 "imagem/joao.jpg");
 		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro no cadastro de Usuarios. Formato de data esta invalida.",
@@ -63,7 +66,7 @@ public class TesteUsuario {
 
 		// EXCECAO IMAGEM
 		try {
-			joao = new Usuario("Joao", "joao@email.com", "123", "10/10/1990", null);
+			joao = fabrica.criaUsuario("Joao", "joao@email.com", "123", "10/10/1990", null);
 		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro no cadastro de Usuarios. Imagem inserida esta invalida.",
 					erro.getMessage());
@@ -76,7 +79,7 @@ public class TesteUsuario {
 		// CRIACAO DE USUARIOS
 		try {
 
-			maria = new Usuario("Maria", "maria@email.com", "321",
+			maria = fabrica.criaUsuario("Maria", "maria@email.com", "321",
 					"30/01/1995", "resources/maria.jpg");
 
 			Assert.assertEquals("Maria", maria.getNome());
@@ -98,7 +101,7 @@ public class TesteUsuario {
 			
 		// ATUALIZACAO DE USUARIOS
 		try {
-			fred = new Usuario("Fred", "fred@email.com", "0101", "25/12/1989",
+			fred = fabrica.criaUsuario("Fred", "fred@email.com", "0101", "25/12/1989",
 					 "resources/fred.jpg");
 
 			fred.setNome("Fred Silva");
@@ -123,61 +126,61 @@ public class TesteUsuario {
 	public void testInformacoesAtualizadasException() {
 		// SET NOME INVALIDO
 		try {
-			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
+			bruna = fabrica.criaUsuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					 "resources/bruna.jpg");
 			bruna.setNome("");
 			Assert.assertEquals("Bruna", bruna.getNome());
 
 		} catch(RedeSocialMaisPopException erro) {
-			Assert.assertEquals("Erro na atualizacao de perfil. Nome dx usuarix nao pode ser vazio.", erro.getMessage());
+			Assert.assertEquals("Erro na atualizacao de perfil.", erro.getMessage());
 		}
 		
 		// SET EMAIL INVALIDO
 		try {
-			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
+			bruna = fabrica.criaUsuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					"resources/bruna.jpg");
 			bruna.setEmail("");
 			Assert.assertEquals("bruna@email.com", bruna.getEmail());
 			
 		} catch(RedeSocialMaisPopException erro) {
-			Assert.assertEquals("Erro na atualizacao de perfil. Formato de e-mail esta invalido.", erro.getMessage());
+			Assert.assertEquals("Erro na atualizacao de perfil.", erro.getMessage());
 		}
 		
 		// SET NASCIMENTO INVALIDO
 		try {
-			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
+			bruna = fabrica.criaUsuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					 "resources/bruna.jpg");
 			bruna.setNascimento("");		
 			Assert.assertEquals("12/11/00", bruna.getNascimento());
 	
 		} catch(RedeSocialMaisPopException erro) {
 			//alterar msg
-			Assert.assertEquals("Erro na atualizacao de perfil. Formato de data esta invalida.", erro.getMessage());
+			Assert.assertEquals("Erro na atualizacao de perfil.", erro.getMessage());
 		}
 
 		// SET NASCIMENTO IVALIDO
 			try {
-				bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
+				bruna = fabrica.criaUsuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 						"resources/bruna.jpg");
 				bruna.setNascimento("12/11/00");
 			} catch (RedeSocialMaisPopException erro) {
-				Assert.assertEquals("Erro na atualizacao de perfil. Formato de data esta invalida.", erro.getMessage());
+				Assert.assertEquals("Erro na atualizacao de perfil.", erro.getMessage());
 			}
 			
 		// SET IMAGEM INVALIDA
 		try {
-			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
+			bruna = fabrica.criaUsuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					"resources/bruna.jpg");
 			bruna.setImagem(null);			
 			Assert.assertEquals("resources/bruna.jpg", bruna.getImagem());
 	
 		} catch(RedeSocialMaisPopException erro) {
-			Assert.assertEquals("Erro na atualizacao de prefil. Imagem inserida esta invalida.", erro.getMessage());
+			Assert.assertEquals("Erro na atualizacao de perfil.", erro.getMessage());
 		}
 		
 		// SET SENHA INVALIDA
 		try {
-			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
+			bruna = fabrica.criaUsuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					"resources/bruna.jpg");
 			bruna.setSenha("1221", "lalala");			
 		} catch (RedeSocialMaisPopException erro) {
@@ -193,13 +196,13 @@ public class TesteUsuario {
 		try {
 			
 			// CRIANDO USUARIOS
-			joao = new Usuario("Joao", "joao@email.com", "123", "10/10/1990",
+			joao = fabrica.criaUsuario("Joao", "joao@email.com", "123", "10/10/1990",
 					 "imagem/joao.jpg");
-			fred = new Usuario("Fred", "fred@email.com", "0101", "25/12/1989",
+			fred = fabrica.criaUsuario("Fred", "fred@email.com", "0101", "25/12/1989",
 					 "resources/fred.jpg");
-			bruna = new Usuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
+			bruna = fabrica.criaUsuario("Bruna", "bruna@email.com", "1221", "12/11/2000",
 					"resources/bruna.jpg");
-			maria = new Usuario("Maria", "maria@email.com", "321",
+			maria = fabrica.criaUsuario("Maria", "maria@email.com", "321",
 					"20/01/1995", "resources/maria.jpg");
 			
 			
