@@ -1,5 +1,6 @@
 package testes;
 
+import logica.FactoryUsuario;
 import logica.Post;
 import logica.Usuario;
 
@@ -17,9 +18,11 @@ public class TesteUsuario {
 	Usuario bruna;
 	Usuario jailsa;
 	Post poster;
+	FactoryUsuario fabricauser;
 
 	@Before
 	public void setUp() {
+		fabricauser = new FactoryUsuario();
 	}
 
 	@Test
@@ -49,15 +52,6 @@ public class TesteUsuario {
 					 "imagem/joao.jpg");
 		} catch (RedeSocialMaisPopException erro) {
 			Assert.assertEquals("Erro no cadastro de Usuarios. Senha dx usuarix nao pode ser vazio.",
-					erro.getMessage());
-		}
-
-		// EXCECAO DATA NASCIMENTO
-		try {
-			joao = new Usuario("Joao", "joao@email.com", "123", "",
-					 "imagem/joao.jpg");
-		} catch (RedeSocialMaisPopException erro) {
-			Assert.assertEquals("Erro no cadastro de Usuarios. Formato de data esta invalida.",
 					erro.getMessage());
 		}
 
@@ -129,7 +123,7 @@ public class TesteUsuario {
 			Assert.assertEquals("Bruna", bruna.getNome());
 
 		} catch(RedeSocialMaisPopException erro) {
-			Assert.assertEquals("Erro na atualizacao de perfil. Nome dx usuarix nao pode ser vazio.", erro.getMessage());
+			Assert.assertEquals("Erro na atualizacao de perfil.", erro.getMessage());
 		}
 		
 		// SET EMAIL INVALIDO
@@ -140,7 +134,7 @@ public class TesteUsuario {
 			Assert.assertEquals("bruna@email.com", bruna.getEmail());
 			
 		} catch(RedeSocialMaisPopException erro) {
-			Assert.assertEquals("Erro na atualizacao de perfil. Formato de e-mail esta invalido.", erro.getMessage());
+			Assert.assertEquals("Erro na atualizacao de perfil.", erro.getMessage());
 		}
 		
 		// SET NASCIMENTO INVALIDO
@@ -152,7 +146,7 @@ public class TesteUsuario {
 	
 		} catch(RedeSocialMaisPopException erro) {
 			//alterar msg
-			Assert.assertEquals("Erro na atualizacao de perfil. Formato de data esta invalida.", erro.getMessage());
+			Assert.assertEquals("Erro na atualizacao de perfil.", erro.getMessage());
 		}
 
 		// SET NASCIMENTO IVALIDO
@@ -161,7 +155,7 @@ public class TesteUsuario {
 						"resources/bruna.jpg");
 				bruna.setNascimento("12/11/00");
 			} catch (RedeSocialMaisPopException erro) {
-				Assert.assertEquals("Erro na atualizacao de perfil. Formato de data esta invalida.", erro.getMessage());
+				Assert.assertEquals("Erro na atualizacao de perfil.", erro.getMessage());
 			}
 			
 		// SET IMAGEM INVALIDA
@@ -172,7 +166,7 @@ public class TesteUsuario {
 			Assert.assertEquals("resources/bruna.jpg", bruna.getImagem());
 	
 		} catch(RedeSocialMaisPopException erro) {
-			Assert.assertEquals("Erro na atualizacao de prefil. Imagem inserida esta invalida.", erro.getMessage());
+			Assert.assertEquals("Erro na atualizacao de perfil.", erro.getMessage());
 		}
 		
 		// SET SENHA INVALIDA

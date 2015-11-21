@@ -6,8 +6,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import exceptions.EntradaException;
-import exceptions.LogicaException;
 import exceptions.RedeSocialMaisPopException;
 
 public class TesteFeed {

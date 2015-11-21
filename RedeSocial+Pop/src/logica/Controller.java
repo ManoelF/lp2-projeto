@@ -18,10 +18,6 @@
  * ============================================================================== #
  */
 
-
-
-
-
 package logica;
 
 import java.io.Serializable;
@@ -490,12 +486,12 @@ public class Controller implements Serializable {
 	 * @return
 	 * 		String com o Post desejado.
 	 * 
-	 * @throws LogicaException
+	 * @throws RedeSocialMaisPopException
 	 * 			Possiveis excecoes na busca de informacoes para construcao do feed.
 	 */
-	public String getFeed(int i) throws RedeSocialMaisPopException {
+	public String getFeed(int indice) throws RedeSocialMaisPopException {
 
-		Post post = this.usuarioLogado.getFeed().get(i);
+		Post post = this.usuarioLogado.getFeed().get(indice);
 		StringBuffer postBuffer = new StringBuffer();
 		final String endOfLine = " ";
 		
@@ -847,9 +843,8 @@ public class Controller implements Serializable {
 	 * 
 	 * @return String
 	 * 			Informacao do Post.
-	 * @throws RedeSocialMaisPopException 
 	 * 
-	 * @throws LogicaException
+	 * @throws RedeSocialMaisPopException
 	 * 			Se for requerido uma informacao inacessivel sera lancado uma excecao.
 	 */
 	public String getPost(String atributo, int post) throws RedeSocialMaisPopException  { 

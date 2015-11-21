@@ -27,7 +27,6 @@ import java.util.List;
 
 import logica.midia.Mensagem;
 import logica.midia.Midia;
-import exceptions.LogicaException;
 import exceptions.PostException;
 
 /**
@@ -63,8 +62,6 @@ public class FactoryPost implements Serializable {
 	 * @throws PostException
 	 * 			{@link PostException}
 	 * 
-	 * @throws LogicaException
-	 * 			{@link LogicaException}
 	 */
 	public Post criaPost(String texto, String data) throws PostException {
 		if (texto == null || texto.trim().length() == 0) {
